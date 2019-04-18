@@ -17,7 +17,7 @@ from re import search
 from setuptools import setup
 
 ROOT = abspath(dirname(__file__))
-UTF8 - 'utf8'
+UTF8 = 'utf8'
 
 with open(join(ROOT, 'README.md'), mode='rt', encoding=UTF8) as fp:
     README = fp.read()
@@ -30,6 +30,7 @@ with open(join(ROOT, "requirements.txt"), mode='rt', encoding=UTF8) as fp:
         line for line in fp.readlines() if line and '#' not in line
     ]
 
+
 def datafiles():
     return [('.', [
         'BUGS.md',
@@ -39,6 +40,7 @@ def datafiles():
         'requirements.txt',
     ])]
 
+
 if __name__ == "__main__":
     # allow setup.py to run from another directory
     chdir(ROOT)
@@ -46,7 +48,7 @@ if __name__ == "__main__":
         author='Helmut Konrad Fahrendholz',
         author_email='info@checkitweg.de',
         data_files=datafiles(),
-        description='Let's make some flask',
+        description='Let\'s make some flask',
         include_package_data=True,
         install_requires=INSTALL_REQUIRES,
         long_description=README,
