@@ -14,6 +14,7 @@ from os.path import dirname
 from os.path import join
 from re import search
 
+from setuptools import find_packages
 from setuptools import setup
 
 ROOT = abspath(dirname(__file__))
@@ -64,9 +65,5 @@ if __name__ == "__main__":
             'Programming Language :: Python :: 3.7',
             'Programming Language :: Python :: 3.8',
         ],
-        packages=[
-            'viewo',
-            
-        ],
-        
+        packages=find_packages(),
     )
