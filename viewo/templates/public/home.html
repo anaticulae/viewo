@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>checkitweg.de</h2>
+
+<p>
+    Fehlerfrei, sei dabei!
+</p>
+
+<ul>
+    <li>Ueberpruefe deine Arbeit in nur wenigen Sekunden</li>
+    <li>Rechtschreibung</li>
+    <li>Regeln</li>
+    <li>Layout</li>
+    <li>Ueberpruefe 500 verschiedene Regeln</li>
+    <li>Kostenlos und automatisiert</li>
+</ul>
+
+<form method="post" action="upload" enctype="multipart/form-data">
+    <fieldset>
+        <legend>Waehle dein Dokument und erhalte<br />sofort deine
+            Auswertung</legend>
+        <input class="resource" type="file" name="file" required="required" />
+        <p>
+            Starte deine persoenliche Analyse jetzt:
+        </p>
+        <input class="submit" type="submit" value="Los geht's" id="submit" />
+    </fieldset>
+</form>
+
+{% endblock %}
