@@ -32,7 +32,7 @@ from viewo.config import environment
 from viewo.public import welcome
 from viewo.upload import upload
 
-__version__ = '0.0.0'
+__version__ = '0.1.0'
 
 
 def create_application(config=None) -> Flask:
