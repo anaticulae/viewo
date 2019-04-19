@@ -16,9 +16,7 @@ from flask import render_template
 from flask import request
 from werkzeug.utils import secure_filename
 
-from viewo import TEMPLATES
-
-upload = Blueprint('upload', __name__, template_folder=TEMPLATES)
+upload = Blueprint('upload', __name__)
 
 
 @upload.route('/upload', methods=['GET', 'POST'])

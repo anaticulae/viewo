@@ -11,9 +11,7 @@ from flask import Blueprint
 from flask import render_template
 from jinja2 import TemplateNotFound
 
-from viewo import TEMPLATES
-
-welcome = Blueprint('welcome', __name__, template_folder=TEMPLATES)
+welcome = Blueprint('welcome', __name__)
 
 
 @welcome.route('/', defaults={'page': 'home'})
