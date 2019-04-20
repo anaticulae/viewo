@@ -32,7 +32,7 @@ from viewo.config import environment
 from viewo.config import export
 from viewo.documents import documents
 from viewo.public import welcome
-from viewo.upload import upload
+from viewo.upload import upload_
 
 __version__ = '0.1.0'
 
@@ -57,11 +57,8 @@ def create_application(config=None) -> Flask:
         except KeyError:
             export('', '', '')
 
-    # # Working folder for pdf analyzing
-    # app_.config['TODO'] = todo
-    # app_.config['READY'] = ready
-
-    app_.register_blueprint(upload)
+    app_.register_blueprint(documents)
+    app_.register_blueprint(upload_)
     app_.register_blueprint(welcome)
     return app_
 
