@@ -8,16 +8,15 @@
 # =============================================================================
 
 from http import HTTPStatus
-from os import listdir
 from os.path import exists
 from tests import MINIMAL
 from tests import result
-from tests import todo
 
-import flask
-from werkzeug.datastructures import FileStorage
 from werkzeug.datastructures import MultiDict
 
+from viewo.upload import FOLDER_LENGTH
+from viewo.upload import random_foldername
+from viewo.upload import todo_count
 
 
 def post_file(client, page: str, field: str, path: str):
@@ -78,6 +77,12 @@ def test_upload_get_forward_to_documents(client):
 
     assert DOCUMENT_PATH in location
     assert response.status_code == HTTPStatus.FOUND
+
+
+def test_random_foldername_length():
+    for _ in range(20):
+        name = random_foldername()
+        assert len(name) == FOLDER_LENGTH, name
 
 
 # def test_upload_without_filename(monkeypatch, client, app):
