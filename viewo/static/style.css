@@ -80,6 +80,27 @@ input.submit {
     height: 30px;
     width: 200px;
 }
+
+#results {
+    width:100%;
+    background: white;
+    /* border: 1px solid black; */
+}
+#results th{
+    width:100%;
+    border-bottom: 2px solid black;
+    background: rgb(195, 212, 230);
+    padding: 4px;
+}
+
+.score, .date, .status{
+    text-align:center;
+}
+.status_header{
+    text-align:center;
+
+}
+
 html {
     background-position: center;
     background-repeat: repeat-y;
