@@ -18,12 +18,6 @@ import flask
 from werkzeug.datastructures import FileStorage
 from werkzeug.datastructures import MultiDict
 
-from viewo.upload import upload_pdf
-
-
-def todo_count(app) -> int:
-    """Count files ?and FOLDER? in common `todo` folder"""
-    return len(listdir(todo(app)))
 
 
 def post_file(client, page: str, field: str, path: str):
@@ -43,36 +37,36 @@ UPLOAD_PATH = '/upload'
 DOCUMENT_PATH = '/documents'
 
 
-def test_upload(client, app):
+def test_upload(client):
     """Upload one file and check if it is saved at common todo folder"""
     # test that viewing the page renders without template errors
     assert client.get('/').status_code == HTTPStatus.OK
 
     # count files in todo folder
-    files_before = todo_count(app)
+    files_before = todo_count()
 
     response = post_file(client, page=UPLOAD_PATH, field='file', path=MINIMAL)
     assert response.status_code == HTTPStatus.OK
 
-    files_after = todo_count(app)
+    files_after = todo_count()
 
     # check if file was uploaded
     assert files_after == files_before + 1
 
 
-def test_upload_with_wrong_field(client, app):
+def test_upload_with_wrong_field(client):
     """Upload one file and check if it is saved at common todo folder"""
     # test that viewing the page renders without template errors
     assert client.get('/').status_code == HTTPStatus.OK
 
     # count files in todo folder
-    files_before = todo_count(app)
+    files_before = todo_count()
 
     # Upload with wrong field
     response = post_file(client, page=UPLOAD_PATH, field='o_o', path=MINIMAL)
     assert response.status_code == HTTPStatus.OK
     assert 'Fehler' in result(response)
-    files_after = todo_count(app)
+    files_after = todo_count()
     # check that no file was uploaded
     assert files_after == files_before
 

@@ -28,8 +28,3 @@ assert exists(MINIMAL), MINIMAL
 
 def result(response) -> str:
     return response.data.decode('utf8')
-
-
-def todo(app):
-    # with current_app.app_context():
-    return app.config['TODO']

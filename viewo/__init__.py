@@ -29,6 +29,8 @@ from viewo.config import SECRET_KEY
 from viewo.config import STATIC
 from viewo.config import TEMPLATES
 from viewo.config import environment
+from viewo.config import export
+from viewo.documents import documents
 from viewo.public import welcome
 from viewo.upload import upload
 
@@ -43,12 +45,17 @@ def create_application(config=None) -> Flask:
 
     if config is None:
         # load the instance config, if it exists, when not testing
-        todo, ready = environment()
+        common, todo, ready = environment()
+        app_.config['COMMON'] = common
         app_.config['TODO'] = todo
         app_.config['READY'] = ready
     else:
         # load the test config if passed in
         app_.config.update(config)
+        try:
+            export(config['COMMON'], config['TODO'], config['READY'])
+        except KeyError:
+            export('', '', '')
 
     # # Working folder for pdf analyzing
     # app_.config['TODO'] = todo

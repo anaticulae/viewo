@@ -32,10 +32,12 @@ def test_with_wrong_folder_configuration(monkeypatch):
 
     with monkeypatch.context() as context:
         # Remove all environment vars
-        context.setattr(os, 'environ', {
-            'SHARED_TODO': 'NO_PATH',
-            'SHARED_READY': 'WRONG_PATH',
-        })
+        context.setattr(
+            os, 'environ', {
+                'SHARED_SPACE': 'NO_PATH',
+                'SHARED_TODO': 'NO_PATH',
+                'SHARED_READY': 'NO_PATH',
+            })
 
         with raises(SystemExit):
             environment()

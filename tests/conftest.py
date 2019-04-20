@@ -32,6 +32,7 @@ def app(tmpdir):
     # create the app with common test config
     test_config = {
         'TESTING': True,
+        'COMMON': tmpdir,
         'TODO': todo,
         'READY': ready,
     }

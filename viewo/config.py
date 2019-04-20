@@ -26,6 +26,7 @@ STATIC = join(ROOT, 'viewo/static')
 def environment():
     """Return `SHARED_TODO` and `SHARED_READY` folder"""
     try:
+        common = os.environ['SHARED_SPACE']
         todo = os.environ['SHARED_TODO']
         ready = os.environ['SHARED_READY']
     except KeyError as error:
@@ -34,12 +35,25 @@ def environment():
     else:
         # Check existence of both folder
         ret = 0
-        if not exists(todo):
-            logging_error('Location does not exists: %s' % todo)
-            ret += 1
-        if not exists(ready):
-            logging_error('Location does not exists: %s' % ready)
-            ret += 1
+        for item in [todo, ready, common]:
+            if not exists(item):
+                logging_error('Location does not exists: %s' % item)
+                ret += 1
         if ret:
             exit(FAILURE)
-    return todo, ready
+    return common, todo, ready
+
+
+def export(common: str, todo: str, ready: str):
+    """Set environment variables"""
+    os.environ['SHARED_SPACE'] = str(common)
+    os.environ['SHARED_TODO'] = str(todo)
+    os.environ['SHARED_READY'] = str(ready)
+
+
+def todo():
+    return os.environ['SHARED_TODO']
+
+
+def ready():
+    return os.environ['SHARED_READY']
