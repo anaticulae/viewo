@@ -22,7 +22,6 @@ from flask import request
 from flask import url_for
 from jinja2 import TemplateNotFound
 from utila import logging_error
-from werkzeug.utils import secure_filename
 
 from viewo.config import MAX_FILE_SIZE
 from viewo.config import SECRET_KEY
@@ -59,17 +58,27 @@ def create_application(config=None) -> Flask:
     app_.register_blueprint(upload_)
     app_.register_blueprint(result_)
     app_.register_blueprint(welcome)
+
     return app_
 
 
 def configure(app_, config):
+    """Set environment for application. Decide between test environment and
+    production environment
+
+    Args:
+        app_(Flask): application to configure, which holds config
+        config(dict): vars to export as global environment
+    """
     if config is None:
-        # load the instance config, if it exists, when not testing
+        # Production environment
+        # load the instance config, if it exists
         common, todo, ready = environment()
         app_.config['COMMON'] = common
         app_.config['TODO'] = todo
         app_.config['READY'] = ready
     else:
+        # Test environment
         # load the test config if passed in
         app_.config.update(config)
         try:

@@ -6,11 +6,10 @@
 # use or distribution is an offensive act against international law and may
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
-from glob import glob
+from contextlib import suppress
 from os import scandir
 from os.path import exists
 from os.path import join
-from pathlib import Path
 
 from flask import Blueprint
 from flask import redirect
@@ -88,10 +87,8 @@ def create_hidden_ref(result, major_id, minor_id, feature_id):
 
     # TODO: READ THE JINJA TO IMPROVE THIS
     for item in not_hidden:
-        try:
+        with suppress(ValueError):
             hidden.remove(item)
-        except ValueError:
-            pass
     return result, hidden
 
 
