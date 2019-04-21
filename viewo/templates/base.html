@@ -18,9 +18,9 @@
     <!-- navigation stars here -->
     <div id="nav">
         <ul>
-            <li><a href="home">Home</a></li>
-            <li><a href="documents">Dokumente</a></li>
-            <li><a href="writing">Schreibhilfe</a></li>
+            <li><a href="{{url_for('welcome.show_welcome')}}">Home</a></li>
+            <li><a href="{{url_for('documents.view_documents')}}">Dokumente</a></li>
+            <li><a href="{{url_for('welcome.show_welcome', page='writing')}}">Schreibhilfe</a></li>
         </ul>
     </div>
 
