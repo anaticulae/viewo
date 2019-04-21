@@ -99,7 +99,9 @@
                     {{feature['title']}}
                 </span>
                 <span id="{{feature['id']}}">
-                    <p>Content</p>
+                    {% if feature['content'] %}
+                    {{ feature['content'] }}
+                    {% endif %}
                 </span>
             </li>
             {% endfor %}

@@ -12,9 +12,11 @@ from os.path import exists
 from os.path import join
 
 from flask import Blueprint
+from flask import Markup
 from flask import redirect
 from flask import render_template
 from flask import url_for
+from utila import file_read
 
 from viewo.config import ready
 
@@ -133,9 +135,14 @@ def structure(path: str):
                     continue
                 children = []
                 index_, title = entry.name.split('_')
+
+                content = load_content(join(path, entry.name))
                 this = {
                     'title': title,
                 }
+                if content:
+                    this['content'] = content
+
                 parent.append((int(index_), this))
 
                 go_deep(join(path, entry.name), children, level + 1)
@@ -145,6 +152,21 @@ def structure(path: str):
     result = []
     go_deep(path, result, 0)
     return result
+
+
+def load_content(path: str) -> Markup:
+    """Load index document out of feature path to render result
+
+    Args:
+        path(str): path to feature location where `index.html` is located
+    Returns:
+        loaded and not escaped html content, ready for jinja
+        None if `index.html` not exists
+    """
+    html = join(path, 'index.html')
+    if not exists(html):
+        return None
+    return Markup(file_read(html))
 
 
 @result_.route('/result/failure')
