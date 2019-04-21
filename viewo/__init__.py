@@ -32,6 +32,7 @@ from viewo.config import environment
 from viewo.config import export
 from viewo.documents import documents
 from viewo.public import welcome
+from viewo.result import result_
 from viewo.upload import upload_
 
 __version__ = '0.2.0'
@@ -43,6 +44,16 @@ def create_application(config=None) -> Flask:
     app_.config['MAX_CONTENT_LENGTH'] = MAX_FILE_SIZE
     app_.secret_key = SECRET_KEY
 
+    configure(app_, config)
+
+    app_.register_blueprint(documents)
+    app_.register_blueprint(upload_)
+    app_.register_blueprint(result_)
+    app_.register_blueprint(welcome)
+    return app_
+
+
+def configure(app_, config):
     if config is None:
         # load the instance config, if it exists, when not testing
         common, todo, ready = environment()
@@ -56,11 +67,6 @@ def create_application(config=None) -> Flask:
             export(config['COMMON'], config['TODO'], config['READY'])
         except KeyError:
             export('', '', '')
-
-    app_.register_blueprint(documents)
-    app_.register_blueprint(upload_)
-    app_.register_blueprint(welcome)
-    return app_
 
 
 app = create_application()

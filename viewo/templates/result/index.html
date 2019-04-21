@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Result</h2>
+
+<style>
+    .nospace {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .major {
+        width: 95%;
+        background-color: rgb(192, 187, 187);
+        display: inline-block;
+        border: 1px solid black;
+        margin: 2px;
+        padding: 4px;
+    }
+
+    .minor {
+        width: 95%;
+        background-color: gainsboro;
+        display: inline-block;
+        border: 1px solid black;
+        margin: 2px;
+        padding: 4px;
+    }
+
+    .feature {
+        width: 95%;
+        background-color: white;
+        display: inline-block;
+        border: 1px solid black;
+        margin: 2px;
+        padding: 4px;
+    }
+
+    .feature_headline {
+        width: 98%;
+        padding: 4px;
+        background-color: lightgray;
+        display: inline-block;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+
+    .imageheader {
+        float: right;
+    }
+
+</style>
+<ul id="overview" class="nospace">
+    {% for major_id, major in result %}
+
+    {% if major['id'] %}
+    <li class="major" onclick="show('{{major['id']}}')">
+        {% else %}
+    <li class="major">
+
+        {% endif %}
+
+        <img id="{{major['id']}}plusminus"
+            src="{{url_for('static',filename='images/result/listadd.png')}}"
+            width="16" />
+        <u>{{major['title']}}</u>
+        <span class="imageheader" width="100%" background="yellow">
+            <a href="{{url_for('result.view_result')}}/{{docid}}/r/{{major_id}}">
+                {{major['right']}}
+                <img src="{{url_for('static',filename='images/result/right.png')}}"
+                    width="16" />
+            </a>
+            <a href="{{url_for('result.view_result')}}/{{docid}}/w/{{major_id}}">
+                {{major['wrong']}}
+                <img src="{{url_for('static',filename='images/result/wrong.png')}}"
+                    width="16" />
+            </a>
+            {% if major['question'] %}
+            <a href="{{url_for('result.view_result')}}/{{docid}}/q/{{major_id}}">
+                {{major['question']}}
+                <img src="{{url_for('static',filename='images/result/question.png')}}"
+                    width="16" />
+            </a>
+            {% endif %}
+        </span>
+    </li>
+    {% if major['minor']%}
+    <ul id="{{major['id']}}">
+        {% for minor_id, minor in major['minor'] %}
+        <li class="minor" onclick="show('{{minor['id']}}')">
+            {{minor['title']}}</li>
+        <ul id="{{minor['id']}}">
+            {% for feature_id, feature in minor['feature'] %}
+            <li class="feature">
+                <span class="feature_headline" onclick="show('{{feature['id']}}')">
+                    {{feature['title']}}
+                    050/172</span>
+                <span id="{{feature['id']}}">
+                    <p>Content</p>
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endfor %}
+</ul>
+
+<script type="text/javascript">
+    var hideme = [];
+    {% for item in hidden %}
+    hideme.push({{ item }});
+    {% endfor %}
+
+
+    for (const item of hideme) {
+        document.getElementById(item).classList.add('hidden')
+    }
+
+    function show(id) {
+        var span = document.getElementById(id);
+        var img = document.getElementById(id + "plusminus");
+        if (span.classList[0] == "hidden") {
+            span.classList.remove("hidden")
+            img.setAttribute('src', "{{ url_for('static', filename = 'images/result/listremove.png') }}")
+        } else {
+            span.classList.add("hidden")
+            img.setAttribute('src', "{{ url_for('static', filename = 'images/result/listadd.png') }}")
+        }
+    }
+</script>
+{% endblock %}

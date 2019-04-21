@@ -1,0 +1,155 @@
+# =============================================================================
+# C O P Y R I G H T
+# -----------------------------------------------------------------------------
+# Copyright (c) 2019 by Helmut Konrad Fahrendholz. All rights reserved.
+# Tis file is property of Helmut Konrad Fahrendholz. Any unauthorized copy,
+# use or distribution is an offensive act against international law and may
+# be prosecuted under federal law. Its content is company confidential.
+# =============================================================================
+from glob import glob
+from os import scandir
+from os.path import exists
+from os.path import join
+from pathlib import Path
+
+from flask import Blueprint
+from flask import redirect
+from flask import render_template
+from flask import url_for
+
+from viewo.config import ready
+
+result_ = Blueprint('result', __name__)
+
+
+@result_.route('/result')
+@result_.route('/result/<int:document>')
+@result_.route('/result/<int:document>/<string:action>')
+@result_.route('/result/<int:document>/<string:action>/<int:major_id>')
+@result_.route(
+    '/result/<int:document>/<string:action>/<int:major_id>/<int:minor_id>')
+@result_.route(
+    '/result/<int:document>/<string:action>/<int:major_id>/<int:minor_id>/<int:feature_id>'
+)
+def view_result(
+        document: int = None,
+        action: str = None,
+        major_id: int = None,
+        minor_id: int = None,
+        feature_id: int = None,
+):
+    if not document:
+        return redirect(url_for('documents.view_documents'))
+
+    result = load_result(document)
+    if not result:
+        return redirect(url_for('result.failure'))
+
+    # prepare for javascript operation to open and close item's
+    result, hidden = create_hidden_ref(result, major_id, minor_id, feature_id)
+
+    return render_template(
+        'result/index.html',
+        docid=document,
+        result=result,
+        hidden=hidden,
+    )
+
+
+def create_hidden_ref(result, major_id, minor_id, feature_id):
+
+    # TODO: Not very nice
+    hidden = []
+    for majorid, major in result:
+        if not major['minor']:
+            continue
+        nbr = index(majorid)
+        major['id'] = nbr
+        hidden.append(nbr)
+        for minorid, minor in major['minor']:
+            nbr = index(majorid, minorid)
+            minor['id'] = nbr
+            hidden.insert(0, nbr)
+            if not minor['feature']:
+                continue
+            for featureid, feature in minor['feature']:
+                nbr = index(majorid, minorid, featureid)
+                feature['id'] = nbr
+                hidden.insert(0, nbr)
+
+    not_hidden = []
+
+    if major_id is not None:
+        not_hidden.append(index(major_id))
+    if major_id is not None and minor_id is not None:
+        not_hidden.append(index(major_id, minor_id))
+    if major_id is not None and minor_id is not None and feature_id is not None:
+        not_hidden.append(index(major_id, minor_id, feature_id))
+
+    # TODO: READ THE JINJA TO IMPROVE THIS
+    for item in not_hidden:
+        try:
+            hidden.remove(item)
+        except ValueError:
+            pass
+    return result, hidden
+
+
+def index(major: int = None, minor: int = None, feature: int = None):
+    if major is None:
+        major = 0
+        minor = -1
+        feature = -1
+    elif minor is None:
+        minor = -1
+        feature = -1
+    elif feature is None:
+        feature = -1
+
+    return (major + 1) * 1000 + (minor + 1) * 100 + feature + 1
+
+
+def load_result(documentid: int):
+    ready_path = ready()
+    assert exists(ready_path), ready_path
+
+    document_path = join(ready_path, '%s' % documentid, 'result')
+    if not exists(document_path):
+        return None
+
+    return structure(document_path)
+
+
+def structure(path: str):
+
+    def level_name(level):
+        if level == 0:
+            return 'minor'
+        if level == 1:
+            return 'feature'
+        return 'to_deep'
+
+    def go_deep(path, parent, level):
+        with scandir(path) as files:
+            for entry in files:
+                if entry.is_file() or entry.name.startswith('.'):
+                    continue
+                children = []
+                index_, title = entry.name.split('_')
+                this = {
+                    'title': title,
+                }
+                parent.append((int(index_), this))
+
+                go_deep(join(path, entry.name), children, level + 1)
+                # if children:
+                this[level_name(level)] = children
+
+    result = []
+    go_deep(path, result, 0)
+    return result
+
+
+@result_.route('/result/failure')
+def failure():
+    return render_template('result/failure.html')
