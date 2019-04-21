@@ -25,6 +25,12 @@ BASE_TEMPLATE = file_read(join(TEMPLATES, 'base.html'))
 MINIMAL = join(TEST_DATA, 'minimal.pdf')
 assert exists(MINIMAL), MINIMAL
 
+EXAMPLE_READY = join(TEST_DATA, 'ready')
+assert exists(EXAMPLE_READY), EXAMPLE_READY
+
+EXAMPLE_RESULT = join(EXAMPLE_READY, '1508790764/result')
+assert exists(EXAMPLE_RESULT), EXAMPLE_RESULT
+
 
 def result(response) -> str:
     return response.data.decode('utf8')
