@@ -2,6 +2,17 @@
 
 Every noteable change is logged here.
 
+## v0.3.0
+
+### Feature
+
+* add result view to display result of analysation (bd10d719e036)
+* add website-symbols (175cb2555174)
+
+### Fix
+
+* make links independent of current directory (efcf21dbbb4a)
+
 ## v0.2.0
 
 ### Feature
