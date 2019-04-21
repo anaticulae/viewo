@@ -39,8 +39,16 @@ __version__ = '0.3.0'
 
 
 def create_application(config=None) -> Flask:
-    # TODO: viewo.viewo?
-    app_ = Flask('viewo.viewo', template_folder=TEMPLATES, static_folder=STATIC)
+    """Setup flask application
+
+    1. Set template and static folder
+    2. Configure application
+    3. Setup global env
+    4. Register blueprint for routing the user requests
+    """
+    # Flask determines template- and static-folder automatically.
+    app_ = Flask(__name__)
+
     app_.config['MAX_CONTENT_LENGTH'] = MAX_FILE_SIZE
     app_.secret_key = SECRET_KEY
 
