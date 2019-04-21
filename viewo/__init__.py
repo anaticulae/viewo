@@ -45,6 +45,7 @@ def create_application(config=None) -> Flask:
     app_.secret_key = SECRET_KEY
 
     configure(app_, config)
+    init_error_handler(app_)
 
     app_.register_blueprint(documents)
     app_.register_blueprint(upload_)
@@ -67,6 +68,18 @@ def configure(app_, config):
             export(config['COMMON'], config['TODO'], config['READY'])
         except KeyError:
             export('', '', '')
+
+
+def init_error_handler(app: Flask):
+    """Add errorhandler for unresolved resources
+
+    Args:
+        app(Flask): app to add errorhandler
+    """
+
+    @app.errorhandler(404)
+    def not_found(_):
+        return render_template('public/error.html', errorpage='Die Seite')
 
 
 app = create_application()
