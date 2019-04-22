@@ -2,6 +2,18 @@
 
 Every noteable change is logged here.
 
+## v0.4.0
+
+### Feature
+
+* increase max-width to show more content (26c865878dc1)
+* display index.html as result of feature (d3f0dc4d9962)
+* add global error handler for 404 + test (675c3b9ad89e)
+
+### Fix
+
+* correct application name, find templates/static folder automatically (3a0510ddde83)
+
 ## v0.3.0
 
 ### Feature
