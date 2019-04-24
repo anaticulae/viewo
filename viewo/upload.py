@@ -6,6 +6,7 @@
 # use or distribution is an offensive act against international law and may
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
+
 from os import listdir
 from os import makedirs
 from os.path import exists
@@ -18,13 +19,13 @@ from flask import flash
 from flask import redirect
 from flask import render_template
 from flask import request
+from utila import today
 from werkzeug.utils import secure_filename
 
 from viewo.config import todo
 from viewo.job import FILE_NAME
 from viewo.job import JobInfo
 from viewo.job import dump
-from viewo.utils import today
 
 upload_ = Blueprint('upload', __name__)
 
