@@ -7,12 +7,12 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 import os
-from tests import EXAMPLE_READY
-from tests import EXAMPLE_RESULT
-from tests import result
 
 from pytest import fixture
 
+from tests import EXAMPLE_READY
+from tests import EXAMPLE_RESULT
+from tests import result
 from viewo.result import create_hidden_ref
 from viewo.result import index
 from viewo.result import structure

@@ -11,12 +11,12 @@ from os import makedirs
 from os.path import exists
 from os.path import join
 
-import pytest
+from pytest import fixture
 
 from viewo import create_application
 
 
-@pytest.fixture
+@fixture
 def app(tmpdir):
     """Create and configure a new app instance for each test."""
 
@@ -41,13 +41,13 @@ def app(tmpdir):
     yield application
 
 
-@pytest.fixture
+@fixture
 def client(app):
     """A test client for the app."""
     return app.test_client()
 
 
-@pytest.fixture
+@fixture
 def runner(app):
     """A test runner for the app's Click commands."""
     return app.test_cli_runner()
