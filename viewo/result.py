@@ -11,14 +11,13 @@ from os import scandir
 from os.path import exists
 from os.path import join
 
+from configo import ready
 from flask import Blueprint
 from flask import Markup
 from flask import redirect
 from flask import render_template
 from flask import url_for
 from utila import file_read
-
-from viewo.config import ready
 
 result_ = Blueprint('result', __name__)
 

@@ -10,6 +10,8 @@ import os
 from os import environ
 from os.path import join
 
+from configo import environment
+from configo import export
 from flask import Blueprint
 from flask import Flask
 from flask import Response
@@ -27,8 +29,6 @@ from viewo.config import MAX_FILE_SIZE
 from viewo.config import SECRET_KEY
 from viewo.config import STATIC
 from viewo.config import TEMPLATES
-from viewo.config import environment
-from viewo.config import export
 from viewo.documents import documents
 from viewo.public import welcome
 from viewo.result import result_
