@@ -18,6 +18,7 @@ from flask import redirect
 from flask import render_template
 from flask import url_for
 from utila import file_read
+from utila import logging
 
 result_ = Blueprint('result', __name__)
 
@@ -133,6 +134,10 @@ def structure(path: str):
                 if entry.is_file() or entry.name.startswith('.'):
                     continue
                 children = []
+                if not '_' in entry.name:
+                    # result folder reuqires #NUMBER_#STRING
+                    logging('Skip non result folder %s' % entry.name)
+                    continue
                 index_, title = entry.name.split('_')
 
                 content = load_content(join(path, entry.name))
