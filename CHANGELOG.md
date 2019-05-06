@@ -2,6 +2,13 @@
 
 Every noteable change is logged here.
 
+## v0.4.2
+
+### Feature
+
+* add percent sign to show grade of uploaded document (41e74d4a18e3)
+* sort files in document view by upload date (7c19eefe23e3)
+
 ## v0.4.1
 
 ### Feature
