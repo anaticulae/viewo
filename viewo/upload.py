@@ -7,26 +7,15 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-from os import listdir
-from os import makedirs
-from os.path import exists
-from os.path import isdir
-from os.path import join
-
-from configo import todo
 from flask import Blueprint
 from flask import flash
 from flask import redirect
 from flask import render_template
 from flask import request
-from link import JOB_FILE_NAME
-from link import JobInfo
 from link import create_todo
-from link import job_dump
-from utila import today
 from werkzeug.utils import secure_filename
 
-upload_ = Blueprint('upload', __name__)
+upload_ = Blueprint('upload', __name__)  # pylint:disable=invalid-name
 
 FOLDER_LENGTH = 10
 
