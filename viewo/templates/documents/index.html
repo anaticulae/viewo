@@ -28,7 +28,7 @@
             {% if row['result'] %}
             <td><a href="result/{{row['index']}}">{{row['title']}}</a></td>
             <td class="date">{{row['date']}}</td>
-            <td class="score">{{row['result']}}</td>
+            <td class="score">{{row['result']}}%</td>
             <td class="status"><a href="result/{{row['index']}}">view</a></td>
             {% else %}
             <td>{{row['title']}}</td>
