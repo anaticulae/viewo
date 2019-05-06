@@ -2,6 +2,16 @@
 
 Every noteable change is logged here.
 
+## v0.4.1
+
+### Feature
+
+* move code to link and configo (38de874407cb)
+
+### Fix
+
+* skip folder with wrong result pattern (7763da26b62f)
+
 ## v0.4.0
 
 ### Feature
