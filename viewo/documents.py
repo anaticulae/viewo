@@ -21,6 +21,11 @@ def view_documents():
     docs = todo + ready
 
     # sort by date
-    docs = sorted(docs, key=lambda item: item.date, reverse=True)
+    docs = sorted(docs, key=lambda item: sortable_date(item.date), reverse=True)
 
     return render_template('documents/index.html', documents=docs)
+
+
+def sortable_date(date):
+    # Sort by year, month, day
+    return date[6:] + date[3:5] + date[0:2]
