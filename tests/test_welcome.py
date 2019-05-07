@@ -8,13 +8,13 @@
 # =============================================================================
 
 from tests import BASE_TEMPLATE
-from tests import result
+from tests import decode
 
 
 def test_index(client):
     """Open welcome page and check that template is rendered correctly"""
     response = client.get('/')
-    content = result(response)
+    content = decode(response)
     assert content
     assert len(content) > len(BASE_TEMPLATE), content
 
@@ -25,7 +25,7 @@ def test_error(client):
     TODO: Redirect to global error handler?
     """
     response = client.get('thispagedoesnotexists_ihopeso')
-    content = result(response)
+    content = decode(response)
     assert content
     assert 'Fehler' in content
 
@@ -33,6 +33,6 @@ def test_error(client):
 def test_404_handler(client):
     """Test global error handler"""
     response = client.get('/abc/existiert_nicht')
-    content = result(response)
+    content = decode(response)
     assert content
     assert 'Fehler' in content

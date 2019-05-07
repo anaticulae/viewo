@@ -12,7 +12,7 @@ from pytest import fixture
 
 from tests import EXAMPLE_READY
 from tests import EXAMPLE_RESULT
-from tests import result
+from tests import decode
 from viewo.result import create_hidden_ref
 from viewo.result import index
 from viewo.result import structure
@@ -137,14 +137,14 @@ def test_hidden_ref_with_selection(example):
 
 def test_call_result(client):
     response = client.get('/result')
-    content = result(response)
+    content = decode(response)
     assert content
     # assert len(content) > len(BASE_TEMPLATE), content
 
 
 def test_call_result_document_does_not_exist(client):
     response = client.get('/result/1020304050', follow_redirects=True)
-    content = result(response)
+    content = decode(response)
     assert content
     assert 'Fehler' in content
 
@@ -167,5 +167,5 @@ def test_call_result_1508790764(client, monkeypatch):
             'SHARED_READY': EXAMPLE_READY,
         })
         response = client.get('/result/1508790764')
-    content = result(response)
+    content = decode(response)
     assert content

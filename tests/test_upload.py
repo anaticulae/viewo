@@ -14,7 +14,7 @@ from link import todo_count
 from werkzeug.datastructures import MultiDict
 
 from tests import MINIMAL
-from tests import result
+from tests import decode
 
 
 def post_file(client, page: str, field: str, path: str):
@@ -62,7 +62,7 @@ def test_upload_with_wrong_field(client):
     # Upload with wrong field
     response = post_file(client, page=UPLOAD_PATH, field='o_o', path=MINIMAL)
     assert response.status_code == HTTPStatus.OK
-    assert 'Fehler' in result(response)
+    assert 'Fehler' in decode(response)
     files_after = todo_count()
     # check that no file was uploaded
     assert files_after == files_before

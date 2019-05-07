@@ -32,5 +32,6 @@ EXAMPLE_RESULT = join(EXAMPLE_READY, '1508790764/result')
 assert exists(EXAMPLE_RESULT), EXAMPLE_RESULT
 
 
-def result(response) -> str:
+def decode(response) -> str:
+    """Read binary data from response and convert them to str"""
     return response.data.decode('utf8')
