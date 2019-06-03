@@ -11,7 +11,7 @@ from flask import Blueprint
 from flask import render_template
 from jinja2 import TemplateNotFound
 
-welcome = Blueprint('welcome', __name__)
+welcome = Blueprint('welcome', __name__)  # pylint:disable=invalid-name
 
 
 @welcome.route('/', defaults={'page': 'home'})
