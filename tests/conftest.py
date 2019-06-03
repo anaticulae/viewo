@@ -15,6 +15,8 @@ from pytest import fixture
 
 from viewo import create_application
 
+pytest_plugins = 'pytester'  # pylint: disable=invalid-name
+
 
 @fixture
 def app(tmpdir):
