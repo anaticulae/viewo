@@ -2,6 +2,12 @@
 
 Every noteable change is logged here.
 
+## v0.4.5
+
+### Documentation
+
+* fix spelling error and format README (e4044cc82076)
+
 ## v0.4.4
 
 ### Fix
