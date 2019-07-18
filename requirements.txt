@@ -1,6 +1,6 @@
 PyYAML==5.1
 Flask==1.0.2
 
-configo==0.1.5
+configo==0.1.7
 link==0.1.5
-utila==0.6.1
+utila==0.7.8
