@@ -2,6 +2,13 @@
 
 Every noteable change is logged here.
 
+## v0.4.4
+
+### Fix
+
+* fix spelling error (41851a272f0e)
+* extend white list for right behavior (a17cb26416b4)
+
 ## v0.4.3
 
 ## v0.4.2
