@@ -23,7 +23,7 @@ from flask import render_template
 from flask import request
 from flask import url_for
 from jinja2 import TemplateNotFound
-from utila import logging_error
+from utila import error
 
 from viewo.config import MAX_FILE_SIZE
 from viewo.config import SECRET_KEY

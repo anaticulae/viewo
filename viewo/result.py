@@ -18,7 +18,7 @@ from flask import redirect
 from flask import render_template
 from flask import url_for
 from utila import file_read
-from utila import logging
+from utila import log
 
 result_ = Blueprint('result', __name__)
 
@@ -136,7 +136,7 @@ def structure(path: str):
                 children = []
                 if not '_' in entry.name:
                     # result folder reuqires #NUMBER_#STRING
-                    logging('Skip non result folder %s' % entry.name)
+                    log('Skip non result folder %s' % entry.name)
                     continue
                 index_, title = entry.name.split('_')
 
