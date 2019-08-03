@@ -2,6 +2,12 @@
 
 Every noteable change is logged here.
 
+## v0.4.7
+
+### Fix
+
+* fix requirements of a unit test (4412b92eebaf)
+
 ## v0.4.6
 
 ## v0.4.5
