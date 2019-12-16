@@ -1,0 +1,37 @@
+.. _0_5_0:
+
+RP 0.5.0
+=========
+
+general
+-------
+
+* [ ] add general rest doc structure
+
+waiting
+-------
+
+* [ ] add webservice to deliver status for waiting room
+
+* [ ] deliver waiting room view
+
+* [ ] conncet webservice and view
+
+verify
+------
+
+* [ ] add webservice with verify step
+
+* [ ] add positive and negative test for verfiy step
+
+Code quality
+------------
+
+Before
+~~~~~~
+
+* Your code has been rated at 9.63/10
+* Total coverage: 97.74%
+
+After
+~~~~~
