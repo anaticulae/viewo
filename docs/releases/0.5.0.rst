@@ -6,7 +6,7 @@ RP 0.5.0
 general
 -------
 
-* [ ] add general rest doc structure
+* [x] add general rest doc structure
 
 waiting
 -------
@@ -15,7 +15,7 @@ waiting
 
 * [ ] deliver waiting room view
 
-* [ ] conncet webservice and view
+* [ ] connect webservice and view
 
 verify
 ------
