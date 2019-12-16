@@ -1,0 +1,71 @@
+#progress {
+    width: 500px;
+}
+
+#waitinglist {
+    background-color: darkkhaki;
+
+    border: black solid 1px;
+}
+
+
+#waitinglist .status {
+    float: right;
+    /* background-color: gray; */
+    padding: 3px;
+    margin: 3px;
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    vertical-align: center;
+    display: flex;
+    border-radius: 3px;
+    border: solid black 1px;
+    /* margin: 5px; */
+}
+
+.todo {
+    background-color: orange;
+}
+
+.inprogress {
+    background-color: lightgreen;
+}
+
+.done {
+    background-color: green;
+}
+
+.failed {
+    background-color: darkred;
+}
+
+.steptext {
+    padding: 5px;
+    padding-left: 5px;
+    padding-right: 0px;
+    margin: 3px;
+    background-color: wheat;
+    display: inline-block;
+    width: 85%;
+    border-radius: 5px;
+    border: solid black 1px;
+}
+
+#waitinglist li,
+ol,
+ul {
+    margin: 0px;
+    padding: 0px;
+    padding-left: 30px;
+}
+
+#waitinglist li {
+    padding-left: 0px;
+    margin: 0px;
+}
+
+.analyze {
+    padding-left: 0px;
+    margin: 0px;
+}

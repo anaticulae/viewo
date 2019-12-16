@@ -25,6 +25,7 @@ from flask import url_for
 from jinja2 import TemplateNotFound
 from utila import error
 
+import viewo.waiting
 from viewo.config import MAX_FILE_SIZE
 from viewo.config import SECRET_KEY
 from viewo.config import STATIC
@@ -58,6 +59,7 @@ def create_application(config=None) -> Flask:
     app_.register_blueprint(upload_)
     app_.register_blueprint(result_)
     app_.register_blueprint(welcome)
+    app_.register_blueprint(viewo.waiting.waiting)
 
     return app_
 

@@ -42,6 +42,10 @@ import enum
 import json
 import typing
 
+import flask
+
+waiting = flask.Blueprint('waiting', __name__)  # pylint:disable=C0103
+
 
 class State(enum.Enum):
     waiting = -1
@@ -73,3 +77,25 @@ def jsonify(item: Status) -> str:
         states.append(state.value)
     result = json.dumps(raw)
     return result
+
+
+@waiting.route('/waiting')
+def waiting_view():
+    return flask.render_template('waiting.html')
+
+
+@waiting.route('/waiting/status/<int:process>')
+def waiting_status(process):
+    status = Status(
+        State.running,
+        [
+            State.waiting,
+            State.running,
+            State.running,
+            State.done,
+            State.failed,
+            State.failed,
+        ],
+    )
+    dumped = jsonify(status)
+    return dumped
