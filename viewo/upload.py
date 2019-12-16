@@ -7,6 +7,8 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import os
+
 from flask import Blueprint
 from flask import flash
 from flask import redirect
@@ -35,10 +37,11 @@ def upload_pdf():
             return redirect('/upload/failure')
 
         filename = secure_filename(file.filename)
-        create_todo(file, filename)
+        todo = create_todo(file, filename)
+        _, process = os.path.split(todo)
+        process = int(process)
         # file.save(join(current_app.config['TODO'], filename))
-        return redirect('/documents?uploaded=%s' % filename)
-
+        return redirect(f'/waiting/{process}')
     return redirect('/documents')
 
 

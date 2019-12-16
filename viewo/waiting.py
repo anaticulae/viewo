@@ -79,9 +79,9 @@ def jsonify(item: Status) -> str:
     return result
 
 
-@waiting.route('/waiting')
-def waiting_view():
-    return flask.render_template('waiting.html')
+@waiting.route('/waiting/<int:process>')
+def waiting_view(process):
+    return flask.render_template('waiting.html', process=process)
 
 
 @waiting.route('/waiting/status/<int:process>')

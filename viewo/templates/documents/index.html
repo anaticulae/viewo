@@ -34,7 +34,7 @@
             <td>{{row['title']}}</td>
             <td class="date">{{row['date']}}</td>
             <td class="score">-</td>
-            <td class="status">in Bearbeitung</td>
+            <td class="status"><a href="waiting/{{row['index']}}">in Bearbeitung</a></td>
             {% endif %}
         </tr>
         {% endfor %}

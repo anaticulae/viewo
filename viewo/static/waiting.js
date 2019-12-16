@@ -52,7 +52,7 @@ function loop(process) {
             update(downloaded.states)
             if (downloaded.status == 1) {
                 // process is currently running
-                setTimeout(() => loop(), 1000);
+                setTimeout(() => loop(process), 1000);
             }
         }
     }
@@ -60,6 +60,6 @@ function loop(process) {
     ajax.send()
 }
 
-function onload() {
-    loop(0)
+function onload(process) {
+    loop(process)
 }
