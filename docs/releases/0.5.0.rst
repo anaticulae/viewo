@@ -11,11 +11,11 @@ general
 waiting
 -------
 
-* [ ] add webservice to deliver status for waiting room
+* [x] add webservice to deliver status for waiting room
 
-* [ ] deliver waiting room view
+* [x] deliver waiting room view
 
-* [ ] connect webservice and view
+* [x] connect webservice and view
 
 verify
 ------

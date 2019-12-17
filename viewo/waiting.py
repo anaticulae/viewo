@@ -40,8 +40,10 @@ Waiting view
 import dataclasses
 import enum
 import json
+import os
 import typing
 
+import configo
 import flask
 
 waiting = flask.Blueprint('waiting', __name__)  # pylint:disable=C0103
@@ -79,23 +81,46 @@ def jsonify(item: Status) -> str:
     return result
 
 
-@waiting.route('/waiting/<int:process>')
+@waiting.route('/waiting/<string:process>')
 def waiting_view(process):
     return flask.render_template('waiting.html', process=process)
 
 
-@waiting.route('/waiting/status/<int:process>')
+@waiting.route('/waiting/status/<string:process>')
 def waiting_status(process):
-    status = Status(
+    try:
+        process = str(process)
+    except UnicodeDecodeError:
+        return '{}'
+    if not process:
+        return '{}'
+    loaded = status(process)
+    if not loaded:
+        return '{}'
+    dumped = jsonify(loaded)
+    return dumped
+
+
+def status(process: str) -> Status:
+    todo = configo.todo()
+    working = os.path.join(todo, process)
+    if not os.path.exists(working):
+        # TODO: CHECK ACCESS RIGHTS
+        # process does not exists
+        return None
+
+    pdf = os.path.join(working, process)
+    uploaded = os.path.exists(pdf)
+
+    result = Status(
         State.running,
         [
+            State.done if uploaded else State.running,
             State.waiting,
-            State.running,
-            State.running,
-            State.done,
-            State.failed,
-            State.failed,
+            State.waiting,
+            State.waiting,
+            State.waiting,
+            State.waiting,
         ],
     )
-    dumped = jsonify(status)
-    return dumped
+    return result
