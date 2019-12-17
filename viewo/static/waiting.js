@@ -52,7 +52,7 @@ function loop(process) {
             update(downloaded.states)
             if (downloaded.status == 1) {
                 // process is currently running
-                setTimeout(() => loop(process), 1000);
+                setTimeout(() => loop(process), 3000);
             }
         }
     }
