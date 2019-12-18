@@ -16,6 +16,36 @@ import tests
 import viewo.waiting
 
 
+def create_validation_result(path: str):
+    assert os.path.exists(path), str(path)
+    utila.copy_content(tests.EXAMPLE_TODO, path, recursive=True)
+
+
+def create_no_validation_result(path: str):
+    assert os.path.exists(path), str(path)
+    utila.copy_content(tests.EXAMPLE_TODO, path, recursive=True)
+    utila.file_remove(os.path.join(path, '12345678900', viewo.waiting.VERIFY))
+
+
+def create_invalid_validation_result(path: str):
+    assert os.path.exists(path), str(path)
+    utila.copy_content(tests.EXAMPLE_TODO, path, recursive=True)
+    utila.file_replace(
+        os.path.join(path, '12345678900', viewo.waiting.VERIFY),
+        '{}',
+    )
+
+
+def run_status(client, todo: str, monkeypatch):
+    with monkeypatch.context() as context:
+        context.setattr(configo, 'todo', lambda: todo)
+        result = tests.content(client, '/waiting/status/12345678900')
+
+    assert result, str(result)
+    loaded = viewo.waiting.loads(result)
+    return loaded
+
+
 def test_waiting_status_jsonify():
     status = viewo.waiting.Status(
         status=viewo.waiting.State.running,
@@ -42,20 +72,9 @@ def test_waiting_status_invalid_ressource(client):
     assert result == '{}'
 
 
-def run_status(client, todo: str, monkeypatch):
-    with monkeypatch.context() as context:
-        context.setattr(configo, 'todo', lambda: todo)
-        result = tests.content(client, '/waiting/status/12345678900')
-
-    assert result, str(result)
-    loaded = viewo.waiting.loads(result)
-    return loaded
-
-
 def test_waiting_status(testdir, client, monkeypatch):
     root = str(testdir)
-    utila.copy_content(tests.EXAMPLE_TODO, root, recursive=True)
-    utila.file_remove(os.path.join(root, '12345678900', viewo.waiting.VERIFY))
+    create_no_validation_result(root)
 
     loaded = run_status(client, root, monkeypatch)
 
@@ -75,12 +94,7 @@ def test_waiting_status_verified(client, testdir, monkeypatch):
 
 def test_waiting_status_verify_failed(client, testdir, monkeypatch):
     root = str(testdir)
-    utila.copy_content(tests.EXAMPLE_TODO, root, recursive=True)
-    # set verfy step to failure
-    utila.file_replace(
-        os.path.join(root, '12345678900', viewo.waiting.VERIFY),
-        '{}',
-    )
+    create_invalid_validation_result(root)
 
     loaded = run_status(client, root, monkeypatch)
 
@@ -91,3 +105,30 @@ def test_waiting_status_verify_failed(client, testdir, monkeypatch):
     assert loaded[3] == viewo.waiting.State.failed
     assert loaded[4] == viewo.waiting.State.failed
     assert loaded[5] == viewo.waiting.State.failed
+
+
+def test_waiting_validation_invalid_result(client, testdir, monkeypatch):
+    root = str(testdir)
+    create_invalid_validation_result(root)
+
+    with monkeypatch.context() as context:
+        context.setattr(configo, 'todo', lambda: root)
+        result = tests.content(client, '/waiting/validation/12345678900')
+
+    assert ('Die hochgeladene Datei konnte nicht erfolgreich als PDF Datei'
+           ) in result, str(result)
+
+
+def test_waiting_validation_result(client, testdir, monkeypatch):
+    root = str(testdir)
+    create_validation_result(root)
+
+    with monkeypatch.context() as context:
+        context.setattr(configo, 'todo', lambda: root)
+        result = tests.content(client, '/waiting/validation/12345678900')
+
+    assert ('Die PDF Datei konnte erfolgreich eingelesen'
+            ' werden und wird nun analysiert.') in result, str(result)
+
+    assert 'Pages' in result, str(result)
+    assert 'Editor' in result, str(result)

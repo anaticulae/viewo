@@ -6,7 +6,7 @@ RP 0.6.0
 valid document view
 -------------------
 
-* [ ] add view to show the result of pdf validation process
+* [x] add view to show the result of pdf validation process
 
 documents
 ---------
