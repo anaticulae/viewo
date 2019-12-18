@@ -6,78 +6,16 @@
 # use or distribution is an offensive act against international law and may
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
-"""Waiting room
-============
 
-This is the waiting room. After submitting the thesis, the user waits in
-the waiting room that document is processed.
-
-There are two views which delivers results:
-  * Fast view
-  * General view
-
-Fast view
----------
-
-    the feedback is generated in less than 5 seconds
-
-General view
-------------
-
-    test
-
-Waiting view
-------------
-
-* Empfange Dokument
-* Validiere empfangenes Dokument
-* Starte Analyse
-* Schnelldurchsicht
-* Gesamtdurchsicht
-* Praesentiere Gesamtergebnis
-
-"""
-import dataclasses
-import enum
 import json
 import os
-import typing
 
 import configo
-import flask
 import utila
 
-waiting_ = flask.Blueprint('waiting', __name__)  # pylint:disable=C0103
-
-VERIFY = 'pdfinfo.json'
-
-
-class State(enum.Enum):
-    waiting = -1
-    done = 0
-    running = 1
-    failed = 2
-
-    @staticmethod
-    def fromstr(item: str):
-        # TODO: DIRTY, replace
-        item = int(item)
-        for state in State:
-            if state.value == item:
-                return state
-        return None
-
-
-@dataclasses.dataclass
-class Status:
-    status: State = State.waiting
-    state: typing.List[State] = dataclasses.field(default_factory=list)
-
-    def append(self, item):
-        self.state.append(item)  # pylint:disable=E1101
-
-    def __getitem__(self, item):
-        return self.state[item]  # pylint:disable=E1136
+from viewo.waiting import VERIFY
+from viewo.waiting import State
+from viewo.waiting import Status
 
 
 def jsonify(item: Status) -> str:
@@ -107,41 +45,6 @@ def loads(content: str) -> Status:
         parsed = State.fromstr(item)
         result.append(parsed)  # pylint:disable=E1101
     return result
-
-
-@waiting_.route('/waiting/<string:process>')
-def waiting_view(process):
-    return flask.render_template('waiting.html', process=process)
-
-
-@waiting_.route('/waiting/validation', defaults={'process': None})
-@waiting_.route('/waiting/validation/<string:process>')
-def waiting_view_validation(process):
-    validated = load_validation_result(process)
-    if process is None or validated is None:
-        return flask.redirect(flask.url_for('result.failure'))
-
-    rendered = flask.render_template(
-        'waiting_validation.html',
-        process=process,
-        validation_result=validated,
-    )
-    return rendered
-
-
-@waiting_.route('/waiting/status/<string:process>')
-def waiting_status(process):
-    try:
-        process = str(process)
-    except UnicodeDecodeError:
-        return '{}'
-    if not process:
-        return '{}'
-    loaded = status(process)
-    if not loaded:
-        return '{}'
-    dumped = jsonify(loaded)
-    return dumped
 
 
 def status(process: str) -> Status:  # pylint:disable=too-complex
@@ -186,6 +89,8 @@ def status(process: str) -> Status:  # pylint:disable=too-complex
         if before == State.failed:
             return State.failed
         path = fastview_result(process)
+        if path is None:
+            return State.waiting
         if os.path.exists(os.path.join(path, 'done')):
             return State.done
         if os.path.exists(os.path.join(path, 'failed')):
@@ -200,6 +105,8 @@ def status(process: str) -> Status:  # pylint:disable=too-complex
         if before == State.failed or before_fast == State.failed:
             return State.failed
         path = result_result(process)
+        if path is None:
+            return State.waiting
         if os.path.exists(os.path.join(path, 'done')):
             return State.done
         if os.path.exists(os.path.join(path, 'failed')):

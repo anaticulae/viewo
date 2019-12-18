@@ -24,14 +24,22 @@ def create_validation_result(path: str):
 def create_no_validation_result(path: str):
     assert os.path.exists(path), str(path)
     utila.copy_content(tests.EXAMPLE_TODO, path, recursive=True)
-    utila.file_remove(os.path.join(path, '12345678900', viewo.waiting.VERIFY))
+    utila.file_remove(os.path.join(
+        path,
+        '12345678900',
+        viewo.waiting.VERIFY,
+    ))
 
 
 def create_invalid_validation_result(path: str):
     assert os.path.exists(path), str(path)
     utila.copy_content(tests.EXAMPLE_TODO, path, recursive=True)
     utila.file_replace(
-        os.path.join(path, '12345678900', viewo.waiting.VERIFY),
+        os.path.join(
+            path,
+            '12345678900',
+            viewo.waiting.VERIFY,
+        ),
         '{}',
     )
 
@@ -42,7 +50,7 @@ def run_status(client, todo: str, monkeypatch):
         result = tests.content(client, '/waiting/status/12345678900')
 
     assert result, str(result)
-    loaded = viewo.waiting.loads(result)
+    loaded = viewo.waiting.data.loads(result)
     return loaded
 
 
@@ -57,7 +65,7 @@ def test_waiting_status_jsonify():
             viewo.waiting.State.waiting,
         ],
     )
-    json = viewo.waiting.jsonify(status)
+    json = viewo.waiting.data.jsonify(status)
     assert 'states' in json
     assert 'status' in json
 

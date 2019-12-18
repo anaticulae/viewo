@@ -33,7 +33,7 @@ from viewo.documents import documents_
 from viewo.public import welcome
 from viewo.result import result_
 from viewo.upload import upload_
-from viewo.waiting import waiting_
+from viewo.waiting.view import waiting_
 
 __version__ = '0.5.0'
 
