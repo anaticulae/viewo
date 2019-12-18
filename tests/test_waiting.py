@@ -8,6 +8,10 @@
 # =============================================================================
 import viewo.waiting
 
+VERIFIED_12345678900 = """\
+{"pages": "7", "generator": "latex", "version": {"major": 1, "minor": 5}}
+"""
+
 
 def test_waiting_status_jsonify():
     status = viewo.waiting.Status(

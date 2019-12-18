@@ -29,6 +29,9 @@ assert exists(MINIMAL), MINIMAL
 EXAMPLE_READY = join(TEST_DATA, 'ready')
 assert exists(EXAMPLE_READY), EXAMPLE_READY
 
+EXAMPLE_TODO = join(TEST_DATA, 'todo')
+assert exists(EXAMPLE_TODO), EXAMPLE_TODO
+
 EXAMPLE_RESULT = join(EXAMPLE_READY, '1508790764/result')
 assert exists(EXAMPLE_RESULT), EXAMPLE_RESULT
 
