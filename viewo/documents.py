@@ -16,7 +16,8 @@ documents_ = Blueprint('documents', __name__)  # pylint:disable=C0103
 
 @documents_.route('/documents', methods=['GET'])
 def view_documents():
-    todo, ready = scan(share())
+    common = share()
+    todo, ready = scan(common)
 
     docs = todo + ready
 
