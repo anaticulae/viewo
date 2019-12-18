@@ -2,6 +2,27 @@
 
 Every noteable change is logged here.
 
+## v0.5.0
+
+### Feature
+
+* if one state failed, set global state to failed (9e7c262adce8)
+* add verify step with negative result (f90540b46f1d)
+* extend waiting room state machine (134133e1b83f)
+* add method to load waiting status (32b6975b826f)
+* deliver the status for selected document (11a63821e07c)
+* link waiting view with document list view (c1014c5ad951)
+* add waiters view and connect with status-web-service (6129b15cc0e5)
+* add method to convert Status to JSON format (d6c256e14265)
+* add general rest doc structure (6d0f092695ae)
+* add prototype view for waiting room (ed3c6813294c)
+
+### Fix
+
+* pass process id of document correctly (6ab82de62e4e)
+* reduce polling rate (bc6add43a6ea)
+* make waiting view smaller to fit in homepage view (d8b8d703126e)
+
 ## v0.4.10
 
 ## v0.4.9
