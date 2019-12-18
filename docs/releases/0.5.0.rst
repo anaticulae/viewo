@@ -35,3 +35,6 @@ Before
 
 After
 ~~~~~
+
+* Your code has been rated at 9.91/10
+* Total coverage: 95.96%
