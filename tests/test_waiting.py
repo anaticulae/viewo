@@ -7,14 +7,13 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import os
+
 import configo
+import utila
 
 import tests
 import viewo.waiting
-
-VERIFIED_12345678900 = """\
-{"pages": "7", "generator": "latex", "version": {"major": 1, "minor": 5}}
-"""
 
 
 def test_waiting_status_jsonify():
@@ -43,13 +42,52 @@ def test_waiting_status_invalid_ressource(client):
     assert result == '{}'
 
 
-def test_waiting_status(client, monkeypatch):
+def run_status(client, todo: str, monkeypatch):
     with monkeypatch.context() as context:
-        context.setattr(configo, 'todo', lambda: tests.EXAMPLE_TODO)
+        context.setattr(configo, 'todo', lambda: todo)
         result = tests.content(client, '/waiting/status/12345678900')
+
     assert result, str(result)
     loaded = viewo.waiting.loads(result)
-    assert loaded.status == viewo.waiting.State.running
+    return loaded
 
+
+def test_waiting_status(testdir, client, monkeypatch):
+    root = str(testdir)
+    utila.copy_content(tests.EXAMPLE_TODO, root, recursive=True)
+    utila.file_remove(os.path.join(root, '12345678900', viewo.waiting.VERIFY))
+
+    loaded = run_status(client, root, monkeypatch)
+
+    assert loaded.status == viewo.waiting.State.running
     assert loaded[0] == viewo.waiting.State.done
     assert loaded[1] == viewo.waiting.State.running
+
+
+def test_waiting_status_verified(client, testdir, monkeypatch):
+    loaded = run_status(client, tests.EXAMPLE_TODO, monkeypatch)
+
+    assert loaded.status == viewo.waiting.State.running
+    assert loaded[0] == viewo.waiting.State.done
+    assert loaded[1] == viewo.waiting.State.done
+    assert loaded[2] == viewo.waiting.State.running
+
+
+def test_waiting_status_verify_failed(client, testdir, monkeypatch):
+    root = str(testdir)
+    utila.copy_content(tests.EXAMPLE_TODO, root, recursive=True)
+    # set verfy step to failure
+    utila.file_replace(
+        os.path.join(root, '12345678900', viewo.waiting.VERIFY),
+        '{}',
+    )
+
+    loaded = run_status(client, root, monkeypatch)
+
+    assert loaded.status == viewo.waiting.State.running
+    assert loaded[0] == viewo.waiting.State.done
+    assert loaded[1] == viewo.waiting.State.failed
+    assert loaded[2] == viewo.waiting.State.failed
+    assert loaded[3] == viewo.waiting.State.failed
+    assert loaded[4] == viewo.waiting.State.failed
+    assert loaded[5] == viewo.waiting.State.failed

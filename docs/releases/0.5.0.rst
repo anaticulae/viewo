@@ -20,9 +20,9 @@ waiting
 verify
 ------
 
-* [ ] add webservice with verify step
+* [x] add webservice with verify step
 
-* [ ] add positive and negative test for verfiy step
+* [x] add positive and negative test for verfiy step
 
 Code quality
 ------------

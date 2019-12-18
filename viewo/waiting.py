@@ -152,15 +152,44 @@ def status(process: str) -> Status:
                 verify = State.done
         return verify
 
+    def analyzestarted():
+        before = verified()
+        if before == State.failed:
+            return State.failed
+        if before == State.waiting:
+            return State.waiting
+        if before == State.done:
+            return State.running
+        return State.waiting
+
+    def fastviewed():
+        before = analyzestarted()
+        if before == State.failed:
+            return State.failed
+        return State.waiting
+
+    def globalviewed():
+        before = analyzestarted()
+        before_fast = fastviewed()
+        if before == State.failed or before_fast == State.failed:
+            return State.failed
+        return State.waiting
+
+    def presented():
+        before = globalviewed()
+        if before == State.failed:
+            return State.failed
+        return State.waiting
+
     result = Status(
         State.running,
         [
             uploaded(),
             verified(),
-            State.waiting,
-            State.waiting,
-            State.waiting,
-            State.waiting,
+            analyzestarted(),
+            fastviewed(),
+            globalviewed(),
+            presented()
         ],
     )
     return result
