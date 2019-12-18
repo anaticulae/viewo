@@ -25,8 +25,13 @@ function enable_fastview(processid) {
     result.href = "result.html"
 }
 
+function enable_validation_view(processid) {
+    validationview = document.getElementById("validationview")
+    validationview.href = "/waiting/validation/" + processid
+}
 
-function update(status) {
+
+function update(processid, status) {
     for (let stateid = 0; stateid < status.length; stateid++) {
         let item = status[stateid]
         statusitem = document.getElementById("status_" + stateid)
@@ -40,6 +45,10 @@ function update(status) {
             make_error(statusitem)
         }
     }
+    if (status[1] != 1) {
+        // not waiting
+        enable_validation_view(processid)
+    }
 }
 
 function loop(process) {
@@ -49,7 +58,7 @@ function loop(process) {
             downloaded = this.responseText
             downloaded = JSON.parse(downloaded)
 
-            update(downloaded.states)
+            update(process, downloaded.states)
             if (downloaded.status == 1) {
                 // process is currently running
                 setTimeout(() => loop(process), 3000);
