@@ -55,11 +55,26 @@ class State(enum.Enum):
     running = 1
     failed = 2
 
+    @staticmethod
+    def fromstr(item: str):
+        # TODO: DIRTY, replace
+        item = int(item)
+        for state in State:
+            if state.value == item:
+                return state
+        return None
+
 
 @dataclasses.dataclass
 class Status:
     status: State = State.waiting
     state: typing.List[State] = dataclasses.field(default_factory=list)
+
+    def append(self, item):
+        self.state.append(item)  # pylint:disable=E1101
+
+    def __getitem__(self, item):
+        return self.state[item]  # pylint:disable=E1136
 
 
 def jsonify(item: Status) -> str:
@@ -78,6 +93,16 @@ def jsonify(item: Status) -> str:
     for state in item.state:
         states.append(state.value)
     result = json.dumps(raw)
+    return result
+
+
+def loads(content: str) -> Status:
+    loaded = json.loads(content)
+    result = Status()
+    result.status = State.fromstr(loaded['status'])
+    for item in loaded['states']:
+        parsed = State.fromstr(item)
+        result.append(parsed)  # pylint:disable=E1101
     return result
 
 
