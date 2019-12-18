@@ -2,6 +2,47 @@
 
 {% block content %}
 
-<h2>Validation</h2>
 
+{% if validation_result != {} %}
+<h2>Erfolg</h2>
+<p>
+    Die PDF Datei konnte erfolgreich eingelesen werden und wird nun analysiert.
+</p>
+<table>
+    <tr>
+        <td width="200">Pages:</td>
+        <td>{{ validation_result['pages'] }}</td>
+    </tr>
+    <tr>
+        <td>Editor:</td>
+        <td>{{ validation_result['generator'] }}</td>
+    </tr>
+    <tr>
+        <td>PDF Version:</td>
+        <td>{{ validation_result['version']['major'] }}.{{ validation_result['version']['minor'] }}
+        </td>
+    </tr>
+</table>
+{% else %}
+<h2>Fehler</h2>
+<p>
+    <ul style="width:350px;">
+        <li style="padding:10px;">
+            Die hochgeladene Datei konnte nicht erfolgreich als PDF Datei
+            erkannt werden.
+        </li>
+        <li style="padding:10px;">
+            Bitte ueberpruefe ob du die hochgeladene Datei mit einem PDF-Viewer
+            oeffnen kannst.
+        </li>
+        <li style="padding:10px;">
+            Falls du die Datei oefnnen kannst handelt es sich leider um ein
+            technische Problem der Plattform.
+        </li>
+    </ul>
+</p>
+{% endif %}
+<p>
+    <a href="/waiting/{{ process }}">zurueck</a>
+</p>
 {% endblock %}

@@ -117,11 +117,14 @@ def waiting_view(process):
 @waiting_.route('/waiting/validation', defaults={'process': None})
 @waiting_.route('/waiting/validation/<string:process>')
 def waiting_view_validation(process):
-    if process is None:
+    validated = load_validation_result(process)
+    if process is None or validated is None:
         return flask.redirect(flask.url_for('result.failure'))
+
     rendered = flask.render_template(
         'waiting_validation.html',
         process=process,
+        validation_result=validated,
     )
     return rendered
 
@@ -214,3 +217,34 @@ def status(process: str) -> Status:  # pylint:disable=too-complex
     if any([item == State.failed for item in result]):
         result.status = State.failed
     return result
+
+
+def load_validation_result(process: str) -> dict:
+    """Load validation result from `todo` or `ready` path depending on
+    processing status.
+
+    Args:
+        process(string): identifier interesseted validation process
+    Returns:
+        - dict with pages, editor and pdf version or
+        - empty dict if validation fails or
+        - None if process does not exists
+    """
+    process = str(process)
+    ready = configo.ready()
+    ready = os.path.join(ready, process)
+    todo = configo.todo()
+    todo = os.path.join(todo, process)
+    path = None
+    if os.path.exists(todo):
+        path = todo
+    if os.path.exists(ready):
+        path = ready
+
+    if path is None:
+        # invalid process
+        return None
+    data = os.path.join(path, VERIFY)
+    data = utila.file_read(data)
+    loaded = json.loads(data)
+    return loaded
