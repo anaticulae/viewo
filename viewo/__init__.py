@@ -25,15 +25,15 @@ from flask import url_for
 from jinja2 import TemplateNotFound
 from utila import error
 
-import viewo.documents
-import viewo.waiting
 from viewo.config import MAX_FILE_SIZE
 from viewo.config import SECRET_KEY
 from viewo.config import STATIC
 from viewo.config import TEMPLATES
+from viewo.documents import documents_
 from viewo.public import welcome
 from viewo.result import result_
 from viewo.upload import upload_
+from viewo.waiting import waiting_
 
 __version__ = '0.5.0'
 
@@ -55,11 +55,11 @@ def create_application(config=None) -> Flask:
     configure(app_, config)
     init_error_handler(app_)
 
-    app_.register_blueprint(viewo.documents.documents_)
+    app_.register_blueprint(documents_)
     app_.register_blueprint(upload_)
     app_.register_blueprint(result_)
     app_.register_blueprint(welcome)
-    app_.register_blueprint(viewo.waiting.waiting)
+    app_.register_blueprint(waiting_)
 
     return app_
 

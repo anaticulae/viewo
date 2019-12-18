@@ -47,7 +47,7 @@ import configo
 import flask
 import utila
 
-waiting = flask.Blueprint('waiting', __name__)  # pylint:disable=C0103
+waiting_ = flask.Blueprint('waiting', __name__)  # pylint:disable=C0103
 
 VERIFY = 'pdfinfo.json'
 
@@ -109,13 +109,13 @@ def loads(content: str) -> Status:
     return result
 
 
-@waiting.route('/waiting/<string:process>')
+@waiting_.route('/waiting/<string:process>')
 def waiting_view(process):
     return flask.render_template('waiting.html', process=process)
 
 
-@waiting.route('/waiting/validation', defaults={'process': None})
-@waiting.route('/waiting/validation/<int:process>')
+@waiting_.route('/waiting/validation', defaults={'process': None})
+@waiting_.route('/waiting/validation/<string:process>')
 def waiting_view_validation(process):
     if process is None:
         return flask.redirect(flask.url_for('result.failure'))
@@ -126,7 +126,7 @@ def waiting_view_validation(process):
     return rendered
 
 
-@waiting.route('/waiting/status/<string:process>')
+@waiting_.route('/waiting/status/<string:process>')
 def waiting_status(process):
     try:
         process = str(process)
