@@ -7,7 +7,14 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-from viewo.documents import sortable_date
+import tests
+import viewo.documents
+
+
+def test_documents_view(client):
+    result = tests.content(client, '/documents')
+    assert len(result) > 300, str(result)
+    assert 'Fehler' not in result
 
 
 def test_sortable_date():
@@ -33,6 +40,6 @@ def test_sortable_date():
         '01.01.2019',
         '31.11.2019',
     ]
-    result = sorted(result, key=sortable_date, reverse=True)
 
+    result = sorted(result, key=viewo.documents.sortable_date, reverse=True)
     assert result == expected

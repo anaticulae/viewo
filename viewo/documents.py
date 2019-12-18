@@ -11,10 +11,10 @@ from flask import Blueprint
 from flask import render_template
 from link import scan
 
-documents = Blueprint('documents', __name__)
+documents_ = Blueprint('documents', __name__)  # pylint:disable=C0103
 
 
-@documents.route('/documents', methods=['GET'])
+@documents_.route('/documents', methods=['GET'])
 def view_documents():
     todo, ready = scan(share())
 
@@ -22,7 +22,6 @@ def view_documents():
 
     # sort by date
     docs = sorted(docs, key=lambda item: sortable_date(item.date), reverse=True)
-
     return render_template('documents/index.html', documents=docs)
 
 
