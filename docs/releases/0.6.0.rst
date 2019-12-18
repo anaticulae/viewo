@@ -1,0 +1,36 @@
+.. _0_6_0:
+
+RP 0.6.0
+=========
+
+valid document view
+-------------------
+
+* [ ] add view to show the result of pdf validation process
+
+documents
+---------
+
+* [ ] show that document analysis is failed/ change link
+
+fastview
+--------
+
+* [ ] add view with current status
+
+result view
+-----------
+
+* [ ] add process which deliver continously new results
+
+code quality
+------------
+
+Before
+~~~~~~
+
+* Your code has been rated at 9.91/10
+* Total coverage: 95.96%
+
+After
+~~~~~
