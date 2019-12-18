@@ -175,6 +175,8 @@ def status(process: str) -> Status:  # pylint:disable=too-complex
             return State.failed
         if before == State.waiting:
             return State.waiting
+        if fastview_result(process):
+            return State.done
         if before == State.done:
             return State.running
         return State.waiting
@@ -183,6 +185,13 @@ def status(process: str) -> Status:  # pylint:disable=too-complex
         before = analyzestarted()
         if before == State.failed:
             return State.failed
+        path = fastview_result(process)
+        if os.path.exists(os.path.join(path, 'done')):
+            return State.done
+        if os.path.exists(os.path.join(path, 'failed')):
+            return State.failed
+        if before == State.done:
+            return State.running
         return State.waiting
 
     def globalviewed():
@@ -190,12 +199,23 @@ def status(process: str) -> Status:  # pylint:disable=too-complex
         before_fast = fastviewed()
         if before == State.failed or before_fast == State.failed:
             return State.failed
+        path = result_result(process)
+        if os.path.exists(os.path.join(path, 'done')):
+            return State.done
+        if os.path.exists(os.path.join(path, 'failed')):
+            return State.failed
+        if before == State.done:
+            return State.running
         return State.waiting
 
     def presented():
         before = globalviewed()
         if before == State.failed:
             return State.failed
+        if before == State.done:
+            if copy_done(process):
+                return State.done
+            return State.running
         return State.waiting
 
     result = Status(
@@ -248,3 +268,29 @@ def load_validation_result(process: str) -> dict:
     data = utila.file_read(data)
     loaded = json.loads(data)
     return loaded
+
+
+def fastview_result(process: str) -> str:
+    todo = configo.todo()
+    todo = os.path.join(todo, process)
+    fastview = os.path.join(todo, 'fastview')
+    if os.path.exists(fastview):
+        return fastview
+    return None
+
+
+def result_result(process: str) -> str:
+    todo = configo.todo()
+    todo = os.path.join(todo, process)
+    fastview = os.path.join(todo, 'result')
+    if os.path.exists(fastview):
+        return fastview
+    return None
+
+
+def copy_done(process: str) -> bool:
+    ready = configo.ready()
+    ready = os.path.join(ready, process)
+    if os.path.exists(ready):
+        return True
+    return False
