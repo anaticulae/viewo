@@ -19,10 +19,12 @@ function make_error(item) {
 
 function enable_fastview(processid) {
     fastview = document.getElementById("fastview")
-    fastview.href = "fastview.html"
+    fastview.href = "/waiting/fastview/" + processid
+}
 
+function enable_resultview(processid) {
     result = document.getElementById("resultview")
-    result.href = "result.html"
+    result.href = "/result/" + processid
 }
 
 function enable_validation_view(processid) {
@@ -48,6 +50,14 @@ function update(processid, status) {
     if (status[1] != 1) {
         // not waiting
         enable_validation_view(processid)
+    }
+    if (status[2] == 0) {
+        // done
+        enable_fastview(processid)
+    }
+    if (status[3] == 0) {
+        // done
+        enable_resultview(processid)
     }
 }
 
