@@ -114,6 +114,18 @@ def waiting_view(process):
     return flask.render_template('waiting.html', process=process)
 
 
+@waiting.route('/waiting/validation', defaults={'process': None})
+@waiting.route('/waiting/validation/<int:process>')
+def waiting_view_validation(process):
+    if process is None:
+        return flask.redirect(flask.url_for('result.failure'))
+    rendered = flask.render_template(
+        'waiting_validation.html',
+        process=process,
+    )
+    return rendered
+
+
 @waiting.route('/waiting/status/<string:process>')
 def waiting_status(process):
     try:
