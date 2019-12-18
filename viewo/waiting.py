@@ -45,8 +45,11 @@ import typing
 
 import configo
 import flask
+import utila
 
 waiting = flask.Blueprint('waiting', __name__)  # pylint:disable=C0103
+
+VERIFY = 'pdfinfo.json'
 
 
 class State(enum.Enum):
@@ -135,13 +138,25 @@ def status(process: str) -> Status:
         return None
 
     pdf = os.path.join(working, process)
-    uploaded = os.path.exists(pdf)
+
+    def uploaded():
+        return State.done if os.path.exists(pdf) else State.running
+
+    def verified():
+        verifypath = os.path.join(working, VERIFY)
+        verify = State.running if uploaded() == State.done else State.waiting
+        if os.path.exists(verifypath):
+            if utila.file_read(verifypath) == '{}':
+                verify = State.failed
+            else:
+                verify = State.done
+        return verify
 
     result = Status(
         State.running,
         [
-            State.done if uploaded else State.running,
-            State.waiting,
+            uploaded(),
+            verified(),
             State.waiting,
             State.waiting,
             State.waiting,
