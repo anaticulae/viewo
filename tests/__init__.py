@@ -7,6 +7,7 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import http
 from os.path import exists
 from os.path import join
 
@@ -35,3 +36,9 @@ assert exists(EXAMPLE_RESULT), EXAMPLE_RESULT
 def decode(response) -> str:
     """Read binary data from response and convert them to str"""
     return response.data.decode('utf8')
+
+
+def content(client, request: str):
+    response = client.get(request)
+    assert response.status_code == http.HTTPStatus.OK
+    return decode(response)
