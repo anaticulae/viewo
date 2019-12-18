@@ -84,7 +84,7 @@ def test_waiting_status_verify_failed(client, testdir, monkeypatch):
 
     loaded = run_status(client, root, monkeypatch)
 
-    assert loaded.status == viewo.waiting.State.running
+    assert loaded.status == viewo.waiting.State.failed
     assert loaded[0] == viewo.waiting.State.done
     assert loaded[1] == viewo.waiting.State.failed
     assert loaded[2] == viewo.waiting.State.failed
