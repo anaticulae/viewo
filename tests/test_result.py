@@ -123,14 +123,14 @@ def example():
     return result
 
 
-def test_hidden_ref_no_selection(example):
+def test_hidden_ref_no_selection(example):  # pylint:disable=W0621
     _, hidden = create_hidden_ref(example, None, None, None)
 
     # All children are hidden
     assert len(hidden) == 9
 
 
-def test_hidden_ref_with_selection(example):
+def test_hidden_ref_with_selection(example):  # pylint:disable=W0621
     _, hidden = create_hidden_ref(example, 0, 0, 0)
     assert len(hidden) == 6
 

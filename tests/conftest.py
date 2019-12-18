@@ -44,12 +44,12 @@ def app(tmpdir):
 
 
 @fixture
-def client(app):
+def client(app):  # pylint:disable=W0621
     """A test client for the app."""
     return app.test_client()
 
 
 @fixture
-def runner(app):
+def runner(app):  # pylint:disable=W0621
     """A test runner for the app's Click commands."""
     return app.test_cli_runner()

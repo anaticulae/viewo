@@ -20,21 +20,18 @@ from flask import url_for
 from utila import file_read
 from utila import log
 
-result_ = Blueprint('result', __name__)
+result_ = Blueprint('result', __name__)  # pylint:disable=C0103
 
 
 @result_.route('/result')
 @result_.route('/result/<int:document>')
 @result_.route('/result/<int:document>/<string:action>')
 @result_.route('/result/<int:document>/<string:action>/<int:major_id>')
-@result_.route(
-    '/result/<int:document>/<string:action>/<int:major_id>/<int:minor_id>')
-@result_.route(
-    '/result/<int:document>/<string:action>/<int:major_id>/<int:minor_id>/<int:feature_id>'
-)
+@result_.route('/result/<int:document>/<string:action>/<int:major_id>/<int:minor_id>') # yapf:disable
+@result_.route('/result/<int:document>/<string:action>/<int:major_id>/<int:minor_id>/<int:feature_id>') # yapf:disable
 def view_result(
         document: int = None,
-        action: str = None,
+        action: str = None,  # pylint:disable=W0613
         major_id: int = None,
         minor_id: int = None,
         feature_id: int = None,

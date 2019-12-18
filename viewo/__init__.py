@@ -89,7 +89,7 @@ def configure(app_, config):
             export('', '', '')
 
 
-def init_error_handler(app: Flask):
+def init_error_handler(app: Flask):  # pylint:disable=W0621
     """Add errorhandler for unresolved resources
 
     Args:
@@ -97,8 +97,8 @@ def init_error_handler(app: Flask):
     """
 
     @app.errorhandler(404)
-    def not_found(_):
+    def not_found(_):  # pylint:disable=W0612,W0613
         return render_template('public/error.html', errorpage='Die Seite')
 
 
-app = create_application()
+app = create_application()  # pylint:disable=C0103
