@@ -6,14 +6,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Fast View</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
-    <script src="main.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="fastview.css">
+    <script src="fastview.js"></script>
+
 </head>
 
 <body>
     <h2>Schnelldurchsicht</h2>
 
-    <footer><a href="index.html">zum Wartebereich</a></footer>
+    <table width="600" id="linter_table">
+        <tr>
+            <th width="500" rowspan="2">Bereich</th>
+            <th rowspan="2">Seiten</th>
+            <th colspan="4"> Checks </th>
+        </tr>
+        <tr>
+            <th>Passed</th>
+            <th>Warning</th>
+            <th>Failed</th>
+            <th>Gesamt</th>
+        </tr>
+    </table>
+    <footer>
+        <p>
+            <a href="index.html">zum Wartebereich</a>
+        </p>
+    </footer>
+    <script type="text/javascript">
+        update_view(data)
+    </script>
 </body>
 
 </html>
