@@ -70,6 +70,23 @@ def test_waiting_status_jsonify():
     assert 'status' in json
 
 
+def test_waiting_fastviewgroupstatus_jsonify():
+    fastviewresult = viewo.waiting.FastViewStatus(
+        status=[
+            viewo.waiting.FastViewGroupStatus(
+                title='Helmut in town',
+                pages='1-5',
+                error=['first', 'second', 'third'],
+                good=['Mister good one.', 'good', 'better', 'best'],
+                warning=[],
+            )
+        ],)
+    json = viewo.waiting.data.fastviewstatus_tojson(fastviewresult)
+    assert 'pages' in json
+    assert 'title' in json
+    assert '"Mister good one."' in json
+
+
 def test_waiting_status_invalid(client):
     result = tests.content(client, '/waiting')
     assert 'Fehler' in result

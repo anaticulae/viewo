@@ -14,6 +14,7 @@ import configo
 import utila
 
 from viewo.waiting import VERIFY
+from viewo.waiting import FastViewStatus
 from viewo.waiting import State
 from viewo.waiting import Status
 
@@ -35,6 +36,28 @@ def jsonify(item: Status) -> str:
         states.append(state.value)
     result = json.dumps(raw)
     return result
+
+
+def fastviewstatus_tojson(items: FastViewStatus) -> str:
+    if not items:
+        return '{}'
+    result = []
+    for item in items:
+        error = [str(item) for item in item.error]
+        good = [str(item) for item in item.good]
+        warning = [str(item) for item in item.warning]
+        raw = {
+            'title': item.title,
+            'pages': item.pages,
+            'content': {
+                'error': error,
+                'good': good,
+                'warning': warning,
+            }
+        }
+        result.append(raw)
+    dumped = json.dumps(result)
+    return dumped
 
 
 def loads(content: str) -> Status:

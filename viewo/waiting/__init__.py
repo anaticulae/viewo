@@ -71,3 +71,28 @@ class Status:
 
     def __getitem__(self, item):
         return self.state[item]  # pylint:disable=E1136
+
+
+@dataclasses.dataclass
+class FastViewGroupStatus:
+    title: str = None
+    pages: str = None
+    error: typing.List[str] = dataclasses.field(default_factory=list)
+    good: typing.List[str] = dataclasses.field(default_factory=list)
+    warning: typing.List[str] = dataclasses.field(default_factory=list)
+
+
+@dataclasses.dataclass
+class FastViewStatus:
+
+    status: typing.List[FastViewGroupStatus] = \
+                                        dataclasses.field(default_factory=list)
+
+    def __len__(self):
+        return len(self.status)
+
+    def __getitem__(self, index):
+        return self.status[index]  # pylint:disable=E1136
+
+    def append(self, item):
+        return self.status.append(item)
