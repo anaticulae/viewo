@@ -15,7 +15,7 @@ waiting_ = flask.Blueprint('waiting', __name__)  # pylint:disable=C0103
 
 @waiting_.route('/waiting/<string:process>')
 def waiting_view(process):
-    return flask.render_template('waiting.html', process=process)
+    return flask.render_template('waiting/index.html', process=process)
 
 
 @waiting_.route('/waiting/validation', defaults={'process': None})
@@ -26,7 +26,7 @@ def waiting_view_validation(process):
         return flask.redirect(flask.url_for('result.failure'))
 
     rendered = flask.render_template(
-        'waiting_validation.html',
+        'waiting/validation.html',
         process=process,
         validation_result=validated,
     )
