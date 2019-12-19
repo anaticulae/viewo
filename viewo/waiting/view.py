@@ -18,6 +18,11 @@ def waiting_view(process):
     return flask.render_template('waiting/index.html', process=process)
 
 
+@waiting_.route('/waiting/fastview/<string:process>')
+def waiting_view_fastview(process):
+    return flask.render_template('waiting/fastview.html', process=process)
+
+
 @waiting_.route('/waiting/validation', defaults={'process': None})
 @waiting_.route('/waiting/validation/<string:process>')
 def waiting_view_validation(process):

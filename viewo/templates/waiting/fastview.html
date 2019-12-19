@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" media="screen"
+    href="{{ url_for('static', filename='fastview.css') }}">
+<script src="{{ url_for('static', filename='fastview.js') }}"></script>
+
+<body>
+    <h2>Schnelldurchsicht</h2>
+
+    <table width="600" id="linter_table">
+        <tr>
+            <th width="500" rowspan="2">Bereich</th>
+            <th rowspan="2">Seiten</th>
+            <th colspan="4"> Checks </th>
+        </tr>
+        <tr>
+            <th>Passed</th>
+            <th>Warning</th>
+            <th>Failed</th>
+            <th>Gesamt</th>
+        </tr>
+    </table>
+
+    <footer>
+        <p>
+            <a href="/waiting/{{ process }}">zum Wartebereich</a>
+        </p>
+    </footer>
+
+    <script type="text/javascript">
+        update_view(data)
+    </script>
+</body>
+
+{% endblock %}
