@@ -109,8 +109,26 @@ def test_waiting_status(testdir, client, monkeypatch):
 
 
 def test_waiting_status_verified(client, testdir, monkeypatch):
-    loaded = run_status(client, tests.EXAMPLE_TODO, monkeypatch)
+    """Test a state where pdf is uploaded and validated.
 
+    This requires the following resources:
+        - pdf file with name process name in process folder like `12345678900`
+        - pdfinfo.json with validation result of pdf file
+    """
+    root = str(testdir)
+    todo = os.path.join(root, '12345678900')
+    os.makedirs(todo)
+    utila.file_create(os.path.join(todo, '12345678900'))  # fake pdf file
+    # TODO: REPLACE WITH FILE_COPY
+    verified = utila.file_read(
+        os.path.join(
+            tests.EXAMPLE_TODO,
+            '12345678900',
+            viewo.waiting.VERIFY,
+        ))
+    utila.file_create(os.path.join(todo, viewo.waiting.VERIFY), verified)
+
+    loaded = run_status(client, root, monkeypatch)
     assert loaded.status == viewo.waiting.State.running
     assert loaded[0] == viewo.waiting.State.done
     assert loaded[1] == viewo.waiting.State.done
