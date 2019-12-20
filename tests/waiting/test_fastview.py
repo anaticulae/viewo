@@ -10,6 +10,7 @@ import configo
 
 import viewo.waiting
 import viewo.waiting.fastview
+from tests import EXAMPLE_TODO
 from tests import content
 from tests.waiting import valid  # pylint:disable=W0611
 
@@ -58,3 +59,12 @@ def test_waiting_fastviewgroupstatus_jsonify():
     assert 'pages' in json
     assert 'title' in json
     assert '"Mister good one."' in json
+
+
+def test_waiting_load_groupstatus(monkeypatch):
+    with monkeypatch.context() as context:
+        context.setattr(configo, 'todo', lambda: EXAMPLE_TODO)
+        loaded = viewo.waiting.fastview.load_fastview_result('12345678900')
+    assert loaded
+    assert len(loaded[0].error) == 1, str(loaded[0])
+    assert loaded[1].error == [], str(loaded[1])

@@ -8,10 +8,13 @@
 # =============================================================================
 import json
 import os
+import re
 
-import configo
+import protocol
+import utila
 
 import viewo.waiting
+import viewo.waiting.data
 
 
 def fastviewstatus_tojson(current: viewo.waiting.FastViewStatus) -> str:
@@ -41,7 +44,7 @@ def fastviewstatus_tojson(current: viewo.waiting.FastViewStatus) -> str:
 
 
 def load_fastview_result(process: str) -> viewo.waiting.FastViewStatus:
-    path = fastview_result(process)
+    path = viewo.waiting.data.fastview_result(process)
     if path is None:
         return None
     groups = [
@@ -56,16 +59,31 @@ def load_fastview_result(process: str) -> viewo.waiting.FastViewStatus:
             # digits longs.
             # Pattern [0-9]{2}\_\w+
             continue
-        title = group[3:]
-        item = viewo.waiting.FastViewGroupStatus(title=title)
-        result.append(item)
+        parsed = load_fastview_group_result(os.path.join(path, group))
+        if not parsed:
+            utila.error(f'could not parse {parsed}')
+            continue
+        result.append(parsed)
     return result
 
 
-def fastview_result(process: str) -> str:
-    todo = configo.todo()
-    todo = os.path.join(todo, process)
-    fastview = os.path.join(todo, viewo.waiting.FASTVIEW)
-    if os.path.exists(fastview):
-        return fastview
-    return None
+PATTERN = re.compile(r'\w+__(?P<filename>\w+)_user\.yaml')
+
+
+def load_fastview_group_result(path: str) -> viewo.waiting.FastViewGroupStatus:
+    assert os.path.exists(path), str(path)
+    _, title = os.path.split(path)
+    title = title[3:]  # remove leading digit/digit/underline
+    files = [
+        item for item in os.listdir(path)
+        if os.path.isfile(os.path.join(path, item)) and item.endswith('.yaml')
+    ]
+    error = []
+    for name in files:
+        if not PATTERN.match(name):
+            utila.error(f'{name} does not match file pattern - skip')
+            continue
+        loaded = protocol.load_result(os.path.join(path, name))
+        for finding in loaded:
+            error.append(finding.solution.title)
+    return viewo.waiting.FastViewGroupStatus(title=title, error=error)

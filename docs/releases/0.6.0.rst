@@ -16,7 +16,7 @@ documents
 fastview
 --------
 
-* [ ] add view with current status
+* [x] add view with current status
 
 result view
 -----------
