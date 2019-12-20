@@ -10,38 +10,11 @@
 import os
 
 import configo
+import pytest
 import utila
 
 import tests
 import viewo.waiting.data
-
-
-def create_validation_result(path: str):
-    assert os.path.exists(path), str(path)
-    utila.copy_content(tests.EXAMPLE_TODO, path, recursive=True)
-
-
-def create_no_validation_result(path: str):
-    assert os.path.exists(path), str(path)
-    utila.copy_content(tests.EXAMPLE_TODO, path, recursive=True)
-    utila.file_remove(os.path.join(
-        path,
-        '12345678900',
-        viewo.waiting.VERIFY,
-    ))
-
-
-def create_invalid_validation_result(path: str):
-    assert os.path.exists(path), str(path)
-    utila.copy_content(tests.EXAMPLE_TODO, path, recursive=True)
-    utila.file_replace(
-        os.path.join(
-            path,
-            '12345678900',
-            viewo.waiting.VERIFY,
-        ),
-        '{}',
-    )
 
 
 def run_status(client, todo: str, monkeypatch):
@@ -52,3 +25,35 @@ def run_status(client, todo: str, monkeypatch):
     assert result, str(result)
     loaded = viewo.waiting.data.loads(result)
     return loaded
+
+
+@pytest.fixture
+def valid(testdir):
+    root = str(testdir)
+    assert os.path.exists(root), str(root)
+    utila.copy_content(tests.EXAMPLE_TODO, root, recursive=True)
+    return root
+
+
+@pytest.fixture
+def no_validation(valid):  # pylint:disable=W0621
+    utila.file_remove(
+        os.path.join(
+            valid,
+            '12345678900',
+            viewo.waiting.VERIFY,
+        ))
+    return valid
+
+
+@pytest.fixture
+def invalid_validation(valid):  # pylint:disable=W0621
+    utila.file_replace(
+        os.path.join(
+            valid,
+            '12345678900',
+            viewo.waiting.VERIFY,
+        ),
+        '{}',
+    )
+    return valid

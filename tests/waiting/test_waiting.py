@@ -12,13 +12,15 @@ import os
 import configo
 import utila
 
-import tests
 import viewo.waiting
 import viewo.waiting.fastview
-from tests.waiting import create_invalid_validation_result
-from tests.waiting import create_no_validation_result
-from tests.waiting import create_validation_result
+from tests import EXAMPLE_TODO
+from tests import content
+# pylint:disable=W0611
+from tests.waiting import invalid_validation
+from tests.waiting import no_validation
 from tests.waiting import run_status
+from tests.waiting import valid
 
 
 def test_waiting_status_jsonify():
@@ -38,20 +40,17 @@ def test_waiting_status_jsonify():
 
 
 def test_waiting_status_invalid(client):
-    result = tests.content(client, '/waiting')
+    result = content(client, '/waiting')
     assert 'Fehler' in result
 
 
 def test_waiting_status_invalid_ressource(client):
-    result = tests.content(client, '/waiting/status/1337')
+    result = content(client, '/waiting/status/1337')
     assert result == '{}'
 
 
-def test_waiting_status(testdir, client, monkeypatch):
-    root = str(testdir)
-    create_no_validation_result(root)
-
-    loaded = run_status(client, root, monkeypatch)
+def test_waiting_status(no_validation, client, monkeypatch):  # pylint:disable=W0621
+    loaded = run_status(client, no_validation, monkeypatch)
 
     assert loaded.status == viewo.waiting.State.running
     assert loaded[0] == viewo.waiting.State.done
@@ -72,7 +71,7 @@ def test_waiting_status_verified(client, testdir, monkeypatch):
     # TODO: REPLACE WITH FILE_COPY
     verified = utila.file_read(
         os.path.join(
-            tests.EXAMPLE_TODO,
+            EXAMPLE_TODO,
             '12345678900',
             viewo.waiting.VERIFY,
         ))
@@ -85,11 +84,8 @@ def test_waiting_status_verified(client, testdir, monkeypatch):
     assert loaded[2] == viewo.waiting.State.running
 
 
-def test_waiting_status_verify_failed(client, testdir, monkeypatch):
-    root = str(testdir)
-    create_invalid_validation_result(root)
-
-    loaded = run_status(client, root, monkeypatch)
+def test_waiting_status_verify_failed(invalid_validation, client, monkeypatch):  # pylint:disable=W0621
+    loaded = run_status(client, invalid_validation, monkeypatch)
 
     assert loaded.status == viewo.waiting.State.failed
     assert loaded[0] == viewo.waiting.State.done
@@ -100,25 +96,23 @@ def test_waiting_status_verify_failed(client, testdir, monkeypatch):
     assert loaded[5] == viewo.waiting.State.failed
 
 
-def test_waiting_validation_invalid_result(client, testdir, monkeypatch):
-    root = str(testdir)
-    create_invalid_validation_result(root)
-
+def test_waiting_validation_invalid_result(
+        invalid_validation,
+        client,
+        monkeypatch,
+):  # pylint:disable=W0621
     with monkeypatch.context() as context:
-        context.setattr(configo, 'todo', lambda: root)
-        result = tests.content(client, '/waiting/validation/12345678900')
+        context.setattr(configo, 'todo', lambda: invalid_validation)
+        result = content(client, '/waiting/validation/12345678900')
 
-    assert ('Die hochgeladene Datei konnte nicht erfolgreich als PDF Datei'
-           ) in result, str(result)
+    assert ('Die hochgeladene Datei konnte '
+            'nicht erfolgreich als PDF Datei') in result, str(result)
 
 
-def test_waiting_validation_result(client, testdir, monkeypatch):
-    root = str(testdir)
-    create_validation_result(root)
-
+def test_waiting_validation_result(valid, client, monkeypatch):  # pylint:disable=W0621
     with monkeypatch.context() as context:
-        context.setattr(configo, 'todo', lambda: root)
-        result = tests.content(client, '/waiting/validation/12345678900')
+        context.setattr(configo, 'todo', lambda: valid)
+        result = content(client, '/waiting/validation/12345678900')
 
     assert ('Die PDF Datei konnte erfolgreich eingelesen'
             ' werden und wird nun analysiert.') in result, str(result)

@@ -8,19 +8,16 @@
 # =============================================================================
 import configo
 
-import tests
 import viewo.waiting
 import viewo.waiting.fastview
-from tests.waiting import create_validation_result
+from tests import content
+from tests.waiting import valid  # pylint:disable=W0611
 
 
-def test_waiting_fastview_status(client, testdir, monkeypatch):
-    root = str(testdir)
-    create_validation_result(root)
-
+def test_waiting_fastview_status(valid, client, monkeypatch):  # pylint:disable=W0621
     with monkeypatch.context() as context:
-        context.setattr(configo, 'todo', lambda: root)
-        result = tests.content(client, '/waiting/fastview/status/12345678900')
+        context.setattr(configo, 'todo', lambda: valid)
+        result = content(client, '/waiting/fastview/status/12345678900')
 
     assert 'title' in result, str(result)
     assert 'pages' in result, str(result)
@@ -30,24 +27,18 @@ def test_waiting_fastview_status(client, testdir, monkeypatch):
     assert 'warning' in result, str(result)
 
 
-def test_waiting_fastview_status_failure(client, testdir, monkeypatch):
-    root = str(testdir)
-    create_validation_result(root)
-
+def test_waiting_fastview_status_failure(valid, client, monkeypatch):  # pylint:disable=W0621
     with monkeypatch.context() as context:
-        context.setattr(configo, 'todo', lambda: root)
-        result = tests.content(client, '/waiting/fastview/status/abcdc')
+        context.setattr(configo, 'todo', lambda: valid)
+        result = content(client, '/waiting/fastview/status/abcdc')
 
     assert '{}' in result, str(result)
 
 
-def test_waiting_fastview(client, testdir, monkeypatch):
-    root = str(testdir)
-    create_validation_result(root)
-
+def test_waiting_fastview(valid, client, monkeypatch):  # pylint:disable=W0621
     with monkeypatch.context() as context:
-        context.setattr(configo, 'todo', lambda: root)
-        result = tests.content(client, '/waiting/fastview/12345678900')
+        context.setattr(configo, 'todo', lambda: valid)
+        result = content(client, '/waiting/fastview/12345678900')
 
     assert 'Schnelldurchsicht' in result, str(result)
 
