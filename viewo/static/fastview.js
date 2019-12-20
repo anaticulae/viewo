@@ -148,7 +148,7 @@ function add_content(item) {
         })
         orange = add_ol(ul, "fastview_group_warning")
         for (let warning of item.warning) {
-            let created = add_li(orange, warning)//, "fastview_group_warning")
+            let created = add_li(orange, warning)
             created.classList.add('hidden')
         }
     }
