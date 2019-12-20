@@ -15,44 +15,10 @@ import utila
 import tests
 import viewo.waiting
 import viewo.waiting.fastview
-
-
-def create_validation_result(path: str):
-    assert os.path.exists(path), str(path)
-    utila.copy_content(tests.EXAMPLE_TODO, path, recursive=True)
-
-
-def create_no_validation_result(path: str):
-    assert os.path.exists(path), str(path)
-    utila.copy_content(tests.EXAMPLE_TODO, path, recursive=True)
-    utila.file_remove(os.path.join(
-        path,
-        '12345678900',
-        viewo.waiting.VERIFY,
-    ))
-
-
-def create_invalid_validation_result(path: str):
-    assert os.path.exists(path), str(path)
-    utila.copy_content(tests.EXAMPLE_TODO, path, recursive=True)
-    utila.file_replace(
-        os.path.join(
-            path,
-            '12345678900',
-            viewo.waiting.VERIFY,
-        ),
-        '{}',
-    )
-
-
-def run_status(client, todo: str, monkeypatch):
-    with monkeypatch.context() as context:
-        context.setattr(configo, 'todo', lambda: todo)
-        result = tests.content(client, '/waiting/status/12345678900')
-
-    assert result, str(result)
-    loaded = viewo.waiting.data.loads(result)
-    return loaded
+from tests.waiting import create_invalid_validation_result
+from tests.waiting import create_no_validation_result
+from tests.waiting import create_validation_result
+from tests.waiting import run_status
 
 
 def test_waiting_status_jsonify():
@@ -69,23 +35,6 @@ def test_waiting_status_jsonify():
     json = viewo.waiting.data.jsonify(status)
     assert 'states' in json
     assert 'status' in json
-
-
-def test_waiting_fastviewgroupstatus_jsonify():
-    fastviewresult = viewo.waiting.FastViewStatus(
-        content=[
-            viewo.waiting.FastViewGroupStatus(
-                title='Helmut in town',
-                pages='1-5',
-                error=['first', 'second', 'third'],
-                good=['Mister good one.', 'good', 'better', 'best'],
-                warning=[],
-            )
-        ],)
-    json = viewo.waiting.fastview.fastviewstatus_tojson(fastviewresult)
-    assert 'pages' in json
-    assert 'title' in json
-    assert '"Mister good one."' in json
 
 
 def test_waiting_status_invalid(client):
@@ -176,41 +125,3 @@ def test_waiting_validation_result(client, testdir, monkeypatch):
 
     assert 'Pages' in result, str(result)
     assert 'Editor' in result, str(result)
-
-
-def test_waiting_fastview(client, testdir, monkeypatch):
-    root = str(testdir)
-    create_validation_result(root)
-
-    with monkeypatch.context() as context:
-        context.setattr(configo, 'todo', lambda: root)
-        result = tests.content(client, '/waiting/fastview/12345678900')
-
-    assert 'Schnelldurchsicht' in result, str(result)
-
-
-def test_waiting_fastview_status(client, testdir, monkeypatch):
-    root = str(testdir)
-    create_validation_result(root)
-
-    with monkeypatch.context() as context:
-        context.setattr(configo, 'todo', lambda: root)
-        result = tests.content(client, '/waiting/fastview/status/12345678900')
-
-    assert 'title' in result, str(result)
-    assert 'pages' in result, str(result)
-    assert 'content' in result, str(result)
-    assert 'error' in result, str(result)
-    assert 'good' in result, str(result)
-    assert 'warning' in result, str(result)
-
-
-def test_waiting_fastview_status_failure(client, testdir, monkeypatch):
-    root = str(testdir)
-    create_validation_result(root)
-
-    with monkeypatch.context() as context:
-        context.setattr(configo, 'todo', lambda: root)
-        result = tests.content(client, '/waiting/fastview/status/abcdc')
-
-    assert '{}' in result, str(result)
