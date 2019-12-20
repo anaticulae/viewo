@@ -60,12 +60,23 @@ data = [{
 
 ]
 
+HEADLINES = {}
+
 function update_view(data) {
     for (let item of data) {
-        add_title_line(item)
-        add_content(item.content)
+        // Create headline only once. If exists update current state.
+        if (HEADLINES[item.title] == undefined) {
+            headline_row = add_title_line(item)
+            content = add_content(item.content)
+            HEADLINES[item.title] = (headline_row, content)
+        } else {
+            headline = HEADLINES[item.title][0]
+            update_title_line(headline, item)
+        }
+
     }
 }
+
 
 function add_title_line(item) {
     let view = document.getElementById("linter_table")
@@ -96,6 +107,7 @@ function add_title_line(item) {
         }
     })
     view.appendChild(headline_row)
+    return headline_row
 }
 
 function add_content(item) {
@@ -160,6 +172,11 @@ function add_content(item) {
     // hide common content
     content.classList.add('hidden')
     view.appendChild(tr)
+    return content
+}
+
+function update_title_line(headline, update) {
+
 }
 
 function add_newline() {
