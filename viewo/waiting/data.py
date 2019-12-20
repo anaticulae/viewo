@@ -13,10 +13,10 @@ import os
 import configo
 import utila
 
+from viewo.waiting import FASTVIEW
 from viewo.waiting import VERIFY
 from viewo.waiting import State
 from viewo.waiting import Status
-from viewo.waiting.fastview import fastview_result
 
 
 def jsonify(item: Status) -> str:
@@ -193,3 +193,12 @@ def copy_done(process: str) -> bool:
     if os.path.exists(ready):
         return True
     return False
+
+
+def fastview_result(process: str) -> str:
+    todo = configo.todo()
+    todo = os.path.join(todo, process)
+    fastview = os.path.join(todo, FASTVIEW)
+    if os.path.exists(fastview):
+        return fastview
+    return None
