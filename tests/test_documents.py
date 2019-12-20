@@ -7,14 +7,26 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import configo
+
 import tests
 import viewo.documents
 
 
-def test_documents_view(client):
+def test_documents_view_no_documents(client):
     result = tests.content(client, '/documents')
     assert len(result) > 300, str(result)
+    assert 'Keine Dokumente verfuegbar!' in result
     assert 'Fehler' not in result
+
+
+def test_documents_view(client, monkeypatch):
+    with monkeypatch.context() as context:
+        context.setattr(configo, 'todo', lambda: tests.EXAMPLE_TODO)
+        result = tests.content(client, '/documents')
+    assert len(result) > 300, str(result)
+    assert 'Keine Dokumente verfuegbar!' not in result, str(result)
+    assert 'Fehler' not in result, str(result)
 
 
 def test_sortable_date():
