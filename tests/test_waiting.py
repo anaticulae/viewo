@@ -157,3 +157,41 @@ def test_waiting_validation_result(client, testdir, monkeypatch):
 
     assert 'Pages' in result, str(result)
     assert 'Editor' in result, str(result)
+
+
+def test_waiting_fastview(client, testdir, monkeypatch):
+    root = str(testdir)
+    create_validation_result(root)
+
+    with monkeypatch.context() as context:
+        context.setattr(configo, 'todo', lambda: root)
+        result = tests.content(client, '/waiting/fastview/12345678900')
+
+    assert 'Schnelldurchsicht' in result, str(result)
+
+
+def test_waiting_fastview_status(client, testdir, monkeypatch):
+    root = str(testdir)
+    create_validation_result(root)
+
+    with monkeypatch.context() as context:
+        context.setattr(configo, 'todo', lambda: root)
+        result = tests.content(client, '/waiting/fastview/status/12345678900')
+
+    assert 'title' in result, str(result)
+    assert 'pages' in result, str(result)
+    assert 'content' in result, str(result)
+    assert 'error' in result, str(result)
+    assert 'good' in result, str(result)
+    assert 'warning' in result, str(result)
+
+
+def test_waiting_fastview_status_failure(client, testdir, monkeypatch):
+    root = str(testdir)
+    create_validation_result(root)
+
+    with monkeypatch.context() as context:
+        context.setattr(configo, 'todo', lambda: root)
+        result = tests.content(client, '/waiting/fastview/status/abcdc')
+
+    assert '{}' in result, str(result)
