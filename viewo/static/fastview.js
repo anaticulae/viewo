@@ -211,7 +211,7 @@ function loop(process) {
             downloaded = this.responseText
             downloaded = JSON.parse(downloaded)
 
-            update_view(downloaded)
+            update_view(downloaded.content)
             if (downloaded.status == 1) {
                 // process is currently running
                 setTimeout(() => loop(process), 3000);

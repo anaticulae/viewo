@@ -40,11 +40,11 @@ def jsonify(item: Status) -> str:
     return result
 
 
-def fastviewstatus_tojson(status: FastViewStatus) -> str:
-    if not status:
+def fastviewstatus_tojson(current: FastViewStatus) -> str:
+    if not current:
         return '{}'
-    result = []
-    for item in status:
+    items = []
+    for item in current:
         error = [str(item) for item in item.error]
         good = [str(item) for item in item.good]
         warning = [str(item) for item in item.warning]
@@ -57,7 +57,11 @@ def fastviewstatus_tojson(status: FastViewStatus) -> str:
                 'warning': warning,
             }
         }
-        result.append(raw)
+        items.append(raw)
+    result = {
+        'status': current.status.value,
+        'content': items,
+    }
     dumped = json.dumps(result)
     return dumped
 

@@ -86,14 +86,15 @@ class FastViewGroupStatus:
 @dataclasses.dataclass
 class FastViewStatus:
 
-    status: typing.List[FastViewGroupStatus] = \
+    status: State = State.running
+    content: typing.List[FastViewGroupStatus] = \
                                         dataclasses.field(default_factory=list)
 
     def __len__(self):
-        return len(self.status)
+        return len(self.content)
 
     def __getitem__(self, index):
-        return self.status[index]  # pylint:disable=E1136
+        return self.content[index]  # pylint:disable=E1136
 
     def append(self, item):
-        return self.status.append(item)
+        return self.content.append(item)  # pylint:disable=E1101

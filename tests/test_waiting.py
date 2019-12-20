@@ -72,7 +72,7 @@ def test_waiting_status_jsonify():
 
 def test_waiting_fastviewgroupstatus_jsonify():
     fastviewresult = viewo.waiting.FastViewStatus(
-        status=[
+        content=[
             viewo.waiting.FastViewGroupStatus(
                 title='Helmut in town',
                 pages='1-5',
