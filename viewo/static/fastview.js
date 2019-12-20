@@ -11,7 +11,6 @@ function openclose(selector) {
 }
 
 function openclose_item(selected) {
-    // selected = document.getElementById(selector)
     let before = selected.classList.length
     selected.classList.remove('hidden')
     if (selected.classList.length == before) {
@@ -30,6 +29,7 @@ function add_openclose_children(selected) {
     })
 }
 
+// TODO: Example data - remove later
 data = [{
     title: 'Titelblatt',
     pages: '5-6',
@@ -64,7 +64,6 @@ function update_view(data) {
     for (let item of data) {
         add_title_line(item)
         add_content(item.content)
-        // add_newline()
     }
 }
 
@@ -178,12 +177,10 @@ function add_newline() {
 
 function add_li(parent, text, style) {
     let node = document.createElement('li')
-    // let textnode = document.createTextNode(text)
     node.innerHTML = text
     if (style) {
         node.classList.add(style)
     }
-    // node.appendChild(textnode)
     parent.appendChild(node)
     return node
 }
@@ -205,4 +202,26 @@ function add_ol(parent, style) {
     parent.appendChild(node)
 
     return node
+}
+
+function loop(process) {
+    let ajax = new XMLHttpRequest()
+    ajax.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            downloaded = this.responseText
+            downloaded = JSON.parse(downloaded)
+
+            update_view(downloaded)
+            if (downloaded.status == 1) {
+                // process is currently running
+                setTimeout(() => loop(process), 3000);
+            }
+        }
+    }
+    ajax.open("GET", 'http://localhost:5000/waiting/fastview/status/' + process, true)
+    ajax.send()
+}
+
+function onload(process) {
+    loop(process)
 }
