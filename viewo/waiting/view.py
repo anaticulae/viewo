@@ -9,6 +9,7 @@
 import flask
 
 import viewo.waiting.data
+import viewo.waiting.fastview
 
 waiting_ = flask.Blueprint('waiting', __name__)  # pylint:disable=C0103
 
@@ -56,8 +57,8 @@ def waiting_status(process: str):
 
 @waiting_.route('/waiting/fastview/status/<string:process>')
 def waiting_fastview_status(process: str):
-    loaded = viewo.waiting.data.load_fastview_result(process)
+    loaded = viewo.waiting.fastview.load_fastview_result(process)
     if loaded is None:
         return '{}'
-    dumped = viewo.waiting.data.fastviewstatus_tojson(loaded)
+    dumped = viewo.waiting.fastview.fastviewstatus_tojson(loaded)
     return dumped

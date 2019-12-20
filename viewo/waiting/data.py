@@ -13,12 +13,10 @@ import os
 import configo
 import utila
 
-from viewo.waiting import FASTVIEW
 from viewo.waiting import VERIFY
-from viewo.waiting import FastViewGroupStatus
-from viewo.waiting import FastViewStatus
 from viewo.waiting import State
 from viewo.waiting import Status
+from viewo.waiting.fastview import fastview_result
 
 
 def jsonify(item: Status) -> str:
@@ -38,32 +36,6 @@ def jsonify(item: Status) -> str:
         states.append(state.value)
     result = json.dumps(raw)
     return result
-
-
-def fastviewstatus_tojson(current: FastViewStatus) -> str:
-    if not current:
-        return '{}'
-    items = []
-    for item in current:
-        error = [str(item) for item in item.error]
-        good = [str(item) for item in item.good]
-        warning = [str(item) for item in item.warning]
-        raw = {
-            'title': item.title,
-            'pages': item.pages,
-            'content': {
-                'error': error,
-                'good': good,
-                'warning': warning,
-            }
-        }
-        items.append(raw)
-    result = {
-        'status': current.status.value,
-        'content': items,
-    }
-    dumped = json.dumps(result)
-    return dumped
 
 
 def loads(content: str) -> Status:
@@ -204,37 +176,6 @@ def load_validation_result(process: str) -> dict:
     data = utila.file_read(data)
     loaded = json.loads(data)
     return loaded
-
-
-def load_fastview_result(process: str) -> FastViewStatus:
-    path = fastview_result(process)
-    if path is None:
-        return None
-    groups = [
-        item for item in os.listdir(path)
-        if os.path.isdir(os.path.join(path, item))
-    ]
-    groups = sorted(groups)
-    result = FastViewStatus()
-    for group in groups:
-        if not group[0:2].isnumeric():
-            # check that content folder start with number which is 2
-            # digits longs.
-            # Pattern [0-9]{2}\_\w+
-            continue
-        title = group[3:]
-        item = FastViewGroupStatus(title=title)
-        result.append(item)
-    return result
-
-
-def fastview_result(process: str) -> str:
-    todo = configo.todo()
-    todo = os.path.join(todo, process)
-    fastview = os.path.join(todo, FASTVIEW)
-    if os.path.exists(fastview):
-        return fastview
-    return None
 
 
 def result_result(process: str) -> str:

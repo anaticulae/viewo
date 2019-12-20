@@ -14,6 +14,7 @@ import utila
 
 import tests
 import viewo.waiting
+import viewo.waiting.fastview
 
 
 def create_validation_result(path: str):
@@ -81,7 +82,7 @@ def test_waiting_fastviewgroupstatus_jsonify():
                 warning=[],
             )
         ],)
-    json = viewo.waiting.data.fastviewstatus_tojson(fastviewresult)
+    json = viewo.waiting.fastview.fastviewstatus_tojson(fastviewresult)
     assert 'pages' in json
     assert 'title' in json
     assert '"Mister good one."' in json
