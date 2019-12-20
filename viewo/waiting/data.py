@@ -15,6 +15,7 @@ import utila
 
 from viewo.waiting import FASTVIEW
 from viewo.waiting import VERIFY
+from viewo.waiting import FastViewGroupStatus
 from viewo.waiting import FastViewStatus
 from viewo.waiting import State
 from viewo.waiting import Status
@@ -199,6 +200,23 @@ def load_validation_result(process: str) -> dict:
     data = utila.file_read(data)
     loaded = json.loads(data)
     return loaded
+
+
+def load_fastview_result(process: str) -> FastViewStatus:
+    path = fastview_result(process)
+    if path is None:
+        return None
+    groups = [
+        item for item in os.listdir(path)
+        if os.path.isdir(os.path.join(path, item))
+    ]
+    groups = sorted(groups)
+    result = FastViewStatus()
+    for group in groups:
+        title = group[3:]
+        item = FastViewGroupStatus(title=title)
+        result.append(item)
+    return result
 
 
 def fastview_result(process: str) -> str:
