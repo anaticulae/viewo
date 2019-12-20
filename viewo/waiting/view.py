@@ -39,7 +39,7 @@ def waiting_view_validation(process):
 
 
 @waiting_.route('/waiting/status/<string:process>')
-def waiting_status(process):
+def waiting_status(process: str):
     try:
         process = str(process)
     except UnicodeDecodeError:
@@ -50,4 +50,13 @@ def waiting_status(process):
     if not loaded:
         return '{}'
     dumped = viewo.waiting.data.jsonify(loaded)
+    return dumped
+
+
+@waiting_.route('/waiting/fastview/status/<string:process>')
+def waiting_fastview_status(process: str):
+    loaded = viewo.waiting.data.load_fastview_result(process)
+    if loaded is None:
+        return '{}'
+    dumped = viewo.waiting.data.fastviewstatus_tojson(loaded)
     return dumped
