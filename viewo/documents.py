@@ -20,7 +20,6 @@ def view_documents():
     todo, ready = scan(common)
 
     docs = todo + ready
-
     # sort by date
     docs = sorted(docs, key=lambda item: sortable_date(item.date), reverse=True)
     return render_template('documents/index.html', documents=docs)

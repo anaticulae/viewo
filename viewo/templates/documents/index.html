@@ -25,12 +25,25 @@
     <tbody>
         {% for row in documents %}
         <tr>
-            {% if row['result'] %}
+            {% if row['result'] == 'failed' %}
+            {#
+                process failed, only fast view is visible
+                change background to red
+             #}
+            <td class="failed">{{row['title']}}</td>
+            <td class="date failed">{{row['date']}}</td>
+            <td class="score failed">failed</td>
+            <td class="status failed"><a href="waiting/{{row['index']}}">failed</a></td>
+
+            {% elif row['result'] %}
+            {# process succeed #}
             <td><a href="result/{{row['index']}}">{{row['title']}}</a></td>
             <td class="date">{{row['date']}}</td>
             <td class="score">{{row['result']}}%</td>
             <td class="status"><a href="result/{{row['index']}}">view</a></td>
+
             {% else %}
+            {# analysis is running #}
             <td>{{row['title']}}</td>
             <td class="date">{{row['date']}}</td>
             <td class="score">-</td>

@@ -11,7 +11,7 @@ valid document view
 documents
 ---------
 
-* [ ] show that document analysis is failed/ change link
+* [x] show that document analysis is failed/ change link
 
 fastview
 --------

@@ -98,7 +98,10 @@ input.submit {
 }
 .status_header{
     text-align:center;
+}
 
+.failed{
+    background: rgb(255, 206, 206)
 }
 
 html {
