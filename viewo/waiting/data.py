@@ -217,6 +217,11 @@ def load_fastview_result(process: str) -> FastViewStatus:
     groups = sorted(groups)
     result = FastViewStatus()
     for group in groups:
+        if not group[0:2].isnumeric():
+            # check that content folder start with number which is 2
+            # digits longs.
+            # Pattern [0-9]{2}\_\w+
+            continue
         title = group[3:]
         item = FastViewGroupStatus(title=title)
         result.append(item)
