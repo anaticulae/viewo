@@ -43,6 +43,7 @@ import enum
 import typing
 
 VERIFY = 'pdfinfo.json'
+FASTVIEW = 'fastview'
 
 
 class State(enum.Enum):

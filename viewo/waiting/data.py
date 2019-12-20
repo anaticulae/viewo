@@ -13,6 +13,7 @@ import os
 import configo
 import utila
 
+from viewo.waiting import FASTVIEW
 from viewo.waiting import VERIFY
 from viewo.waiting import FastViewStatus
 from viewo.waiting import State
@@ -38,11 +39,11 @@ def jsonify(item: Status) -> str:
     return result
 
 
-def fastviewstatus_tojson(items: FastViewStatus) -> str:
-    if not items:
+def fastviewstatus_tojson(status: FastViewStatus) -> str:
+    if not status:
         return '{}'
     result = []
-    for item in items:
+    for item in status:
         error = [str(item) for item in item.error]
         good = [str(item) for item in item.good]
         warning = [str(item) for item in item.warning]
@@ -203,7 +204,7 @@ def load_validation_result(process: str) -> dict:
 def fastview_result(process: str) -> str:
     todo = configo.todo()
     todo = os.path.join(todo, process)
-    fastview = os.path.join(todo, 'fastview')
+    fastview = os.path.join(todo, FASTVIEW)
     if os.path.exists(fastview):
         return fastview
     return None
