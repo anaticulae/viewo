@@ -1,58 +1,14 @@
 {% extends 'base.html' %}
 
+
 {% block content %}
+
 <h2>Result</h2>
 
-<style>
-    .nospace {
-        padding: 0px;
-        margin: 0px;
-    }
+<link rel="stylesheet" type="text/css" media="screen"
+    href="{{ url_for('static', filename='result.css') }}">
+<script src="{{ url_for('static', filename='result.js') }}"></script>
 
-    .major {
-        width: 95%;
-        background-color: rgb(192, 187, 187);
-        display: inline-block;
-        border: 1px solid black;
-        margin: 2px;
-        padding: 4px;
-    }
-
-    .minor {
-        width: 95%;
-        background-color: gainsboro;
-        display: inline-block;
-        border: 1px solid black;
-        margin: 2px;
-        padding: 4px;
-    }
-
-    .feature {
-        width: 95%;
-        background-color: white;
-        display: inline-block;
-        border: 1px solid black;
-        margin: 2px;
-        padding: 4px;
-    }
-
-    .feature_headline {
-        width: 98%;
-        padding: 4px;
-        background-color: lightgray;
-        display: inline-block;
-    }
-
-    .hidden {
-        display: none;
-    }
-
-
-    .imageheader {
-        float: right;
-    }
-
-</style>
 <ul id="overview" class="nospace">
     {% for major_id, major in result %}
 
@@ -60,29 +16,24 @@
     <li class="major" onclick="show('{{major['id']}}')">
         {% else %}
     <li class="major">
-
         {% endif %}
 
         <img id="{{major['id']}}plusminus"
-            src="{{url_for('static',filename='images/result/listadd.png')}}"
-            width="16" />
+            src="{{url_for('static',filename='images/result/listadd.png')}}" width="16" />
         <u>{{major['title']}}</u>
         <span class="imageheader" width="100%" background="yellow">
             <a href="{{url_for('result.view_result')}}/{{docid}}/r/{{major_id}}">
                 {{major['right']}}
-                <img src="{{url_for('static',filename='images/result/right.png')}}"
-                    width="16" />
+                <img src="{{url_for('static',filename='images/result/right.png')}}" width="16" />
             </a>
             <a href="{{url_for('result.view_result')}}/{{docid}}/w/{{major_id}}">
                 {{major['wrong']}}
-                <img src="{{url_for('static',filename='images/result/wrong.png')}}"
-                    width="16" />
+                <img src="{{url_for('static',filename='images/result/wrong.png')}}" width="16" />
             </a>
             {% if major['question'] %}
             <a href="{{url_for('result.view_result')}}/{{docid}}/q/{{major_id}}">
                 {{major['question']}}
-                <img src="{{url_for('static',filename='images/result/question.png')}}"
-                    width="16" />
+                <img src="{{url_for('static',filename='images/result/question.png')}}" width="16" />
             </a>
             {% endif %}
         </span>
