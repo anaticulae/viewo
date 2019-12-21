@@ -10,6 +10,7 @@
 import os
 
 import configo
+import pytest
 import utila
 
 import viewo.waiting
@@ -37,6 +38,11 @@ def test_waiting_status_jsonify():
     json = viewo.waiting.data.jsonify(status)
     assert 'states' in json
     assert 'status' in json
+
+
+def test_waiting_status_fromstr():
+    with pytest.raises(ValueError):
+        viewo.waiting.State.fromstr('')
 
 
 def test_waiting_status_invalid(client):

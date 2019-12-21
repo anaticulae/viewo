@@ -38,6 +38,7 @@ Waiting view
 
 """
 
+import contextlib
 import dataclasses
 import enum
 import typing
@@ -54,12 +55,12 @@ class State(enum.Enum):
 
     @staticmethod
     def fromstr(item: str):
-        # TODO: DIRTY, replace
-        item = int(item)
+        with contextlib.suppress(ValueError):
+            item = int(item)
         for state in State:
             if state.value == item:
                 return state
-        return None
+        raise ValueError(f'could not create State from `{item}`')
 
 
 @dataclasses.dataclass
