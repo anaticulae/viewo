@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" media="screen"
+    href="{{ url_for('static', filename='resultview.css') }}">
+<script src="{{ url_for('static', filename='resultview.js') }}"></script>
+
+<style>
+</style>
+
+<h2>Gesamtdurchsicht</h2>
+
+<div id="error_page_selector">
+    <p>Seite:</p>
+    <ul id="error_page_selector_list"></ul>
+</div>
+
+<main>
+    <aside id="error">
+        <ul id="error_list">
+        </ul>
+        <p id="error_navigator">
+            <button type="button" onclick="javascript:previous(3)">Previous</button>
+            <button type="button" onclick="javascript:next(3)">Next</button>
+        </p>
+        <div id="error_content">
+            <h4 id="error_message_headline">Titleseite enthaelt keine Ueberschrift</h4>
+            <pre id="error_message"></pre>
+        </div>
+    </aside>
+    <article>
+        <pre id="error_page_content">Could not reach Server.</pre>
+    </article>
+</main>
+
+<footer>
+    <p>
+        <a href="/waiting/{{ process }}">zum Wartebereich</a>
+    </p>
+</footer>
+
+<script type="text/javascript">
+    onload("{{ process }}")
+</script>
+
+{% endblock %}
