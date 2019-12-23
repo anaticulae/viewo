@@ -2,6 +2,43 @@
 
 Every noteable change is logged here.
 
+## v0.6.0
+
+### Feature
+
+* harden result view against malformed folder structure (f1d936cbf3e2)
+* connect web service and view of result view (502583c04ddf)
+* add web service to deliver result view status (0ad6f9482de7)
+* add result view and link to documents view (0e379d4c2e2a)
+* use modern html syntax (35b652db0a8c)
+* raise ValueError if creating illegal state (1adbe765dcd1)
+* change document list item if analysis fails (ca3cfe072b75)
+* extend loader to load linter result (63c314f9dbcb)
+* update fast view on content change (b0799c08dfa2)
+* filter non matching directory names (af099b3c4389)
+* extend FastViewStatus with running status (0078c6bc2a49)
+* connect view with web service data delivery (5d268b5a9038)
+* add web service to deliver current FastViewStatus (73aca2acef91)
+* add method to load FastViewStatus (9da81ff7ce33)
+* add FastViewStatus to store status of FastView-Process (4538919c1362)
+* link fast view into waiting room (d8a2044c7279)
+* add draft for fastview (f95529e56854)
+* extend status state machine of fast view and result view (3b47c1d6d682)
+* enable link to visit fast view and result view (72bd280bc3c9)
+* extend validation result view (8e611fa7dba9)
+* enable validation result view after finishing validation (d22292039fa5)
+* add validation result view (b93ce3540b67)
+
+### Fix
+
+* validate html output (2f5c5418db03)
+* check only todo instead of both folder (666081bfc2b3)
+* correct path to results to view (9187aac64110)
+* fix link when being on sub page (f43a47c5369e)
+* move method to solve cyclic imports (acacdaf4b18a)
+* remove forbidden body statement (bc433138bd4c)
+* rename Blueprints to avoid problems with importing (9f5712325e5c)
+
 ## v0.5.0
 
 ### Feature
