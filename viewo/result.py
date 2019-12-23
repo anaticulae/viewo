@@ -6,6 +6,7 @@
 # use or distribution is an offensive act against international law and may
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
+import contextlib
 from contextlib import suppress
 from os import scandir
 from os.path import exists
@@ -144,7 +145,9 @@ def structure(path: str):
                 if content:
                     this['content'] = content
 
-                parent.append((int(index_), this))
+                with contextlib.suppress(ValueError):
+                    # TODO: REMOVE LATER
+                    parent.append((int(index_), this))
 
                 go_deep(join(path, entry.name), children, level + 1)
                 # if children:
