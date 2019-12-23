@@ -43,6 +43,8 @@ import dataclasses
 import enum
 import typing
 
+import protocol
+
 VERIFY = 'pdfinfo.json'
 FASTVIEW = 'fastview'
 
@@ -99,3 +101,23 @@ class FastViewStatus:
 
     def append(self, item):
         return self.content.append(item)  # pylint:disable=E1101
+
+
+@dataclasses.dataclass
+class ResultPageView:
+
+    page: int = None
+    html: str = None
+    findings: protocol.Findings = dataclasses.field(default_factory=list)
+
+    def __len__(self):
+        return len(self.findings)
+
+    def __getitem__(self, index):
+        return self.findings[index]  # pylint:disable=E1136
+
+    def append(self, item):
+        return self.findings.append(item)  # pylint:disable=E1101
+
+
+ResultPageViews = typing.List[ResultPageView]
