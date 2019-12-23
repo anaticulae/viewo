@@ -105,7 +105,6 @@ class FastViewStatus:
 
 @dataclasses.dataclass
 class ResultPageView:
-
     page: int = None
     html: str = None
     findings: protocol.Findings = dataclasses.field(default_factory=list)

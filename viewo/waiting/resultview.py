@@ -37,7 +37,7 @@ def load_resultview(path: str) -> viewo.waiting.ResultPageViews:
     for group in grouped:
         item = viewo.waiting.ResultPageView(
             page=group.page,
-            html='Empy Page',
+            html='Empty Page',
             findings=group.content,
         )
         result.append(item)
@@ -61,5 +61,9 @@ def tojson(items: viewo.waiting.ResultPageViews) -> str:
             'html': item.html,
             'findings': findings,
         })
-    dumped = json.dumps(result)
+    raw = {
+        'status': 0,
+        'content': result,
+    }
+    dumped = json.dumps(raw)
     return dumped

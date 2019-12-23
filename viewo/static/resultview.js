@@ -1,33 +1,4 @@
-CONTENT = [
-    {
-        'number': 5,
-        'html': 'First line\n Second Line\nThird Line',
-        'error': [
-            {
-                'title': 'Das Dokument is sowas von kaputt.',
-                'message': 'So geht das aber gar nicht\nJeha',
-            },
-            {
-                'title': 'Lalalala alal laal lal al',
-                'message': 'So geht das aber gar nicht\nJeha',
-            },
-            {
-                'title': '1337 1337 1337',
-                'message': 'So geht das \nen\n\n\nJeha',
-            },
-        ],
-    },
-    {
-        'number': 9,
-        'html': 'First line\n asdasd323223Second Line\nThird Line',
-        'error': [],
-    },
-    {
-        'number': 17,
-        'html': 'asdas dadds saFirst line\n asdasd323223Second Line\nThird Line',
-        'error': [],
-    },
-]
+CONTENT = []
 
 error_page = null
 error_selected = null
@@ -44,7 +15,7 @@ function show_page(page) {
     update_error_page_selector(page)
     mark_selected_page(page)
 
-    if (content.error.length == 0) {
+    if (content.findings.length == 0) {
         // disable error bar if no error is provided
         document.getElementById("error").classList.add('hidden')
     } else {
@@ -80,7 +51,8 @@ function show(id) {
     show_error_message(error_selected)
 }
 
-function next(max_element) {
+function next() {
+    max_element = CONTENT[error_page].findings.length
     let next_id = error_selected + 1
     if (next_id < max_element) {
         show(next_id)
@@ -99,7 +71,7 @@ function update_page_selector() {
     // TODO: CHECK FOR BETTER REMOVEMENT
     error_page_list.innerHTML = ''
     for (let id in CONTENT) {
-        let item = CONTENT[id].number
+        let item = CONTENT[id].page + 1
         add_li_button(error_page_list, id, item)
     }
 }
@@ -108,7 +80,7 @@ function update_error_page_selector(page) {
     let error_page_selector = document.getElementById('error_list')
     // TODO: CHECK FOR BETTER REMOVEMENT
     error_page_selector.innerHTML = ''
-    let error = CONTENT[page].error
+    let error = CONTENT[page].findings
     for (let index in error) {
         let item = error[index]
         add_li_selector(error_page_selector, index, item.title)
@@ -124,12 +96,12 @@ function update_error_page_selector(page) {
 
 function show_error_message(selected) {
     let message = CONTENT[error_page]
-    if (message == null || message.error.length <= selected) {
+    if (message == null || message.findings.length <= selected) {
         document.getElementById('error_message').innerHTML = ''
         document.getElementById('error_message_headline').innerHTML = ''
         return
     }
-    message = message.error[selected]
+    message = message.findings[selected]
     document.getElementById('error_message').innerHTML = message.message
     document.getElementById('error_message_headline').innerHTML = message.title
 }
@@ -153,10 +125,29 @@ function add_li_selector(parent, page, text) {
 }
 
 function onload(process) {
-    update_content()
+    loop(process)
 }
 
-function update_content() {
+function update_view(content) {
+    CONTENT = content
     update_page_selector()
     show_page(0)
+}
+
+function loop(process) {
+    let ajax = new XMLHttpRequest()
+    ajax.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            downloaded = this.responseText
+            downloaded = JSON.parse(downloaded)
+
+            update_view(downloaded.content)
+            if (downloaded.status == 1) {
+                // process is currently running
+                setTimeout(() => loop(process), 3000);
+            }
+        }
+    }
+    ajax.open("GET", 'http://localhost:5000/waiting/resultview/status/' + process, true)
+    ajax.send()
 }
