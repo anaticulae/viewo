@@ -21,7 +21,7 @@ fastview
 result view
 -----------
 
-* [ ] add process which deliver continously new results
+* [x] add process which deliver continously new results
 
 code quality
 ------------

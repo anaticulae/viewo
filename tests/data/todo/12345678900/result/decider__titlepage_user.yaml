@@ -1,0 +1,33 @@
+- !!python/object:protocol.finding.Finding
+  active: true
+  confidence: 1.0
+  location: !!python/object:protocol.finding.Location
+    page: 0
+    shortcut: p
+    value: null
+  msgid: E1200
+  number: 0
+  solution: !!python/object:protocol.solution.Text
+    description: "Das Dokument enthaelt keine Titelseite. \n\nFuegen Sie eine Titelseite\
+      \ zum Dokument hinzu."
+    msgid: E1200
+    number: -1
+    status: !!python/object/apply:protocol.solution.ProblemStatus
+    - 1
+    title: Dokument enhaelt keine Titelseite
+- !!python/object:protocol.finding.Finding
+  active: true
+  confidence: 1.0
+  location: !!python/object:protocol.finding.Location
+    page: 5
+    shortcut: p
+    value: null
+  msgid: E1202
+  number: 1
+  solution: !!python/object:protocol.solution.Text
+    description: "Der Inhalt wurde ueber den Rand geschrieben.\n\nEnde."
+    msgid: E1200
+    number: -1
+    status: !!python/object/apply:protocol.solution.ProblemStatus
+    - 1
+    title: Inhalt geht uber den Rand
