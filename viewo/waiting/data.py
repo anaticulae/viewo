@@ -166,8 +166,8 @@ def load_validation_result(process: str) -> dict:
     path = None
     if os.path.exists(todo):
         path = todo
-    if os.path.exists(ready):
-        path = ready
+    # if os.path.exists(ready):
+    #     path = ready
 
     if path is None:
         # invalid process
