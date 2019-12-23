@@ -29,37 +29,6 @@ function add_openclose_children(selected) {
     })
 }
 
-// TODO: Example data - remove later
-data = [{
-    title: 'Titelblatt',
-    pages: '5-6',
-    content: {
-        'error': ['Hello', 'My Fried', 'Sambuka'],
-        'warning': ['WW', 'DD', 'WW', 1, 2, 3, 4, 5, 6, 7],
-        'good': ['Hey', ' My DD']
-    }
-},
-{
-    title: 'Inhaltsverzeichnis',
-    pages: '1-3',
-    content: {
-        'error': ['Hello 123', 'My Fried', 'Sambuka'],
-        'warning': ['WW 123', 'DD', 'WW'],
-        'good': ['Hey 123', ' My DD', 1, 23, 4, 5]
-    }
-},
-{
-    title: 'Lala Mamaba',
-    pages: '1-3',
-    content: {
-        'error': [],
-        'warning': ['WW 123', 'DD', 'WW'],
-        'good': []
-    }
-}
-
-]
-
 HEADLINES = {}
 
 function update_view(data) {
@@ -73,10 +42,8 @@ function update_view(data) {
             headline = HEADLINES[item.title][0]
             update_title_line(headline, item)
         }
-
     }
 }
-
 
 function add_title_line(item) {
     let view = document.getElementById("linter_table")
@@ -176,7 +143,7 @@ function add_content(item) {
 }
 
 function update_title_line(headline, update) {
-
+    // TODO: NOT IMPLEMENTED
 }
 
 function add_newline() {
@@ -187,10 +154,7 @@ function add_newline() {
     td.innerHTML = "&nbsp;"
     newline.appendChild(td)
     view.appendChild(newline)
-
 }
-
-
 
 function add_li(parent, text, style) {
     let node = document.createElement('li')
