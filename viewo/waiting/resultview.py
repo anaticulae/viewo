@@ -16,8 +16,8 @@ import viewo.waiting
 
 
 def load_resultview_result(process: str) -> str:
-    ready = configo.ready()
-    result = os.path.join(ready, process)
+    todo = configo.todo()
+    result = os.path.join(todo, process, 'result')
     if not os.path.exists(result):
         return None
     return load_resultview(result)
