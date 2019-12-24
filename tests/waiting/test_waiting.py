@@ -50,7 +50,7 @@ def test_waiting_status_invalid(client):
     assert 'Fehler' in result
 
 
-def test_waiting_status_invalid_ressource(client):
+def test_waiting_status_invalid_resource(client):
     result = content(client, '/waiting/status/1337')
     assert result == '{}'
 

@@ -32,7 +32,6 @@ def test_waiting_fastview_status_failure(valid, client, monkeypatch):  # pylint:
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
         result = content(client, '/waiting/fastview/status/abcdc')
-
     assert '{}' in result, str(result)
 
 
