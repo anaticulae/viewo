@@ -2,6 +2,12 @@
 
 Every noteable change is logged here.
 
+## v0.6.1
+
+### Fix
+
+* change style of error content box (122ad3282e3d)
+
 ## v0.6.0
 
 ### Feature
