@@ -11,24 +11,20 @@
 import glob
 import itertools
 import os
-from os import chdir
-from os.path import abspath
-from os.path import dirname
-from os.path import join
-from re import search
+import re
 
-from setuptools import setup
+import setuptools
 
-ROOT = abspath(dirname(__file__))
+ROOT = os.path.abspath(os.path.dirname(__file__))
 UTF8 = 'utf8'
 
-with open(join(ROOT, 'README.md'), mode='rt', encoding=UTF8) as fp:
+with open(os.path.join(ROOT, 'README.md'), mode='rt', encoding=UTF8) as fp:
     README = fp.read()
 
-with open(join(ROOT, 'viewo/__init__.py'), mode='rt', encoding=UTF8) as fp:
-    VERSION = search(r'__version__ = \'(.*?)\'', fp.read()).group(1)
+with open(os.path.join(ROOT, 'viewo/__init__.py'), mode='rt', encoding=UTF8) as fp: # yapf:disable
+    VERSION = re.search(r'__version__ = \'(.*?)\'', fp.read()).group(1)
 
-with open(join(ROOT, "requirements.txt"), mode='rt', encoding=UTF8) as fp:
+with open(os.path.join(ROOT, "requirements.txt"), mode='rt', encoding=UTF8) as fp: # yapf:disable
     INSTALL_REQUIRES = [
         line for line in fp.readlines() if line and '#' not in line
     ]
@@ -53,8 +49,8 @@ def datafiles():
 
 if __name__ == "__main__":
     # allow setup.py to run from another directory
-    chdir(ROOT)
-    setup(
+    os.chdir(ROOT)
+    setuptools.setup(
         author='Helmut Konrad Fahrendholz',
         author_email='info@checkitweg.de',
         data_files=datafiles(),
@@ -64,8 +60,6 @@ if __name__ == "__main__":
         long_description=README,
         name='viewo',
         platforms='any',
-        setup_requires=[],
-        tests_require=[],
         url='https://dev.package.checkitweg.de/viewo',
         version=VERSION,
         zip_safe=False,  # create 'zip'-file if True. Don't do it!
