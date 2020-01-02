@@ -88,6 +88,8 @@ class HtmlLookup:
         self.data = []
         if os.path.exists(path):
             self.data = load_htmlview(path)
+        else:
+            utila.error(f'html lookup: {path} does not exists.')
 
     def __getitem__(self, index):
         try:
