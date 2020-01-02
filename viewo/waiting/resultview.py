@@ -11,6 +11,7 @@ import os
 
 import configo
 import protocol
+import utila
 
 import viewo.waiting
 
@@ -34,10 +35,13 @@ def load_resultview(path: str) -> viewo.waiting.ResultPageViews:
     grouped = protocol.bylocation(findings)
 
     result = []
+    htmlpath = os.path.join(path, '../view')
+    html = HtmlLookup(htmlpath)
     for group in grouped:
+        content = html[group.page]
         item = viewo.waiting.ResultPageView(
             page=group.page,
-            html='Empty Page',
+            html=content if content else '',
             findings=group.content,
         )
         result.append(item)
@@ -67,3 +71,26 @@ def tojson(items: viewo.waiting.ResultPageViews) -> str:
     }
     dumped = json.dumps(raw)
     return dumped
+
+
+def load_htmlview(path: str) -> list:
+    assert os.path.exists(path), str(path)
+    content = [
+        utila.file_read(os.path.join(path, item))
+        for item in sorted(os.listdir(path))
+    ]
+    return content
+
+
+class HtmlLookup:
+
+    def __init__(self, path):
+        self.data = []
+        if os.path.exists(path):
+            self.data = load_htmlview(path)
+
+    def __getitem__(self, index):
+        try:
+            return self.data[index]
+        except IndexError:
+            return None
