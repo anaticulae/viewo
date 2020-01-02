@@ -24,12 +24,12 @@ maintenance
 
 * [ ] automate test data generation
 
-* [ ] fix setup.py to deliver templates in setup process
+* [x] fix setup.py to deliver templates in setup process
 
 javascript
 ----------
 
-* [ ] remove hard codet links to web services
+* [ ] remove hard coded links to web services
 
 code quality
 ------------

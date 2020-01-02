@@ -8,13 +8,15 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import glob
+import itertools
+import os
 from os import chdir
 from os.path import abspath
 from os.path import dirname
 from os.path import join
 from re import search
 
-from setuptools import find_packages
 from setuptools import setup
 
 ROOT = abspath(dirname(__file__))
@@ -33,11 +35,20 @@ with open(join(ROOT, "requirements.txt"), mode='rt', encoding=UTF8) as fp:
 
 
 def datafiles():
-    return [('.', [
+    files = glob.glob('viewo/**/**.*', recursive=True)
+    collected = [
+        item for item in files
+        if not any([item.endswith(ext) for ext in ['py', 'pyc']])
+    ]
+    grouped = itertools.groupby(collected, key=lambda x: os.path.split(x)[0])
+    result = [(item[0], list(item[1])) for item in grouped]
+
+    result += ('.', [
         'CHANGELOG.md',
         'README.md',
         'requirements.txt',
-    ])]
+    ]),
+    return result
 
 
 if __name__ == "__main__":
@@ -63,5 +74,8 @@ if __name__ == "__main__":
             'Programming Language :: Python :: 3.7',
             'Programming Language :: Python :: 3.8',
         ],
-        packages=find_packages(),
+        packages=[
+            'viewo',
+            'viewo.waiting',
+        ],
     )
