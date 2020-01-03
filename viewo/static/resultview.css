@@ -55,6 +55,7 @@ aside {
     border: 1px solid black;
     background: white;
     text-align: left;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 #error_content h4 {
