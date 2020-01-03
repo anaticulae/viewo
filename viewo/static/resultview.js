@@ -2,6 +2,7 @@ CONTENT = []
 
 error_page = null
 error_selected = null
+error_pages_only = true
 
 function show_page(page) {
     let content = CONTENT[page]
@@ -71,6 +72,13 @@ function update_page_selector() {
     // TODO: CHECK FOR BETTER REMOVEMENT
     error_page_list.innerHTML = ''
     for (let id in CONTENT) {
+        if (error_pages_only) {
+            // skip pages which contains no error
+            let no_findings = CONTENT[id].findings.length == 0
+            if (no_findings) {
+                continue
+            }
+        }
         let item = CONTENT[id].page + 1
         add_li_button(error_page_list, id, item)
     }
@@ -150,4 +158,16 @@ function loop(process) {
     }
     ajax.open("GET", '/waiting/resultview/status/' + process, true)
     ajax.send()
+}
+
+function toggle_pages() {
+    let toggle = document.getElementById('error_page_selector_toggle')
+    if (error_pages_only) {
+        error_pages_only = false
+        toggle.innerText = 'hide'
+    } else {
+        error_pages_only = true
+        toggle.innerText = 'show'
+    }
+    update_page_selector()
 }

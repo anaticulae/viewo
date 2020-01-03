@@ -12,8 +12,28 @@
 <h2>Gesamtdurchsicht</h2>
 
 <div id="error_page_selector">
-    <p>Seite:</p>
-    <ul id="error_page_selector_list"></ul>
+    <!-- TODO: sooo dirty -->
+    <table width="100%">
+        <tr>
+            <td>
+                <p>Seite:</p>
+            </td>
+            <td width="95%">
+                <ul id="error_page_selector_list"></ul>
+            </td>
+            <td style="min-width:120px;">
+                <!-- toggle page selection view -->
+                <button type="button" id="error_page_selector_toggle"
+                    onclick="javascript:toggle_pages()">show</button>
+                <!-- previous page -->
+                <button type="button">&lt;</button>
+                <!-- next page -->
+                <button type="button">&gt;</button>
+            </td>
+        </tr>
+    </table>
+    <p>
+    </p>
 </div>
 
 <main>
