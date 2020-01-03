@@ -10,6 +10,13 @@ result view
 
 * [x] add button to visit next/previous page
 
+queuemo
+-------
+
+* [ ] Ensure to connect service - move logic of creating and catching result
+ resources to link package. Build an common API.
+
+
 code quality
 ------------
 
