@@ -8,11 +8,16 @@ result view
 
 * [ ] add toogle to switch view between all pages and erroneous pages
 
+* [ ] add button to visit next/previous page
+
 code quality
 ------------
 
 before
 ~~~~~~
+
+* Total coverage: 90.98%
+* Your code has been rated at 9.93/10
 
 after
 ~~~~~

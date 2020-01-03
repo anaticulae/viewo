@@ -33,8 +33,11 @@ code quality
 Before
 ~~~~~~
 
-* Your code has been rated at 9.92/10
 * Total coverage: 91.73%
+* Your code has been rated at 9.92/10
 
 After
 ~~~~~
+
+* Total coverage: 90.98%
+* Your code has been rated at 9.93/10
