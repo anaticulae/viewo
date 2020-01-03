@@ -14,15 +14,8 @@ documents view
 
 * [x] deliver content for selected error page in /waiting/resultview
 
-queuemo
--------
-
-* [ ] ensure to connect service
-
 maintenance
 -----------
-
-* [ ] automate test data generation
 
 * [x] fix setup.py to deliver templates in setup process
 
