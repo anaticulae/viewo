@@ -19,8 +19,6 @@ from werkzeug.utils import secure_filename
 
 upload_ = Blueprint('upload', __name__)  # pylint:disable=invalid-name
 
-FOLDER_LENGTH = 10
-
 
 @upload_.route('/upload', methods=['GET', 'POST'])
 def upload_pdf():
