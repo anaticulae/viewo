@@ -6,9 +6,9 @@ RP 0.8.0
 result view
 ~~~~~~~~~~~
 
-* [ ] add toogle to switch view between all pages and erroneous pages
+* [x] add toogle to switch view between all pages and erroneous pages
 
-* [ ] add button to visit next/previous page
+* [x] add button to visit next/previous page
 
 code quality
 ------------

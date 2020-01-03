@@ -170,4 +170,25 @@ function toggle_pages() {
         toggle.innerText = 'show'
     }
     update_page_selector()
+    mark_selected_page(error_page)
+}
+
+function previous_page() {
+    let current = error_page - 1
+    if (current >= 0) {
+        show_page(current)
+    }
+    else {
+        show_page(CONTENT.length - 1)
+    }
+}
+
+function next_page() {
+    let current = error_page + 1
+    let maxpages = CONTENT.length
+    if (current < maxpages) {
+        show_page(current)
+    } else {
+        show_page(0)
+    }
 }
