@@ -74,15 +74,11 @@ def test_waiting_status_verified(client, testdir, monkeypatch):
     todo = os.path.join(root, '12345678900')
     os.makedirs(todo)
     utila.file_create(os.path.join(todo, '12345678900'))  # fake pdf file
-    # TODO: REPLACE WITH FILE_COPY
-    verified = utila.file_read(
-        os.path.join(
-            EXAMPLE_TODO,
-            '12345678900',
-            viewo.waiting.VERIFY,
-        ))
-    utila.file_create(os.path.join(todo, viewo.waiting.VERIFY), verified)
 
+    utila.file_copy(
+        os.path.join(EXAMPLE_TODO, '12345678900', viewo.waiting.VERIFY),
+        os.path.join(todo, viewo.waiting.VERIFY),
+    )
     loaded = run_status(client, root, monkeypatch)
     assert loaded.status == viewo.waiting.State.running
     assert loaded[0] == viewo.waiting.State.done
