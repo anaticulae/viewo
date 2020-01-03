@@ -75,7 +75,7 @@ function loop(process) {
             }
         }
     }
-    ajax.open("GET", 'http://localhost:5000/waiting/status/' + process, true)
+    ajax.open("GET", '/waiting/status/' + process, true)
     ajax.send()
 }
 

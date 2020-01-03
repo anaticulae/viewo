@@ -29,7 +29,10 @@ maintenance
 javascript
 ----------
 
-* [ ] remove hard coded links to web services
+* [x] remove hard coded links to web services
+
+.. note :: Hard coded links are not necessary cause ajax can only call
+           resources from own server.
 
 code quality
 ------------

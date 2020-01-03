@@ -199,7 +199,7 @@ function loop(process) {
             }
         }
     }
-    ajax.open("GET", 'http://localhost:5000/waiting/fastview/status/' + process, true)
+    ajax.open("GET", '/waiting/fastview/status/' + process, true)
     ajax.send()
 }
 

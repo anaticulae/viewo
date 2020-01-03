@@ -148,6 +148,6 @@ function loop(process) {
             }
         }
     }
-    ajax.open("GET", 'http://localhost:5000/waiting/resultview/status/' + process, true)
+    ajax.open("GET", '/waiting/resultview/status/' + process, true)
     ajax.send()
 }
