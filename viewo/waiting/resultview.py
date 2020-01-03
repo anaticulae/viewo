@@ -32,19 +32,38 @@ def load_resultview(path: str) -> viewo.waiting.ResultPageViews:
     for item in files:
         loaded = protocol.load_result(os.path.join(path, item))
         findings.extend(loaded)
-    grouped = protocol.bylocation(findings)
+    grouped = {page.page: page for page in protocol.bylocation(findings)}
 
     result = []
     htmlpath = os.path.join(path, '../view')
     html = HtmlLookup(htmlpath)
-    for group in grouped:
-        content = html[group.page]
+    # load all pages not only the erroneous
+    for page in pages(html, grouped.values()):
+        # for page, rendered in enumerate(html):
+        finding = grouped.get(page, None)
+        finding = finding.content if finding else []
+        try:
+            content = html[page]
+        except IndexError:
+            content = ''
+        # for group in grouped:
+        # content = html[group.page]
         item = viewo.waiting.ResultPageView(
-            page=group.page,
-            html=content if content else '',
-            findings=group.content,
+            page=page,
+            html=content,
+            findings=finding,
         )
         result.append(item)
+    return result
+
+
+def pages(html, grouped) -> list:
+    collected = []
+    # TODO: IMPROVE THIS TO SUPPORT SELECTIVE PAGES
+    collected.extend(list(range(len(html))))
+    collected.extend([item.page for item in grouped])
+    result = set(collected)
+    result = sorted(result)
     return result
 
 
@@ -92,7 +111,7 @@ class HtmlLookup:
             utila.error(f'html lookup: {path} does not exists.')
 
     def __getitem__(self, index):
-        try:
-            return self.data[index]
-        except IndexError:
-            return None
+        return self.data[index]
+
+    def __len__(self):
+        return len(self.data)
