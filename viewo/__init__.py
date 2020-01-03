@@ -35,7 +35,7 @@ from viewo.result import result_
 from viewo.upload import upload_
 from viewo.waiting.view import waiting_
 
-__version__ = '0.6.1'
+__version__ = '0.7.0'
 
 
 def create_application(config=None) -> Flask:

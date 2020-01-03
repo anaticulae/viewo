@@ -2,6 +2,22 @@
 
 Every noteable change is logged here.
 
+## v0.7.0
+
+### Feature
+
+* sort document by year, month, day, hour and second (172c87235e69)
+* add warning that html result path does not exists (c9c23e958620)
+* connect html page view to result delivery service (56185052e62f)
+
+### Fix
+
+* fix hard coded links (a4bd7d0bf1af)
+
+### Documentation
+
+* Happy New Year! (dd98cea6c8b0)
+
 ## v0.6.1
 
 ### Fix
