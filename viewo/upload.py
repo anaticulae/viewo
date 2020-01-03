@@ -24,25 +24,26 @@ FOLDER_LENGTH = 10
 
 @upload_.route('/upload', methods=['GET', 'POST'])
 def upload_pdf():
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file transmitted')
-            return redirect('/upload/failure')
-        file = request.files['file']
-        # if user does not select file, browser also
-        # submit an empty part without filename
-        if file.filename == '':
-            flash('No selected file')
-            return redirect('/upload/failure')
+    if request.method != 'POST':
+        return redirect('/documents')
 
-        filename = secure_filename(file.filename)
-        todo = create_todo(file, filename)
-        _, process = os.path.split(todo)
-        process = int(process)
-        # file.save(join(current_app.config['TODO'], filename))
-        return redirect(f'/waiting/{process}')
-    return redirect('/documents')
+    # check if the post request has the file part
+    if 'file' not in request.files:
+        flash('No file transmitted')
+        return redirect('/upload/failure')
+    file = request.files['file']
+    # if user does not select file, browser also
+    # submit an empty part without filename
+    if file.filename == '':
+        flash('No selected file')
+        return redirect('/upload/failure')
+
+    filename = secure_filename(file.filename)
+    todo = create_todo(file, filename)
+    _, process = os.path.split(todo)
+    process = int(process)
+    # file.save(join(current_app.config['TODO'], filename))
+    return redirect(f'/waiting/{process}')
 
 
 @upload_.route('/upload/failure')
