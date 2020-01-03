@@ -6,23 +6,22 @@
 # use or distribution is an offensive act against international law and may
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
-from configo import share
-from flask import Blueprint
-from flask import render_template
-from link import scan
+import configo
+import flask
+import link
 
-documents_ = Blueprint('documents', __name__)  # pylint:disable=C0103
+documents_ = flask.Blueprint('documents', __name__)  # pylint:disable=C0103
 
 
 @documents_.route('/documents', methods=['GET'])
 def view_documents():
-    common = share()
-    todo, ready = scan(common)
+    common = configo.share()
+    todo, ready = link.scan(common)
 
     docs = todo + ready
     # sort by date
     docs = sorted(docs, key=lambda item: sortable_date(item.date), reverse=True)
-    return render_template('documents/index.html', documents=docs)
+    return flask.render_template('documents/index.html', documents=docs)
 
 
 def sortable_date(date):
