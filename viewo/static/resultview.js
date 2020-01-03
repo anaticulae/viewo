@@ -39,8 +39,8 @@ function mark_selected_page(page) {
 }
 
 function show(id) {
-    old = document.getElementById("error_selected_" + error_selected)
-    current = document.getElementById("error_selected_" + id)
+    let old = document.getElementById("error_selected_" + error_selected)
+    let current = document.getElementById("error_selected_" + id)
 
     if (old != null) {
         old.classList.remove("highlighted")
@@ -53,7 +53,7 @@ function show(id) {
 }
 
 function next() {
-    max_element = CONTENT[error_page].findings.length
+    let max_element = CONTENT[error_page].findings.length
     let next_id = error_selected + 1
     if (next_id < max_element) {
         show(next_id)
