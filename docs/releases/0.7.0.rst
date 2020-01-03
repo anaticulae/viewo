@@ -6,7 +6,7 @@ RP 0.7.0
 documents view
 --------------
 
-* [ ] fix order of uploaded documents. in the current state there are
+* [x] fix order of uploaded documents. in the current state there are
   ordered by date but not by time
 
 /waiting/resultview
