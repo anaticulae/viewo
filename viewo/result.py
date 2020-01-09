@@ -7,7 +7,10 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import os
+
 import flask
+import link
 
 result_ = flask.Blueprint('result', __name__)  # pylint:disable=C0103
 
@@ -17,6 +20,10 @@ result_ = flask.Blueprint('result', __name__)  # pylint:disable=C0103
 def view_result(document: str = None):
     if not document:
         return flask.redirect(flask.url_for('documents.view_documents'))
+
+    invalid_document = not os.path.exists(link.ready(document))
+    if invalid_document:
+        return flask.redirect('result/failure')
 
     rendered = flask.render_template(
         'waiting/resultview.html',
