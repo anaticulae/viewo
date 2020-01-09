@@ -6,6 +6,9 @@ error_selected = null
 error_pages_only = false
 
 function show_page(page) {
+    if (CONTENT == undefined) {
+        return
+    }
     let content = CONTENT[page]
     if (content == undefined) {
         return
