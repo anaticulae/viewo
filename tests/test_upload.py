@@ -10,7 +10,7 @@
 from http import HTTPStatus
 from os.path import exists
 
-from link import todo_count
+from link import count_todo
 from werkzeug.datastructures import MultiDict
 
 from tests import MINIMAL
@@ -40,12 +40,12 @@ def test_upload(client):
     assert client.get('/').status_code == HTTPStatus.OK
 
     # count files in todo folder
-    files_before = todo_count()
+    files_before = count_todo()
 
     response = post_file(client, page=UPLOAD_PATH, field='file', path=MINIMAL)
     assert response.status_code == HTTPStatus.OK
 
-    files_after = todo_count()
+    files_after = count_todo()
 
     # check if file was uploaded
     assert files_after == files_before + 1
@@ -57,13 +57,13 @@ def test_upload_with_wrong_field(client):
     assert client.get('/').status_code == HTTPStatus.OK
 
     # count files in todo folder
-    files_before = todo_count()
+    files_before = count_todo()
 
     # Upload with wrong field
     response = post_file(client, page=UPLOAD_PATH, field='o_o', path=MINIMAL)
     assert response.status_code == HTTPStatus.OK
     assert 'Fehler' in decode(response)
-    files_after = todo_count()
+    files_after = count_todo()
     # check that no file was uploaded
     assert files_after == files_before
 

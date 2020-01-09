@@ -9,7 +9,7 @@
 import json
 import os
 
-import configo
+import link
 import protocol
 import utila
 
@@ -17,8 +17,7 @@ import viewo.waiting
 
 
 def load_resultview_result(process: str) -> str:
-    todo = configo.todo()
-    result = os.path.join(todo, process, 'result')
+    result = link.resultview(process)
     if not os.path.exists(result):
         return None
     return load_resultview(result)
@@ -35,7 +34,7 @@ def load_resultview(path: str) -> viewo.waiting.ResultPageViews:
     grouped = {page.page: page for page in protocol.bylocation(findings)}
 
     result = []
-    htmlpath = os.path.join(path, '../view')
+    htmlpath = os.path.join(path, 'view')
     html = HtmlLookup(htmlpath)
     # load all pages not only the erroneous
     for page in pages(html, grouped.values()):

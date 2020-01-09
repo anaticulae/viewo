@@ -16,7 +16,7 @@ documents_ = flask.Blueprint('documents', __name__)  # pylint:disable=C0103
 @documents_.route('/documents', methods=['GET'])
 def view_documents():
     common = configo.share()
-    todo, ready = link.scan(common)
+    todo, ready = link.collect_jobs(common)
 
     docs = todo + ready
     # sort by date
