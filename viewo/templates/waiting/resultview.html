@@ -54,11 +54,13 @@
     </article>
 </main>
 
+{% if waiting %}
 <footer>
     <p>
         <a href="/waiting/{{ process }}">zum Wartebereich</a>
     </p>
 </footer>
+{% endif %}
 
 <script type="text/javascript">
     onload("{{ process }}")
