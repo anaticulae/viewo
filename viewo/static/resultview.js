@@ -2,7 +2,8 @@ CONTENT = []
 
 error_page = null
 error_selected = null
-error_pages_only = true
+// If True, only show pages which contains an error
+error_pages_only = false
 
 function show_page(page) {
     let content = CONTENT[page]
