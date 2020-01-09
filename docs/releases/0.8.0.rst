@@ -10,6 +10,8 @@ result view
 
 * [x] add button to visit next/previous page
 
+* [ ] connect documents with result ready view
+
 queuemo
 -------
 
