@@ -93,10 +93,10 @@ def tojson(items: viewo.waiting.ResultPageViews) -> str:
 
 def load_htmlview(path: str) -> list:
     assert os.path.exists(path), str(path)
-    content = [
-        utila.file_read(os.path.join(path, item))
-        for item in sorted(os.listdir(path))
-    ]
+    # Sort html pages by number, sort 0, 1, 2, 3, ..., 10, 11, 12 correctly.
+    # Example: 0.html, cut file extention and make file name int-sortable.
+    files = sorted(os.listdir(path), key=lambda x: int(str(x).split('.')[0]))
+    content = [utila.file_read(os.path.join(path, item)) for item in files]
     return content
 
 
