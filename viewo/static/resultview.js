@@ -100,7 +100,7 @@ function update_error_page_selector(page) {
     let error = CONTENT[page].findings
     for (let index in error) {
         let item = error[index]
-        add_li_selector(error_page_selector, index, item.title)
+        add_li_selector(error_page_selector, index, item.title, item.number)
     }
     error_selected = 0
     let mark = document.getElementById('error_selected_0')
@@ -133,12 +133,31 @@ function add_li_button(parent, page, text) {
     parent.appendChild(node)
 }
 
-function add_li_selector(parent, page, text) {
+function add_li_selector(parent, page, text, number) {
     let node = document.createElement('li')
     node.setAttribute('id', 'error_selected_' + page)
     node.setAttribute('onclick', 'javascript:show(' + page + ')')
-    node.innerText = text
+    let selector = '<input type="checkbox" checked="true" ' +
+        'onclick="javascript:show_hide(' + number + ')">'
+    node.innerHTML = selector + text
     parent.appendChild(node)
+}
+
+function openclose_item(selected) {
+    let before = selected.classList.length
+    selected.classList.remove('hidden')
+    if (selected.classList.length == before) {
+        selected.classList.add('hidden')
+    }
+    else {
+        selected.classList.remove('hidden')
+    }
+}
+
+function show_hide(number) {
+    // show or hide finding
+    let selected = document.getElementById('finding_' + number)
+    openclose_item(selected)
 }
 
 function onload(process) {

@@ -31,6 +31,11 @@ def load_resultview(path: str) -> viewo.waiting.ResultPageViews:
     for item in files:
         loaded = protocol.load_result(os.path.join(path, item))
         findings.extend(loaded)
+
+    # TODO: unite with feedback enumerater
+    for index, finding in enumerate(findings):
+        finding.number = index
+
     grouped = {page.page: page for page in protocol.bylocation(findings)}
 
     result = []
