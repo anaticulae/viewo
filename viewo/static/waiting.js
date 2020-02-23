@@ -65,7 +65,7 @@ function loop(process) {
     let ajax = new XMLHttpRequest()
     ajax.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            downloaded = this.responseText
+            let downloaded = this.responseText
             downloaded = JSON.parse(downloaded)
 
             update(process, downloaded.states)
