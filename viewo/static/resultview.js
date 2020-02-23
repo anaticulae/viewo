@@ -61,13 +61,18 @@ function next() {
     let next_id = error_selected + 1
     if (next_id < max_element) {
         show(next_id)
+    } else {
+        show(0)
     }
 }
 
 function previous() {
+    let max_element = CONTENT[error_page].findings.length
     let next_id = error_selected - 1
     if (next_id >= 0) {
         show(next_id)
+    } else {
+        show(max_element - 1)
     }
 }
 
