@@ -46,11 +46,16 @@ function show(id) {
     let old = document.getElementById("error_selected_" + error_selected)
     let current = document.getElementById("error_selected_" + id)
 
+    let set_focus = document.getElementById("error_selector_checkbox_" + id)
     if (old != null) {
         old.classList.remove("highlighted")
     }
     if (current != null) {
         current.classList.add("highlighted")
+        current.focus()
+    }
+    if (set_focus != null) {
+        set_focus.focus()
     }
     error_selected = id
     show_error_message(error_selected)
@@ -137,7 +142,8 @@ function add_li_selector(parent, page, text, number) {
     let node = document.createElement('li')
     node.setAttribute('id', 'error_selected_' + page)
     node.setAttribute('onclick', 'javascript:show(' + page + ')')
-    let selector = '<input type="checkbox" checked="true" ' +
+    let selector = '<input id="error_selector_checkbox_' + page + '"'
+        + ' type="checkbox" checked="true" ' +
         'onclick="javascript:show_hide(' + number + ')">'
     node.innerHTML = selector + text
     parent.appendChild(node)
