@@ -201,3 +201,26 @@ function next_page() {
         show_page(0)
     }
 }
+
+// Navigate thrue error pages
+window.addEventListener('keydown', event => {
+    // Hands up for vim :)
+    // TODO: REFACTOR
+    key = event.key
+    if (key == 'l' || key == 'ArrowRight') {
+        next_page()
+        event.preventDefault()
+    }
+    if (key == 'h' || key == 'ArrowLeft') {
+        previous_page()
+        event.preventDefault()
+    }
+    if (key == 'j' || key == 'ArrowDown') {
+        next()
+        event.preventDefault()
+    }
+    if (key == 'k' || key == 'ArrowUp') {
+        previous()
+        event.preventDefault()
+    }
+})
