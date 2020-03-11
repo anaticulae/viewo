@@ -1,9 +1,9 @@
 PyYAML==5.1
 Flask==1.0.2
 
-configo==0.5.2
-link==0.3.8
-utila==1.14.0
+configo==0.5.5
+link==0.3.9
+utila==1.15.1
 
 # load validation results
-protocol==0.8.0
+protocol==0.8.2
