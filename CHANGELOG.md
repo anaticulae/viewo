@@ -2,6 +2,30 @@
 
 Every noteable change is logged here.
 
+## v0.8.0
+
+### Feature
+
+* integrate writer html generation result (2c4bb8454ad3)
+* add path to generated writers content (454207694af9)
+* set focus on input box to toggle visibility via space (9bbc642e63a9)
+* add option to hide/show linter findings (dd5f86a6d72f)
+* add shortcuts to navigate though results (831d1d2a52dd)
+* enable to navigate thru error border (a9f4cfa6544b)
+* return failure if document does not exists (f28430da7655)
+* use waiting result-view to represent result view (46fe0a5df1dc)
+* make pages bar visible as default (6e8ecc1b3e5a)
+* add next previous function change displayed page (44112ff64bab)
+* add toggle button to toggle page number view (fe25053e46a5)
+* deliver every page and decide via web view what error/page is presented (2ce33b607951)
+* use Times as default font face (5d67473aaa70)
+
+### Fix
+
+* improve java script style (477473d17502)
+* preserve page order (028bb780c9fc)
+* avoid JavaScript error if data can not be loaded (205171e07034)
+
 ## v0.7.0
 
 ### Feature
