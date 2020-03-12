@@ -34,6 +34,7 @@ from viewo.public import welcome
 from viewo.result import result_
 from viewo.upload import upload_
 from viewo.waiting.view import waiting_
+from viewo.writing import writing_
 
 __version__ = '0.7.0'
 
@@ -60,6 +61,7 @@ def create_application(config=None) -> Flask:
     app_.register_blueprint(result_)
     app_.register_blueprint(welcome)
     app_.register_blueprint(waiting_)
+    app_.register_blueprint(writing_)
 
     return app_
 
