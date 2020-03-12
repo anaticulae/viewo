@@ -1,0 +1,21 @@
+.. _0_9_0:
+
+RP 0.9.0
+=========
+
+links
+-----
+
+* [ ] add support to convert links to simple links - remove .html
+  http://www.checkitweg.de/writing/elemente/deckblatt.html#elemente-deckblatt-overview
+
+* [ ] add dictionary to add mapping table of moved content
+
+code quality
+------------
+
+before
+~~~~~~
+
+* Total coverage: 86.27%
+* Your code has been rated at 10.00/10
