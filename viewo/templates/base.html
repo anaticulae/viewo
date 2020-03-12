@@ -9,24 +9,25 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
-<body>
+<body class="main_wrapper">
     <!-- logo starts here -->
     <img src="{{ url_for('static', filename='images/logo.jpg') }}" width="100%"
         style="margin:0px;padding:0px;" id="logo" alt="page logo">
 
     <!-- navigation stars here -->
-    <nav>
+    <nav class="main">
         <ul>
             <li><a href="{{url_for('welcome.show_welcome')}}">Home</a></li>
             <li><a href="{{url_for('documents.view_documents')}}">Dokumente</a></li>
             <li><a href="{{url_for('welcome.show_welcome', page='writing')}}">Schreibhilfe</a></li>
         </ul>
     </nav>
-
     <!-- content starts here -->
-    <div id="content">
+    {% block content_container %}
+    <div id="content_main">
         {% block content %}{% endblock %}
     </div>
+    {% endblock %}
 
     <!-- footer starts here  -->
     <footer>

@@ -5,22 +5,21 @@ body {
     font-size: 100%;
     margin: 0%;
     padding: 0%;
-    width: 80%;
-    min-width: 768px;
-    margin: auto;
+    background-color: #f9f8f6;
 }
 #logo,
 #center,
 footer {
-    background: beige;
+    /* background: beige; */
     display: inline-block;
     padding: 0px;
-    width:100%;
+    margin: 0px;
+    width: 100%;
 }
 
-nav {
-    background: beige;
-    border: black solid 1px;
+nav.main {
+    /* background: beige; */
+    border: black solid 2px;
     display: inline-block;
     margin:0px;
     margin-bottom: 20px;
@@ -30,22 +29,23 @@ nav {
 }
 
 #logo {
-    border: black solid 1px;
+    border: black solid 2px;
     display: inline-block;
     margin: 0px;
     padding: 0px;
     max-height: 120px;
+    /* padding: 20px; */
 }
 
-#content {
+#content_main {
     background: beige;
-    border: black solid 1px;
+    border: black solid 2px;
     min-height:200px;
     text-align: justify;
     padding:20px;
 }
 footer {
-    border: black solid 1px;
+    border: black solid 2px;
     margin-bottom: 5px;
     margin-top: 20px;
     padding-bottom: 10px;
@@ -58,17 +58,17 @@ footer p{
     margin:2px;
     padding: 0px;
 }
-nav ul {
+nav.main ul {
     margin: 0px;
     padding: 0px;
     text-align: center;
 }
-nav li {
+nav.main li {
     display: inline;
     margin: 0px;
     padding: 0px;
 }
-nav a {
+nav.main a {
     display: inline-block;
     font-size: 150%;
     margin: 0px;
@@ -110,6 +110,11 @@ input.submit {
 
 html {
     background-position: center;
-    /* background-repeat: repeat-y; */
     max-height:400%;
+}
+
+.main_wrapper {
+    min-width: 640px;
+    max-width: 980px;
+    margin: 1px auto 1px auto;
 }
