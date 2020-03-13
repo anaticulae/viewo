@@ -34,7 +34,7 @@ from viewo.public import welcome
 from viewo.result import result_
 from viewo.upload import upload_
 from viewo.waiting.view import waiting_
-from viewo.writing import writing_
+from viewo.writing.index import writing_
 
 __version__ = '0.8.0'
 
