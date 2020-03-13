@@ -16,7 +16,7 @@ queuemo
 -------
 
 * [ ] Ensure to connect service - move logic of creating and catching result
- resources to link package. Build an common API.
+  resources to link package. Build an common API.
 
 
 code quality
