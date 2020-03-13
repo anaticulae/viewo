@@ -11,6 +11,8 @@ links
 
 * [ ] add dictionary to add mapping table of moved content
 
+* [x] add reflink replacer
+
 code quality
 ------------
 

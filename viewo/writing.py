@@ -8,6 +8,7 @@
 # =============================================================================
 
 import os
+import re
 
 import flask
 import utila
@@ -47,8 +48,36 @@ def view_result(selected: str = None):
         content = content.replace('action="search.html"', 'action="writing/search.html"') # yapf:disable
         content = content.replace('href="#', 'href="index.html#')
         content = content.replace('href="', 'href="writing/')
-
+    content = replace_reflinks(content, table=REFLINKS)
     content = f'{CSS}\n{JS}\n{content}'
     rendered = flask.render_template('public/writing.html', content=content)
     return rendered
     # return rendered
+
+
+def replace_reflinks(content: str, table: dict) -> str:
+    """Replace reflinks in generated html code.
+
+    >>> replace_reflinks('rnal" href="{amazon:theissen_2017}">Theissen:2017;',
+    ... table={'amazon:theissen_2017': 'http://amazon.com/helm/theissen'})
+    'rnal" href="http://amazon.com/helm/theissen">Theissen:2017;'
+    """
+    pattern = r'{(?P<store>\w+):(?P<product>\w+)}'
+    matched = re.findall(pattern, content)
+    if not matched:
+        return content
+    for item in matched:
+        finding = '%s:%s' % item
+        token = '{%s}' % finding
+        try:
+            replacement = table[finding]
+        except KeyError:
+            utila.error(f'could find ref link for {finding}')
+            continue
+        content = content.replace(token, replacement, 1)
+    return content
+
+
+REFLINKS = {
+    'amazon:theissen_2017': 'http://amazon.com/helm/theissen',
+}
