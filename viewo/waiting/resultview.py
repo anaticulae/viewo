@@ -12,7 +12,9 @@ import os
 import link
 import protocol
 import utila
+import writers
 
+import viewo.utils
 import viewo.waiting
 
 
@@ -72,6 +74,8 @@ def pages(html, grouped) -> list:
 
 
 def tojson(items: viewo.waiting.ResultPageViews) -> str:
+    url = viewo.utils.docs_url()
+    message = lambda content: writers.replace(content, url)
     result = []
     for item in items:
         findings = [{
@@ -80,7 +84,7 @@ def tojson(items: viewo.waiting.ResultPageViews) -> str:
                 'page': finding.location.page,
             },
             'title': finding.solution.title,
-            'message': finding.solution.description,
+            'message': message(finding.solution.description),
             'status': finding.solution.status.value,
         } for finding in item.findings if finding.solution]
         result.append({
