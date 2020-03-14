@@ -27,11 +27,11 @@ def view_result(selected: str = None):
     source = os.path.join(viewo.config.writing(), selected)
     if not os.path.exists(source):
         source = os.path.join(viewo.config.writing(), 'index.html')
-    content = utila.file_read(source)
+    result = utila.file_read(source)
 
-    content = viewo.writing.content.replace(content, source)
+    result = viewo.writing.content.replace(result, source)
 
-    content = viewo.writing.reflinks.replace(content)
+    result = viewo.writing.reflinks.replace(result)
 
-    rendered = flask.render_template('public/writing.html', content=content)
+    rendered = flask.render_template('public/writing.html', content=result)
     return rendered

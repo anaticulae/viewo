@@ -24,13 +24,12 @@ def replace_links(content: str, table: dict) -> str:
     ... table={'amazon:theissen_2017': 'http://amazon.com/helm/theissen'})
     'rnal" href="http://amazon.com/helm/theissen">Theissen:2017;'
     """
-    pattern = r'{(?P<store>\w+):(?P<product>\w+)}'
+    pattern = r'({((?P<store>\w+):(?P<product>\w+))})'
     matched = re.findall(pattern, content)
     if not matched:
         return content
     for item in matched:
-        finding = '%s:%s' % item
-        token = '{%s}' % finding
+        token, finding, store, product = item  # pylint:disable=W0612
         try:
             replacement = table[finding]
         except KeyError:
