@@ -16,7 +16,7 @@ import viewo.config
 import viewo.writing.content
 import viewo.writing.reflinks
 
-STATIC = os.path.join(viewo.config.writing(), '_static')
+STATIC = viewo.config.writing()
 
 writing_ = flask.Blueprint('writing', __name__, static_folder=STATIC)  # pylint:disable=C0103
 
