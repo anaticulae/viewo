@@ -75,20 +75,3 @@ def test_upload_get_forward_to_documents(client):
 
     assert DOCUMENT_PATH in location
     assert response.status_code == HTTPStatus.FOUND
-
-
-# def test_upload_without_filename(monkeypatch, client, app):
-
-#     class MyRequest:
-#         pass
-
-#     with monkeypatch.context() as context:
-#         # Remove all environment vars
-#         my_request = MyRequest()
-#         my_request.method = 'POST'
-#         empty_file = MyRequest()
-#         empty_file.filename = ''
-#         my_request.files = {'file': empty_file}
-#         context.setattr(flask.globals, 'request', my_request)
-#         # context.setattr(flask.globals, 'top', [1])
-#         upload_pdf()
