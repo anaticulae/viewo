@@ -1,0 +1,31 @@
+.. _0_10_0:
+
+RP 0.10.0
+=========
+
+table
+-----
+
+* [ ] add renderer to display border of tables
+
+* [ ] verify with 3 examples
+
+maintenance
+-----------
+
+* [ ] solve 3 todos
+
+* [ ] clean up testing
+
+* [ ] clean up setup.py
+
+* [ ] check requirements
+
+code quality
+------------
+
+before
+~~~~~~
+
+* Total coverage: 83.40%
+* Your code has been rated at 10.00/10
