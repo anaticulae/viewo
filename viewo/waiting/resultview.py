@@ -23,10 +23,10 @@ def load_resultview_result(process: str) -> str:
     result = link.resultview(process)
     if not os.path.exists(result):
         return None
-    return load_resultview(result)
+    return load_resultview(result, process)
 
 
-def load_resultview(path: str) -> viewo.waiting.ResultPageViews:
+def load_resultview(path: str, process: str) -> viewo.waiting.ResultPageViews:
     assert os.path.exists(path), str(path)
     files = [item for item in os.listdir(path) if item.endswith('.yaml')]
 
@@ -57,11 +57,18 @@ def load_resultview(path: str) -> viewo.waiting.ResultPageViews:
         # content = html[group.page]
         item = viewo.waiting.ResultPageView(
             page=page,
-            html=content,
+            html=patch_images(content, process),
             findings=finding,
         )
         result.append(item)
     return result
+
+
+def patch_images(html: str, process: int) -> str:
+    # TODO: REMOVE THIS HACK
+    utila.error('patch images')
+    html = html.replace('src="', f'src="{process}/')
+    return html
 
 
 def pages(html, grouped) -> list:
@@ -106,7 +113,6 @@ def load_htmlview(path: str) -> list:
     assert os.path.exists(path), str(path)
     # Sort html pages by number, sort 0, 1, 2, 3, ..., 10, 11, 12 correctly.
     # Example: 0.html, cut file extention and make file name int-sortable.
-
     files = sorted(
         utila.file_list(path, 'html'), key=lambda x: int(str(x).split('.')[0]))
     content = [utila.file_read(os.path.join(path, item)) for item in files]

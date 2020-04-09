@@ -24,14 +24,20 @@ def validate_status(dumped: str):
 
 
 def test_waiting_resultview_load_resultview():
-    loaded = viewo.waiting.resultview.load_resultview(EXAMPLE_RESULT)
+    loaded = viewo.waiting.resultview.load_resultview(
+        EXAMPLE_RESULT,
+        '1508790764',
+    )
     assert loaded, str(loaded)
     # 2 pages
     assert len(loaded) == 2, str(loaded)
 
 
 def test_waiting_resultview_tojson():
-    loaded = viewo.waiting.resultview.load_resultview(EXAMPLE_RESULT)
+    loaded = viewo.waiting.resultview.load_resultview(
+        EXAMPLE_RESULT,
+        '1508790764',
+    )
     dumped = viewo.waiting.resultview.tojson(loaded)
     validate_status(dumped)
     assert len(dumped) > 450, str(dumped)

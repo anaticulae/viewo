@@ -11,6 +11,7 @@ import os
 
 import flask
 import link
+import utila
 
 result_ = flask.Blueprint('result', __name__)  # pylint:disable=C0103
 
@@ -31,6 +32,23 @@ def view_result(document: str = None):
         waiting=False,
     )
     return rendered
+
+
+@result_.route('/result/<string:document>/<string:image>')
+def view_images(document: str = None, image: str = None):
+    document = str(document)
+    source = link.ready(document)
+    invalid_document = not os.path.exists(source)
+    if invalid_document:
+        utila.error(f'could not load document: {source}')
+        return flask.redirect('result/failure')
+    image = os.path.join(source, 'result/view/', image)
+    if not os.path.exists(image):
+        utila.error(f'could not load image: {image}')
+        return flask.redirect('result/failure')
+    # TODO: REPLACE?
+    response = flask.send_file(open(image, mode='rb'), mimetype='image')
+    return response
 
 
 @result_.route('/result/failure')
