@@ -8,6 +8,16 @@ General
   :maxdepth: 1
 
   bugs
+  todo
+
+Quality
+-------
+
+.. toctree::
+  :maxdepth: 1
+
+  big5/index
+  hand/index
 
 Progress
 --------
@@ -25,7 +35,6 @@ Developer
 .. toctree::
   :maxdepth: 1
 
-  todo
 
 Modules
 --------------------
