@@ -2,6 +2,23 @@
 
 Every noteable change is logged here.
 
+## v0.9.0
+
+### Feature
+
+* add images loader and provider for html content (f608b700c302)
+* increase width of main view (697bc96df8b1)
+* replace link template with static checkitweg url (abae851f9ae9)
+* add method to replace ref links in generated content (2091aa65aa4a)
+
+### Fix
+
+* ensure to load html files only (37ce8c154c45)
+* forward to error page if page does not exists (8421c5089991)
+* fix search option (79d928c5c267)
+* fix rst directive (01e72c0d36ee)
+* fix spelling error (ccc6b977a000)
+
 ## v0.8.0
 
 ### Feature
