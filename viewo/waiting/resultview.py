@@ -6,6 +6,7 @@
 # use or distribution is an offensive act against international law and may
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
+
 import json
 import os
 
@@ -101,10 +102,13 @@ def tojson(items: viewo.waiting.ResultPageViews) -> str:
 
 
 def load_htmlview(path: str) -> list:
+    # TODO: DANGEROUS
     assert os.path.exists(path), str(path)
     # Sort html pages by number, sort 0, 1, 2, 3, ..., 10, 11, 12 correctly.
     # Example: 0.html, cut file extention and make file name int-sortable.
-    files = sorted(os.listdir(path), key=lambda x: int(str(x).split('.')[0]))
+
+    files = sorted(
+        utila.file_list(path, 'html'), key=lambda x: int(str(x).split('.')[0]))
     content = [utila.file_read(os.path.join(path, item)) for item in files]
     return content
 
