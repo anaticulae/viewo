@@ -15,7 +15,7 @@ maintenance
 
 * [ ] solve 3 todos
 
-* [ ] clean up testing
+* [x] clean up testing
 
 * [x] clean up setup.py
 
