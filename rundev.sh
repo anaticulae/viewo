@@ -3,4 +3,4 @@
 export FLASK_APP=viewo
 export FLASK_ENV=development
 
-flask run
+python -m flask run &
