@@ -8,8 +8,6 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import glob
-import itertools
 import os
 import re
 
@@ -29,25 +27,10 @@ with open(os.path.join(ROOT, "requirements.txt"), mode='rt', encoding=UTF8) as f
         line for line in fp.readlines() if line and '#' not in line
     ]
 
-
-def datafiles():
-    files = glob.glob('viewo/**/**.*', recursive=True)
-    collected = [
-        item for item in files
-        if not any([item.endswith(ext) for ext in ['py', 'pyc']])
-    ]
-    grouped = itertools.groupby(collected, key=lambda x: os.path.split(x)[0])
-    result = [(item[0], list(item[1])) for item in grouped]
-    return result
-
-
 if __name__ == "__main__":
-    # allow setup.py to run from another directory
-    os.chdir(ROOT)
     setuptools.setup(
         author='Helmut Konrad Fahrendholz',
         author_email='info@checkitweg.de',
-        data_files=datafiles(),
         description='Let\'s make some flask',
         include_package_data=True,
         install_requires=INSTALL_REQUIRES,

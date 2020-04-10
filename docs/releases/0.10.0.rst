@@ -17,7 +17,7 @@ maintenance
 
 * [ ] clean up testing
 
-* [ ] clean up setup.py
+* [x] clean up setup.py
 
 * [ ] check requirements
 
