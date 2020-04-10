@@ -38,12 +38,6 @@ def datafiles():
     ]
     grouped = itertools.groupby(collected, key=lambda x: os.path.split(x)[0])
     result = [(item[0], list(item[1])) for item in grouped]
-
-    result += ('.', [
-        'CHANGELOG.md',
-        'README.md',
-        'requirements.txt',
-    ]),
     return result
 
 
