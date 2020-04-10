@@ -63,6 +63,7 @@ if __name__ == "__main__":
         ],
         packages=[
             'viewo',
+            'viewo.utils',
             'viewo.waiting',
             'viewo.writing',
         ],
