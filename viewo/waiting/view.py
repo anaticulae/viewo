@@ -52,13 +52,6 @@ def waiting_view_validation(process):
 
 @waiting_.route('/waiting/status/<string:process>')
 def waiting_status(process: str):
-    try:
-        # TODO: ASK FLASK IF WE NEED THIS ONE?
-        process = str(process)
-    except UnicodeDecodeError:
-        return '{}'
-    if not process:
-        return '{}'
     loaded = viewo.waiting.data.status(process)
     if not loaded:
         return '{}'
