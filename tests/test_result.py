@@ -26,13 +26,29 @@ def test_call_result_document_does_not_exist(client):
     assert 'Fehler' in content
 
 
+def test_call_result_document_and_imagedoes_not_exist(client):
+    response = client.get('/result/1020304050/1.png', follow_redirects=True)
+    content = decode(response)
+    assert content
+    assert 'Fehler' in content
+
+
 def test_call_result_1508790764(client, monkeypatch):
 
     with monkeypatch.context() as context:
         # Remove all environment vars
-        context.setattr(os, 'environ', {
-            'SHARED_READY': EXAMPLE_READY,
-        })
+        context.setattr(os, 'environ', {'SHARED_READY': EXAMPLE_READY})
         response = client.get('/result/1508790764')
     content = decode(response)
     assert content
+
+
+def test_call_result_1508790764_image_access(client, monkeypatch):
+
+    with monkeypatch.context() as context:
+        # Remove all environment vars
+        context.setattr(os, 'environ', {'SHARED_READY': EXAMPLE_READY})
+        response = client.get('/result/1508790764/attention.png')
+    assert response._status_code == 200, response  # pylint:disable=W0212
+    # ensure that PNG is donwloaded
+    assert b'PNG' in response.data, response
