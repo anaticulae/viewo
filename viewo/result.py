@@ -46,7 +46,7 @@ def view_images(document: str = None, image: str = None):
     if not os.path.exists(image):
         utila.error(f'could not load image: {image}')
         return flask.redirect('result/failure')
-    # TODO: REPLACE?
+    # contextmanager does not works here
     response = flask.send_file(open(image, mode='rb'), mimetype='image')
     return response
 

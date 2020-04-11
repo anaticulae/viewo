@@ -6,20 +6,22 @@ RP 0.10.0
 table
 -----
 
-* [ ] add renderer to display border of tables
+* [x] add renderer to display border of tables
 
-* [ ] verify with 3 examples
+* [x] verify with 3 examples
+
+(solved in feedback module)
 
 maintenance
 -----------
 
-* [ ] solve 3 todos
+* [x] solve 3 todos
 
 * [x] clean up testing
 
 * [x] clean up setup.py
 
-* [ ] check requirements
+* [x] check requirements
 
 code quality
 ------------

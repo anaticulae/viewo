@@ -13,7 +13,7 @@ import utila
 
 
 def docs_url() -> str:
-    # TODO: MOVE TO CONFIGO
+    # TODO: REPLACE
     try:
         url = os.environ['HELPY_DOCS']
     except KeyError:

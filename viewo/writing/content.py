@@ -34,7 +34,8 @@ def replace(content: str, source: str) -> str:
     # strip body
     content = viewo.config.content(content)
 
-    if source == os.path.join(viewo.config.writing(), 'index.html'):
+    docpage = os.path.join(viewo.config.writing(), 'index.html')
+    if source == docpage:
         # HACK: fix main links
         content = content.replace('action="search.html"', 'action="writing/search.html"') # yapf:disable
         content = content.replace('href="#', 'href="index.html#')

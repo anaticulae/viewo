@@ -16,20 +16,19 @@ import viewo.config
 import viewo.writing.content
 import viewo.writing.reflinks
 
-STATIC = viewo.config.writing()
+DOC_PATH = viewo.config.writing()
 
-writing_ = flask.Blueprint('writing', __name__, static_folder=STATIC)  # pylint:disable=C0103
+writing_ = flask.Blueprint('writing', __name__, static_folder=DOC_PATH)  # pylint:disable=C0103
 
 
 @writing_.route('/writing', defaults={'selected': 'index.html'})
 @writing_.route('/writing/<path:selected>')
 def view_result(selected: str = None):
-    # TODO: DIRTY
-    source = os.path.join(viewo.config.writing(), selected)
+    source = os.path.join(DOC_PATH, selected)
     if not os.path.exists(source):
-        errorpage = ('writing/' + selected).lower()
+        errorpage = f'writing/{selected}'.lower()
         return flask.render_template('public/error.html', errorpage=errorpage)
-        # source = os.path.join(viewo.config.writing(), 'index.html')
+
     result = utila.file_read(source)
 
     result = viewo.writing.content.replace(result, source)
