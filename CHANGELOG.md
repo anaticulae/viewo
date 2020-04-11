@@ -2,6 +2,16 @@
 
 Every noteable change is logged here.
 
+## v0.10.0
+
+### Feature
+
+* add description of hand-factor and BIG5 use cases (7bfda7a84b67)
+
+### Fix
+
+* fix link in fastview (c10e658609d5)
+
 ## v0.9.0
 
 ### Feature
