@@ -24,7 +24,7 @@ function enable_fastview(processid) {
 
 function enable_resultview(processid) {
     result = document.getElementById("resultview")
-    result.href = "/waiting/resultview/" + processid
+    result.href = "/result/" + processid
 }
 
 function enable_validation_view(processid) {
