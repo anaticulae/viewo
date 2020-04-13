@@ -10,6 +10,7 @@
 import json
 import os
 
+import configo
 import link
 import protocol
 import utila
@@ -82,7 +83,7 @@ def pages(html, grouped) -> list:
 
 
 def tojson(items: viewo.waiting.ResultPageViews) -> str:
-    url = viewo.utils.docs_url()
+    url = configo.docs_url()
     message = lambda content: writers.replace(content, url)
     result = []
     for item in items:
