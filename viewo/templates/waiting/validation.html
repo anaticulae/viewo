@@ -2,7 +2,6 @@
 
 {% block content %}
 
-
 {% if validation_result != {} %}
 <h2>Erfolg</h2>
 <p>
@@ -27,20 +26,22 @@
 <h2>Fehler</h2>
 <ul style="width:350px;">
     <li style="padding:10px;">
-        Die hochgeladene Datei konnte nicht erfolgreich als PDF Datei
-        erkannt werden.
+        Die hochgeladene Datei konnte <strong>nicht erfolgreich</strong>
+        als PDF Datei erkannt werden.
     </li>
     <li style="padding:10px;">
-        Bitte ueberpruefe ob du die hochgeladene Datei mit einem PDF-Viewer
-        oeffnen kannst.
+        Bitte überprüfen Sie ob Sie die hochgeladene Datei mit einem
+        PDF-Viewer öffnen können.
     </li>
     <li style="padding:10px;">
-        Falls du die Datei oefnnen kannst handelt es sich leider um ein
-        technische Problem der Plattform.
+        Falls Sie die Datei öffnen können handelt es sich leider um ein
+        technisches Problem der Plattform.
     </li>
 </ul>
 {% endif %}
+
 <p>
-    <a href="/waiting/{{ process }}">zurueck</a>
+    <a href="/waiting/{{ process }}">zurück</a>
 </p>
+
 {% endblock %}
