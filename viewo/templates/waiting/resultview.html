@@ -2,12 +2,8 @@
 
 {% block content %}
 
-<link rel="stylesheet" type="text/css" media="screen"
-    href="{{ url_for('static', filename='resultview.css') }}">
+<link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='resultview.css') }}">
 <script src="{{ url_for('static', filename='resultview.js') }}"></script>
-
-<style>
-</style>
 
 <h2>Gesamtdurchsicht</h2>
 
@@ -23,8 +19,7 @@
             </td>
             <td style="min-width:120px;">
                 <!-- toggle page selection view -->
-                <button type="button" id="error_page_selector_toggle"
-                    onclick="javascript:toggle_pages()">hide</button>
+                <button type="button" id="error_page_selector_toggle" onclick="javascript:toggle_pages()">hide</button>
                 <!-- previous page -->
                 <button type="button" onclick="javascript:previous_page()">&lt;</button>
                 <!-- next page -->
