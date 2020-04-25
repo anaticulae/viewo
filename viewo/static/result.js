@@ -128,7 +128,7 @@ function update_error_page_selector(page) {
 
 function show_error_message(selected) {
     let message = result_view.content[result_view.error_page]
-    if (message == null || message.findings.length <= selected) {
+    if (message == null || message.findings.length <= selected || selected == -1) {
         document.getElementById('error_message').innerHTML = ''
         document.getElementById('error_message_headline').innerHTML = ''
         return
