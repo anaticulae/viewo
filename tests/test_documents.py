@@ -15,7 +15,7 @@ import tests
 def test_documents_view_no_documents(client):
     result = tests.content(client, '/documents')
     assert len(result) > 300, str(result)
-    assert 'Keine Dokumente verfuegbar!' in result
+    assert 'Keine Dokumente verfügbar!' in result
     assert 'Fehler' not in result
 
 
@@ -24,5 +24,5 @@ def test_documents_view(client, monkeypatch):
         context.setattr(configo, 'todo', lambda: tests.EXAMPLE_TODO)
         result = tests.content(client, '/documents')
     assert len(result) > 300, str(result)
-    assert 'Keine Dokumente verfuegbar!' not in result, str(result)
+    assert 'Keine Dokumente verfügbar!' not in result, str(result)
     assert 'Fehler' not in result, str(result)

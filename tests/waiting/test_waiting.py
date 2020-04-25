@@ -106,9 +106,8 @@ def test_waiting_validation_invalid_result(
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: invalid_validation)
         result = content(client, '/waiting/validation/12345678900')
-
-    assert ('Die hochgeladene Datei konnte '
-            'nicht erfolgreich als PDF Datei') in result, str(result)
+    assert ('Die hochgeladene Datei konnte <strong>'
+            'nicht erfolgreich</strong>') in result, str(result)
 
 
 def test_waiting_validation_result(valid, client, monkeypatch):  # pylint:disable=W0621
