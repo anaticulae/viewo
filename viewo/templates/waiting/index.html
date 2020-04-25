@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<link rel="stylesheet" type="text/css" media="screen"
-    href="{{ url_for('static', filename='waiting.css') }}">
+<link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='waiting.css') }}">
 <script src="{{ url_for('static', filename='waiting.js') }}"></script>
 
 <h2>Wartebereich</h2>
@@ -42,7 +41,7 @@
     </ol>
 </div>
 <script type="text/javascript">
-    onload("{{ process }}")
+    resultWaitingView.onload("{{ process }}")
 </script>
 
 {% endblock %}
