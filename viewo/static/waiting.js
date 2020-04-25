@@ -63,6 +63,15 @@ var resultWaitingView = {
                 let downloaded = this.responseText
                 downloaded = JSON.parse(downloaded)
 
+                if (downloaded.states == undefined) {
+                    $("#progress_connecting").hide()
+                    $("#progress_error").show()
+                    return
+                }
+                else {
+                    $("#progress_connecting").hide()
+                    $("#progress").show()
+                }
                 resultWaitingView.update(process, downloaded.states)
 
                 if (downloaded.status == 1) {
@@ -76,6 +85,9 @@ var resultWaitingView = {
     },
 
     onload: function (process) {
+        $("#progress_connecting").show()
+        $("#progress").hide()
+        $("#progress_error").hide()
         this.loop(process)
     },
 

@@ -4,9 +4,10 @@
 <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='waiting.css') }}">
 <script src="{{ url_for('static', filename='waiting.js') }}"></script>
 
-<h2>Wartebereich</h2>
 <div id="progress">
-    <p>
+    <h2>Wartebereich</h2>
+
+    <p id="progress_info">
         Deine persoenliche Analyse steht sofort fuer dich bereit. Sobald
         die <strong>Schnelldurchsicht</strong> erfolgt ist, kannst du
         dir erste <strong>Ergebnisse</strong> anschauen.
@@ -40,6 +41,21 @@
         </li>
     </ol>
 </div>
+
+<div id="progress_error">
+    <h2>Fehler</h2>
+    <p>
+        Dokument nicht verfügbar.
+    </p>
+    <p>
+        <a href="/documents">zur Dokumentenübersicht...</a>
+    </p>
+</div>
+
+<div id="progress_connecting">
+    <h2>Verbindung wird hergestellt...</h2>
+</div>
+
 <script type="text/javascript">
     resultWaitingView.onload("{{ process }}")
 </script>
