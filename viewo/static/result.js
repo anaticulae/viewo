@@ -25,7 +25,7 @@ var result_view = {
         $('#error_page_content')[0].innerHTML = selected.html
 
         update_error_page_selector(page)
-        mark_selected_page(page)
+        navigator.highlight_pagenumber(page)
 
         if (selected.findings.length == 0) {
             // disable error bar if no error is provided
@@ -80,19 +80,27 @@ var result_view = {
 
 }
 
-function mark_selected_page(page) {
-    let error_page_list = document.getElementById('error_page_selector_list')
-    for (let index in error_page_list.children) {
-        let child = error_page_list.children[index]
-        if (index == page) {
-            child.classList.add('highlighted')
-        } else {
-            if (child.classList != undefined) {// do not why this is required
-                child.classList.remove('highlighted')
+var navigator = {
+
+    highlight_pagenumber: function (page) {
+        // Highlight page number as open page in upper page selector bar.
+        // Remove other potential highlights of other pages.
+        // TODO: SPLIT METHOD IN CLEAR AND SET/ADD
+        let error_page_list = $('#error_page_selector_list')[0]
+        for (let index in error_page_list.children) {
+            let child = error_page_list.children[index]
+            if (index == page) {
+                child.classList.add('highlighted')
+            } else {
+                // remove possible highlight
+                if (child.classList != undefined) {// do not why this is required
+                    child.classList.remove('highlighted')
+                }
             }
         }
     }
 }
+
 
 function show(id) {
     let old = document.getElementById("error_selected_" + result_view.error_selected)
@@ -237,7 +245,7 @@ function toggle_pages() {
         toggle.innerText = 'show'
     }
     update_page_selector()
-    mark_selected_page(result_view.error_page)
+    navigator.highlight_pagenumber(result_view.error_page)
 }
 
 
