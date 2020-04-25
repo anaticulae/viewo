@@ -27,7 +27,7 @@ def view_result(document: str = None):
         return flask.redirect('result/failure')
 
     rendered = flask.render_template(
-        'waiting/resultview.html',
+        'result/index.html',
         process=document,
         waiting=False,
     )
