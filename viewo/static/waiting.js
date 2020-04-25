@@ -18,25 +18,22 @@ function make_error(item) {
 }
 
 function enable_fastview(processid) {
-    fastview = document.getElementById("fastview")
-    fastview.href = "/waiting/fastview/" + processid
+    $("#fastview")[0].href = `/waiting/fastview/${processid}`
 }
 
 function enable_resultview(processid) {
-    result = document.getElementById("resultview")
-    result.href = "/result/" + processid
+    $("#resultview")[0].href = `/result/${processid}`
 }
 
 function enable_validation_view(processid) {
-    validationview = document.getElementById("validationview")
-    validationview.href = "/waiting/validation/" + processid
+    $("#validationview")[0].href = `/waiting/validation/${processid}`
 }
 
 
 function update(processid, status) {
     for (let stateid = 0; stateid < status.length; stateid++) {
         let item = status[stateid]
-        statusitem = document.getElementById("status_" + stateid)
+        statusitem = $(`#status_${stateid}`)[0]
         if (item == 0) {
             make_ready(statusitem)
         }
