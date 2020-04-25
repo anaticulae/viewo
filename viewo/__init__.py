@@ -31,7 +31,7 @@ from viewo.config import STATIC
 from viewo.config import TEMPLATES
 from viewo.documents import documents_
 from viewo.public import welcome
-from viewo.result import result_
+from viewo.result.blueprint import result_
 from viewo.upload import upload_
 from viewo.waiting.view import waiting_
 from viewo.writing.index import writing_

@@ -9,7 +9,7 @@
 
 import configo
 
-import viewo.waiting.resultview
+import viewo.result.data
 from tests import EXAMPLE_RESULT
 from tests import content
 from tests.waiting import valid  # pylint:disable=W0611
@@ -24,7 +24,7 @@ def validate_status(dumped: str):
 
 
 def test_waiting_resultview_load_resultview():
-    loaded = viewo.waiting.resultview.load_resultview(
+    loaded = viewo.result.data.load_resultview(
         EXAMPLE_RESULT,
         '1508790764',
     )
@@ -34,11 +34,11 @@ def test_waiting_resultview_load_resultview():
 
 
 def test_waiting_resultview_tojson():
-    loaded = viewo.waiting.resultview.load_resultview(
+    loaded = viewo.result.data.load_resultview(
         EXAMPLE_RESULT,
         '1508790764',
     )
-    dumped = viewo.waiting.resultview.tojson(loaded)
+    dumped = viewo.result.data.tojson(loaded)
     validate_status(dumped)
     assert len(dumped) > 450, str(dumped)
 
