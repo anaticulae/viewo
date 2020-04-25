@@ -91,17 +91,25 @@ input.submit {
     /* border: 1px solid black; */
 }
 #results th{
-    width:100%;
     border-bottom: 2px solid black;
     background: rgb(195, 212, 230);
     padding: 4px;
 }
 
-.score, .date, .status{
+.score, .status{
     text-align:center;
 }
+.score{
+    width:50px;
+}
+.date{
+    width:150px;
+}
+.document_title{
+    max-width:100%;
+}
 .status_header{
-    text-align:center;
+    width:50px;
 }
 
 .failed{
