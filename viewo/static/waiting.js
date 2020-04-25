@@ -14,7 +14,7 @@
       There are four possible states for every step. Waiting, Started,
       Finished, Failed.
 */
-var resultWaitingView = {
+var result_waiting_view = {
 
     update: function (processid, status) {
         for (let stateid = 0; stateid < status.length; stateid++) {
@@ -32,15 +32,15 @@ var resultWaitingView = {
         }
         if (status[1] != 1) {
             // not waiting
-            resultWaitingView.enable_validation_view(processid)
+            result_waiting_view.enable_validation_view(processid)
         }
         if (status[2] == 0) {
             // done
-            resultWaitingView.enable_fastview(processid)
+            result_waiting_view.enable_fastview(processid)
         }
         if (status[3] == 0) {
             // done
-            resultWaitingView.enable_resultview(processid)
+            result_waiting_view.enable_resultview(processid)
         }
     },
 
@@ -72,7 +72,7 @@ var resultWaitingView = {
                     $("#progress_connecting").hide()
                     $("#progress").show()
                 }
-                resultWaitingView.update(process, downloaded.states)
+                result_waiting_view.update(process, downloaded.states)
 
                 if (downloaded.status == 1) {
                     // process is currently running
