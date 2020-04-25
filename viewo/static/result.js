@@ -1,32 +1,49 @@
+/** Result View
+
+*/
+
+var result_view = {
+
+    init: function () {
+        this.error_page = null
+        this.error_selected = null
+        // If True, only show pages which contains an error
+        this.error_pages_only = false
+        this.content = []
+    },
+
+    show_page: function (page) {
+        if (this.content == []) {
+            return
+        }
+        let selected = this.content[page]
+        if (selected == undefined) {
+            return
+        }
+        this.error_page = page
+
+        $('#error_page_content')[0].innerHTML = selected.html
+
+        update_error_page_selector(page)
+        mark_selected_page(page)
+
+        if (selected.findings.length == 0) {
+            // disable error bar if no error is provided
+            $('#error')[0].classList.add('hidden')
+        } else {
+            $('#error')[0].classList.remove('hidden')
+        }
+
+    }
+
+}
+
 CONTENT = []
 
 error_page = null
 error_selected = null
 // If True, only show pages which contains an error
 error_pages_only = false
-
-function show_page(page) {
-    if (CONTENT == undefined) {
-        return
-    }
-    let content = CONTENT[page]
-    if (content == undefined) {
-        return
-    }
-
-    error_page = page
-    document.getElementById('error_page_content').innerHTML = content.html
-
-    update_error_page_selector(page)
-    mark_selected_page(page)
-
-    if (content.findings.length == 0) {
-        // disable error bar if no error is provided
-        document.getElementById("error").classList.add('hidden')
-    } else {
-        document.getElementById("error").classList.remove('hidden')
-    }
-}
 
 function mark_selected_page(page) {
     let error_page_list = document.getElementById('error_page_selector_list')
@@ -131,7 +148,7 @@ function show_error_message(selected) {
 function add_li_button(parent, page, text) {
     let button = document.createElement('button')
     button.setAttribute('type', 'button')
-    button.setAttribute('onclick', 'javascript:show_page(' + page + ')')
+    button.setAttribute('onclick', `javascript:result_view.show_page(${page})`)
     button.innerText = text
     let node = document.createElement('li')
     node.appendChild(button)
@@ -172,8 +189,9 @@ function onload(process) {
 
 function update_view(content) {
     CONTENT = content
+    result_view.content = content
     update_page_selector()
-    show_page(0)
+    result_view.show_page(0)
 }
 
 function loop(process) {
@@ -210,10 +228,10 @@ function toggle_pages() {
 function previous_page() {
     let current = error_page - 1
     if (current >= 0) {
-        show_page(current)
+        result_view.show_page(current)
     }
     else {
-        show_page(CONTENT.length - 1)
+        result_view.show_page(CONTENT.length - 1)
     }
 }
 
@@ -221,9 +239,9 @@ function next_page() {
     let current = error_page + 1
     let maxpages = CONTENT.length
     if (current < maxpages) {
-        show_page(current)
+        result_view.show_page(current)
     } else {
-        show_page(0)
+        result_view.show_page(0)
     }
 }
 
