@@ -34,6 +34,48 @@ var result_view = {
             $('#error')[0].classList.remove('hidden')
         }
 
+    },
+
+    previous_page: function () {
+        let current = this.error_page - 1
+        if (current >= 0) {
+            this.show_page(current)
+        }
+        else {
+            this.show_page(this.content.length - 1)
+        }
+    },
+
+    next_page: function () {
+        let current = this.error_page + 1
+        let maxpages = this.content.length
+        if (current < maxpages) {
+            this.show_page(current)
+        } else {
+            this.show_page(0)
+        }
+    },
+
+    next: function () {
+        //Iterate error message headline box downwards
+        let max_element = this.content[this.error_page].findings.length
+        let next_id = this.error_selected + 1
+        if (next_id < max_element) {
+            show(next_id)
+        } else {
+            show(0)
+        }
+    },
+
+    previous: function () {
+        //Iterate error message headline box upwards
+        let max_element = this.content[this.error_page].findings.length
+        let next_id = this.error_selected - 1
+        if (next_id >= 0) {
+            show(next_id)
+        } else {
+            show(max_element - 1)
+        }
     }
 
 }
@@ -71,25 +113,6 @@ function show(id) {
     show_error_message(result_view.error_selected)
 }
 
-function next() {
-    let max_element = result_view.content[result_view.error_page].findings.length
-    let next_id = result_view.error_selected + 1
-    if (next_id < max_element) {
-        show(next_id)
-    } else {
-        show(0)
-    }
-}
-
-function previous() {
-    let max_element = result_view.content[result_view.error_page].findings.length
-    let next_id = result_view.error_selected - 1
-    if (next_id >= 0) {
-        show(next_id)
-    } else {
-        show(max_element - 1)
-    }
-}
 
 function update_page_selector() {
     let error_page_list = document.getElementById('error_page_selector_list')
@@ -217,25 +240,6 @@ function toggle_pages() {
     mark_selected_page(result_view.error_page)
 }
 
-function previous_page() {
-    let current = result_view.error_page - 1
-    if (current >= 0) {
-        result_view.show_page(current)
-    }
-    else {
-        result_view.show_page(result_view.content.length - 1)
-    }
-}
-
-function next_page() {
-    let current = result_view.error_page + 1
-    let maxpages = result_view.content.length
-    if (current < maxpages) {
-        result_view.show_page(current)
-    } else {
-        result_view.show_page(0)
-    }
-}
 
 // Navigate thrue error pages
 window.addEventListener('keydown', event => {
@@ -243,19 +247,19 @@ window.addEventListener('keydown', event => {
     // TODO: REFACTOR
     key = event.key
     if (key == 'l' || key == 'ArrowRight') {
-        next_page()
+        result_view.next_page()
         event.preventDefault()
     }
     if (key == 'h' || key == 'ArrowLeft') {
-        previous_page()
+        result_view.previous_page()
         event.preventDefault()
     }
     if (key == 'j' || key == 'ArrowDown') {
-        next()
+        result_view.next()
         event.preventDefault()
     }
     if (key == 'k' || key == 'ArrowUp') {
-        previous()
+        result_view.previous()
         event.preventDefault()
     }
 })

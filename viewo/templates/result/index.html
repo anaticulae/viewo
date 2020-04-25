@@ -21,9 +21,9 @@
                 <!-- toggle page selection view -->
                 <button type="button" id="error_page_selector_toggle" onclick="javascript:toggle_pages()">hide</button>
                 <!-- previous page -->
-                <button type="button" onclick="javascript:previous_page()">&lt;</button>
+                <button type="button" onclick="javascript:result_view.previous_page()">&lt;</button>
                 <!-- next page -->
-                <button type="button" onclick="javascript:next_page()">&gt;</button>
+                <button type="button" onclick="javascript:result_view.next_page()">&gt;</button>
             </td>
         </tr>
     </table>
@@ -36,8 +36,8 @@
         <ul id="error_list">
         </ul>
         <p id="error_navigator">
-            <button type="button" onclick="javascript:previous()">Previous</button>
-            <button type="button" onclick="javascript:next()">Next</button>
+            <button type="button" onclick="javascript:result_view.previous()">Previous</button>
+            <button type="button" onclick="javascript:result_view.next()">Next</button>
         </p>
         <div id="error_content">
             <h4 id="error_message_headline"></h4>
