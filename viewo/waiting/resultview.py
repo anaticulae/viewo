@@ -82,9 +82,15 @@ def pages(html, grouped) -> list:
     return result
 
 
-def tojson(items: viewo.waiting.ResultPageViews) -> str:
+def message_replace(content: str) -> str:
     url = configo.docs_url()
-    message = lambda content: writers.replace(content, url)
+    content = writers.replace(content, url)
+    # TODO: REMOVE VIEW HACK LATER
+    content = content.replace('<a href', '<br/><br/><a href')
+    return content
+
+
+def tojson(items: viewo.waiting.ResultPageViews) -> str:
     result = []
     for item in items:
         findings = [{
@@ -93,7 +99,7 @@ def tojson(items: viewo.waiting.ResultPageViews) -> str:
                 'page': finding.location.page,
             },
             'title': finding.solution.title,
-            'message': message(finding.solution.description),
+            'message': message_replace(finding.solution.description),
             'status': finding.solution.status.value,
         } for finding in item.findings if finding.solution]
         result.append({

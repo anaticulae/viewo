@@ -51,7 +51,6 @@ aside {
 }
 
 #error_content {
-    height: 300px;
     border: 1px solid black;
     background: white;
     text-align: left;
@@ -63,7 +62,6 @@ aside {
 }
 
 #error_message {
-    word-wrap: break-word;
     padding: 5px;
 }
 
