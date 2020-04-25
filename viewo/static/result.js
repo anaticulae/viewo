@@ -38,13 +38,6 @@ var result_view = {
 
 }
 
-CONTENT = []
-
-error_page = null
-error_selected = null
-// If True, only show pages which contains an error
-error_pages_only = false
-
 function mark_selected_page(page) {
     let error_page_list = document.getElementById('error_page_selector_list')
     for (let index in error_page_list.children) {
@@ -60,7 +53,7 @@ function mark_selected_page(page) {
 }
 
 function show(id) {
-    let old = document.getElementById("error_selected_" + error_selected)
+    let old = document.getElementById("error_selected_" + result_view.error_selected)
     let current = document.getElementById("error_selected_" + id)
 
     let set_focus = document.getElementById("error_selector_checkbox_" + id)
@@ -74,13 +67,13 @@ function show(id) {
     if (set_focus != null) {
         set_focus.focus()
     }
-    error_selected = id
-    show_error_message(error_selected)
+    result_view.error_selected = id
+    show_error_message(result_view.error_selected)
 }
 
 function next() {
-    let max_element = CONTENT[error_page].findings.length
-    let next_id = error_selected + 1
+    let max_element = result_view.content[result_view.error_page].findings.length
+    let next_id = result_view.error_selected + 1
     if (next_id < max_element) {
         show(next_id)
     } else {
@@ -89,8 +82,8 @@ function next() {
 }
 
 function previous() {
-    let max_element = CONTENT[error_page].findings.length
-    let next_id = error_selected - 1
+    let max_element = result_view.content[result_view.error_page].findings.length
+    let next_id = result_view.error_selected - 1
     if (next_id >= 0) {
         show(next_id)
     } else {
@@ -102,15 +95,15 @@ function update_page_selector() {
     let error_page_list = document.getElementById('error_page_selector_list')
     // TODO: CHECK FOR BETTER REMOVEMENT
     error_page_list.innerHTML = ''
-    for (let id in CONTENT) {
-        if (error_pages_only) {
+    for (let id in result_view.content) {
+        if (result_view.error_pages_only) {
             // skip pages which contains no error
-            let no_findings = CONTENT[id].findings.length == 0
+            let no_findings = result_view.content[id].findings.length == 0
             if (no_findings) {
                 continue
             }
         }
-        let item = CONTENT[id].page + 1
+        let item = result_view.content[id].page + 1
         add_li_button(error_page_list, id, item)
     }
 }
@@ -119,22 +112,22 @@ function update_error_page_selector(page) {
     let error_page_selector = document.getElementById('error_list')
     // TODO: CHECK FOR BETTER REMOVEMENT
     error_page_selector.innerHTML = ''
-    let error = CONTENT[page].findings
+    let error = result_view.content[page].findings
     for (let index in error) {
         let item = error[index]
         add_li_selector(error_page_selector, index, item.title, item.number)
     }
-    error_selected = 0
+    result_view.error_selected = 0
     let mark = document.getElementById('error_selected_0')
     if (mark != undefined) {
         document.getElementById('error_selected_0').classList.add('highlighted')
-        show_error_message(error_selected)
+        show_error_message(result_view.error_selected)
     }
-    show(error_selected)
+    show(result_view.error_selected)
 }
 
 function show_error_message(selected) {
-    let message = CONTENT[error_page]
+    let message = result_view.content[result_view.error_page]
     if (message == null || message.findings.length <= selected) {
         document.getElementById('error_message').innerHTML = ''
         document.getElementById('error_message_headline').innerHTML = ''
@@ -188,7 +181,6 @@ function onload(process) {
 }
 
 function update_view(content) {
-    CONTENT = content
     result_view.content = content
     update_page_selector()
     result_view.show_page(0)
@@ -214,30 +206,30 @@ function loop(process) {
 
 function toggle_pages() {
     let toggle = document.getElementById('error_page_selector_toggle')
-    if (error_pages_only) {
-        error_pages_only = false
+    if (result_view.error_pages_only) {
+        result_view.error_pages_only = false
         toggle.innerText = 'hide'
     } else {
-        error_pages_only = true
+        result_view.error_pages_only = true
         toggle.innerText = 'show'
     }
     update_page_selector()
-    mark_selected_page(error_page)
+    mark_selected_page(result_view.error_page)
 }
 
 function previous_page() {
-    let current = error_page - 1
+    let current = result_view.error_page - 1
     if (current >= 0) {
         result_view.show_page(current)
     }
     else {
-        result_view.show_page(CONTENT.length - 1)
+        result_view.show_page(result_view.content.length - 1)
     }
 }
 
 function next_page() {
-    let current = error_page + 1
-    let maxpages = CONTENT.length
+    let current = result_view.error_page + 1
+    let maxpages = result_view.content.length
     if (current < maxpages) {
         result_view.show_page(current)
     } else {
