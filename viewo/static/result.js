@@ -100,6 +100,26 @@ class FindingBox {
         this.update_finding_text()
     }
 
+    next() {
+        //Iterate error message headline box downwards
+        let next_id = this.result.current_finding + 1
+        if (next_id < this.result.findings.length) {
+            this.show_finding(next_id)
+        } else {
+            this.show_finding(0)
+        }
+    }
+
+    previous() {
+        //Iterate error message headline box upwards
+        let next_id = this.result.current_finding - 1
+        if (next_id >= 0) {
+            this.show_finding(next_id)
+        } else {
+            this.show_finding(this.result.findings.length - 1)
+        }
+    }
+
     update_finding_text() {
         let message = this.result.selected_finding
         if (message == null) {
@@ -117,7 +137,6 @@ class Navigator {
 
     constructor(result) {
         this.result = result
-        this._register_keyhandler()
     }
 
     highlight_pagenumber(page) {
@@ -157,50 +176,7 @@ class Navigator {
         }
     }
 
-    next() {
-        //Iterate error message headline box downwards
-        let next_id = this.result.current_finding + 1
-        if (next_id < this.result.findings.length) {
-            findingbox.show_finding(next_id)
-        } else {
-            findingbox.show_finding(0)
-        }
-    }
 
-    previous() {
-        //Iterate error message headline box upwards
-        let next_id = this.result.current_finding - 1
-        if (next_id >= 0) {
-            findingbox.show_finding(next_id)
-        } else {
-            findingbox.show_finding(this.result.findings.length - 1)
-        }
-    }
-
-    _register_keyhandler() {
-        // Navigate thrue error pages
-        window.addEventListener('keydown', event => {
-            // Hands up for vim :)
-            // TODO: REFACTOR
-            const key = event.key
-            if (key == 'l' || key == 'ArrowRight') {
-                this.next_page()
-                event.preventDefault()
-            }
-            if (key == 'h' || key == 'ArrowLeft') {
-                this.previous_page()
-                event.preventDefault()
-            }
-            if (key == 'j' || key == 'ArrowDown') {
-                this.next()
-                event.preventDefault()
-            }
-            if (key == 'k' || key == 'ArrowUp') {
-                this.previous()
-                event.preventDefault()
-            }
-        })
-    }
 }
 
 const result_view = new ResultView()
@@ -346,4 +322,27 @@ function init() {
     $("#finding_next").click(function () {
         navigator.next()
     });
+
+    // Navigate thrue error pages
+    window.addEventListener('keydown', event => {
+        // Hands up for vim :)
+        // TODO: REFACTOR
+        const key = event.key
+        if (key == 'l' || key == 'ArrowRight') {
+            navigator.next_page()
+            event.preventDefault()
+        }
+        if (key == 'h' || key == 'ArrowLeft') {
+            navigator.previous_page()
+            event.preventDefault()
+        }
+        if (key == 'j' || key == 'ArrowDown') {
+            findingbox.next()
+            event.preventDefault()
+        }
+        if (key == 'k' || key == 'ArrowUp') {
+            findingbox.previous()
+            event.preventDefault()
+        }
+    })
 }
