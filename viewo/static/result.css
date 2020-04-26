@@ -80,12 +80,13 @@ aside {
 #error_page_selector ul{
     list-style: none;
     padding: 0px;
+    margin: 2px;
 }
 
 #error_page_selector li{
     list-style: none;
     display: inline;
-    padding: 5px;
+    padding: 2px;
 }
 
 .highlighted {
