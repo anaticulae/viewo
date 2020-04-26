@@ -1,3 +1,5 @@
+"use strict";
+
 /** Result View
 
 */
@@ -253,7 +255,7 @@ function toggle_pages() {
 window.addEventListener('keydown', event => {
     // Hands up for vim :)
     // TODO: REFACTOR
-    key = event.key
+    const key = event.key
     if (key == 'l' || key == 'ArrowRight') {
         result_view.next_page()
         event.preventDefault()
