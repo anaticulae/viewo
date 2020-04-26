@@ -151,12 +151,23 @@ class FindingBox {
          * finding is detected for current page, finding box will be
          * disabled.
          */
-        let error_page_selector = $('#error_list')[0]
+        let error_page_selector = $('#error_list')
         // TODO: CHECK FOR BETTER REMOVEMENT
-        error_page_selector.innerHTML = ''
+        error_page_selector[0].innerHTML = ''
         for (let index in this.result.findings) {
             let item = this.result.findings[index]
-            add_li_selector(error_page_selector, index, item.title, item.number)
+
+            let finding_id = item.number
+            let text = item.title
+            let node_selectable =
+                `<li id="error_selected_${index}">` +
+                `<input id="error_selector_checkbox_${index}" ` +
+                `type="checkbox" checked="true">` +
+                `${text}</li>`
+            error_page_selector.append(node_selectable)
+            $(`#error_selector_checkbox_${index}`).click(function () {
+                findingbox.toggle_finding(finding_id)
+            });
         }
         this.result.error_selected = 0
         let mark = $('#error_selected_0')
@@ -249,19 +260,23 @@ class Navigator {
     }
 
     update_page_navigator() {
-        let error_page_list = $('#error_page_selector_list')[0]
+        let error_page_list = $('#error_page_selector_list')
         // TODO: CHECK FOR BETTER REMOVEMENT
-        error_page_list.innerHTML = ''
+        error_page_list[0].innerHTML = ''
         for (let id in this.result.content) {
             if (this.error_pages_only) {
                 // skip pages which contains no error
-                let no_findings = result_view.content[id].findings.length == 0
+                let no_findings = this.result.content[id].findings.length == 0
                 if (no_findings) {
                     continue
                 }
             }
-            let item = result_view.content[id].page + 1
-            add_li_button(error_page_list, id, item)
+            let text = Number(id) + 1
+            let btn = `<li><button type="button" id="openpage_${id}">${text}</button></li>`
+            error_page_list.append(btn)
+            $(`#openpage_${id} `).click(function () {
+                result_view.show_page(id)
+            });
         }
     }
 
@@ -284,37 +299,6 @@ class Navigator {
 const result_view = new ResultView()
 const navigator = new Navigator(result_view)
 const findingbox = new FindingBox(result_view)
-
-function show(id) {
-    // TODO: REMOVE LATER
-    findingbox.show_finding(id)
-}
-
-function add_li_button(parent, page, text) {
-    let button = document.createElement('button')
-    button.setAttribute('type', 'button')
-    button.setAttribute('onclick', `javascript:result_view.show_page(${page})`)
-    button.innerText = text
-    let node = document.createElement('li')
-    node.appendChild(button)
-    parent.appendChild(node)
-}
-
-function add_li_selector(parent, page, text, number) {
-    let node = document.createElement('li')
-    node.setAttribute('id', `error_selected_${page}`)
-    node.setAttribute('onclick', `javascript:show(${page})`)
-    let selector = '<input id="error_selector_checkbox_' + page + '"'
-        + ' type="checkbox" checked="true" ' +
-        'onclick="javascript:show_hide(' + number + ')">'
-    node.innerHTML = selector + text
-    parent.appendChild(node)
-}
-
-function show_hide(number) {
-    //REMOVE LATER
-    findingbox.toggle_finding(number)
-}
 
 function onload(process) {
     result_view.loop(process)
