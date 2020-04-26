@@ -27,15 +27,9 @@ class ResultView {
 
         $('#error_page_content')[0].innerHTML = selected.html
 
-        update_error_page_selector(page)
+        findingbox.update_findings()
         navigator.highlight_pagenumber(page)
 
-        if (selected.findings.length == 0) {
-            // disable error bar if no error is provided
-            $('#error')[0].classList.add('hidden')
-        } else {
-            $('#error')[0].classList.remove('hidden')
-        }
     }
 
     get current_page() {
@@ -127,6 +121,34 @@ class FindingBox {
         }
     }
 
+    update_findings() {
+        /**
+         * Update list of selectable findings of current page. If no
+         * finding is detected for current page, finding box will be
+         * disabled.
+         */
+        let error_page_selector = $('#error_list')[0]
+        // TODO: CHECK FOR BETTER REMOVEMENT
+        error_page_selector.innerHTML = ''
+        for (let index in this.result.findings) {
+            let item = this.result.findings[index]
+            add_li_selector(error_page_selector, index, item.title, item.number)
+        }
+        this.result.error_selected = 0
+        let mark = document.getElementById('error_selected_0')
+        if (mark != undefined) {
+            document.getElementById('error_selected_0').classList.add('highlighted')
+            this.update_finding_text()
+        }
+        this.show_finding(this.result.error_selected)
+        if (this.result.findings.length == 0) {
+            // disable error bar if no error is provided
+            $('#error')[0].classList.add('hidden')
+        } else {
+            $('#error')[0].classList.remove('hidden')
+        }
+    }
+
     update_finding_text() {
         let message = this.result.selected_finding
         if (message == null) {
@@ -215,6 +237,8 @@ class Navigator {
     }
 
     toggle_pages() {
+        // Switch between all page numbers of the document and the pages
+        // with errors only.
         let toggle = $('#error_page_selector_toggle')[0]
         if (this.error_pages_only) {
             toggle.innerText = 'hide'
@@ -237,23 +261,6 @@ function show(id) {
     findingbox.show_finding(id)
 }
 
-function update_error_page_selector(page) {
-    let error_page_selector = document.getElementById('error_list')
-    // TODO: CHECK FOR BETTER REMOVEMENT
-    error_page_selector.innerHTML = ''
-    let error = result_view.content[page].findings
-    for (let index in error) {
-        let item = error[index]
-        add_li_selector(error_page_selector, index, item.title, item.number)
-    }
-    result_view.error_selected = 0
-    let mark = document.getElementById('error_selected_0')
-    if (mark != undefined) {
-        document.getElementById('error_selected_0').classList.add('highlighted')
-        findingbox.update_finding_text()
-    }
-    findingbox.show_finding(result_view.error_selected)
-}
 
 function add_li_button(parent, page, text) {
     let button = document.createElement('button')
