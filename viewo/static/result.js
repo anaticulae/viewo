@@ -38,7 +38,6 @@ class ResultView {
         } else {
             $('#error')[0].classList.remove('hidden')
         }
-
     }
 
     get current_page() {
@@ -65,6 +64,52 @@ class ResultView {
         }
         let result = this.content[this.current_page].findings
         return result
+    }
+
+    get selected_finding() {
+        let findings = this.findings
+        if (this.current_finding < this.findings.length) {
+            return findings[this.current_finding]
+        }
+        return null
+    }
+}
+
+class FindingBox {
+
+    constructor(result) {
+        this.result = result
+    }
+
+    show_finding(id) {
+        let old = $(`#error_selected_${this.result.error_selected}`)[0]
+        let current = $(`#error_selected_${id}`)[0]
+
+        let set_focus = $(`#error_selector_checkbox_${id}`)[0]
+        if (old != null) {
+            old.classList.remove("highlighted")
+        }
+        if (current != null) {
+            current.classList.add("highlighted")
+            current.focus()
+        }
+        if (set_focus != null) {
+            set_focus.focus()
+        }
+        this.result.error_selected = id
+        this.update_finding_text()
+    }
+
+    update_finding_text() {
+        let message = this.result.selected_finding
+        if (message == null) {
+            document.getElementById('error_message').innerHTML = ''
+            document.getElementById('error_message_headline').innerHTML = ''
+        }
+        else {
+            document.getElementById('error_message').innerHTML = message.message
+            document.getElementById('error_message_headline').innerHTML = message.title
+        }
     }
 }
 
@@ -116,9 +161,9 @@ class Navigator {
         //Iterate error message headline box downwards
         let next_id = this.result.current_finding + 1
         if (next_id < this.result.findings.length) {
-            show(next_id)
+            findingbox.show_finding(next_id)
         } else {
-            show(0)
+            findingbox.show_finding(0)
         }
     }
 
@@ -126,9 +171,9 @@ class Navigator {
         //Iterate error message headline box upwards
         let next_id = this.result.current_finding - 1
         if (next_id >= 0) {
-            show(next_id)
+            findingbox.show_finding(next_id)
         } else {
-            show(this.result.findings.length - 1)
+            findingbox.show_finding(this.result.findings.length - 1)
         }
     }
 
@@ -160,30 +205,15 @@ class Navigator {
 
 const result_view = new ResultView()
 const navigator = new Navigator(result_view)
-
+const findingbox = new FindingBox(result_view)
 
 function show(id) {
-    let old = document.getElementById("error_selected_" + result_view.error_selected)
-    let current = document.getElementById("error_selected_" + id)
-
-    let set_focus = document.getElementById("error_selector_checkbox_" + id)
-    if (old != null) {
-        old.classList.remove("highlighted")
-    }
-    if (current != null) {
-        current.classList.add("highlighted")
-        current.focus()
-    }
-    if (set_focus != null) {
-        set_focus.focus()
-    }
-    result_view.error_selected = id
-    show_error_message(result_view.error_selected)
+    // TODO: REMOVE LATER
+    findingbox.show_finding(id)
 }
 
-
 function update_page_selector() {
-    let error_page_list = document.getElementById('error_page_selector_list')
+    let error_page_list = $('#error_page_selector_list')[0]
     // TODO: CHECK FOR BETTER REMOVEMENT
     error_page_list.innerHTML = ''
     for (let id in result_view.content) {
@@ -212,22 +242,11 @@ function update_error_page_selector(page) {
     let mark = document.getElementById('error_selected_0')
     if (mark != undefined) {
         document.getElementById('error_selected_0').classList.add('highlighted')
-        show_error_message(result_view.error_selected)
+        findingbox.update_finding_text()
     }
-    show(result_view.error_selected)
+    findingbox.show_finding(result_view.error_selected)
 }
 
-function show_error_message(selected) {
-    let message = result_view.content[result_view.error_page]
-    if (message == null || message.findings.length <= selected || selected == -1) {
-        document.getElementById('error_message').innerHTML = ''
-        document.getElementById('error_message_headline').innerHTML = ''
-        return
-    }
-    message = message.findings[selected]
-    document.getElementById('error_message').innerHTML = message.message
-    document.getElementById('error_message_headline').innerHTML = message.title
-}
 
 function add_li_button(parent, page, text) {
     let button = document.createElement('button')
@@ -264,6 +283,9 @@ function openclose_item(selected) {
 function show_hide(number) {
     // show or hide finding
     let selected = document.getElementById('finding_' + number)
+    if (selected == undefined) {
+        return
+    }
     openclose_item(selected)
 }
 
