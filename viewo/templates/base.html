@@ -8,6 +8,7 @@
     <title>Willkommen - Marhaban</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename='lib/jquery.js') }}"></script>
+    {% block head %}{% endblock %}
 </head>
 
 <body class="main_wrapper">

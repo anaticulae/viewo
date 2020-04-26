@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
-{% block content %}
-
+{% block head %}
+{{ super() }}
 <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='result.css') }}">
 <script src="{{ url_for('static', filename='result.js') }}"></script>
+<script type="text/javascript">jQuery(document).ready(init);</script>
+{% endblock %}
 
+{% block content %}
 <h2>Gesamtdurchsicht</h2>
-
 <div id="error_page_selector">
     <!-- TODO: sooo dirty -->
     <table width="100%">
