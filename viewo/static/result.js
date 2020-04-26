@@ -15,6 +15,12 @@ class ResultView {
         this.content = []
     }
 
+    update_content(content) {
+        this.content = content
+        navigator.update_page_navigator()
+        this.show_page(0)
+    }
+
     show_page(page) {
         if (this.content == []) {
             return
@@ -66,6 +72,23 @@ class ResultView {
         return null
     }
 
+    loop(process) {
+        // TODO: MOVE TO SEPARATE DATA MANAGER?
+        let ajax = new XMLHttpRequest()
+        ajax.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let downloaded = this.responseText
+                downloaded = JSON.parse(downloaded)
+                result_view.update_content(downloaded.content)
+                if (downloaded.status == 1) {
+                    // process is currently running
+                    setTimeout(() => loop(process), 3000);
+                }
+            }
+        }
+        ajax.open("GET", `/waiting/resultview/status/${process}`, true)
+        ajax.send()
+    }
 }
 
 class FindingBox {
@@ -296,32 +319,9 @@ function show_hide(number) {
 }
 
 function onload(process) {
-    loop(process)
+    result_view.loop(process)
 }
 
-function update_view(content) {
-    result_view.content = content
-    navigator.update_page_navigator()
-    result_view.show_page(0)
-}
-
-function loop(process) {
-    let ajax = new XMLHttpRequest()
-    ajax.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            let downloaded = this.responseText
-            downloaded = JSON.parse(downloaded)
-
-            update_view(downloaded.content)
-            if (downloaded.status == 1) {
-                // process is currently running
-                setTimeout(() => loop(process), 3000);
-            }
-        }
-    }
-    ajax.open("GET", '/waiting/resultview/status/' + process, true)
-    ajax.send()
-}
 
 function init() {
     navigator.init_listener()
