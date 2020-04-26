@@ -75,10 +75,10 @@ class FindingBox {
 
     init_listener() {
         $("#finding_previous").click(function () {
-            findingbox.previous()
+            findingbox.previous_finding()
         });
         $("#finding_next").click(function () {
-            findingbox.next()
+            findingbox.next_finding()
         });
     }
 
@@ -101,7 +101,7 @@ class FindingBox {
         this.update_finding_text()
     }
 
-    next() {
+    next_finding() {
         //Iterate error message headline box downwards
         let next_id = this.result.current_finding + 1
         if (next_id < this.result.findings.length) {
@@ -111,7 +111,7 @@ class FindingBox {
         }
     }
 
-    previous() {
+    previous_finding() {
         //Iterate error message headline box upwards
         let next_id = this.result.current_finding - 1
         if (next_id >= 0) {
@@ -349,11 +349,11 @@ function init() {
             event.preventDefault()
         }
         if (key == 'j' || key == 'ArrowDown') {
-            findingbox.next()
+            findingbox.next_finding()
             event.preventDefault()
         }
         if (key == 'k' || key == 'ArrowUp') {
-            findingbox.previous()
+            findingbox.previous_finding()
             event.preventDefault()
         }
     })
