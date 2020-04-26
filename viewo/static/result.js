@@ -308,3 +308,20 @@ function toggle_pages() {
     navigator.highlight_pagenumber(result_view.error_page)
 }
 
+function init() {
+    $("#error_page_selector_toggle").click(function () {
+        toggle_pages()
+    });
+    $("#error_next_page").click(function () {
+        navigator.next_page()
+    });
+    $("#error_previous_page").click(function () {
+        navigator.previous_page()
+    });
+    $("#finding_previous").click(function () {
+        navigator.previous()
+    });
+    $("#finding_next").click(function () {
+        navigator.next()
+    });
+}
