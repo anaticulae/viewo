@@ -65,6 +65,7 @@ class ResultView {
         }
         return null
     }
+
 }
 
 class FindingBox {
@@ -141,6 +142,7 @@ class FindingBox {
             this.update_finding_text()
         }
         this.show_finding(this.result.error_selected)
+
         if (this.result.findings.length == 0) {
             // disable error bar if no error is provided
             $('#error')[0].classList.add('hidden')
@@ -160,6 +162,12 @@ class FindingBox {
             document.getElementById('error_message_headline').innerHTML = message.title
         }
     }
+
+    toggle_finding(finding) {
+        $('#finding_' + finding).toggle()
+    }
+
+
 }
 
 class Navigator {
@@ -261,7 +269,6 @@ function show(id) {
     findingbox.show_finding(id)
 }
 
-
 function add_li_button(parent, page, text) {
     let button = document.createElement('button')
     button.setAttribute('type', 'button')
@@ -283,24 +290,9 @@ function add_li_selector(parent, page, text, number) {
     parent.appendChild(node)
 }
 
-function openclose_item(selected) {
-    let before = selected.classList.length
-    selected.classList.remove('hidden')
-    if (selected.classList.length == before) {
-        selected.classList.add('hidden')
-    }
-    else {
-        selected.classList.remove('hidden')
-    }
-}
-
 function show_hide(number) {
-    // show or hide finding
-    let selected = document.getElementById('finding_' + number)
-    if (selected == undefined) {
-        return
-    }
-    openclose_item(selected)
+    //REMOVE LATER
+    findingbox.toggle_finding(number)
 }
 
 function onload(process) {
