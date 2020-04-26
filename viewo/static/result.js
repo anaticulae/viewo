@@ -12,8 +12,6 @@ class ResultView {
     init() {
         this.error_page = null
         this.error_selected = null
-        // If True, only show pages which contains an error
-        this.error_pages_only = false
         this.content = []
     }
 
@@ -81,6 +79,15 @@ class FindingBox {
         this.result = result
     }
 
+    init_listener() {
+        $("#finding_previous").click(function () {
+            findingbox.previous()
+        });
+        $("#finding_next").click(function () {
+            findingbox.next()
+        });
+    }
+
     show_finding(id) {
         let old = $(`#error_selected_${this.result.error_selected}`)[0]
         let current = $(`#error_selected_${id}`)[0]
@@ -137,6 +144,20 @@ class Navigator {
 
     constructor(result) {
         this.result = result
+        // If True, only show pages which contains an error
+        this.error_pages_only = false
+    }
+
+    init_listener() {
+        $("#error_page_selector_toggle").click(function () {
+            navigator.toggle_pages()
+        });
+        $("#error_next_page").click(function () {
+            navigator.next_page()
+        });
+        $("#error_previous_page").click(function () {
+            navigator.previous_page()
+        });
     }
 
     highlight_pagenumber(page) {
@@ -176,6 +197,34 @@ class Navigator {
         }
     }
 
+    update_page_navigator() {
+        let error_page_list = $('#error_page_selector_list')[0]
+        // TODO: CHECK FOR BETTER REMOVEMENT
+        error_page_list.innerHTML = ''
+        for (let id in this.result.content) {
+            if (this.error_pages_only) {
+                // skip pages which contains no error
+                let no_findings = result_view.content[id].findings.length == 0
+                if (no_findings) {
+                    continue
+                }
+            }
+            let item = result_view.content[id].page + 1
+            add_li_button(error_page_list, id, item)
+        }
+    }
+
+    toggle_pages() {
+        let toggle = $('#error_page_selector_toggle')[0]
+        if (this.error_pages_only) {
+            toggle.innerText = 'hide'
+        } else {
+            toggle.innerText = 'show'
+        }
+        this.error_pages_only = !this.error_pages_only //toggle
+        this.update_page_navigator()
+        this.highlight_pagenumber(this.result.error_page)
+    }
 
 }
 
@@ -186,23 +235,6 @@ const findingbox = new FindingBox(result_view)
 function show(id) {
     // TODO: REMOVE LATER
     findingbox.show_finding(id)
-}
-
-function update_page_selector() {
-    let error_page_list = $('#error_page_selector_list')[0]
-    // TODO: CHECK FOR BETTER REMOVEMENT
-    error_page_list.innerHTML = ''
-    for (let id in result_view.content) {
-        if (result_view.error_pages_only) {
-            // skip pages which contains no error
-            let no_findings = result_view.content[id].findings.length == 0
-            if (no_findings) {
-                continue
-            }
-        }
-        let item = result_view.content[id].page + 1
-        add_li_button(error_page_list, id, item)
-    }
 }
 
 function update_error_page_selector(page) {
@@ -222,7 +254,6 @@ function update_error_page_selector(page) {
     }
     findingbox.show_finding(result_view.error_selected)
 }
-
 
 function add_li_button(parent, page, text) {
     let button = document.createElement('button')
@@ -271,7 +302,7 @@ function onload(process) {
 
 function update_view(content) {
     result_view.content = content
-    update_page_selector()
+    navigator.update_page_navigator()
     result_view.show_page(0)
 }
 
@@ -293,35 +324,9 @@ function loop(process) {
     ajax.send()
 }
 
-function toggle_pages() {
-    let toggle = document.getElementById('error_page_selector_toggle')
-    if (result_view.error_pages_only) {
-        result_view.error_pages_only = false
-        toggle.innerText = 'hide'
-    } else {
-        result_view.error_pages_only = true
-        toggle.innerText = 'show'
-    }
-    update_page_selector()
-    navigator.highlight_pagenumber(result_view.error_page)
-}
-
 function init() {
-    $("#error_page_selector_toggle").click(function () {
-        toggle_pages()
-    });
-    $("#error_next_page").click(function () {
-        navigator.next_page()
-    });
-    $("#error_previous_page").click(function () {
-        navigator.previous_page()
-    });
-    $("#finding_previous").click(function () {
-        navigator.previous()
-    });
-    $("#finding_next").click(function () {
-        navigator.next()
-    });
+    navigator.init_listener()
+    findingbox.init_listener()
 
     // Navigate thrue error pages
     window.addEventListener('keydown', event => {
