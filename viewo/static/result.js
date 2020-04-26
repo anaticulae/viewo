@@ -2,19 +2,22 @@
 
 /** Result View
 
+    Navigator
+    ShowHide/Selector
+
 */
 
-var result_view = {
+class ResultView {
 
-    init: function () {
+    init() {
         this.error_page = null
         this.error_selected = null
         // If True, only show pages which contains an error
         this.error_pages_only = false
         this.content = []
-    },
+    }
 
-    show_page: function (page) {
+    show_page(page) {
         if (this.content == []) {
             return
         }
@@ -36,55 +39,43 @@ var result_view = {
             $('#error')[0].classList.remove('hidden')
         }
 
-    },
-
-    previous_page: function () {
-        let current = this.error_page - 1
-        if (current >= 0) {
-            this.show_page(current)
-        }
-        else {
-            this.show_page(this.content.length - 1)
-        }
-    },
-
-    next_page: function () {
-        let current = this.error_page + 1
-        let maxpages = this.content.length
-        if (current < maxpages) {
-            this.show_page(current)
-        } else {
-            this.show_page(0)
-        }
-    },
-
-    next: function () {
-        //Iterate error message headline box downwards
-        let max_element = this.content[this.error_page].findings.length
-        let next_id = this.error_selected + 1
-        if (next_id < max_element) {
-            show(next_id)
-        } else {
-            show(0)
-        }
-    },
-
-    previous: function () {
-        //Iterate error message headline box upwards
-        let max_element = this.content[this.error_page].findings.length
-        let next_id = this.error_selected - 1
-        if (next_id >= 0) {
-            show(next_id)
-        } else {
-            show(max_element - 1)
-        }
     }
 
+    get current_page() {
+        return this.error_page
+    }
+
+    get current_finding() {
+        return this.error_selected
+    }
+
+    get available_pages() {
+        if (this.content == undefined) {
+            return 0
+        }
+        return this.content.length
+    }
+
+    get findings() {
+        if (this.content == undefined) {
+            return []
+        }
+        if (this.content.length <= this.current_page) {
+            return []
+        }
+        let result = this.content[this.current_page].findings
+        return result
+    }
 }
 
-var navigator = {
+class Navigator {
 
-    highlight_pagenumber: function (page) {
+    constructor(result) {
+        this.result = result
+        this._register_keyhandler()
+    }
+
+    highlight_pagenumber(page) {
         // Highlight page number as open page in upper page selector bar.
         // Remove other potential highlights of other pages.
         // TODO: SPLIT METHOD IN CLEAR AND SET/ADD
@@ -101,7 +92,74 @@ var navigator = {
             }
         }
     }
+
+    previous_page() {
+        let current = this.result.current_page - 1
+        if (current >= 0) {
+            this.result.show_page(current)
+        }
+        else {
+            this.result.show_page(this.result.available_pages - 1)
+        }
+    }
+
+    next_page() {
+        let current = this.result.current_page + 1
+        if (current < this.result.available_pages) {
+            this.result.show_page(current)
+        } else {
+            this.result.show_page(0)
+        }
+    }
+
+    next() {
+        //Iterate error message headline box downwards
+        let next_id = this.result.current_finding + 1
+        if (next_id < this.result.findings.length) {
+            show(next_id)
+        } else {
+            show(0)
+        }
+    }
+
+    previous() {
+        //Iterate error message headline box upwards
+        let next_id = this.result.current_finding - 1
+        if (next_id >= 0) {
+            show(next_id)
+        } else {
+            show(this.result.findings.length - 1)
+        }
+    }
+
+    _register_keyhandler() {
+        // Navigate thrue error pages
+        window.addEventListener('keydown', event => {
+            // Hands up for vim :)
+            // TODO: REFACTOR
+            const key = event.key
+            if (key == 'l' || key == 'ArrowRight') {
+                this.next_page()
+                event.preventDefault()
+            }
+            if (key == 'h' || key == 'ArrowLeft') {
+                this.previous_page()
+                event.preventDefault()
+            }
+            if (key == 'j' || key == 'ArrowDown') {
+                this.next()
+                event.preventDefault()
+            }
+            if (key == 'k' || key == 'ArrowUp') {
+                this.previous()
+                event.preventDefault()
+            }
+        })
+    }
 }
+
+const result_view = new ResultView()
+const navigator = new Navigator(result_view)
 
 
 function show(id) {
@@ -250,26 +308,3 @@ function toggle_pages() {
     navigator.highlight_pagenumber(result_view.error_page)
 }
 
-
-// Navigate thrue error pages
-window.addEventListener('keydown', event => {
-    // Hands up for vim :)
-    // TODO: REFACTOR
-    const key = event.key
-    if (key == 'l' || key == 'ArrowRight') {
-        result_view.next_page()
-        event.preventDefault()
-    }
-    if (key == 'h' || key == 'ArrowLeft') {
-        result_view.previous_page()
-        event.preventDefault()
-    }
-    if (key == 'j' || key == 'ArrowDown') {
-        result_view.next()
-        event.preventDefault()
-    }
-    if (key == 'k' || key == 'ArrowUp') {
-        result_view.previous()
-        event.preventDefault()
-    }
-})
