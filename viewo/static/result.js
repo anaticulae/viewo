@@ -159,9 +159,9 @@ class FindingBox {
             add_li_selector(error_page_selector, index, item.title, item.number)
         }
         this.result.error_selected = 0
-        let mark = document.getElementById('error_selected_0')
-        if (mark != undefined) {
-            document.getElementById('error_selected_0').classList.add('highlighted')
+        let mark = $('#error_selected_0')
+        if (mark.length > 0) {
+            mark[0].classList.add('highlighted')
             this.update_finding_text()
         }
         this.show_finding(this.result.error_selected)
@@ -177,20 +177,18 @@ class FindingBox {
     update_finding_text() {
         let message = this.result.selected_finding
         if (message == null) {
-            document.getElementById('error_message').innerHTML = ''
-            document.getElementById('error_message_headline').innerHTML = ''
+            $('#error_message')[0].innerHTML = ''
+            $('#error_message_headline')[0].innerHTML = ''
         }
         else {
-            document.getElementById('error_message').innerHTML = message.message
-            document.getElementById('error_message_headline').innerHTML = message.title
+            $('#error_message')[0].innerHTML = message.message
+            $('#error_message_headline')[0].innerHTML = message.title
         }
     }
 
     toggle_finding(finding) {
         $('#finding_' + finding).toggle()
     }
-
-
 }
 
 class Navigator {
@@ -304,8 +302,8 @@ function add_li_button(parent, page, text) {
 
 function add_li_selector(parent, page, text, number) {
     let node = document.createElement('li')
-    node.setAttribute('id', 'error_selected_' + page)
-    node.setAttribute('onclick', 'javascript:show(' + page + ')')
+    node.setAttribute('id', `error_selected_${page}`)
+    node.setAttribute('onclick', `javascript:show(${page})`)
     let selector = '<input id="error_selector_checkbox_' + page + '"'
         + ' type="checkbox" checked="true" ' +
         'onclick="javascript:show_hide(' + number + ')">'
