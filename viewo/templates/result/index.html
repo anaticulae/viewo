@@ -4,7 +4,13 @@
 {{ super() }}
 <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='result.css') }}">
 <script src="{{ url_for('static', filename='result.js') }}"></script>
-<script type="text/javascript">jQuery(document).ready(init);</script>
+<script type="text/javascript">
+    let go = function () {
+        init()
+        onload("{{ process }}")
+    }
+    jQuery(document).ready(go);
+</script>
 {% endblock %}
 
 {% block content %}
@@ -52,7 +58,4 @@
     </p>
 </footer>
 {% endif %}
-<script type="text/javascript">
-    onload("{{ process }}")
-</script>
 {% endblock %}

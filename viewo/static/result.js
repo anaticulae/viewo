@@ -22,6 +22,9 @@ class ResultView {
     }
 
     show_page(page) {
+        if (this.content == undefined) {
+            return
+        }
         if (this.content == []) {
             return
         }
@@ -36,6 +39,7 @@ class ResultView {
         findingbox.update_findings()
         navigator.highlight_pagenumber(page)
 
+        base.show_done()
     }
 
     get current_page() {
@@ -78,13 +82,20 @@ class ResultView {
         ajax.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 let downloaded = this.responseText
-                downloaded = JSON.parse(downloaded)
+                try {
+                    downloaded = JSON.parse(downloaded)
+                } catch (error) {
+                    base.show_error()
+                }
                 result_view.update_content(downloaded.content)
                 if (downloaded.status == 1) {
                     // process is currently running
                     setTimeout(() => loop(process), 3000);
                 }
             }
+            // else { staus ==404?
+            //     base.show_error('Verbindung zum Server nicht möglich.')
+            // }
         }
         ajax.open("GET", `/waiting/resultview/status/${process}`, true)
         ajax.send()
@@ -331,4 +342,6 @@ function init() {
             event.preventDefault()
         }
     })
+
+    base.show_connecting('Öffne Dokument...')
 }

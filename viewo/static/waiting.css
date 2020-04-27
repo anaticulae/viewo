@@ -1,13 +1,13 @@
-#progress {
-    width: 100%;
-    max-width: 600px;
-}
 
 #waitinglist {
     background-color: darkkhaki;
     border: black solid 1px;
+    max-width: 500px;
 }
 
+#progress_info{
+    max-width: 500px;
+}
 
 #waitinglist .status {
     float: right;
@@ -22,10 +22,6 @@
     border-radius: 3px;
     border: solid black 1px;
     /* margin: 5px; */
-}
-
-#progress_error{
-    height: 100px;
 }
 
 .todo {

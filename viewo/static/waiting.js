@@ -64,6 +64,7 @@ var result_waiting_view = {
                 downloaded = JSON.parse(downloaded)
 
                 if (downloaded.states == undefined) {
+                    // TODO: VERIFY LATER
                     $("#progress_connecting").hide()
                     $("#progress_error").show()
                     return
@@ -76,7 +77,7 @@ var result_waiting_view = {
 
                 if (downloaded.status == 1) {
                     // process is currently running
-                    setTimeout(() => loop(process), 3000);
+                    setTimeout(() => result_waiting_view.loop(process), 3000);
                 }
             }
         }
@@ -85,9 +86,8 @@ var result_waiting_view = {
     },
 
     onload: function (process) {
-        $("#progress_connecting").show()
-        $("#progress").hide()
         $("#progress_error").hide()
+        $("#progress").hide()
         this.loop(process)
     },
 

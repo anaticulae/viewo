@@ -7,9 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Willkommen - Marhaban</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='base.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='lib/jquery.js') }}"></script>
     {% block head %}{% endblock %}
 </head>
+
 
 <body class="main_wrapper">
     <!-- logo starts here -->
@@ -27,10 +29,12 @@
     <!-- content starts here -->
     {% block content_container %}
     <div id="content_main">
-        {% block content %}{% endblock %}
+        <div id="display">
+            {% block content %}{% endblock %}
+        </div>
+        <div id="message"> </div>
     </div>
     {% endblock %}
-
     <!-- footer starts here  -->
     <footer>
         <p>

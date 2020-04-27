@@ -126,3 +126,15 @@ html {
     max-width: 1280px;
     margin: 1px auto 1px auto;
 }
+
+#progress {
+    width: 100%;
+}
+
+#progress_error{
+    height: 100px;
+}
+
+.hidden {
+    display: none;
+}

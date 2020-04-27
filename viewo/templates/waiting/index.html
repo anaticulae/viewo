@@ -1,63 +1,52 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block head %}
+{{ super() }}
 <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='waiting.css') }}">
 <script src="{{ url_for('static', filename='waiting.js') }}"></script>
-
-<div id="progress">
-    <h2>Wartebereich</h2>
-
-    <p id="progress_info">
-        Deine persoenliche Analyse steht sofort fuer dich bereit. Sobald
-        die <strong>Schnelldurchsicht</strong> erfolgt ist, kannst du
-        dir erste <strong>Ergebnisse</strong> anschauen.
-    </p>
-    <ol id="waitinglist">
-        <li>
-            <span class="steptext">Empfange Dokument</span>
-            <span id="status_0" class="status todo">...</span>
-        </li>
-        <li>
-            <span class="steptext"><a id="validationview">Validiere empfangenes Dokument</a></span>
-            <span id="status_1" class="status todo">...</span>
-        </li>
-        <li>
-            <span class="steptext">Starte Analyse</span>
-            <span id="status_2" class="status todo">...</span>
-        </li>
-        <ul class="analyze">
-            <li>
-                <span class="steptext"><a id="fastview">Schnelldurchsicht</a></span>
-                <span id="status_3" class="status todo">...</span>
-            </li>
-            <li>
-                <span class="steptext"><a id="resultview">Gesamtdurchsicht</a></span>
-                <span id="status_4" class="status todo">...</span>
-            </li>
-        </ul>
-        <li>
-            <span class="steptext">Praesentiere Gesamtergebnis</span>
-            <span id="status_5" class="status todo">...</span>
-        </li>
-    </ol>
-</div>
-
-<div id="progress_error">
-    <h2>Fehler</h2>
-    <p>
-        Dokument nicht verfügbar.
-    </p>
-    <p>
-        <a href="/documents">zur Dokumentenübersicht...</a>
-    </p>
-</div>
-
-<div id="progress_connecting">
-    <h2>Verbindung wird hergestellt...</h2>
-</div>
-
 <script type="text/javascript">
-    result_waiting_view.onload("{{ process }}")
+    let go = function () {
+        result_waiting_view.onload("{{ process }}")
+    }
+    jQuery(document).ready(go);
 </script>
+{% endblock %}
 
+{% block content %}
+<h2>Wartebereich</h2>
+
+<p id="progress_info">
+    Deine persoenliche Analyse steht sofort fuer dich bereit. Sobald
+    die <strong>Schnelldurchsicht</strong> erfolgt ist, kannst du
+    dir erste <strong>Ergebnisse</strong> anschauen.
+</p>
+<ol id="waitinglist">
+    <li>
+        <span class="steptext">Empfange Dokument</span>
+        <span id="status_0" class="status todo">...</span>
+    </li>
+    <li>
+        <span class="steptext"><a id="validationview">Validiere empfangenes Dokument</a></span>
+        <span id="status_1" class="status todo">...</span>
+    </li>
+    <li>
+        <span class="steptext">Starte Analyse</span>
+        <span id="status_2" class="status todo">...</span>
+    </li>
+    <ul class="analyze">
+        <li>
+            <span class="steptext"><a id="fastview">Schnelldurchsicht</a></span>
+            <span id="status_3" class="status todo">...</span>
+        </li>
+        <li>
+            <span class="steptext"><a id="resultview">Gesamtdurchsicht</a></span>
+            <span id="status_4" class="status todo">...</span>
+        </li>
+    </ul>
+    <li>
+        <span class="steptext">Praesentiere Gesamtergebnis</span>
+        <span id="status_5" class="status todo">...</span>
+    </li>
+</ol>
+</div>
 {% endblock %}
