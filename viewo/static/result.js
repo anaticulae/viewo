@@ -76,6 +76,11 @@ class ResultView {
         return null
     }
 
+    update_current_finding_status(status) {
+        this.selected_finding.status = status
+        // TODO: synchronize with server
+    }
+
     loop(process) {
         // TODO: MOVE TO SEPARATE DATA MANAGER?
         let ajax = new XMLHttpRequest()
@@ -196,7 +201,6 @@ class FindingBox {
             mark[0].classList.add('highlighted')
             this.update_finding_text()
         }
-
         if (this.result.findings.length == 0) {
             // disable error bar if no error is provided
             $('#error')[0].classList.add('hidden_inbounds')
@@ -233,10 +237,10 @@ class FindingBox {
 
     toggle_selected_finding() {
         if (this.result.selected_finding.status == 1) {
-            this.result.selected_finding.status = 0
+            this.result.update_current_finding_status(0)
             this.hide_finding(this.result.selected_finding)
         } else {
-            this.result.selected_finding.status = 1
+            this.result.update_current_finding_status(1)
             this.show_finding(this.result.selected_finding)
         }
     }
