@@ -53,7 +53,7 @@ def view_images(document: str = None, image: str = None):
 
 @result_.route(
     '/result/<string:doc>/update/finding/<int:finding>/<int:status>',
-    # methods=['POST'],
+    methods=['POST'],
 )
 def update_finding_status(
         doc: str = None,

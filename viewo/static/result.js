@@ -24,6 +24,7 @@ class ResultView {
     }
 
     show_page(page) {
+        // Open selected `page` and update findings.
         if (this.content == undefined) {
             return
         }
@@ -79,13 +80,29 @@ class ResultView {
 
     update_current_finding_status(status) {
         this.selected_finding.status = status
-        // TODO: synchronize with server
         let document = this.document
         let findingid = Number(this.selected_finding.number)
         let url = `/result/${document}/update/finding/${findingid}/${status}`
-        let send = new XMLHttpRequest()
-        send.open("GET", url, true)
-        send.send()
+        fetch(url, { method: "POST" }).then(resp => {
+            if (status > SELECTED) {
+                // TODO: CHANGE HTTP RETURN VALUE
+                this.remove_current_finding()
+            }
+        })
+    }
+
+    remove_current_finding() {
+        let reduce = (this.findings.length - 1) == this.current_finding
+        this.content[this.current_page].findings =
+            remove(this.content[this.current_page].findings, this.current_finding)
+        if (reduce) {
+            this.error_selected = this.error_selected - 1
+        } else {
+            if (this.findings.length == 0) {
+                this.error_selected = null
+            }
+        }
+        findingbox.update_findings(this.error_selected)
     }
 
     loop(process) {
@@ -114,6 +131,7 @@ class ResultView {
         ajax.send()
     }
 }
+
 
 const NOT_SELECTED = 0
 const SELECTED = 1
@@ -184,7 +202,7 @@ class FindingBox {
         }
     }
 
-    update_findings() {
+    update_findings(current = 0) {
         /**
          * Update list of selectable findings of current page. If no
          * finding is detected for current page, finding box will be
@@ -238,7 +256,7 @@ class FindingBox {
         } else {
             $('#error')[0].classList.remove('hidden_inbounds')
         }
-        this.open_finding(0)
+        this.open_finding(current)
     }
 
     update_finding_text() {
@@ -416,6 +434,10 @@ function init() {
         }
         if (key == 'k' || key == 'ArrowUp') {
             findingbox.previous_finding()
+            event.preventDefault()
+        }
+        if (key == 'Delete') {
+            findingbox.current_finding_delete()
             event.preventDefault()
         }
     })
