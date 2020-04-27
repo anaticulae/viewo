@@ -95,8 +95,3 @@ aside {
     display: block;
     padding: 5px;
 }
-
-.hidden_inbounds{
-    /* hidden but location is preserved/reserverd in layout*/
-    visibility: hidden;
-}

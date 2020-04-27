@@ -134,3 +134,8 @@ html {
 .hidden {
     display: none;
 }
+
+.hidden_inbounds{
+    /* hidden but location is preserved/reserverd in layout*/
+    visibility: hidden;
+}
