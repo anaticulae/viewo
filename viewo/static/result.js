@@ -179,9 +179,9 @@ class FindingBox {
 
         if (this.result.findings.length == 0) {
             // disable error bar if no error is provided
-            $('#error')[0].classList.add('hidden')
+            $('#error')[0].classList.add('hidden_inbounds')
         } else {
-            $('#error')[0].classList.remove('hidden')
+            $('#error')[0].classList.remove('hidden_inbounds')
         }
     }
 
