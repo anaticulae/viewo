@@ -35,6 +35,19 @@ aside {
     height: 35px;
 }
 
+#error_options{
+    padding: 0px;
+    margin: 1px;
+    text-align: right;
+}
+
+#error_options button {
+    width: 25px;
+    height: 25px;
+    padding: 0px;
+    cursor: pointer;
+}
+
 #error ul {
     display: block;
     padding: 5px;

@@ -115,6 +115,12 @@ class ResultView {
     }
 }
 
+const NOT_SELECTED = 0
+const SELECTED = 1
+const DONE = 2
+const IGNORED = 3
+const REMOVED = 4
+
 class FindingBox {
 
     constructor(result) {
@@ -127,6 +133,15 @@ class FindingBox {
         });
         $("#finding_next").click(function () {
             findingbox.next_finding()
+        });
+        $("#finding_select_done").click(function () {
+            findingbox.current_finding_done()
+        });
+        $("#finding_select_ignore").click(function () {
+            findingbox.current_finding_ignore()
+        });
+        $("#finding_select_delete").click(function () {
+            findingbox.current_finding_delete()
         });
     }
 
@@ -183,6 +198,11 @@ class FindingBox {
             let text = item.title
             let selectable = ''
             if (item.selectable == '1') {
+                let status = item.status
+                if (status == DONE || status == REMOVED || status == IGNORED) {
+                    // done, hidden or rejected
+                    continue
+                }
                 // add optional checkbox to disable highlighted area in
                 // text view by user.
                 // TODO: CHECKED SEEMS TO BE WRONG
@@ -252,6 +272,19 @@ class FindingBox {
             this.show_finding(this.result.selected_finding)
         }
     }
+
+    current_finding_done() {
+        this.result.update_current_finding_status(DONE)
+    }
+
+    current_finding_ignore() {
+        this.result.update_current_finding_status(IGNORED)
+    }
+
+    current_finding_delete() {
+        this.result.update_current_finding_status(REMOVED)
+    }
+
 }
 
 class Navigator {
