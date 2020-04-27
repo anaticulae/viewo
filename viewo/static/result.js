@@ -46,7 +46,8 @@ class ResultView {
     }
 
     get current_finding() {
-        return this.error_selected
+        // TODO: REMOVE THIS HACK
+        return Number(this.error_selected)
     }
 
     get available_pages() {
@@ -116,7 +117,7 @@ class FindingBox {
         });
     }
 
-    show_finding(id) {
+    open_finding(id) {
         let old = $(`#error_selected_${this.result.error_selected}`)[0]
         let current = $(`#error_selected_${id}`)[0]
 
@@ -139,9 +140,9 @@ class FindingBox {
         //Iterate error message headline box downwards
         let next_id = this.result.current_finding + 1
         if (next_id < this.result.findings.length) {
-            this.show_finding(next_id)
+            this.open_finding(next_id)
         } else {
-            this.show_finding(0)
+            this.open_finding(0)
         }
     }
 
@@ -149,9 +150,9 @@ class FindingBox {
         //Iterate error message headline box upwards
         let next_id = this.result.current_finding - 1
         if (next_id >= 0) {
-            this.show_finding(next_id)
+            this.open_finding(next_id)
         } else {
-            this.show_finding(this.result.findings.length - 1)
+            this.open_finding(this.result.findings.length - 1)
         }
     }
 
@@ -166,20 +167,27 @@ class FindingBox {
         error_page_selector[0].innerHTML = ''
         for (let index in this.result.findings) {
             let item = this.result.findings[index]
-
-            let finding_id = item.number
             let text = item.title
             let selectable = ''
             if (item.selectable == '1') {
                 // add optional checkbox to disable highlighted area in
                 // text view by user.
+                // TODO: CHECKED SEEMS TO BE WRONG
+                let checked = item.status == SELECTED ? 'checked="True"' : ''
                 selectable = `<input id="error_selector_checkbox_${index}" ` +
-                    `type="checkbox" checked="true">`
+                    `type="checkbox" ${checked}>`
+                // this.open_finding(index)
+                if (item.status == SELECTED) {
+                    this.show_finding(item)
+                }
+                else {
+                    this.hide_finding(item)
+                }
             }
             let node_selectable = `<li id="error_selected_${index}">${selectable} ${text}</li>`
             error_page_selector.append(node_selectable)
             $(`#error_selector_checkbox_${index}`).click(function () {
-                findingbox.toggle_finding(finding_id)
+                findingbox.toggle_finding(index)
             });
         }
         this.result.error_selected = 0
@@ -188,7 +196,6 @@ class FindingBox {
             mark[0].classList.add('highlighted')
             this.update_finding_text()
         }
-        this.show_finding(this.result.error_selected)
 
         if (this.result.findings.length == 0) {
             // disable error bar if no error is provided
@@ -196,6 +203,7 @@ class FindingBox {
         } else {
             $('#error')[0].classList.remove('hidden_inbounds')
         }
+        this.open_finding(0)
     }
 
     update_finding_text() {
@@ -210,8 +218,27 @@ class FindingBox {
         }
     }
 
+    show_finding(finding) {
+        $('#finding_' + finding.number).show()
+    }
+
+    hide_finding(finding) {
+        $('#finding_' + finding.number).hide()
+    }
+
     toggle_finding(finding) {
-        $('#finding_' + finding).toggle()
+        this.open_finding(finding)
+        this.toggle_selected_finding()
+    }
+
+    toggle_selected_finding() {
+        if (this.result.selected_finding.status == 1) {
+            this.result.selected_finding.status = 0
+            this.hide_finding(this.result.selected_finding)
+        } else {
+            this.result.selected_finding.status = 1
+            this.show_finding(this.result.selected_finding)
+        }
     }
 }
 
