@@ -90,6 +90,13 @@ def message_replace(content: str) -> str:
     return content
 
 
+def selectable(location) -> int:
+    """Page able only `location` is not selectable."""
+    if location.value is None:
+        return 0
+    return 1
+
+
 def tojson(items: viewo.waiting.ResultPageViews) -> str:
     result = []
     for item in items:
@@ -101,6 +108,7 @@ def tojson(items: viewo.waiting.ResultPageViews) -> str:
             'title': finding.solution.title,
             'message': message_replace(finding.solution.description),
             'status': finding.solution.status.value,
+            'selectable': selectable(finding.location)
         } for finding in item.findings if finding.solution]
         result.append({
             'page': item.page,

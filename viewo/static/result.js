@@ -170,11 +170,14 @@ class FindingBox {
 
             let finding_id = item.number
             let text = item.title
-            let node_selectable =
-                `<li id="error_selected_${index}">` +
-                `<input id="error_selector_checkbox_${index}" ` +
-                `type="checkbox" checked="true">` +
-                `${text}</li>`
+            let selectable = ''
+            if (item.selectable == '1') {
+                // add optional checkbox to disable highlighted area in
+                // text view by user.
+                selectable = `<input id="error_selector_checkbox_${index}" ` +
+                    `type="checkbox" checked="true">`
+            }
+            let node_selectable = `<li id="error_selected_${index}">${selectable} ${text}</li>`
             error_page_selector.append(node_selectable)
             $(`#error_selector_checkbox_${index}`).click(function () {
                 findingbox.toggle_finding(finding_id)
