@@ -131,10 +131,6 @@ html {
     width: 100%;
 }
 
-#progress_error{
-    height: 100px;
-}
-
 .hidden {
     display: none;
 }

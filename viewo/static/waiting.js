@@ -42,6 +42,7 @@ var result_waiting_view = {
             // done
             result_waiting_view.enable_resultview(processid)
         }
+        base.show_done()
     },
 
     enable_validation_view: function (processid) {
@@ -65,13 +66,8 @@ var result_waiting_view = {
 
                 if (downloaded.states == undefined) {
                     // TODO: VERIFY LATER
-                    $("#progress_connecting").hide()
-                    $("#progress_error").show()
+                    base.show_error()
                     return
-                }
-                else {
-                    $("#progress_connecting").hide()
-                    $("#progress").show()
                 }
                 result_waiting_view.update(process, downloaded.states)
 
@@ -86,8 +82,7 @@ var result_waiting_view = {
     },
 
     onload: function (process) {
-        $("#progress_error").hide()
-        $("#progress").hide()
+        base.show_connecting()
         this.loop(process)
     },
 
