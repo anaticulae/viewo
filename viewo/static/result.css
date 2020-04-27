@@ -23,11 +23,17 @@ aside {
     text-align: right;
 }
 
+#error_list{
+    background: white;
+}
+
 #error ul {
     border: 1px solid black;
     margin: 0px;
     padding: 0px;
     list-style: none;
+    display: block;
+    padding: 5px;
 }
 
 #error button {
@@ -48,19 +54,10 @@ aside {
     cursor: pointer;
 }
 
-#error ul {
-    display: block;
-    padding: 5px;
-}
-
 #error li {
     cursor: pointer;
     padding: 5px;
     text-decoration: underline;
-}
-
-#error ul {
-    background-color: beige;
 }
 
 #error_content {
