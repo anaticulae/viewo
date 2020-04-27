@@ -94,7 +94,7 @@ class ResultView {
     remove_current_finding() {
         let reduce = (this.findings.length - 1) == this.current_finding
         this.content[this.current_page].findings =
-            remove(this.content[this.current_page].findings, this.current_finding)
+            base.remove(this.content[this.current_page].findings, this.current_finding)
         if (reduce) {
             this.error_selected = this.error_selected - 1
         } else {
