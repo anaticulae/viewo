@@ -40,3 +40,7 @@ base.hide = function (item) {
 base.show = function (item) {
     $(item)[0].classList.remove('hidden')
 }
+
+base.remove = function (array, index) {
+    return array.slice(0, index).concat(array.slice(index + 1))
+}
