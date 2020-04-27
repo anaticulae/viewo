@@ -10,6 +10,7 @@
 class ResultView {
 
     init() {
+        this.document = null
         this.error_page = null
         this.error_selected = null
         this.content = []
@@ -79,9 +80,16 @@ class ResultView {
     update_current_finding_status(status) {
         this.selected_finding.status = status
         // TODO: synchronize with server
+        let document = this.document
+        let findingid = Number(this.selected_finding.number)
+        let url = `/result/${document}/update/finding/${findingid}/${status}`
+        let send = new XMLHttpRequest()
+        send.open("GET", url, true)
+        send.send()
     }
 
     loop(process) {
+        this.document = Number(process)
         // TODO: MOVE TO SEPARATE DATA MANAGER?
         let ajax = new XMLHttpRequest()
         ajax.onreadystatechange = function () {

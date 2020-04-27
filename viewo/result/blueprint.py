@@ -51,6 +51,19 @@ def view_images(document: str = None, image: str = None):
     return response
 
 
+@result_.route(
+    '/result/<string:doc>/update/finding/<int:finding>/<int:status>',
+    # methods=['POST'],
+)
+def update_finding_status(
+        doc: str = None,
+        finding: int = None,
+        status: int = None,
+):
+    # TODO: REFACTOR THIS
+    return ''
+
+
 @result_.route('/result/failure')
 def failure():
     return flask.render_template('result/failure.html')
