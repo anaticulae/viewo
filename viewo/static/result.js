@@ -222,6 +222,9 @@ class FindingBox {
             $(`#error_selector_checkbox_${index}`).click(function () {
                 findingbox.toggle_finding(index)
             });
+            $(`#error_selected_${index}`).click(function () {
+                findingbox.open_finding(index)
+            });
         }
         this.result.error_selected = 0
         let mark = $('#error_selected_0')
