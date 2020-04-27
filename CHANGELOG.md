@@ -2,6 +2,25 @@
 
 Every noteable change is logged here.
 
+## v0.11.0
+
+### Feature
+
+* use new waiting approach to handle process communication (6de7e71f0ee3)
+* introduce general waiting/short/error approach (6636db94d28f)
+* minimize area of page selection view (b3bf8c3a6565)
+* add more explicit waiting room error handling (496bba176503)
+* use jquery as js bib (8040d67b4a73)
+* increase copyright date (a286fc35eacc)
+
+### Fix
+
+* ensure to handle empty linter pages correctly (eb676f904cf4)
+* fix error message box (621298969e0b)
+* fix documents table view (c402b5e6cb78)
+* fix spelling error (1d6695f26a44)
+* fix spelling errors (77335d47b119)
+
 ## v0.10.0
 
 ### Feature
