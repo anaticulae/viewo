@@ -19,6 +19,7 @@ class ResultView {
         this.content = content
         navigator.update_page_navigator()
         this.show_page(0)
+        base.show_done()
     }
 
     show_page(page) {
@@ -38,8 +39,6 @@ class ResultView {
 
         findingbox.update_findings()
         navigator.highlight_pagenumber(page)
-
-        base.show_done()
     }
 
     get current_page() {
