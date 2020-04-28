@@ -21,24 +21,24 @@ aside {
 
 #error_navigator {
     text-align: right;
+    margin: 0px;
+}
+
+#error_navigator button {
+    width: 70px;
+    height: 30px;
+    border: 1px solid black;
+    cursor: pointer;
 }
 
 #error_list{
     background: white;
-}
-
-#error ul {
     border: 1px solid black;
-    margin: 0px;
-    padding: 0px;
-    list-style: none;
     display: block;
+    list-style: none;
+    margin: 0px;
+    margin-bottom: 10px;
     padding: 5px;
-}
-
-#error button {
-    width: 100px;
-    height: 35px;
 }
 
 #error_options{
@@ -61,10 +61,11 @@ aside {
 }
 
 #error_content {
-    border: 1px solid black;
     background: white;
-    text-align: left;
+    border: 1px solid black;
     font-family: 'Times New Roman', Times, serif;
+    margin-top: 10px;
+    text-align: left;
 }
 
 #error_content h4 {

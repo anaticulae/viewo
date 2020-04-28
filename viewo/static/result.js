@@ -179,6 +179,7 @@ class FindingBox {
             set_focus.focus()
         }
         this.result.error_selected = id
+        this.update_finding_navigation()
         this.update_finding_text()
     }
 
@@ -257,6 +258,15 @@ class FindingBox {
             $('#error')[0].classList.remove('hidden_inbounds')
         }
         this.open_finding(current)
+    }
+
+    update_finding_navigation() {
+        if (this.result.findings.length == 1) {
+            $('#error_navigator').hide()
+        }
+        else {
+            $('#error_navigator').show()
+        }
     }
 
     update_finding_text() {
