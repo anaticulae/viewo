@@ -37,6 +37,16 @@ View
 
 * ContentStep, VisualStep, MasterMind
 
+* add hint that pdf is running in compatible mode
+
+* add dialog to extend pdf with user information: author, date, key words
+
+* add hint of missing outlines
+
+* add option to optimize pdf file?
+
+* add publication check
+
 Fonts
 -----
 
@@ -51,3 +61,8 @@ General
 
 * Add config to disable/enable different style checker, different universities
   etc. Fachgebiete.
+
+* Add option to rerun with updated pdf again
+
+* Limit accepted pdf size/length: add premium feature to run more than 256
+  pdf, 10mb
