@@ -139,3 +139,13 @@ html {
     /* hidden but location is preserved/reserverd in layout*/
     visibility: hidden;
 }
+
+.highlighted_text{
+    text-decoration: underline;
+    background: rgb(255, 206, 206);
+}
+
+.highlighted_important{
+    text-decoration: underline;
+    background: green;
+}

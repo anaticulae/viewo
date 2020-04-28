@@ -285,11 +285,32 @@ class FindingBox {
     }
 
     show_finding(finding) {
-        $('#finding_' + finding.number).show()
+        if (finding.location['words']) {
+            let page = finding.location['page']
+            for (let item of finding.location['words']) {
+                let word = $(`#word${page}_${item}`)
+                if (word.length) {
+                    word[0].classList.add('highlighted_text')
+                }
+            }
+        }
+        else {
+            $('#finding_' + finding.number).fadeIn()
+        }
     }
 
     hide_finding(finding) {
-        $('#finding_' + finding.number).hide()
+        if (finding.location['words']) {
+            let page = finding.location['page']
+            for (let item of finding.location['words']) {
+                let word = $(`#word${page}_${item}`)
+                if (word.length) {
+                    word[0].classList.remove('highlighted_text')
+                }
+            }
+        } {
+            $('#finding_' + finding.number).fadeOut()
+        }
     }
 
     toggle_finding(finding) {
