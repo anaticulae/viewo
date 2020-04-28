@@ -34,7 +34,7 @@ Waiting view
 * Starte Analyse
 * Schnelldurchsicht
 * Gesamtdurchsicht
-* Praesentiere Gesamtergebnis
+* Präsentiere Gesamtergebnis
 
 """
 
