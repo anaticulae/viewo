@@ -53,6 +53,7 @@ def load_resultview(path: str, process: str) -> viewo.waiting.ResultPageViews:
         try:
             content = html[page]
         except IndexError:
+            utila.error(f'non existing html page: {page}')
             content = ''
         # for group in grouped:
         # content = html[group.page]
