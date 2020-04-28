@@ -79,6 +79,9 @@ class ResultView {
     }
 
     update_current_finding_status(status) {
+        if (this.selected_finding == undefined) {
+            return
+        }
         this.selected_finding.status = status
         let document = this.document
         let findingid = Number(this.selected_finding.number)
