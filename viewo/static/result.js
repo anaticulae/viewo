@@ -95,6 +95,7 @@ class ResultView {
     }
 
     remove_current_finding() {
+        findingbox.hide_finding(this.selected_finding)
         let reduce = (this.findings.length - 1) == this.current_finding
         this.content[this.current_page].findings =
             base.remove(this.content[this.current_page].findings, this.current_finding)
