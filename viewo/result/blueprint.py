@@ -55,7 +55,7 @@ def view_images(document: str = None, image: str = None):
     '/result/<string:doc>/update/finding/<int:finding>/<int:status>',
     methods=['POST'],
 )
-def update_finding_status(
+def update_finding_status(  # pylint:disable=W0613
         doc: str = None,
         finding: int = None,
         status: int = None,
