@@ -8,9 +8,10 @@
 # =============================================================================
 import flask
 
+import viewo.result.data
+import viewo.result.json
 import viewo.waiting.data
 import viewo.waiting.fastview
-import viewo.result.data
 
 waiting_ = flask.Blueprint('waiting', __name__)  # pylint:disable=C0103
 
@@ -73,5 +74,5 @@ def waiting_resultview_status(process: str):
     loaded = viewo.result.data.load_resultview_result(process)
     if loaded is None:
         return '{}'
-    dumped = viewo.result.data.tojson(loaded)
+    dumped = viewo.result.json.tojson(loaded)
     return dumped

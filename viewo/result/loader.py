@@ -7,9 +7,11 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import collections
 import os
 
 import protocol
+import serializeraw
 
 
 def load_findings(path: str) -> dict:
@@ -28,3 +30,16 @@ def load_findings(path: str) -> dict:
 
     grouped = {page.page: page for page in protocol.bylocation(findings)}
     return grouped
+
+
+def load_sentences(path: str) -> dict:
+    # TODO: REFACTOR WITH FEEDBACK
+    words = serializeraw.load_text(path)
+    pagesentences = collections.defaultdict(list)
+    for page, pagecontent in words:
+        for _, sentences in pagecontent:
+            for sentence in sentences:
+                pagesentences[page].append(sentence)
+    # enable KeyError
+    pagesentences = dict(pagesentences)  # pylint:disable=R0204
+    return pagesentences
