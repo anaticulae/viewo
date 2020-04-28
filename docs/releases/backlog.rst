@@ -33,6 +33,10 @@ View
 
 * add option to enlarge pdf view
 
+* add verification view in titlepage, toc, abstract
+
+* ContentStep, VisualStep, MasterMind
+
 Fonts
 -----
 
@@ -41,3 +45,9 @@ Fonts
 * use new font flags to improve font rendering
 
 * support blocksatz/ detect out of common text x1 endings?
+
+General
+-------
+
+* Add config to disable/enable different style checker, different universities
+  etc. Fachgebiete.
