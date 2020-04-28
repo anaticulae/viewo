@@ -66,3 +66,9 @@ General
 
 * Limit accepted pdf size/length: add premium feature to run more than 256
   pdf, 10mb
+
+Result
+------
+
+* Add color rectangle into FindingBox to match marked finding with finding
+  box fast.
