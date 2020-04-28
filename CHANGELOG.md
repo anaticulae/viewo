@@ -2,6 +2,31 @@
 
 Every noteable change is logged here.
 
+## v0.12.0
+
+### Feature
+
+* highlight sentences which contain finding (dc113ec58392)
+* add words to sentence findings (b24ab5ca2243)
+* add hint of non existing html file (96c12966e86d)
+* add word indexes to `sentence` findings (ca8d968f3d87)
+* disable finding navigator for less then 2 findings (cccf950d5229)
+* remove current finding and signal to server (fad2eadf7def)
+* add method to remove index out of array (889e62f2723c)
+* add operation bar to hide and remove findings (2f01e6434f10)
+* add REST API to sync document finding state (00cdc49ffa7e)
+* save selected findings over page changes (39c52d16b998)
+* disable selection for non select able linting events (601e764842eb)
+
+### Fix
+
+* disable deleting finding on empty findings (2ee9974a15fa)
+* fix spelling error (723a02730657)
+* change background color of finding list to white (5537394dad8a)
+* add missing reference to library (4046fd058f17)
+* enable selecting finding by clicking on line (10bf03a0625b)
+* run done only when open view at first (e6c73ecddddd)
+
 ## v0.11.0
 
 ### Feature
