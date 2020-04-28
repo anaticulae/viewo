@@ -76,15 +76,49 @@ def selectable(location) -> int:
 
 
 def word_index(pagesentences, page, sentence):
-    result = []
     try:
         current = pagesentences[page]
     except KeyError:
         utila.log(f'could not access page: {page}')
-        return result
+        return []
 
-    start = sum([len(items) for items in current[current:sentence]], start=0)
+    generator = WordGenerator()
+    for line in current[0:sentence]:
+        list(generator.words(line))
 
-    for index, _ in enumerate(current[sentence], start=start):
-        result.append(index)
+    result = [index for index, _ in generator.words(current[sentence])]
     return result
+
+
+# TODO: MOVE TO WORDS MODULE
+def split_token(text: str, normalize: bool = True):
+    # replace text division -
+    text = text.replace('-\n', '')
+    # support multi line text
+    text = text.replace('\n', ' ')
+    tokens = text.split(' ')
+    if normalize:
+        tokens = [token for token in tokens if token]
+    return tokens
+
+
+class WordGenerator:
+
+    def __init__(self):
+        self.index = 0
+
+    def words(self, line):
+        splitted = split_token(line, normalize=False)
+        for item in splitted:
+            if not item or not item.strip():
+                continue
+            yield self.index, item
+            self.index += 1
+
+
+def count_words(lines):
+    generator = WordGenerator()
+    result = []
+    for line in lines:
+        result.extend(list(generator.words(line)))
+    return len(result)

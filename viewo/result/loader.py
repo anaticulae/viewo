@@ -10,14 +10,16 @@
 import collections
 import os
 
+import link
 import protocol
 import serializeraw
+import utila
 
 
 def load_findings(path: str) -> dict:
     assert os.path.exists(path), str(path)
     # TODO: REPLACE WITH LOAD FINDING METHOD FROM PROTOCOL
-    files = [item for item in os.listdir(path) if item.endswith('.yaml')]
+    files = [item for item in os.listdir(path) if item.endswith('_user.yaml')]
 
     findings = []
     for item in files:
@@ -43,3 +45,14 @@ def load_sentences(path: str) -> dict:
     # enable KeyError
     pagesentences = dict(pagesentences)  # pylint:disable=R0204
     return pagesentences
+
+
+def load_sentences_fromprocess(process: str) -> str:
+    result = link.resultview(process)
+    if not os.path.exists(result):
+        return None
+    path = os.path.join(result, 'words__word_result.yaml')
+    if not os.path.exists(path):
+        utila.error(f'could not load: {path}')
+        return None
+    return load_sentences(path)

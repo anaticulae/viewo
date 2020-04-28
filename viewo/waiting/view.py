@@ -74,5 +74,11 @@ def waiting_resultview_status(process: str):
     loaded = viewo.result.data.load_resultview_result(process)
     if loaded is None:
         return '{}'
-    dumped = viewo.result.json.tojson(loaded)
+
+    pagesentences = viewo.result.loader.load_sentences_fromprocess(process)
+
+    dumped = viewo.result.json.tojson(
+        loaded,
+        pagesentences=pagesentences,
+    )
     return dumped
