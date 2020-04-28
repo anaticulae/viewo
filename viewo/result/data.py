@@ -18,6 +18,7 @@ import serializeraw
 import utila
 import writers
 
+import viewo.result.loader
 import viewo.utils
 import viewo.waiting
 
@@ -30,19 +31,16 @@ def load_resultview_result(process: str) -> str:
 
 
 def load_resultview(path: str, process: str) -> viewo.waiting.ResultPageViews:
+    """Load result view and findings.
+
+    Args:
+        path(str): path to result view: e.g: `ready/processid`
+        process(str): number of analyzed `process`
+    Returns:
+        Loaded HTML Page View
+    """
     assert os.path.exists(path), str(path)
-    files = [item for item in os.listdir(path) if item.endswith('.yaml')]
-
-    findings = []
-    for item in files:
-        loaded = protocol.load_result(os.path.join(path, item))
-        findings.extend(loaded)
-
-    # TODO: unite with feedback enumerater
-    for index, finding in enumerate(findings):
-        finding.number = index
-
-    grouped = {page.page: page for page in protocol.bylocation(findings)}
+    grouped = viewo.result.loader.load_findings(path)
 
     result = []
     htmlpath = os.path.join(path, 'view')
