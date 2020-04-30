@@ -21,6 +21,7 @@ class ResultView {
         navigator.update_page_navigator()
         this.show_page(0)
         base.show_done()
+        statuscounter.update()
     }
 
     show_page(page) {
@@ -70,6 +71,16 @@ class ResultView {
         return result
     }
 
+    get document_findings() {
+        let result = []
+        for (let items of this.content) {
+            for (let item of items.findings) {
+                result.push(item)
+            }
+        }
+        return result
+    }
+
     get selected_finding() {
         let findings = this.findings
         if (this.current_finding < this.findings.length) {
@@ -92,6 +103,7 @@ class ResultView {
                 this.remove_current_finding()
             }
         })
+        statuscounter.update()
     }
 
     remove_current_finding() {
@@ -216,6 +228,7 @@ class FindingBox {
         let error_page_selector = $('#error_list')
         // TODO: CHECK FOR BETTER REMOVEMENT
         error_page_selector[0].innerHTML = ''
+
         for (let index in this.result.findings) {
             let item = this.result.findings[index]
             let text = item.title
@@ -343,6 +356,22 @@ class FindingBox {
 
 }
 
+function count_by_finding_status(findings) {
+    let done = 0
+    let rejected = 0
+    let open = 0
+    for (let finding of findings) {
+        if (finding.status <= 1) {
+            open += 1
+        } else if (finding.status == DONE) {
+            done += 1
+        } else if (finding.status > DONE) {
+            rejected += 1
+        }
+    }
+    return { 'open': open, 'done': done, 'rejected': rejected }
+}
+
 class Navigator {
 
     constructor(result) {
@@ -448,22 +477,27 @@ class FindingStatusCounter {
         let open = base.new_image_button('result/wrong.png', '#show_open', 'open')
         let rejected = base.new_image_button('result/trash.png', '#show_rejected', 'rejected')
 
-        let view = done + open + rejected
+        let view = done + rejected + open
         $('#finding_status_counter')[0].innerHTML = view
-        this.update()
+        this.update_values()
     }
 
-    update(done = 0, rejected = 0, open = 0) {
+    update_values(done = 0, rejected = 0, open = 0) {
         $('#finding_status_counter .done').text(done)
         $('#finding_status_counter .open').text(open)
         $('#finding_status_counter .rejected').text(rejected)
+    }
+
+    update() {
+        let counted = count_by_finding_status(result_view.document_findings)
+        this.update_values(counted.done, counted.rejected, counted.open)
     }
 }
 
 const result_view = new ResultView()
 const navigator = new Navigator(result_view)
-const findingbox = new FindingBox(result_view)
 const statuscounter = new FindingStatusCounter()
+const findingbox = new FindingBox(result_view)
 
 function onload(process) {
     result_view.loop(process)
