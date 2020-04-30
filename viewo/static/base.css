@@ -149,3 +149,14 @@ html {
     text-decoration: underline;
     background: green;
 }
+
+button {
+    cursor: pointer;
+    border: 1px solid black;
+    background: whitesmoke;
+}
+
+.image_button {
+    margin: 0px;
+    padding: 1px;
+}

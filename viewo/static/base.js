@@ -44,3 +44,18 @@ base.show = function (item) {
 base.remove = function (array, index) {
     return array.slice(0, index).concat(array.slice(index + 1))
 }
+
+
+base.new_image_button = function (src, id = null, textid = null, link = null, alt = null) {
+    let raw = `<button type="button" id="${id}" class="image_button" style="width:50px;">`
+    if (textid != null) {
+        raw += `<span class="${textid}">0</span>`
+    }
+    raw += `<img src="/static/images/${src}" width="14" height="14" style="padding-left:5px" `
+    if (alt != null) {
+        raw += `alt="${alt} "`
+    }
+    raw += '/>'
+    raw += '</button>'
+    return raw
+}
