@@ -49,6 +49,9 @@ class ResultView {
     }
 
     get current_finding() {
+        if (this.error_selected == null) {
+            return null
+        }
         // TODO: REMOVE THIS HACK
         return Number(this.error_selected)
     }
@@ -67,7 +70,13 @@ class ResultView {
         if (this.content.length <= this.current_page) {
             return []
         }
-        let result = this.content[this.current_page].findings
+        let result = []
+        for (let item of this.content[this.current_page].findings) {
+            if (item.status <= SELECTED) {
+                result.push(item)
+            }
+        }
+        // let result = this.content[this.current_page].findings
         return result
     }
 
@@ -82,43 +91,70 @@ class ResultView {
     }
 
     get selected_finding() {
-        let findings = this.findings
-        if (this.current_finding < this.findings.length) {
+        let findings = this.content[this.current_page].findings
+        // let findings = this.findings
+        if (this.current_finding < findings.length) {
             return findings[this.current_finding]
         }
         return null
     }
 
+    get get_next_finding() {
+        let findings = this.content[this.current_page].findings
+        for (let index = this.current_finding; index < findings.length; index++) {
+            if (findings[index].status <= SELECTED) {
+                return index
+            }
+        }
+        return null
+    }
+
+    get get_prev_finding() {
+        let findings = this.content[this.current_page].findings
+        for (let index = this.current_finding - 1; index >= 0; index--) {
+            if (findings[index].status <= SELECTED) {
+                return index
+            }
+        }
+        return null
+    }
+
     update_current_finding_status(status) {
-        if (this.selected_finding == undefined) {
+        if (this.selected_finding == null) {
             return
         }
-        this.selected_finding.status = status
-        let document = this.document
         let findingid = Number(this.selected_finding.number)
+        this.selected_finding.status = status // remove finding
+        let document = this.document
         let url = `/result/${document}/update/finding/${findingid}/${status}`
         fetch(url, { method: "POST" }).then(resp => {
             if (status > SELECTED) {
                 // TODO: CHANGE HTTP RETURN VALUE
-                this.remove_current_finding()
+                // this.remove_current_finding()
             }
         })
         statuscounter.update()
+        this.update_current_finding()
     }
 
-    remove_current_finding() {
-        findingbox.hide_finding(this.selected_finding)
-        let reduce = (this.findings.length - 1) == this.current_finding
-        this.content[this.current_page].findings =
-            base.remove(this.content[this.current_page].findings, this.current_finding)
-        if (reduce) {
-            this.error_selected = this.error_selected - 1
-        } else {
-            if (this.findings.length == 0) {
-                this.error_selected = null
-            }
+    update_current_finding() {
+        if (this.selected_finding.status <= SELECTED) {
+            return
         }
-        findingbox.update_findings(this.error_selected)
+        let next = this.get_next_finding
+        if (next != null) {
+            this.error_selected = next
+            findingbox.update_findings(this.error_selected)
+            return
+        }
+        let prev = this.get_prev_finding
+        if (prev != null) {
+            this.error_selected = prev
+            findingbox.update_findings(this.error_selected)
+            return
+        }
+        this.error_selected = null
+
     }
 
     loop(process) {
@@ -268,13 +304,18 @@ class FindingBox {
             mark[0].classList.add('highlighted')
             this.update_finding_text()
         }
+        this.update_inbox_visibility()
+        this.open_finding(current)
+    }
+
+    update_inbox_visibility() {
         if (this.result.findings.length == 0) {
             // disable error bar if no error is provided
             $('#error')[0].classList.add('hidden_inbounds')
         } else {
             $('#error')[0].classList.remove('hidden_inbounds')
         }
-        this.open_finding(current)
+
     }
 
     update_finding_navigation() {
@@ -344,14 +385,26 @@ class FindingBox {
 
     current_finding_done() {
         this.result.update_current_finding_status(DONE)
+        this.update_box()
     }
 
     current_finding_ignore() {
         this.result.update_current_finding_status(IGNORED)
+        this.update_box()
     }
 
     current_finding_delete() {
         this.result.update_current_finding_status(REMOVED)
+        this.update_box()
+    }
+
+    update_box() {
+        if (this.result.selected_finding != null) {
+            this.show_finding(result_view.selected_finding)
+        }
+        this.update_inbox_visibility()
+        this.update_finding_navigation()
+        this.update_finding_text()
     }
 
 }
