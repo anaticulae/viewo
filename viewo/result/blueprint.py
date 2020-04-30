@@ -11,6 +11,7 @@ import os
 
 import flask
 import link
+import protocol
 import utila
 
 result_ = flask.Blueprint('result', __name__)  # pylint:disable=C0103
@@ -60,8 +61,24 @@ def update_finding_status(  # pylint:disable=W0613
         finding: int = None,
         status: int = None,
 ):
+    source = link.ready(doc)
+    invalid_document = not os.path.exists(source)
+    if invalid_document:
+        utila.error(f'could not load document: {source}')
+        return flask.redirect('result/failure')
+    status = problem_fromint(status)
+    if not protocol.finding_status_update(source, finding, status):
+        utila.error(f'could not update: {finding}; status: {status}')
     # TODO: REFACTOR THIS
     return ''
+
+
+def problem_fromint(status: int) -> protocol.ProblemStatus:
+    if status in (0, 1):
+        return protocol.ProblemStatus.OPEN
+    if status == 2:
+        return protocol.ProblemStatus.CLOSED
+    return protocol.ProblemStatus.DISAGREE
 
 
 @result_.route('/result/failure')
