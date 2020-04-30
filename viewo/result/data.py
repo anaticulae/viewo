@@ -10,6 +10,7 @@
 import os
 
 import link
+import protocol
 import utila
 
 import viewo.result.loader
@@ -34,15 +35,15 @@ def load_resultview(path: str, process: str) -> viewo.waiting.ResultPageViews:
         Loaded HTML Page View
     """
     assert os.path.exists(path), str(path)
-    grouped = viewo.result.loader.load_findings(path)
+    pagefindings = protocol.findings_from_path(path)
 
     result = []
     htmlpath = os.path.join(path, 'view')
     html = HtmlLookup(htmlpath)
     # load all pages not only the erroneous
-    for page in pages(html, grouped.keys()):
+    for page in pages(html, pagefindings):
         # for page, rendered in enumerate(html):
-        finding = grouped.get(page, [])
+        finding = utila.select_page(pagefindings, page, default=[])
         try:
             content = html[page]
         except IndexError:
@@ -66,11 +67,11 @@ def patch_images(html: str, process: int) -> str:
     return html
 
 
-def pages(html, grouped) -> list:
+def pages(html, pagefindings) -> list:
     collected = []
     # TODO: IMPROVE THIS TO SUPPORT SELECTIVE PAGES
     collected.extend(list(range(len(html))))
-    collected.extend([item for item in grouped])
+    collected.extend([item.page for item in pagefindings])
     result = set(collected)
     result = sorted(result)
     return result

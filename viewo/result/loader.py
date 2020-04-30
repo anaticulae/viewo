@@ -11,27 +11,8 @@ import collections
 import os
 
 import link
-import protocol
 import serializeraw
 import utila
-
-
-def load_findings(path: str) -> dict:
-    assert os.path.exists(path), str(path)
-    # TODO: REPLACE WITH LOAD FINDING METHOD FROM PROTOCOL
-    files = [item for item in os.listdir(path) if item.endswith('_user.yaml')]
-
-    findings = []
-    for item in files:
-        loaded = protocol.load_result(os.path.join(path, item))
-        findings.extend(loaded)
-
-    # TODO: unite with feedback enumerater
-    for index, finding in enumerate(findings):
-        finding.number = index
-
-    grouped = {page.page: page.content for page in protocol.bypage(findings)}
-    return grouped
 
 
 def load_sentences(path: str) -> dict:
