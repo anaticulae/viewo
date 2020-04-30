@@ -1,0 +1,27 @@
+.. _0_13_0:
+
+RP 0.13.0
+=========
+
+result
+------
+
+* add finding status view
+
+* add [done, rejected and total] in `Gesamtübersicht` as small icons with
+  links
+
+* add option to jump to finding
+
+* add option to reactivate finding
+
+* add animation to increase or decrease counter
+
+code quality
+------------
+
+before
+~~~~~~
+
+* Total coverage: 83.18%
+* Your code has been rated at 10.00/10
