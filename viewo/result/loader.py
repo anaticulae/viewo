@@ -30,7 +30,7 @@ def load_findings(path: str) -> dict:
     for index, finding in enumerate(findings):
         finding.number = index
 
-    grouped = {page.page: page for page in protocol.bylocation(findings)}
+    grouped = {page.page: page.content for page in protocol.bypage(findings)}
     return grouped
 
 

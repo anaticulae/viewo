@@ -40,10 +40,9 @@ def load_resultview(path: str, process: str) -> viewo.waiting.ResultPageViews:
     htmlpath = os.path.join(path, 'view')
     html = HtmlLookup(htmlpath)
     # load all pages not only the erroneous
-    for page in pages(html, grouped.values()):
+    for page in pages(html, grouped.keys()):
         # for page, rendered in enumerate(html):
-        finding = grouped.get(page, None)
-        finding = finding.content if finding else []
+        finding = grouped.get(page, [])
         try:
             content = html[page]
         except IndexError:
@@ -71,7 +70,7 @@ def pages(html, grouped) -> list:
     collected = []
     # TODO: IMPROVE THIS TO SUPPORT SELECTIVE PAGES
     collected.extend(list(range(len(html))))
-    collected.extend([item.page for item in grouped])
+    collected.extend([item for item in grouped])
     result = set(collected)
     result = sorted(result)
     return result
