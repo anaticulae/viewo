@@ -106,3 +106,20 @@ aside {
     display: block;
     padding: 5px;
 }
+
+#finding_status_counter {
+    margin-left: 25px;
+    font-size: 18px;
+}
+
+#finding_status_counter .open {
+    color: red;
+}
+
+#finding_status_counter .rejected {
+    color: grey;
+}
+
+#finding_status_counter .done {
+    color: green;
+}

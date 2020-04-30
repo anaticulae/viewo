@@ -437,9 +437,33 @@ class Navigator {
 
 }
 
+class FindingStatusCounter {
+
+    constructor() {
+
+    }
+
+    init() {
+        let done = base.new_image_button('result/right.png', '#show_done', 'done')
+        let open = base.new_image_button('result/wrong.png', '#show_open', 'open')
+        let rejected = base.new_image_button('result/trash.png', '#show_rejected', 'rejected')
+
+        let view = done + open + rejected
+        $('#finding_status_counter')[0].innerHTML = view
+        this.update()
+    }
+
+    update(done = 0, rejected = 0, open = 0) {
+        $('#finding_status_counter .done').text(done)
+        $('#finding_status_counter .open').text(open)
+        $('#finding_status_counter .rejected').text(rejected)
+    }
+}
+
 const result_view = new ResultView()
 const navigator = new Navigator(result_view)
 const findingbox = new FindingBox(result_view)
+const statuscounter = new FindingStatusCounter()
 
 function onload(process) {
     result_view.loop(process)
@@ -477,5 +501,6 @@ function init() {
         }
     })
 
+    statuscounter.init()
     base.show_connecting('Öffne Dokument...')
 }
