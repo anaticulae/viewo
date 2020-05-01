@@ -422,8 +422,9 @@ class Navigator {
 
     constructor(result) {
         this.result = result
-        // If True, only show pages which contains an error
-        this.error_pages_only = false
+        // If True, only show pages which contains an error. Start in error
+        // mode to show the findings first.
+        this.error_pages_only = true
     }
 
     init_listener() {
