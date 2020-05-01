@@ -11,7 +11,7 @@
 
 class ResultView {
 
-    init() {
+    constructor() {
         this.document = null
         this.error_page = null
         this.error_selected = null
