@@ -45,6 +45,11 @@ base.remove = function (array, index) {
     return array.slice(0, index).concat(array.slice(index + 1))
 }
 
+base.clear = function (item) {
+    //TODO: REMOVE WITH SMART APPROACH
+    item[0].innerHTML = ''
+}
+
 
 base.new_image_button = function (parent, src, id = null, textid = null, link = null, alt = null) {
     let raw = `<button type="button" id="${id}" class="image_button" style="width:50px;">`
