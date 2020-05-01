@@ -538,14 +538,14 @@ class FindingStatusCounter {
         let parent = $('#finding_status_counter')
         base.new_image_button(parent, 'result/right.png', 'show_done', 'done')
         base.new_image_button(parent, 'result/wrong.png', 'show_open', 'open')
-        base.new_image_button(parent, 'result/trash.png', 'show_rejected', 'rejected')
+        base.new_image_button(parent, 'result/trash.png', 'show_removed', 'rejected')
     }
 
     init_listener() {
         $("#show_done").click(function () {
             open_todolistview(DONE)
         });
-        $("#show_open").click(function () {
+        $("#show_removed").click(function () {
             open_todolistview(REMOVED)
         });
         $("#show_open").click(function () {
