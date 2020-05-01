@@ -15,7 +15,7 @@ result
 
 * [x] add option to reactivate finding
 
-* [ ] add animation to increase or decrease counter
+* [x] add animation to increase or decrease counter
 
 code quality
 ------------

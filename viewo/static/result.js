@@ -566,9 +566,19 @@ class FindingStatusCounter {
     }
 
     update_values(done = 0, rejected = 0, open = 0) {
+        // TODO: Improve animation, maybe slide from top down or something,
+        // reduce amout of required code
+        $('#finding_status_counter .done').fadeOut()
+        $('#finding_status_counter .open').fadeOut()
+        $('#finding_status_counter .rejected').fadeOut()
+
         $('#finding_status_counter .done').text(done)
         $('#finding_status_counter .open').text(open)
         $('#finding_status_counter .rejected').text(rejected)
+
+        $('#finding_status_counter .done').fadeIn()
+        $('#finding_status_counter .open').fadeIn()
+        $('#finding_status_counter .rejected').fadeIn()
     }
 
     update() {
