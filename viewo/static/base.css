@@ -85,15 +85,20 @@ input.submit {
     width: 200px;
 }
 
-#results {
-    width:100%;
+table {
     background: white;
-    /* border: 1px solid black; */
+    border: solid 1px black;
+    width:100%;
 }
-#results th{
+
+th {
     border-bottom: 2px solid black;
     background: rgb(195, 212, 230);
     padding: 4px;
+}
+
+td {
+    border-bottom: 1px dotted #eee;
 }
 
 .score, .status{
@@ -159,4 +164,28 @@ button {
 .image_button {
     margin: 1px;
     padding: 1px;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+.no_margin {
+    margin: 0px;
+}
+
+.tiny{
+    width: 50px;
+}
+
+.tiny_extra{
+    width: 25px;
+}
+
+.small{
+    width: 100px;
 }
