@@ -597,8 +597,7 @@ class TodoListView {
                 this.create_finding_line(open, finding)
             } else if (status == DONE) {
                 this.create_finding_line(done, finding)
-            }
-            else {
+            } else {
                 this.create_finding_line(removed, finding)
             }
         }
@@ -643,6 +642,14 @@ class TodoListView {
 function open_todolistview(category = DONE) {
     $('#pdfview').hide()
     $('#todolistview').show()
+
+    if (category == REMOVED) {
+        base.scroll_to('#removed')
+    } else if (category == DONE) {
+        base.scroll_to('#done')
+    } else if (category == OPEN) {
+        base.scroll_to('#open')
+    }
 }
 
 function open_pdfview(page = 0) {

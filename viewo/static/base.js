@@ -50,6 +50,13 @@ base.clear = function (item) {
     item[0].innerHTML = ''
 }
 
+base.scroll_to = function (item) {
+    // TODO REPLACE
+    let poff = $(item).position().top
+    let win = $(window)
+    win.scrollTop(poff)
+}
+
 
 base.new_image_button = function (parent, src, id = null, textid = null, link = null, alt = null) {
     let raw = `<button type="button" id="${id}" class="image_button" style="width:50px;">`
