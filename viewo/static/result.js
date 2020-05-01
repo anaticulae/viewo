@@ -133,13 +133,9 @@ class ResultView {
         }
         let findingid = Number(this.selected_finding.number)
         this.selected_finding.status = status // remove finding
-        let url = `/result/${this.document}/update/finding/${findingid}/${status}`
-        fetch(url, { method: "POST" }).then(resp => {
-            if (status > SELECTED) {
-                // TODO: CHANGE HTTP RETURN VALUE
-                // this.remove_current_finding()
-            }
-        })
+
+        this.update_finding(findingid, status)
+
         statuscounter.update()
         this.update_current_finding()
     }
@@ -161,7 +157,16 @@ class ResultView {
             return
         }
         this.error_selected = null
+    }
 
+    update_finding(findingid, status) {
+        let url = `/result/${this.document}/update/finding/${findingid}/${status}`
+        fetch(url, { method: "POST" }).then(resp => {
+            if (status > SELECTED) {
+                // TODO: CHANGE HTTP RETURN VALUE
+                // this.remove_current_finding()
+            }
+        })
     }
 
     loop(process) {
