@@ -6,14 +6,14 @@ RP 0.13.0
 result
 ------
 
-* [ ] add finding status view
+* [x] add finding status view
 
 * [x] add [done, rejected and total] in `Gesamtübersicht` as small icons with
   links
 
-* [ ] add option to jump to finding
+* [x] add option to jump to finding
 
-* [ ] add option to reactivate finding
+* [x] add option to reactivate finding
 
 * [ ] add animation to increase or decrease counter
 

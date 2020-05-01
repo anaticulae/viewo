@@ -723,7 +723,6 @@ function init() {
     statuscounter.init_listener()
 
     todolist.init_listener()
-    open_todolistview()
     todolist.update_tables()
 
     base.show_connecting('Öffne Dokument...')
