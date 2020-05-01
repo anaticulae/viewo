@@ -125,8 +125,7 @@ class ResultView {
         }
         let findingid = Number(this.selected_finding.number)
         this.selected_finding.status = status // remove finding
-        let document = this.document
-        let url = `/result/${document}/update/finding/${findingid}/${status}`
+        let url = `/result/${this.document}/update/finding/${findingid}/${status}`
         fetch(url, { method: "POST" }).then(resp => {
             if (status > SELECTED) {
                 // TODO: CHANGE HTTP RETURN VALUE
@@ -158,7 +157,8 @@ class ResultView {
     }
 
     loop(process) {
-        this.document = Number(process)
+        // this.document = Number(process) // 16 bits are to short, investigate later
+        this.document = process
         // TODO: MOVE TO SEPARATE DATA MANAGER?
         let ajax = new XMLHttpRequest()
         ajax.onreadystatechange = function () {
