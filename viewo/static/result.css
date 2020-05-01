@@ -103,8 +103,9 @@ aside {
 .highlighted {
     background: yellowgreen;
     color: black;
-    display: block;
-    padding: 5px;
+    margin: 1px;
+    /* display: block;
+    padding: 5px; */
 }
 
 #finding_status_counter {

@@ -446,33 +446,46 @@ class Navigator {
         let error_page_list = $('#error_page_selector_list')[0]
         for (let index in error_page_list.children) {
             let child = error_page_list.children[index]
-            if (index == page) {
-                child.classList.add('highlighted')
-            } else {
-                // remove possible highlight
-                if (child.classList != undefined) {// do not why this is required
-                    child.classList.remove('highlighted')
-                }
+            if (child.classList != undefined) {
+                child.classList.remove('highlighted')
             }
         }
+        $(`#openpage_${page}`)[0].classList.add('highlighted')
     }
 
     previous_page() {
-        let current = this.result.current_page - 1
-        if (current >= 0) {
+        if (this.error_pages_only) {
+            let current = this.result.current_page
+            do {
+                current = (current - 1 + this.result.available_pages) % this.result.available_pages
+                if (current == this.result.current_page) {
+                    // no page change possible, stay on page
+                    return;
+                }
+            } while (this.result.content[current].findings.length == 0)
             this.result.show_page(current)
         }
         else {
-            this.result.show_page(this.result.available_pages - 1)
+            let current = (this.result.current_page - 1 + this.result.available_pages)
+            current = current % this.result.available_pages
+            this.result.show_page(current)
         }
     }
 
     next_page() {
-        let current = this.result.current_page + 1
-        if (current < this.result.available_pages) {
+        if (this.error_pages_only) {
+            let current = this.result.current_page
+            do {
+                current = (current + 1) % this.result.available_pages
+                if (current == this.result.current_page) {
+                    // no page change possible, stay on page
+                    return;
+                }
+            } while (this.result.content[current].findings.length == 0)
             this.result.show_page(current)
         } else {
-            this.result.show_page(0)
+            let current = (this.result.current_page + 1) % this.result.available_pages
+            this.result.show_page(current)
         }
     }
 
@@ -480,16 +493,17 @@ class Navigator {
         let error_page_list = $('#error_page_selector_list')
         // TODO: CHECK FOR BETTER REMOVEMENT
         error_page_list[0].innerHTML = ''
-        for (let id in this.result.content) {
+        for (let page of this.result.content) {
             if (this.error_pages_only) {
                 // skip pages which contains no error
-                let no_findings = this.result.content[id].findings.length == 0
+                let no_findings = page.findings.length == 0
                 if (no_findings) {
                     continue
                 }
             }
-            let text = Number(id) + 1
-            let btn = `<li><button type="button" id="openpage_${id}">${text}</button></li>`
+            let id = page.page
+            let id_user = Number(id) + 1
+            let btn = `<button type="button" id="openpage_${id}">${id_user}</button>`
             error_page_list.append(btn)
             $(`#openpage_${id}`).click(function () {
                 result_view.show_page(id)
@@ -498,8 +512,8 @@ class Navigator {
     }
 
     toggle_pages() {
-        // Switch between all page numbers of the document and the pages
-        // with errors only.
+        /** Switch between all page numbers of the document and the pages
+            with errors only. **/
         let toggle = $('#error_page_selector_toggle')[0]
         if (this.error_pages_only) {
             toggle.innerText = 'hide'
@@ -508,7 +522,10 @@ class Navigator {
         }
         this.error_pages_only = !this.error_pages_only //toggle
         this.update_page_navigator()
-        this.highlight_pagenumber(this.result.error_page)
+        // ensure to be on valid page after changing from selective pages
+        // to all pages.
+        this.next_page()
+        this.previous_page()
     }
 
 }
