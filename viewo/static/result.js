@@ -607,21 +607,23 @@ class TodoListView {
             }
         }
     }
-
     create_finding_line(parent, finding) {
         let status = finding.status
         let action = ''
         if (status in OPEN) {
+            var del = `finding_delete_${finding.number}`
+            var done = `finding_done_${finding.number}`
             action =
-                `<button type="button" id="finding_select_delete">
-                    <img src="/static/images/result/trash.png" alt="delte" width="100%" height="100%" />
+                `<button type="button" id="${del}">
+                    <img src="/static/images/result/trash.png" alt="delete" width="100%" height="100%" />
                  </button>
-                 <button type="button" id="finding_select_done">
+                 <button type="button" id="${done}">
                     <img src="/static/images/result/right.png" alt="done" width="100%" height="100%" />
                  </button>`
         } else {
+            var restore = `finding_restore_${finding.number}`
             action =
-                `<button type="button" id="finding_restore">
+                `<button type="button" id="${restore}">
                     <img src="/static/images/result/refresh.png" alt="done" width="100%" height="100%" />
                 </button>`
         }
@@ -641,6 +643,18 @@ class TodoListView {
         $(`#${openid} `).click(function () {
             open_pdfview(page)
         });
+        if (status in OPEN) {
+            $(`#${del}`).click(function () {
+                result_view.update_finding(finding.number, REMOVED)
+            });
+            $(`#${done}`).click(function () {
+                result_view.update_finding(finding.number, DONE)
+            });
+        } else {
+            $(`#${restore}`).click(function () {
+                result_view.update_finding(finding.number, SELECTED)
+            });
+        }
     }
 }
 
