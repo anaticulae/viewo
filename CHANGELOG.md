@@ -2,6 +2,42 @@
 
 Every noteable change is logged here.
 
+## v0.13.0
+
+### Feature
+
+* animate changing of todo counter (53338d5c6382)
+* change pages in reduces page view correctly (7b5188ef1868)
+* start with error mode first (29a39a88e953)
+* move findings to separate module (1cf9d9ded641)
+* remove button to reduce complexity (9600a268cf89)
+* add action listener to delete and restore buttons (2bac2109f2bb)
+* jump to open, closed and reject depending on clicked item (42625808ba17)
+* add content of open, done and closed findings (a28cc4014657)
+* add parameter page to select page to open in pdfview (a0d52843fdd9)
+* add method to remove content of DOM object (53de61f7b31f)
+* add useful basic style (b66a5804bacd)
+* change to pdfview on finding status click (6792a03c71fb)
+* introduce `todolistview` to show manage findings (6b4e9ccce328)
+* serialize user decision on linting (3b0dae222ec9)
+* do not remove items just hide them (df6deddd3257)
+* count solved, rejected and open findings in result view (14efeab7f9c3)
+* add finding status counter to display open and solved todos (7b009d81d2bf)
+* add method to create image button (59f89f622ff2)
+
+### Fix
+
+* ensure to start on valid page if first page contain no error (8e5981c63b37)
+* fix constructor of result view (1053e37d7a6c)
+* start with pdf view (c0da7211f5a9)
+* fix goto todo view in result view (d0d664284d9e)
+* do not use Number, cause it is limited by 16-bits (52cf23f6e341)
+* remove highlight in view when removing finding (feac0a5d7eaa)
+
+### Documentation
+
+* add document to store design decisions (2742cc457c77)
+
 ## v0.12.0
 
 ### Feature
