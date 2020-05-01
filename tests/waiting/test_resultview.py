@@ -63,5 +63,4 @@ def test_waiting_resultview(valid, client, monkeypatch):  # pylint:disable=W0621
         context.setattr(configo, 'todo', lambda: valid)
         result = content(client, '/waiting/resultview/12345678900')
     assert 'Gesamtdurchsicht' in result
-    assert 'Fehler' not in result
     assert len(result) > 2000, str(result)

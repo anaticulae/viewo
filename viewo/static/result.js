@@ -7,6 +7,8 @@
 
 */
 
+// TODO: REQUIRE DATA MANAGER
+
 class ResultView {
 
     init() {
@@ -17,11 +19,13 @@ class ResultView {
     }
 
     update_content(content) {
+        // INTRODUCE EVENT LISTENER CONCEPT
         this.content = content
         navigator.update_page_navigator()
         this.show_page(0)
         base.show_done()
         statuscounter.update()
+        todolist.update_tables()
     }
 
     show_page(page) {
@@ -81,7 +85,11 @@ class ResultView {
     }
 
     get document_findings() {
+        if (this.content == undefined) {
+            return []
+        }
         let result = []
+
         for (let items of this.content) {
             for (let item of items.findings) {
                 result.push(item)
@@ -561,6 +569,77 @@ class FindingStatusCounter {
 
 }
 
+class TodoListView {
+    constructor(result) {
+        this.result = result
+    }
+
+    init_listener() {
+        $("#todolistview_show_pdfview").click(function () {
+            open_pdfview()
+        });
+    }
+
+    update_tables() {
+        let open = $('#todolistview_table_open')
+        let done = $('#todolistview_table_done')
+        let removed = $('#todolistview_table_removed')
+
+        base.clear(open)
+        base.clear(done)
+        base.clear(removed)
+
+        let findings = this.result.document_findings
+
+        for (let finding of findings) {
+            let status = finding.status
+            if (status in OPEN) {
+                this.create_finding_line(open, finding)
+            } else if (status == DONE) {
+                this.create_finding_line(done, finding)
+            }
+            else {
+                this.create_finding_line(removed, finding)
+            }
+        }
+    }
+
+    create_finding_line(parent, finding) {
+        let status = finding.status
+        let action = ''
+        if (status in OPEN) {
+            action =
+                `<button type="button" id="finding_select_delete">
+                    <img src="/static/images/result/trash.png" alt="delte" width="100%" height="100%" />
+                 </button>
+                 <button type="button" id="finding_select_done">
+                    <img src="/static/images/result/right.png" alt="done" width="100%" height="100%" />
+                 </button>`
+        } else {
+            action =
+                `<button type="button" id="finding_restore">
+                    <img src="/static/images/result/refresh.png" alt="done" width="100%" height="100%" />
+                </button>`
+        }
+        let page = finding.location.page
+        let page_user = Number(finding.location.page) + 1
+        let openid = `_todolistview_open_finding_${finding.number}`
+        let jump_to_page = `<a href = "#" id = "${openid}">${finding.title}</a>`
+        let number = parent[0].rows.length + 1
+        let raw =
+            `<tr>
+                <td class="center">${number}</td>
+                <td>${jump_to_page}</td>
+                <td class="center">${page_user}</td>
+                <td class="center">${action}</td>
+            </tr>`
+        parent.append(raw)
+        $(`#${openid} `).click(function () {
+            open_pdfview(page)
+        });
+    }
+}
+
 function open_todolistview(category = DONE) {
     $('#pdfview').hide()
     $('#todolistview').show()
@@ -576,6 +655,7 @@ const result_view = new ResultView()
 const navigator = new Navigator(result_view)
 const statuscounter = new FindingStatusCounter()
 const findingbox = new FindingBox(result_view)
+const todolist = new TodoListView(result_view)
 
 
 function onload(process) {
@@ -615,6 +695,10 @@ function init() {
 
     statuscounter.build()
     statuscounter.init_listener()
+
+    todolist.init_listener()
+    open_todolistview()
+    todolist.update_tables()
 
     base.show_connecting('Öffne Dokument...')
 

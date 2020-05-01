@@ -123,3 +123,15 @@ aside {
 #finding_status_counter .done {
     color: green;
 }
+
+#todolistview table button{
+    width:20px;
+    height:20px;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+}
+
+#todolistview h3{
+    margin: 0px;
+}

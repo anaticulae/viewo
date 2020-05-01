@@ -64,7 +64,54 @@
 </div>
 <div id="todolistview" class="hidden">
     <h2>Fortschritt</h2>
-    <a href="#" id="show_pdfview">zurück zum PDF</a>
+
+    <h3>Open</h3>
+    <p class="right no_margin">
+        <a href="#" id="todolistview_show_pdfview">zurück zum PDF</a>
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <th class="tiny_extra center">Nr.</th>
+                <th>Fehler</th>
+                <th class="tiny_extra center">Seite</th>
+                <th class="tiny"></th>
+            </tr>
+        </thead>
+        <tbody id="todolistview_table_open"></tbody>
+    </table>
+
+    <h3>Closed</h3>
+    <p class="right no_margin">
+        <a href="#" id="todolistview_show_pdfview">zurück zum PDF</a>
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <th class="tiny_extra center">Nr.</th>
+                <th>Fehler</th>
+                <th class="tiny_extra center">Seite</th>
+                <th class="tiny"></th>
+            </tr>
+        </thead>
+        <tbody id="todolistview_table_done"></tbody>
+    </table>
+
+    <h3>Removed</h3>
+    <p class="right no_margin">
+        <a href="#" id="todolistview_show_pdfview">zurück zum PDF</a>
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <th class="tiny_extra center">Nr.</th>
+                <th>Fehler</th>
+                <th class="tiny_extra center">Seite</th>
+                <th class="tiny"></th>
+            </tr>
+        </thead>
+        <tbody id="todolistview_table_removed"></tbody>
+    </table>
 </div>
 {% if waiting %}
 <footer>
