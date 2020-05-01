@@ -187,6 +187,7 @@ class ResultView {
 
 const NOT_SELECTED = 0
 const SELECTED = 1
+const OPEN = [NOT_SELECTED, SELECTED]
 const DONE = 2
 const IGNORED = 3
 const REMOVED = 4
@@ -497,7 +498,7 @@ class Navigator {
             let text = Number(id) + 1
             let btn = `<li><button type="button" id="openpage_${id}">${text}</button></li>`
             error_page_list.append(btn)
-            $(`#openpage_${id} `).click(function () {
+            $(`#openpage_${id}`).click(function () {
                 result_view.show_page(id)
             });
         }
@@ -525,13 +526,24 @@ class FindingStatusCounter {
 
     }
 
-    init() {
-        let done = base.new_image_button('result/right.png', '#show_done', 'done')
-        let open = base.new_image_button('result/wrong.png', '#show_open', 'open')
-        let rejected = base.new_image_button('result/trash.png', '#show_rejected', 'rejected')
+    build() {
+        let parent = $('#finding_status_counter')
+        base.new_image_button(parent, 'result/right.png', 'show_done', 'done')
+        base.new_image_button(parent, 'result/wrong.png', 'show_open', 'open')
+        base.new_image_button(parent, 'result/trash.png', 'show_rejected', 'rejected')
+    }
 
-        let view = done + rejected + open
-        $('#finding_status_counter')[0].innerHTML = view
+    init_listener() {
+        $("#show_done").click(function () {
+            open_todolistview(DONE)
+        });
+        $("#show_open").click(function () {
+            open_todolistview(REMOVED)
+        });
+        $("#show_open").click(function () {
+            open_todolistview(OPEN)
+        });
+
         this.update_values()
     }
 
@@ -544,13 +556,26 @@ class FindingStatusCounter {
     update() {
         let counted = count_by_finding_status(result_view.document_findings)
         this.update_values(counted.done, counted.rejected, counted.open)
+
     }
+
+}
+
+function open_todolistview(category = DONE) {
+    $('#pdfview').hide()
+    $('#todolistview').show()
+}
+
+function open_pdfview() {
+    $('#todolistview').hide()
+    $('#pdfview').show()
 }
 
 const result_view = new ResultView()
 const navigator = new Navigator(result_view)
 const statuscounter = new FindingStatusCounter()
 const findingbox = new FindingBox(result_view)
+
 
 function onload(process) {
     result_view.loop(process)
@@ -560,7 +585,6 @@ function onload(process) {
 function init() {
     navigator.init_listener()
     findingbox.init_listener()
-
     // Navigate thrue error pages
     window.addEventListener('keydown', event => {
         // Hands up for vim :)
@@ -588,6 +612,9 @@ function init() {
         }
     })
 
-    statuscounter.init()
+    statuscounter.build()
+    statuscounter.init_listener()
+
     base.show_connecting('Öffne Dokument...')
+
 }

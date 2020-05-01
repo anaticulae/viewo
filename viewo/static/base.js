@@ -46,7 +46,7 @@ base.remove = function (array, index) {
 }
 
 
-base.new_image_button = function (src, id = null, textid = null, link = null, alt = null) {
+base.new_image_button = function (parent, src, id = null, textid = null, link = null, alt = null) {
     let raw = `<button type="button" id="${id}" class="image_button" style="width:50px;">`
     if (textid != null) {
         raw += `<span class="${textid}">0</span>`
@@ -57,5 +57,10 @@ base.new_image_button = function (src, id = null, textid = null, link = null, al
     }
     raw += '/>'
     raw += '</button>'
-    return raw
+    parent.append(raw)
+    // if (link != null) {
+    //     $(`#${id}`).click(function () {
+    //         link(this.)
+    //     });
+    // }
 }
