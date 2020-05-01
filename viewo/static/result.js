@@ -23,6 +23,7 @@ class ResultView {
         this.content = content
         navigator.update_page_navigator()
         this.show_page(0)
+        navigator.set_on_valid_hidden_page()
         base.show_done()
         statuscounter.update()
         todolist.update_tables()
@@ -450,7 +451,10 @@ class Navigator {
                 child.classList.remove('highlighted')
             }
         }
-        $(`#openpage_${page}`)[0].classList.add('highlighted')
+        let current = $(`#openpage_${page}`)
+        if (current.length == 1) {
+            current[0].classList.add('highlighted')
+        }
     }
 
     previous_page() {
@@ -522,6 +526,10 @@ class Navigator {
         }
         this.error_pages_only = !this.error_pages_only //toggle
         this.update_page_navigator()
+        this.set_on_valid_hidden_page()
+    }
+
+    set_on_valid_hidden_page() {
         // ensure to be on valid page after changing from selective pages
         // to all pages.
         this.next_page()
@@ -577,7 +585,7 @@ class TodoListView {
 
     init_listener() {
         $("#todolistview_show_pdfview").click(function () {
-            open_pdfview()
+            open_pdfview(result_view.current_page)
         });
     }
 
