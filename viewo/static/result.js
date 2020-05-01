@@ -566,9 +566,10 @@ function open_todolistview(category = DONE) {
     $('#todolistview').show()
 }
 
-function open_pdfview() {
+function open_pdfview(page = 0) {
     $('#todolistview').hide()
     $('#pdfview').show()
+    result_view.show_page(page)
 }
 
 const result_view = new ResultView()
