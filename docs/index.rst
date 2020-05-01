@@ -9,6 +9,7 @@ General
 
   bugs
   todo
+  questions
 
 Quality
 -------
