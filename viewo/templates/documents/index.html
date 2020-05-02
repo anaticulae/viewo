@@ -15,6 +15,12 @@
 
 
 {% if documents %}
+
+{% block head %}
+{{ super() }}
+<script type="text/javascript" src="{{ url_for('static', filename='documents.js') }}"></script>
+{% endblock %}
+
 <table id="results">
     <tr>
         <th class="document_title"></th>
@@ -25,7 +31,7 @@
     </tr>
     <tbody>
         {% for row in documents %}
-        <tr>
+        <tr id="result_table_{{row['index']}}">
             {% if row['result'] == 'failed' %}
             {#
                 process failed, only fast view is visible
@@ -35,8 +41,8 @@
             <td class="date failed">{{row['date']}}</td>
             <td class="score failed">failed</td>
             <td class="right">
-                <a href="result/{{row['index']}}/delete">
-                    <img src="/static/images/result/trash.png" alt="delete" width="16" height="16" /></a>
+                <a href="#delete" onclick="delete_document('{{row['index']}}')"><img
+                        src="/static/images/result/trash.png" alt="delete" width="16" height="16" /></a>
             </td>
             <td class="status failed"><a href="waiting/{{row['index']}}">failed</a></td>
 
@@ -52,22 +58,23 @@
                     <img src="/static/images/result/share.png" alt="share" width="16" height="16" /></a>
                 <a href="result/{{row['index']}}/lock">
                     <img src="/static/images/result/lock.png" alt="lock" width="16" height="16" /></a>
-                <a href="result/{{row['index']}}/delete">
-                    <img src="/static/images/result/trash.png" alt="delete" width="16" height="16" /></a>
+                <a href="#delete" onclick="delete_document('{{row['index']}}')"><img
+                        src="/static/images/result/trash.png" alt="delete" width="16" height="16" /></a>
             </td>
             <td class="status">
                 <a href="result/{{row['index']}}">
                     <img src="/static/images/result/document.png" alt="open" width="16" height="16" />
                 </a>
             </td>
+
             {% else %}
             {# analysis is running #}
             <td>{{row['title']}}</td>
             <td class="date">{{row['date']}}</td>
             <td class="score">-</td>
             <td class="right">
-                <a href="result/{{row['index']}}/delete">
-                    <img src="/static/images/result/trash.png" alt="delete" width="16" height="16" /></a>
+                <a href="#delete" onclick="delete_document('{{row['index']}}')"><img
+                        src="/static/images/result/trash.png" alt="delete" width="16" height="16" /></a>
             </td>
             <td class="status">
                 <a href="waiting/{{row['index']}}">
