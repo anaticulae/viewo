@@ -19,8 +19,9 @@
     <tr>
         <th class="document_title"></th>
         <th class="date">Datum</th>
-        <th class="score">Ergebnis</th>
-        <th class="status_header">Status</th>
+        <th class="score">Todo</th>
+        <th class="tiny"></th>
+        <th class="status_header"></th>
     </tr>
     <tbody>
         {% for row in documents %}
@@ -33,6 +34,10 @@
             <td class="failed">{{row['title']}}</td>
             <td class="date failed">{{row['date']}}</td>
             <td class="score failed">failed</td>
+            <td class="right">
+                <a href="result/{{row['index']}}/delete">
+                    <img src="/static/images/result/trash.png" alt="delete" width="16" height="16" /></a>
+            </td>
             <td class="status failed"><a href="waiting/{{row['index']}}">failed</a></td>
 
             {% elif row['result'] %}
@@ -40,14 +45,33 @@
             <td><a href="result/{{row['index']}}">{{row['title']}}</a></td>
             <td class="date">{{row['date']}}</td>
             <td class="score">{{row['result']}}%</td>
-            <td class="status"><a href="result/{{row['index']}}">view</a></td>
-
+            <td class="right">
+                <a href="result/{{row['index']}}/share">
+                    <img src="/static/images/result/share.png" alt="share" width="16" height="16" /></a>
+                <a href="result/{{row['index']}}/lock">
+                    <img src="/static/images/result/lock.png" alt="lock" width="16" height="16" /></a>
+                <a href="result/{{row['index']}}/delete">
+                    <img src="/static/images/result/trash.png" alt="delete" width="16" height="16" /></a>
+            </td>
+            <td class="status">
+                <a href="result/{{row['index']}}">
+                    <img src="/static/images/result/document.png" alt="open" width="16" height="16" />
+                </a>
+            </td>
             {% else %}
             {# analysis is running #}
             <td>{{row['title']}}</td>
             <td class="date">{{row['date']}}</td>
             <td class="score">-</td>
-            <td class="status"><a href="waiting/{{row['index']}}">in Bearbeitung</a></td>
+            <td class="right">
+                <a href="result/{{row['index']}}/delete">
+                    <img src="/static/images/result/trash.png" alt="delete" width="16" height="16" /></a>
+            </td>
+            <td class="status">
+                <a href="waiting/{{row['index']}}">
+                    <img src="/static/images/animation/loader.gif" alt="in progress" width="16" height="16" />
+                </a>
+            </td>
             {% endif %}
         </tr>
         {% endfor %}
