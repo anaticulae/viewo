@@ -6,6 +6,7 @@
 # use or distribution is an offensive act against international law and may
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
+
 import configo
 import flask
 import link
@@ -16,10 +17,15 @@ documents_ = flask.Blueprint('documents', __name__)  # pylint:disable=C0103
 @documents_.route('/documents', methods=['GET'])
 def view_documents():
     common = configo.share()
+    # TODO: USE SKIP_REMOVED
     todo, ready = link.collect_jobs(common)
 
-    docs = todo + ready
-    docs = unify(docs)
+    docs = list(ready)
+    done = {item.index for item in ready}
+    for item in todo:
+        if item.index in done:
+            continue
+        docs.append(item)
     # sort by date
     docs = sorted(
         docs,
@@ -27,19 +33,3 @@ def view_documents():
         reverse=True,
     )
     return flask.render_template('documents/index.html', documents=docs)
-
-
-def unify(items):
-    done_index = {item.index for item in done(items)}
-
-    result = done(items)
-    for item in items:
-        if item.index in done_index:
-            # job is already done
-            continue
-        result.append(item)
-    return result
-
-
-def done(items):
-    return [item for item in items if item.result]
