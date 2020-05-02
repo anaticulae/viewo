@@ -11,7 +11,7 @@ PyYAML==5.1
 Flask==1.0.2
 
 configo==0.6.3
-link==0.3.16
+link==0.4.3
 utila==1.21.0
 
 # load validation results

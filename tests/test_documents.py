@@ -21,7 +21,7 @@ def test_documents_view_no_documents(client):
 
 def test_documents_view(client, monkeypatch):
     with monkeypatch.context() as context:
-        context.setattr(configo, 'todo', lambda: tests.EXAMPLE_TODO)
+        context.setattr(configo, 'share', lambda: tests.TEST_DATA)
         result = tests.content(client, '/documents')
     assert len(result) > 300, str(result)
     assert 'Keine Dokumente verfügbar!' not in result, str(result)

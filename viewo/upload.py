@@ -39,7 +39,6 @@ def upload_pdf():
     filename = secure_filename(file.filename)
     todo = create_todo(file, filename)
     _, process = os.path.split(todo)
-    process = int(process)
     # file.save(join(current_app.config['TODO'], filename))
     return redirect(f'/waiting/{process}')
 
