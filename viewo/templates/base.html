@@ -28,11 +28,9 @@
     </nav>
     <!-- content starts here -->
     {% block content_container %}
-    <div id="content_main">
-        <div id="display">
-            {% block content %}{% endblock %}
-        </div>
-        <div id="message"> </div>
+    <div id="pagecontent">
+        <div id="display">{% block content %}{% endblock %}</div>
+        <div id="message"></div>
     </div>
     {% endblock %}
     <!-- footer starts here  -->

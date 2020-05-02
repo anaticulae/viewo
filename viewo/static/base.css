@@ -8,13 +8,17 @@ body {
     background-color: #f9f8f6;
 }
 #logo,
-#center,
+#pagecontent,
 footer {
     /* background: beige; */
     display: inline-block;
     padding: 0px;
     margin: 0px;
     width: 100%;
+}
+
+#display{
+    padding: 20px;
 }
 
 nav.main {
@@ -37,13 +41,13 @@ nav.main {
     /* padding: 20px; */
 }
 
-#content_main {
+#pagecontent {
     background: beige;
     border: black solid 2px;
     min-height:200px;
     text-align: justify;
-    padding:20px;
 }
+
 footer {
     border: black solid 2px;
     margin-bottom: 5px;
