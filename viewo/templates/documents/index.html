@@ -54,9 +54,9 @@
                 {{row['result'].closed+row['result'].excluded}}/{{row['result'].open+row['result'].closed+row['result'].excluded}}
             </td>
             <td class="right">
-                <a href="result/{{row['index']}}/share">
+                <a href="#share" onclick="share_document('{{row['index']}}')">
                     <img src="/static/images/result/share.png" alt="share" width="16" height="16" /></a>
-                <a href="result/{{row['index']}}/lock">
+                <a href="#lock" onclick="add_password('{{row['index']}}')">
                     <img src="/static/images/result/lock.png" alt="lock" width="16" height="16" /></a>
                 <a href="#delete" onclick="delete_document('{{row['index']}}')"><img
                         src="/static/images/result/trash.png" alt="delete" width="16" height="16" /></a>

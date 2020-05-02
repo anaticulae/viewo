@@ -6,13 +6,13 @@ RP 0.14.0
 documents
 ---------
 
-* [ ] deleting documents with asking before doing it
+* [x] deleting documents with asking before doing it
 
-* [ ] fix empty waiting documents
+* [x] fix empty waiting documents
 
-* [ ] add link to share documents
+* [x] add link to share documents
 
-* [ ] add lock icon to add password
+* [x] add lock icon to add password
 
 * [ ] add password request before open document
 
