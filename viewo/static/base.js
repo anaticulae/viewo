@@ -30,7 +30,8 @@ base.show_message = function (headline, content = '') {
     base.hide('#display')
     base.show('#message')
     let message = `<h2>${headline}</h2><p>${content}</p>`
-    $('#message')[0].innerHTML = message
+    $('#message').html(message)
+
 }
 
 base.hide = function (item) {
@@ -47,7 +48,7 @@ base.remove = function (array, index) {
 
 base.clear = function (item) {
     //TODO: REMOVE WITH SMART APPROACH
-    item[0].innerHTML = ''
+    item.html('')
 }
 
 base.scroll_to = function (item) {

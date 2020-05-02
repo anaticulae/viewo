@@ -43,7 +43,7 @@ class ResultView {
         }
         this.error_page = page
 
-        $('#error_page_content')[0].innerHTML = selected.html
+        $('#error_page_content').html(selected.html)
 
         findingbox.update_findings()
         navigator.highlight_pagenumber(page)
@@ -272,7 +272,7 @@ class FindingBox {
          */
         let error_page_selector = $('#error_list')
         // TODO: CHECK FOR BETTER REMOVEMENT
-        error_page_selector[0].innerHTML = ''
+        error_page_selector.html('')
 
         for (let index in this.result.findings) {
             let item = this.result.findings[index]
@@ -339,12 +339,12 @@ class FindingBox {
     update_finding_text() {
         let message = this.result.selected_finding
         if (message == null) {
-            $('#error_message')[0].innerHTML = ''
-            $('#error_message_headline')[0].innerHTML = ''
+            $('#error_message').html('')
+            $('#error_message_headline').html('')
         }
         else {
-            $('#error_message')[0].innerHTML = message.message
-            $('#error_message_headline')[0].innerHTML = message.title
+            $('#error_message').html(message.message)
+            $('#error_message_headline').html(message.title)
         }
     }
 
@@ -496,7 +496,7 @@ class Navigator {
     update_page_navigator() {
         let error_page_list = $('#error_page_selector_list')
         // TODO: CHECK FOR BETTER REMOVEMENT
-        error_page_list[0].innerHTML = ''
+        error_page_list.html('')
         for (let page of this.result.content) {
             if (this.error_pages_only) {
                 // skip pages which contains no error
