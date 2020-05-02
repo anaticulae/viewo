@@ -72,3 +72,10 @@ Result
 
 * Add color rectangle into FindingBox to match marked finding with finding
   box fast.
+
+Documment
+---------
+
+* Enable sharing result with password/ without password
+
+* Click to lock again to remove password

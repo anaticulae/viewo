@@ -1,0 +1,26 @@
+.. _0_14_0:
+
+RP 0.14.0
+=========
+
+documents
+---------
+
+* [ ] deleting documents with asking before doing it
+
+* [ ] fix empty waiting documents
+
+* [ ] add link to share documents
+
+* [ ] add lock icon to add password
+
+* [ ] add password request before open document
+
+code quality
+------------
+
+before
+~~~~~~
+
+* Total coverage: 80.78%
+* Your code has been rated at 10.00/10
