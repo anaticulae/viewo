@@ -19,6 +19,7 @@ def view_documents():
     todo, ready = link.collect_jobs(common)
 
     docs = todo + ready
+    docs = unify(docs)
     # sort by date
     docs = sorted(
         docs,
@@ -26,3 +27,19 @@ def view_documents():
         reverse=True,
     )
     return flask.render_template('documents/index.html', documents=docs)
+
+
+def unify(items):
+    done_index = {item.index for item in done(items)}
+
+    result = done(items)
+    for item in items:
+        if item.index in done_index:
+            # job is already done
+            continue
+        result.append(item)
+    return result
+
+
+def done(items):
+    return [item for item in items if item.result]
