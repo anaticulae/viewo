@@ -44,7 +44,9 @@
             {# process succeed #}
             <td><a href="result/{{row['index']}}">{{row['title']}}</a></td>
             <td class="date">{{row['date']}}</td>
-            <td class="score">{{row['result']}}%</td>
+            <td class="score">
+                {{row['result'].closed+row['result'].excluded}}/{{row['result'].open+row['result'].closed+row['result'].excluded}}
+            </td>
             <td class="right">
                 <a href="result/{{row['index']}}/share">
                     <img src="/static/images/result/share.png" alt="share" width="16" height="16" /></a>
