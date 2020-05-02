@@ -18,7 +18,7 @@ documents_ = flask.Blueprint('documents', __name__)  # pylint:disable=C0103
 def view_documents():
     common = configo.share()
     # TODO: USE SKIP_REMOVED
-    todo, ready = link.collect_jobs(common)
+    todo, ready = link.collect_jobs(common, skip_removed=True)
 
     docs = list(ready)
     done = {item.index for item in ready}
