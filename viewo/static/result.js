@@ -546,8 +546,8 @@ class FindingStatusCounter {
 
     build() {
         let parent = $('#finding_status_counter')
-        base.new_image_button(parent, 'result/right.png', 'show_done', 'done')
         base.new_image_button(parent, 'result/wrong.png', 'show_open', 'open')
+        base.new_image_button(parent, 'result/right.png', 'show_done', 'done')
         base.new_image_button(parent, 'result/trash.png', 'show_removed', 'rejected')
     }
 
