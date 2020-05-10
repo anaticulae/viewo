@@ -3,9 +3,11 @@
 
 {% block head %}
 
-{{ super() }}
-<link href="/build/_static/wclub.css" rel="stylesheet" type="text/css">
 
+{{ super() }}
+
+<link href="/build/_static/wclub.css" rel="stylesheet" type="text/css">
+<link href="/static/writing.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/build/_static/jquery.js"></script>
 <script type="text/javascript" id="documentation_options" data-url_root="/build/"
     src="/build/_static/documentation_options.js"></script>
@@ -22,6 +24,47 @@
 
 <script type="text/javascript" id="searchindexloader"></script>
 
+<style>
+    @media only screen and (max-width: 750px) {
+        body {
+            color: black;
+        }
+
+        .wrapper {
+            border: 0px;
+            padding: 0px;
+            height: 97%;
+            overflow-y: auto;
+        }
+
+        #content {
+            padding: 0px;
+            overflow: visible;
+        }
+
+        nav {
+            width: 100%;
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+            margin: 0px;
+            padding: 0px;
+            margin-bottom: 20px;
+        }
+
+        .mastertoc a {
+            font-size: 24px;
+        }
+
+        .highlight {
+            border: 0px;
+        }
+
+        .footnote {
+            border: 0px;
+        }
+    }
+
+</style>
 
 {% endblock %}
 
