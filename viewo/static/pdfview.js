@@ -63,21 +63,31 @@ class ResultView {
         let overview = $('#pdfview_overview')
         overview.html('')
         for (let finding of this.findings) {
+            let del = `delete_${finding.number}`
+            let done = `done_${finding.number}`
             let content = `
-            <div id="flex_content">
+            <div class="flex_content" id="flex_content_${finding.number}">
                 <h4>${finding.title}</h4>
                 <div class="error_message">${finding.message}</div>
                 <p class="error_options">
-                    <button type="button" id="">
+                    <button type="button" id="${del}">
                         <img src="/static/images/result/right.png" alt="done" width="100%" height="100%" />
                     </button>
-                    <button type="button" id="">
+                    <button type="button" id="${done}">
                         <img src="/static/images/result/trash.png" alt="delte" width="100%" height="100%" />
                     </button>
                 </p>
             </div>
             `
             $('#pdfview_overview').append(content)
+            $(`#${del}`).click(function () {
+                result_view.update_finding(finding.number, REMOVED)
+                $(`#flex_content_${finding.number}`).hide()
+            });
+            $(`#${done}`).click(function () {
+                result_view.update_finding(finding.number, DONE)
+                $(`#flex_content_${finding.number}`).hide()
+            });
         }
     }
 
