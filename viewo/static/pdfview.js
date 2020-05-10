@@ -42,11 +42,43 @@ class ResultView {
             return
         }
         this.error_page = page
-
         $('#error_page_content').html(selected.html)
 
         findingbox.update_findings()
         navigator.highlight_pagenumber(page)
+
+        // TODO: REMOVE LATER
+        if (selected.page == 1024 || selected.page == -1) {
+            this.show_overview()
+        } else {
+            $('#pdfview_content').show()
+            $('#pdfview_overview').hide()
+        }
+    }
+
+    show_overview() {
+        $('#pdfview_content').hide()
+        $('#pdfview_overview').show()
+
+        let overview = $('#pdfview_overview')
+        overview.html('')
+        for (let finding of this.findings) {
+            let content = `
+            <div id="flex_content">
+                <h4>${finding.title}</h4>
+                <div class="error_message">${finding.message}</div>
+                <p class="error_options">
+                    <button type="button" id="">
+                        <img src="/static/images/result/right.png" alt="done" width="100%" height="100%" />
+                    </button>
+                    <button type="button" id="">
+                        <img src="/static/images/result/trash.png" alt="delte" width="100%" height="100%" />
+                    </button>
+                </p>
+            </div>
+            `
+            $('#pdfview_overview').append(content)
+        }
     }
 
     get current_page() {
