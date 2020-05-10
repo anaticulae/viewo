@@ -76,7 +76,7 @@ aside {
     padding: 5px;
 }
 
-#error_page_selector{
+#pdfview_navigation{
     display: flex;
     background: white;
     border: 1px solid black;
@@ -84,17 +84,17 @@ aside {
     margin-bottom: 20px;
 }
 
-#error_page_selector p{
+#pdfview_navigation p{
     padding-left: 10px;
 }
 
-#error_page_selector ul{
+#pdfview_navigation ul{
     list-style: none;
     padding: 0px;
     margin: 2px;
 }
 
-#error_page_selector li{
+#pdfview_navigation li{
     list-style: none;
     display: inline;
     padding: 2px;

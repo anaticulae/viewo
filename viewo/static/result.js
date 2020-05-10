@@ -270,9 +270,9 @@ class FindingBox {
          * finding is detected for current page, finding box will be
          * disabled.
          */
-        let error_page_selector = $('#error_list')
+        let pdfview_navigation = $('#error_list')
         // TODO: CHECK FOR BETTER REMOVEMENT
-        error_page_selector.html('')
+        pdfview_navigation.html('')
 
         for (let index in this.result.findings) {
             let item = this.result.findings[index]
@@ -299,7 +299,7 @@ class FindingBox {
                 }
             }
             let node_selectable = `<li id="error_selected_${index}">${selectable} ${text}</li>`
-            error_page_selector.append(node_selectable)
+            pdfview_navigation.append(node_selectable)
             $(`#error_selector_checkbox_${index}`).click(function () {
                 findingbox.toggle_finding(index)
             });
@@ -429,13 +429,13 @@ class Navigator {
     }
 
     init_listener() {
-        $("#error_page_selector_toggle").click(function () {
+        $("#pdfview_navigation_toggle").click(function () {
             navigator.toggle_pages()
         });
-        $("#error_next_page").click(function () {
+        $("#pdfview_next_page").click(function () {
             navigator.next_page()
         });
-        $("#error_previous_page").click(function () {
+        $("#pdfview_previous_page").click(function () {
             navigator.previous_page()
         });
     }
@@ -444,7 +444,7 @@ class Navigator {
         // Highlight page number as open page in upper page selector bar.
         // Remove other potential highlights of other pages.
         // TODO: SPLIT METHOD IN CLEAR AND SET/ADD
-        let error_page_list = $('#error_page_selector_list')[0]
+        let error_page_list = $('#pdfview_navigation_list')[0]
         for (let index in error_page_list.children) {
             let child = error_page_list.children[index]
             if (child.classList != undefined) {
@@ -494,7 +494,7 @@ class Navigator {
     }
 
     update_page_navigator() {
-        let error_page_list = $('#error_page_selector_list')
+        let error_page_list = $('#pdfview_navigation_list')
         // TODO: CHECK FOR BETTER REMOVEMENT
         error_page_list.html('')
         for (let page of this.result.content) {
@@ -518,7 +518,7 @@ class Navigator {
     toggle_pages() {
         /** Switch between all page numbers of the document and the pages
             with errors only. **/
-        let toggle = $('#error_page_selector_toggle')[0]
+        let toggle = $('#pdfview_navigation_toggle')[0]
         if (this.error_pages_only) {
             toggle.innerText = 'hide'
         } else {
