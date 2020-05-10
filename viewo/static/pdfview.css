@@ -152,6 +152,13 @@ aside {
     height: 1%;
 }
 
+@media only screen and (max-width: 750px){
+    #flex_content{
+        /* switch to double from tripple column layout */
+        width:48%;
+    }
+}
+
 #flex_content h4{
     margin: 5px;
 }
