@@ -109,11 +109,8 @@ class ResultView {
         }
         let result = []
         for (let item of this.content[this.current_page].findings) {
-            if (item.status <= SELECTED) {
-                result.push(item)
-            }
+            result.push(item)
         }
-        // let result = this.content[this.current_page].findings
         return result
     }
 
@@ -142,7 +139,11 @@ class ResultView {
 
     get get_next_finding() {
         let findings = this.content[this.current_page].findings
-        for (let index = this.current_finding; index < findings.length; index++) {
+        let current_plus = this.current_finding + 1
+        if (current_plus == findings.length) {
+            current_plus = 0
+        }
+        for (let index = current_plus; index < findings.length; index++) {
             if (findings[index].status <= SELECTED) {
                 return index
             }
@@ -152,7 +153,11 @@ class ResultView {
 
     get get_prev_finding() {
         let findings = this.content[this.current_page].findings
-        for (let index = this.current_finding - 1; index >= 0; index--) {
+        let current_minus = this.current_finding - 1
+        if (current_minus < 0) {
+            current_minus = findings.length - 1
+        }
+        for (let index = current_minus; index >= 0; index--) {
             if (findings[index].status <= SELECTED) {
                 return index
             }
@@ -278,22 +283,12 @@ class FindingBox {
 
     next_finding() {
         //Iterate error message headline box downwards
-        let next_id = this.result.current_finding + 1
-        if (next_id < this.result.findings.length) {
-            this.open_finding(next_id)
-        } else {
-            this.open_finding(0)
-        }
+        this.open_finding(this.result.get_next_finding)
     }
 
     previous_finding() {
         //Iterate error message headline box upwards
-        let next_id = this.result.current_finding - 1
-        if (next_id >= 0) {
-            this.open_finding(next_id)
-        } else {
-            this.open_finding(this.result.findings.length - 1)
-        }
+        this.open_finding(this.result.get_prev_finding)
     }
 
     update_findings(current = 0) {
