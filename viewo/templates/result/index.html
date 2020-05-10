@@ -19,28 +19,19 @@
     <h2>Gesamtdurchsicht<span id="finding_status_counter"></span></h2>
 
     <div id="error_page_selector">
-        <!-- TODO: sooo dirty -->
-        <table width="100%">
-            <tr>
-                <td width="5%">
-                    Seite:<br />
-                    <!-- toggle page selection view -->
-                    <button type="button" id="error_page_selector_toggle">hide</button><br />
-                    <!-- previous page -->
-                    <button type="button" id="error_previous_page">&lt;</button>
-                    <!-- next page -->
-                    <button type="button" id="error_next_page">&gt;</button>
-                </td>
-                <td width="95%">
-                    <ul id="error_page_selector_list"></ul>
-                </td>
-            </tr>
-        </table>
+        <span style="padding: 4px; min-width:60px; ">
+            <!-- previous page -->
+            <button type="button" id="error_previous_page" style="margin-top: 2px; margin-bottom: 2px;">&lt;</button>
+            <!-- next page -->
+            <button type="button" id="error_next_page">&gt;</button><br />
+            <button type="button" id="error_page_selector_toggle">hide</button>
+        </span>
+        <ul id="error_page_selector_list"></ul>
     </div>
+
     <main>
         <aside id="error">
-            <ul id="error_list">
-            </ul>
+            <ul id="error_list"></ul>
             <p id="error_navigator">
                 <button type="button" id="finding_previous">Previous</button>
                 <button type="button" id="finding_next">Next</button>
@@ -51,8 +42,6 @@
                 <p id="error_options">
                     <button type="button" id="finding_select_done"><img src="/static/images/result/right.png"
                             alt="done" width="100%" height="100%" /></button>
-                    <!-- <button type="button" id="finding_select_ignore"><img src="/static/images/result/undecided.png"
-                            alt="ignore" width="100%" height="100%" /></button> -->
                     <button type="button" id="finding_select_delete"><img src="/static/images/result/trash.png"
                             alt="delte" width="100%" height="100%" /></button>
                 </p>
