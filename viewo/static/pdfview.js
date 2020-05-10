@@ -451,7 +451,8 @@ class Navigator {
                 child.classList.remove('highlighted')
             }
         }
-        let current = $(`#openpage_${page}`)
+        let pdfpage = this.result.content[page].page
+        let current = $(`#openpage_${pdfpage}`)
         if (current.length == 1) {
             current[0].classList.add('highlighted')
         }
