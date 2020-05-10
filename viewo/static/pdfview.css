@@ -136,3 +136,38 @@ aside {
 #todolistview h3{
     margin-top: 0px;
 }
+
+#pdfview_overview{
+    flex-flow: wrap;
+}
+
+#flex_content{
+    background: white;
+    border: 1px solid black;
+    margin-top: 10px;
+    text-align: left;
+    width: 32.5%;
+    float: left;
+    margin: 0.3%;
+}
+
+#flex_content h4{
+    margin: 5px;
+}
+
+#flex_content button{
+    width: 25px;
+    height: 25px;
+    padding: 0px;
+    cursor: pointer;
+}
+
+#flex_content .error_message{
+    padding: 5px;
+}
+
+#flex_content .error_options{
+    padding: 0px;
+    margin: 1px;
+    text-align: right;
+}
