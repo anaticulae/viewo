@@ -2,6 +2,34 @@
 
 Every noteable change is logged here.
 
+## v0.14.0
+
+### Feature
+
+* do not shrink minimal items on small displays (f1c6f79a91ad)
+* improve mobile navigation (e9449a9027e2)
+* enable deleting items of page zero (073fb35c978a)
+* add app view for small displays (9011559b0b1d)
+* use double instead of triple layout for small displays (e3fae8d160fa)
+* add pdf error overview to display non page bound lintings (6236e9ae6430)
+* add pdf overview page (6975b016d721)
+* add function to share, delete and lock link (df7bf1062c7b)
+* modernize style (43605dccd7e3)
+* add option to delete document by remove button (456370e51e44)
+* hidden removed documents (231881eed265)
+* sum open, closed and excluded todos in table (05059b450160)
+* add icons to prepare new functionality (a40b36a6b2a6)
+
+### Fix
+
+* ensure to handle closed/deleted items correctly (473cbf9453ca)
+* highlight non ascending pages (6d948ac47c18)
+* make order consistent with progress view (799f524004fb)
+* fix main view to adjust right border (0026b876e226)
+* do not add the todo entry of finished document (aed56dd88720)
+* do not display document in done and progress state (3ac2cdf68976)
+* reduce hack a little bit (a24dd438cabc)
+
 ## v0.13.0
 
 ### Feature
