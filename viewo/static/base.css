@@ -1,120 +1,120 @@
 html,
-body {
-    background-color: #f9f8f6;
-    font-family: Georgia,times,serif;
-    font-size: 100%;
+body{
+    background-color:#f9f8f6;
+    font-family:Georgia,times,serif;
+    font-size:100%;
     max-height:400%;
-    margin: 0%;
-    padding: 0%;
+    margin:0%;
+    padding:0%;
 }
 
-a {
-    color: black;
-    text-decoration: underline;
+a{
+    color:black;
+    text-decoration:underline;
 }
 
 #logo,
 #pagecontent,
-footer {
-    display: inline-block;
-    padding: 0px;
-    margin: 0px;
-    width: 100%;
-}
-
-#display{
-    padding: 20px;
-}
-
-nav.main {
-    border: black solid 2px;
-    display: inline-block;
+footer{
+    display:inline-block;
+    padding:0px;
     margin:0px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    padding: 0px;
     width:100%;
 }
 
-#logo {
-    border: black solid 2px;
-    display: inline-block;
-    margin: 0px;
-    padding: 0px;
-    max-height: 120px;
+#display{
+    padding:20px;
 }
 
-#pagecontent {
-    background: beige;
-    border: black solid 2px;
+nav.main{
+    border:black solid 2px;
+    display:inline-block;
+    margin:0px;
+    margin-bottom:20px;
+    margin-top:20px;
+    padding:0px;
+    width:100%;
+}
+
+#logo{
+    border:black solid 2px;
+    display:inline-block;
+    margin:0px;
+    padding:0px;
+    max-height:120px;
+}
+
+#pagecontent{
+    background:beige;
+    border:black solid 2px;
     min-height:200px;
-    text-align: justify;
+    text-align:justify;
 }
 
-footer {
-    border: black solid 2px;
-    margin-bottom: 5px;
-    margin-top: 20px;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    text-align: center;
+footer{
+    border:black solid 2px;
+    margin-bottom:5px;
+    margin-top:20px;
+    padding-bottom:10px;
+    padding-top:10px;
+    text-align:center;
 }
 
 footer p{
-    font-size: 80%;
+    font-size:80%;
     margin:2px;
-    padding: 0px;
+    padding:0px;
 }
 
 #message{
     padding:20px;
 }
 
-nav.main ul {
-    margin: 0px;
-    padding: 0px;
-    text-align: center;
+nav.main ul{
+    margin:0px;
+    padding:0px;
+    text-align:center;
 }
 
-nav.main li {
-    display: inline;
-    margin: 0px;
-    padding: 0px;
+nav.main li{
+    display:inline;
+    margin:0px;
+    padding:0px;
 }
 
-nav.main a {
-    display: inline-block;
-    font-size: 150%;
-    margin: 0px;
-    padding: 5px 5px 5px 5px;
+nav.main a{
+    display:inline-block;
+    font-size:150%;
+    margin:0px;
+    padding:5px 5px 5px 5px;
 }
 
-input.resource {
-    border: solid 1px black;
-    height: 30px;
-    width: 400px;
+input.resource{
+    border:solid 1px black;
+    height:30px;
+    width:400px;
 }
 
-input.submit {
-    border: solid 1px black;
-    height: 30px;
-    width: 200px;
+input.submit{
+    border:solid 1px black;
+    height:30px;
+    width:200px;
 }
 
-table {
-    background: white;
-    border: solid 1px black;
+table{
+    background:white;
+    border:solid 1px black;
     width:100%;
 }
 
-th {
-    border-bottom: 2px solid black;
-    background: rgb(195, 212, 230);
-    padding: 4px;
+th{
+    border-bottom:2px solid black;
+    background:rgb(195, 212, 230);
+    padding:4px;
 }
 
-td {
-    border-bottom: 1px dotted #eee;
+td{
+    border-bottom:1px dotted #eee;
 }
 
 .score, .status{
@@ -134,83 +134,83 @@ td {
 }
 
 .failed{
-    background: rgb(255, 206, 206)
+    background:rgb(255, 206, 206)
 }
 
-.main_wrapper {
-    min-width: 640px;
-    max-width: 1024px;
-    margin: 1px auto 1px auto;
+.main_wrapper{
+    min-width:640px;
+    max-width:1024px;
+    margin:1px auto 1px auto;
 }
 
-#progress {
-    width: 100%;
+#progress{
+    width:100%;
 }
 
-.hidden {
-    display: none;
+.hidden{
+    display:none;
 }
 
-.hidden_inbounds {
+.hidden_inbounds{
     /* hidden but location is preserved/reserverd in layout*/
-    visibility: hidden;
+    visibility:hidden;
 }
 
-.highlighted_text {
-    text-decoration: underline;
-    background: rgb(255, 206, 206);
+.highlighted_text{
+    text-decoration:underline;
+    background:rgb(255, 206, 206);
 }
 
-.highlighted_important {
-    text-decoration: underline;
-    background: green;
+.highlighted_important{
+    text-decoration:underline;
+    background:green;
 }
 
-button {
-    cursor: pointer;
-    border: 1px solid black;
-    background: whitesmoke;
+button{
+    cursor:pointer;
+    border:1px solid black;
+    background:whitesmoke;
 }
 
-.click {
-    cursor: pointer;
+.click{
+    cursor:pointer;
 }
 
-.underline {
-    text-decoration: underline;
+.underline{
+    text-decoration:underline;
 }
 
-.image_button {
-    margin: 1px;
-    padding: 1px;
+.image_button{
+    margin:1px;
+    padding:1px;
 }
 
-.center {
-    text-align: center;
+.center{
+    text-align:center;
 }
 
-.right {
-    text-align: right;
+.right{
+    text-align:right;
 }
 
 .top{
     vertical-align:top;
 }
 
-.no_margin {
-    margin: 0px;
+.no_margin{
+    margin:0px;
 }
 
 .tiny{
-    min-width: 50px;
+    min-width:50px;
 }
 
 .tiny_extra{
-    min-width: 25px;
+    min-width:25px;
 }
 
 .small{
-    min-width: 100px;
+    min-width:100px;
 }
 
 .expand{

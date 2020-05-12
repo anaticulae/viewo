@@ -1,166 +1,166 @@
-main {
-    display: flex;
-    margin-bottom: 20px;
-    min-height: 500px;
+main{
+    display:flex;
+    margin-bottom:20px;
+    min-height:500px;
 }
 
-article {
-    background-color: white;
-    border: 1px solid black;
-    padding: 20px;
-    width: 100%;
-    overflow: auto;
+article{
+    background-color:white;
+    border:1px solid black;
+    padding:20px;
+    width:100%;
+    overflow:auto;
 }
 
-aside {
-    padding: 0px;
-    min-width: 220px;
-    padding-right: 20px;
+aside{
+    padding:0px;
+    min-width:220px;
+    padding-right:20px;
 }
 
-#error_navigator {
-    text-align: right;
-    margin: 0px;
+#error_navigator{
+    text-align:right;
+    margin:0px;
 }
 
-#error_navigator button {
-    width: 70px;
-    height: 30px;
-    border: 1px solid black;
-    cursor: pointer;
+#error_navigator button{
+    width:70px;
+    height:30px;
+    border:1px solid black;
+    cursor:pointer;
 }
 
 #error_list{
-    background: white;
-    border: 1px solid black;
-    display: block;
-    list-style: none;
-    margin: 0px;
-    margin-bottom: 10px;
-    padding: 5px;
+    background:white;
+    border:1px solid black;
+    display:block;
+    list-style:none;
+    margin:0px;
+    margin-bottom:10px;
+    padding:5px;
 }
 
 #error_options{
-    padding: 0px;
-    margin: 1px;
-    text-align: right;
+    padding:0px;
+    margin:1px;
+    text-align:right;
 }
 
-#error_options button {
-    width: 25px;
-    height: 25px;
-    padding: 0px;
-    cursor: pointer;
+#error_options button{
+    width:25px;
+    height:25px;
+    padding:0px;
+    cursor:pointer;
 }
 
-#error li {
-    cursor: pointer;
-    padding: 5px;
-    text-decoration: underline;
+#error li{
+    cursor:pointer;
+    padding:5px;
+    text-decoration:underline;
 }
 
-#error_content {
-    background: white;
-    border: 1px solid black;
-    font-family: 'Times New Roman', Times, serif;
-    margin-top: 10px;
-    text-align: left;
+#error_content{
+    background:white;
+    border:1px solid black;
+    font-family:'Times New Roman', Times, serif;
+    margin-top:10px;
+    text-align:left;
 }
 
-#error_content h4 {
-    margin: 5px;
+#error_content h4{
+    margin:5px;
 }
 
-#error_message {
-    padding: 5px;
+#error_message{
+    padding:5px;
 }
 
 #pdfview_navigation{
-    display: flex;
-    background: white;
-    border: 1px solid black;
-    width: 100%;
-    margin-bottom: 20px;
+    display:flex;
+    background:white;
+    border:1px solid black;
+    width:100%;
+    margin-bottom:20px;
 }
 
 #pdfview_navigation p{
-    padding-left: 10px;
+    padding-left:10px;
 }
 
 #pdfview_navigation ul{
-    list-style: none;
-    padding: 0px;
-    margin: 2px;
+    list-style:none;
+    padding:0px;
+    margin:2px;
 }
 
 #pdfview_navigation li{
-    list-style: none;
-    display: inline;
-    padding: 2px;
+    list-style:none;
+    display:inline;
+    padding:2px;
 }
 
-.highlighted {
-    background: yellowgreen;
-    color: black;
-    margin: 1px;
-    /* display: block;
-    padding: 5px; */
+.highlighted{
+    background:yellowgreen;
+    color:black;
+    margin:1px;
+    /* display:block;
+    padding:5px; */
 }
 
-#finding_status_counter {
-    margin-left: 25px;
-    font-size: 18px;
+#finding_status_counter{
+    margin-left:25px;
+    font-size:18px;
 }
 
-#finding_status_counter .open {
-    color: red;
+#finding_status_counter .open{
+    color:red;
 }
 
-#finding_status_counter .rejected {
-    color: grey;
+#finding_status_counter .rejected{
+    color:grey;
 }
 
-#finding_status_counter .done {
-    color: green;
+#finding_status_counter .done{
+    color:green;
 }
 
 #todolistview table button{
     width:20px;
     height:20px;
-    margin: 0px;
-    padding: 0px;
-    border: 0px;
+    margin:0px;
+    padding:0px;
+    border:0px;
 }
 
 #todolistview h3{
-    margin-top: 0px;
+    margin-top:0px;
 }
 
 #pdfview_overview{
-    flex-flow: wrap;
+    flex-flow:wrap;
 }
 
 .flex_content{
-    background: white;
-    border: 1px solid black;
-    margin-top: 10px;
-    text-align: left;
-    width: 32.5%;
-    float: left;
-    margin: 0.3%;
-    height: 1%;
+    background:white;
+    border:1px solid black;
+    margin-top:10px;
+    text-align:left;
+    width:32.5%;
+    float:left;
+    margin:0.3%;
+    height:1%;
 }
 
-@media only screen and (max-width: 750px){
+@media only screen and (max-width:750px){
     .flex_content{
         /* switch to double from tripple column layout */
-        width: 48%;
+        width:48%;
     }
     .finding_button{
-        width: 120px;
-        min-height: 80px;
-        display: inline-block;
-        border: 1px solid black;
+        width:120px;
+        min-height:80px;
+        display:inline-block;
+        border:1px solid black;
         margin:5px;
     }
     #error_page_content{
@@ -171,19 +171,19 @@ aside {
         width:100%;
     }
     #pagecontent{
-        text-align: left;
+        text-align:left;
     }
     #error li{
-        text-decoration: none;
+        text-decoration:none;
     }
-    .finding_button {
-        max-width: 100px;
-        max-height: 80px;
-        display: inline-block;
-        border: 1px solid black;
-        margin: 2px;
-        word-break: break-all;
-        vertical-align: top;
+    .finding_button{
+        max-width:100px;
+        max-height:80px;
+        display:inline-block;
+        border:1px solid black;
+        margin:2px;
+        word-break:break-all;
+        vertical-align:top;
     }
     #pdfview_navigation_list button{
         padding:10px;
@@ -191,30 +191,30 @@ aside {
     #error_navigator,
     #pdfview_previous_page,
     #pdfview_next_page{
-        display: none;
+        display:none;
     }
     main{
-        display: block;
+        display:block;
     }
 }
 
 .flex_content h4{
-    margin: 5px;
+    margin:5px;
 }
 
 .flex_content button{
-    width: 25px;
-    height: 25px;
-    padding: 0px;
-    cursor: pointer;
+    width:25px;
+    height:25px;
+    padding:0px;
+    cursor:pointer;
 }
 
 .flex_content .error_message{
-    padding: 5px;
+    padding:5px;
 }
 
 .flex_content .error_options{
-    padding: 0px;
-    margin: 1px;
-    text-align: right;
+    padding:0px;
+    margin:1px;
+    text-align:right;
 }
