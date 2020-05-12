@@ -124,7 +124,7 @@ td {
     width:50px;
 }
 .date{
-    width:150px;
+    min-width:130px;
 }
 .document_title{
     max-width:100%;
@@ -203,4 +203,8 @@ button {
 
 .small{
     min-width: 100px;
+}
+
+.expand{
+    width:100%;
 }
