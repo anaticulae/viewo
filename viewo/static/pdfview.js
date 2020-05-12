@@ -125,6 +125,7 @@ class ResultView {
     show_footnotes() {
         $('#pdfview_footnotes').show()
         let list = $('#pdfview_footnotes_list')
+        let current = null
         list.html('')
         for (let index in this.footnotes) {
             let item = this.footnotes[index]
@@ -133,6 +134,10 @@ class ResultView {
             if (item.error != '') {
                 status = '✖'
             }
+            if (current != null && current != item.page) {
+                list.append('<tr><td style="border-top:solid black 1px;" colspan="4"></td></tr>')
+            }
+            current = item.page
             let row = `
             <tr>
                 <td class="center top">${nr}</td>
