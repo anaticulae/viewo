@@ -19,6 +19,7 @@ import viewo.waiting
 def tojson(
         items: viewo.waiting.ResultPageViews,
         pagesentences: dict = None,
+        footnotes: list = None,
 ) -> str:
     result = []
     for item in items:
@@ -36,7 +37,17 @@ def tojson(
             'findings': findings,
         }
         result.append(pageraw)
-    footnotes = []
+    footnotes = footnotes if footnotes else []
+
+    # convert to raw
+    footnotes = [[{
+        'title': footnote.text,
+        'number': footnote.number,
+        'page': page,
+        'error': '',
+    } for footnote in content] for page, content in footnotes]
+    footnotes = utila.flatten(footnotes)
+
     raw = {
         'status': 0,
         'content': result,

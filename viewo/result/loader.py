@@ -10,6 +10,8 @@
 import collections
 import os
 
+import iamraw
+import iamraw.path
 import link
 import serializeraw
 import utila
@@ -37,3 +39,29 @@ def load_sentences_fromprocess(process: str) -> str:
         utila.error(f'could not load: {path}')
         return None
     return load_sentences(path)
+
+
+def load_footenotes(path: str):
+    footerheaders = serializeraw.load_headerfooter(path)
+    result = []
+    for page in footerheaders:
+        footer = page.footer
+        if not footer:
+            continue
+        try:
+            notes = footer.notes
+        except AttributeError:
+            continue
+        result.append((page.page, notes))
+    return result
+
+
+def load_footnotes_fromprocess(process: str):
+    result = link.resultview(process)
+    if not os.path.exists(result):
+        return None
+    path = iamraw.path.headerfooters(result)
+    if not os.path.exists(path):
+        utila.error(f'could not load: {path}')
+        return None
+    return load_footenotes(path)
