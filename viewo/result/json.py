@@ -30,14 +30,17 @@ def tojson(
             'status': finding.solution.status.value,
             'selectable': selectable(finding.location)
         } for finding in item.findings if finding.solution]
-        result.append({
+        pageraw = {
             'page': item.page,
             'html': item.html,
             'findings': findings,
-        })
+        }
+        result.append(pageraw)
+    footnotes = []
     raw = {
         'status': 0,
         'content': result,
+        'footnotes': footnotes,
     }
     dumped = json.dumps(raw)
     return dumped
