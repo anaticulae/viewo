@@ -26,6 +26,7 @@ class ResultView {
                 'content': '',
                 'findings': [],
                 'page': 1025,
+                'title': 'Darstellung',
             }
         )
         this.content = content
@@ -560,8 +561,11 @@ class Navigator {
                 }
             }
             let id = page.page
-            let id_user = Number(id) + 1
-            let btn = `<button type="button" id="openpage_${id}">${id_user}</button>`
+            let title = Number(id) + 1
+            if (page.hasOwnProperty('title')) {
+                title = page.title
+            }
+            let btn = `<button type="button" id="openpage_${id}">${title}</button>`
             error_page_list.append(btn)
             $(`#openpage_${id}`).click(function () {
                 result_view.show_page(id)
