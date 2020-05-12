@@ -19,10 +19,12 @@ class ResultView {
         this.content = []
     }
 
-    update_content(content) {
+    update_content(content, footnotes) {
         // INTRODUCE EVENT LISTENER CONCEPT
         // add document style overview
         content[content.length - 1].title = 'Übersicht'
+        this.footnotes = footnotes
+
         content.push(
             {
                 'content': this.footnotes,
@@ -281,7 +283,7 @@ class ResultView {
                 } catch (error) {
                     base.show_error()
                 }
-                result_view.update_content(downloaded.content)
+                result_view.update_content(downloaded.content, downloaded.footnotes)
                 if (downloaded.status == 1) {
                     // process is currently running
                     setTimeout(() => loop(process), 3000);
