@@ -154,10 +154,11 @@ aside {
 @media only screen and (max-width: 750px){
     .flex_content{
         /* switch to double from tripple column layout */
-        width:48%;
+        width: 48%;
     }
     .finding_button{
-        width:120px;
+        width: 120px;
+        min-height: 80px;
         display: inline-block;
         border: 1px solid black;
         margin:5px;
