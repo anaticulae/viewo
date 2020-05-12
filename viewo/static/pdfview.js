@@ -386,7 +386,7 @@ class FindingBox {
                     this.hide_finding(item)
                 }
             }
-            let node_selectable = `<li id="error_selected_${index}">${selectable} ${text}</li>`
+            let node_selectable = `<li id="error_selected_${index}" class="finding_button">${selectable} ${text}</li>`
             pdfview_navigation.append(node_selectable)
             $(`#error_selector_checkbox_${index}`).click(function () {
                 findingbox.toggle_finding(index)
