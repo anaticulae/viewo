@@ -69,4 +69,7 @@
     footer{
         display: none;
     }
+    .hidden_inbounds{
+        display: none;
+    }
 }
