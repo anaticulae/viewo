@@ -68,7 +68,9 @@ class ResultView {
         findingbox.update_findings()
         navigator.highlight_pagenumber(page)
 
-        $('#pdfview_content').hide()
+        // use base cause jquery introduces trouble with display: block, do
+        // not refactor!
+        base.hide('#pdfview_content')
         $('#pdfview_overview').hide()
         $('#pdfview_document_style').hide()
         $('#pdfview_footnotes').hide()
@@ -80,7 +82,7 @@ class ResultView {
         } else if (selected.page == 1026) {
             this.show_document_style()
         } else {
-            $('#pdfview_content').show()
+            base.show('#pdfview_content')
         }
     }
 
@@ -431,10 +433,11 @@ class FindingBox {
 
     update_finding_navigation() {
         if (this.result.findings.length == 1) {
-            $('#error_navigator').hide()
+            // use base.hide cause jquery introduce display object
+            base.hide('#error_navigator')
         }
         else {
-            $('#error_navigator').show()
+            base.show('#error_navigator')
         }
     }
 

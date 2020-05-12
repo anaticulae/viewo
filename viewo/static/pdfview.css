@@ -162,9 +162,6 @@ aside {
         border: 1px solid black;
         margin:5px;
     }
-    #pdfview_content{
-        display: block;
-    }
     #error_page_content{
         margin-top:10px;
         width:auto;
