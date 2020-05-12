@@ -1,0 +1,161 @@
+<style>
+    #pdfview_document_style {
+        display: block;
+    }
+
+    .tiny {
+        width: 60px;
+    }
+
+    .small {
+        width: 100px;
+    }
+
+    .small_table {
+        width: 300px;
+    }
+
+    .medium_table {
+        width: 450px;
+    }
+
+    .large_table {
+        width: 600px;
+    }
+
+</style>
+<h2>Gestalltung</h2>
+
+<h3>Schrift</h3>
+
+<h4>Text</h4>
+
+<table class="medium_table">
+    <tr>
+        <td>Schriftart</td>
+        <td>Times New Roman</td>
+        <td class="tiny center">&#10004;</td>
+    </tr>
+    <tr>
+        <td>Schriftgröße</td>
+        <td>10pt</td>
+        <td class="tiny center">&#10004;</td>
+    </tr>
+    <tr>
+        <td>Zeilenabstand</td>
+        <td>10pt</td>
+        <td class="tiny center">&#10004;</td>
+    </tr>
+    <tr>
+        <td>Satz</td>
+        <td>Flattersatz</td>
+        <td class="tiny center">&#10004;</td>
+    </tr>
+</table>
+
+<h4>Überschriften</h4>
+
+<table class="large_table">
+    <tr>
+        <td></td>
+        <td>Art</td>
+        <td class="tiny center">Größe</td>
+        <td class="small center">Abstand vor</td>
+        <td class="small center">Abstand nach</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Überschrift 1</td>
+        <td>Times New Roman</td>
+        <td class="center">24</td>
+        <td class="center">1cm</td>
+        <td class="center">2cm</td>
+        <td class="center tiny">&#10004;</td>
+    </tr>
+    <tr>
+        <td>Überschrift 2</td>
+        <td>Times New Roman</td>
+        <td class="center">18</td>
+        <td class="center">1cm</td>
+        <td class="center">2cm</td>
+        <td class="center tiny">&#10006;</td>
+    </tr>
+    <tr>
+        <td>Überschrift 3</td>
+        <td>Times New Roman</td>
+        <td class="center">14</td>
+        <td class="center">1cm</td>
+        <td class="center">2cm</td>
+        <td class="center tiny">&#10006;</td>
+    </tr>
+</table>
+
+<h4>Fußnoten</h4>
+
+<table class="medium_table">
+    <tr>
+        <td>Schriftart</td>
+        <td>Times New Roman</td>
+        <td class="tiny center">&#10004;</td>
+    </tr>
+    <tr>
+        <td>Schriftgröße</td>
+        <td>10pt</td>
+        <td class="tiny center">&#10006;</td>
+    </tr>
+    <tr>
+        <td>Zeilenabstand</td>
+        <td>10pt</td>
+        <td class="tiny center">&#10006;</td>
+    </tr>
+</table>
+
+
+<h3 id="page_layout">Layout</h3>
+
+<span id="paper">
+    <h4>Papier</h4>
+    <table class="small_table">
+        <tr>
+            <td>Format</td>
+            <td class="tiny center" id="paper_format">DIN A4</td>
+            <td class="tiny center">&#10004;</td>
+        </tr>
+        <tr>
+            <td>Breite</td>
+            <td class="tiny center"><span id="paper_width">15</span> cm</td>
+            <td class="tiny center"><span id="paper_width_status">&#10006;</span></td>
+        </tr>
+        <tr>
+            <td>Höhe</td>
+            <td class="tiny center"><span id="paper_height">15</span> cm</td>
+            <td class="tiny center"><span id="paper_height_status">&#10006;</span></td>
+        </tr>
+    </table>
+</span>
+
+<span id="page_border">
+    <h4>Seitenrand</h4>
+    <table class="small_table">
+        <tr>
+            <td>Links</td>
+            <td class="tiny center" id="border_left">3cm</td>
+            <td class="tiny center">&#10004;</td>
+        </tr>
+        <tr>
+            <td>Rechts</td>
+            <td class="tiny center" id="border_right">3cm</td>
+            <td class="tiny center">&#10004;</td>
+        </tr>
+        <tr>
+            <td>Oben</td>
+            <td class="tiny center" id="border_top">3cm</td>
+            <td class="tiny center">&#10004;</td>
+        </tr>
+        <tr>
+            <td>Unten</td>
+            <td class="tiny center" id="border_bottom">3cm</td>
+            <td class="tiny center">&#10004;</td>
+        </tr>
+    </table>
+</span>

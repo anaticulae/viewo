@@ -11,14 +11,14 @@ footenotes
 documents
 ---------
 
-* [ ] font size, face:
+* [x] font size, face:
 
 - normal
 - headlines
 - footnotes
 - tables
 
-* [ ] pageborder
+* [x] pageborder
 
 code quality
 ------------

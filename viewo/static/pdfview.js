@@ -20,6 +20,14 @@ class ResultView {
 
     update_content(content) {
         // INTRODUCE EVENT LISTENER CONCEPT
+        // add document style overview
+        content.push(
+            {
+                'content': '',
+                'findings': [],
+                'page': 1025,
+            }
+        )
         this.content = content
         navigator.update_page_navigator()
         this.show_page(0)
@@ -47,17 +55,21 @@ class ResultView {
         findingbox.update_findings()
         navigator.highlight_pagenumber(page)
 
+        $('#pdfview_content').hide()
+        $('#pdfview_overview').hide()
+        $('#pdfview_document_style').hide()
         // TODO: REMOVE LATER
         if (selected.page == 1024 || selected.page == -1) {
             this.show_overview()
-        } else {
+        } else if (selected.page == 1025) {
+            this.show_document_style()
+        }
+        else {
             $('#pdfview_content').show()
-            $('#pdfview_overview').hide()
         }
     }
 
     show_overview() {
-        $('#pdfview_content').hide()
         $('#pdfview_overview').show()
 
         let overview = $('#pdfview_overview')
@@ -89,6 +101,10 @@ class ResultView {
                 $(`#flex_content_${finding.number}`).hide()
             });
         }
+    }
+
+    show_document_style() {
+        $('#pdfview_document_style').show()
     }
 
     get current_page() {
