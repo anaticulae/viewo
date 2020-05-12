@@ -15,17 +15,27 @@ class ResultView {
         this.document = null
         this.error_page = null
         this.error_selected = null
+        this.footnotes = []
         this.content = []
     }
 
     update_content(content) {
         // INTRODUCE EVENT LISTENER CONCEPT
         // add document style overview
+        content[content.length - 1].title = 'Übersicht'
+        content.push(
+            {
+                'content': this.footnotes,
+                'findings': [],
+                'page': 1025,
+                'title': 'Fußnoten',
+            }
+        )
         content.push(
             {
                 'content': '',
                 'findings': [],
-                'page': 1025,
+                'page': 1026,
                 'title': 'Darstellung',
             }
         )
@@ -59,13 +69,15 @@ class ResultView {
         $('#pdfview_content').hide()
         $('#pdfview_overview').hide()
         $('#pdfview_document_style').hide()
+        $('#pdfview_footnotes').hide()
         // TODO: REMOVE LATER
         if (selected.page == 1024 || selected.page == -1) {
             this.show_overview()
         } else if (selected.page == 1025) {
+            this.show_footnotes()
+        } else if (selected.page == 1026) {
             this.show_document_style()
-        }
-        else {
+        } else {
             $('#pdfview_content').show()
         }
     }
@@ -106,6 +118,28 @@ class ResultView {
 
     show_document_style() {
         $('#pdfview_document_style').show()
+    }
+
+    show_footnotes() {
+        $('#pdfview_footnotes').show()
+        let list = $('#pdfview_footnotes_list')
+        list.html('')
+        for (let index in this.footnotes) {
+            let item = this.footnotes[index]
+            let nr = Number(index) + 1
+            let status = '✔'
+            if (item.error != '') {
+                status = '✖'
+            }
+            let row = `
+            <tr>
+                <td class="center top">${nr}</td>
+                <td class="expand">${item.title}</td>
+                <td class="center top">${item.page}</td>
+                <td class="center top">${status}</td>
+            </tr>`
+            list.append(row)
+        }
     }
 
     get current_page() {

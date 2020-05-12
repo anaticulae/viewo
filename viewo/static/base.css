@@ -185,6 +185,10 @@ button {
     text-align: right;
 }
 
+.top{
+    vertical-align:top;
+}
+
 .no_margin {
     margin: 0px;
 }
