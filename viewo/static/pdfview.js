@@ -130,6 +130,7 @@ class ResultView {
         for (let index in this.footnotes) {
             let item = this.footnotes[index]
             let nr = Number(index) + 1
+            let userpage = Number(item.page) + 1
             let status = '✔'
             if (item.error != '') {
                 status = '✖'
@@ -138,14 +139,20 @@ class ResultView {
                 list.append('<tr><td style="border-top:solid black 1px;" colspan="4"></td></tr>')
             }
             current = item.page
+
+            let href = `footnote_openpage_${index}`
             let row = `
             <tr>
                 <td class="center top">${nr}</td>
-                <td class="expand">${item.title}</td>
-                <td class="center top">${item.page}</td>
+                <td class="expand"><span id="${href}" class="click underline">${item.title}</span></td>
+                <td class="center top">${userpage}</td>
                 <td class="center top">${status}</td>
             </tr>`
             list.append(row)
+            $(`#${href}`).click(function () {
+                $(`#openpage_${item.page}`).click()
+            });
+
         }
     }
 

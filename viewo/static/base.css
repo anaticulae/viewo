@@ -172,6 +172,14 @@ button {
     background: whitesmoke;
 }
 
+.click {
+    cursor: pointer;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
 .image_button {
     margin: 1px;
     padding: 1px;
