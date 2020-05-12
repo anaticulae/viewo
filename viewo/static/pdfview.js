@@ -122,11 +122,14 @@ class ResultView {
         $('#pdfview_document_style').show()
     }
 
-    show_footnotes() {
+    show_footnotes(update = false) {
         $('#pdfview_footnotes').show()
         let list = $('#pdfview_footnotes_list')
-        let current = null
+        if (list[0].rows.length > 0 && !update) {
+            return
+        }
         list.html('')
+        let current = null
         for (let index in this.footnotes) {
             let item = this.footnotes[index]
             let nr = Number(index) + 1
