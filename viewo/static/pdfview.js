@@ -328,9 +328,6 @@ class FindingBox {
         $("#finding_select_done").click(function () {
             findingbox.current_finding_done()
         });
-        // $("#finding_select_ignore").click(function () {
-        //     findingbox.current_finding_ignore()
-        // });
         $("#finding_select_delete").click(function () {
             findingbox.current_finding_delete()
         });
