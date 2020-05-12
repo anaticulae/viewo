@@ -79,3 +79,5 @@ Documment
 * Enable sharing result with password/ without password
 
 * Click to lock again to remove password
+
+* add password request before open document

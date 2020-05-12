@@ -1,0 +1,30 @@
+.. _0_15_0:
+
+RP 0.15.0
+=========
+
+footenotes
+----------
+
+* [ ] table view with `nr, text, page, error`
+
+documents
+---------
+
+* [ ] font size, face:
+
+- normal
+- headlines
+- footnotes
+- tables
+
+* [ ] pageborder
+
+code quality
+------------
+
+before
+~~~~~
+
+* Total coverage: 78.39%
+* Your code has been rated at 10.00/10
