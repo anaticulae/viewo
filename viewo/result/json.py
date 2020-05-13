@@ -20,18 +20,44 @@ def tojson(
         items: viewo.waiting.ResultPageViews,
         pagesentences: dict = None,
         footnotes: list = None,
+        properties: dict = None,
 ) -> str:
 
     pages = pages_tojson(items, pagesentences)
     footnotes = footnotes_tojson(footnotes)
+    properties = properties_tojson(properties)
 
     raw = {
         'status': 0,
         'content': pages,
         'footnotes': footnotes,
+        'properties': properties,
     }
     dumped = json.dumps(raw)
     return dumped
+
+
+def properties_tojson(properties: dict) -> dict:
+    keys = [
+        'author', 'title', 'date', 'subject', 'keywords', 'password', 'outlines'
+    ]
+    if not properties:
+        return {key: '' for key in keys}
+    # TODO: USE SERIALIZERAW.data_parse
+    result = {
+        'title': properties['Title'],
+        'author': properties['Author'],
+        'date': {
+            'year': 2020,
+            'month': 12,
+            'day': 10,
+        },
+        'subject': properties['Subject'],
+        'keywords': ['Hier', 'Spricht', 'Helm'],
+        'password': properties['Password'],
+        'outlines': False,
+    }
+    return result
 
 
 def pages_tojson(pages: list, pagesentences) -> dict:
