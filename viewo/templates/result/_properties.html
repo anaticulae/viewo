@@ -1,0 +1,98 @@
+<style>
+    #pdfview_properties {
+        display: block;
+    }
+
+    .label {
+        width: 200px;
+        display: inline-block;
+        margin: 0px;
+        padding: 0px;
+        padding-bottom: 5px;
+        padding-top: 5px;
+    }
+
+    .data {
+        width: 320px;
+        border: solid black 1px;
+    }
+
+    .keywords {
+        height: 100px;
+        padding-bottom: 5px;
+    }
+
+    .status {
+        width: 30px;
+        text-align: right;
+        display: inline-block;
+    }
+
+    .info {
+        margin-bottom: 30px;
+        max-width: 600px;
+    }
+
+    .download {
+        margin: 0px;
+        padding: 0px;
+        width: 180px;
+        height: 20px;
+    }
+
+</style>
+
+<h2>Eigenschaften</h2>
+
+<fieldset class="info">
+    <legend>Info</legend>
+    Reichern Sie Ihr Dokument mit weiteren Metainformationen an. Dies
+    erleichtert das Archiveren und das Auffinden Ihreres Dokuments in
+    Datenarchiven.<br />
+    Nachdem Sie die gewünschten Angaben ergänzt haben, kann das
+    angereicherte Dokument durch den Download-Button heruntergeladen
+    werden.
+</fieldset>
+
+
+<form>
+    <fieldset class="info">
+        <legend>Eigenschaften</legend>
+        <span class="label">Titel:</span>
+        <input type="text" id="properties_title" class="data">
+        <span class="status right">✔</span>
+        <br />
+
+        <span class="label">Autor:</span>
+        <input type="text" id="properties_author" class="data">
+        <span class="status right">✔</span>
+        <br />
+
+        <span class="label">Erstellt am:</span>
+        <input type="date" id="properties_date" class="data">
+        <span class="status right">✖</span>
+        <br />
+
+        <span class="label">Subject:</span>
+        <input type="text" id="properties_subject" class="data">
+        <span class="status right">✖</span>
+        <br />
+
+        <span class="label top">Keywords:</span>
+        <textarea id="properties_keywords" class="data keywords"></textarea>
+        <span class="status right top">✖</span>
+        <br />
+
+        <span class="label">Passwort:</span>
+        <input type="password" id="properties_password" class="data">
+        <span class="status right">✖</span>
+        <br />
+
+        <span class="label">Outlines:</span>
+        <input type="text" id="outlines" class="data">
+        <span class="status right">✖</span>
+        <br />
+        <span class="label"></span>
+        <input class="download" type="submit" value="Download" id="submit" disabled="True" />
+    </fieldset>
+</form>

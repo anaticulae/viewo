@@ -41,6 +41,14 @@ class ResultView {
                 'title': 'Darstellung',
             }
         )
+        content.push(
+            {
+                'content': '',
+                'findings': [],
+                'page': 1027,
+                'title': 'Eigenschaften',
+            }
+        )
         this.content = content
         navigator.update_page_navigator()
         this.show_page(0)
@@ -74,6 +82,7 @@ class ResultView {
         $('#pdfview_overview').hide()
         $('#pdfview_document_style').hide()
         $('#pdfview_footnotes').hide()
+        $('#pdfview_properties').hide()
         // TODO: REMOVE LATER
         if (selected.page == 1024 || selected.page == -1) {
             this.show_overview()
@@ -81,6 +90,8 @@ class ResultView {
             this.show_footnotes()
         } else if (selected.page == 1026) {
             this.show_document_style()
+        } else if (selected.page == 1027) {
+            this.show_pdf_properties()
         } else {
             base.show('#pdfview_content')
         }
@@ -159,6 +170,10 @@ class ResultView {
             });
 
         }
+    }
+
+    show_pdf_properties() {
+        $('#pdfview_properties').show()
     }
 
     get current_page() {
