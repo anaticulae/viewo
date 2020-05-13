@@ -30,26 +30,7 @@
     </div>
 
     <main id="pdfview_content" class="hidden">
-        <aside id="error">
-            <ul id="error_list"></ul>
-            <p id="error_navigator">
-                <button type="button" id="finding_previous">Previous</button>
-                <button type="button" id="finding_next">Next</button>
-            </p>
-            <div id="error_content">
-                <h4 id="error_message_headline"></h4>
-                <div id="error_message"></div>
-                <p id="error_options">
-                    <button type="button" id="finding_select_done"><img src="/static/images/result/right.png"
-                            alt="done" width="100%" height="100%" /></button>
-                    <button type="button" id="finding_select_delete"><img src="/static/images/result/trash.png"
-                            alt="delte" width="100%" height="100%" /></button>
-                </p>
-            </div>
-        </aside>
-        <article id="error_page_content">
-            <strong>ERROR:</strong> Could not reach Server.
-        </article>
+        {% include 'result/_pdf.html' %}
     </main>
 
     <main id="pdfview_overview" class="hidden"></main>
@@ -61,56 +42,9 @@
     <main id="pdfview_footnotes" class="hidden">
         {% include 'result/_footnotes.html' %}
     </main>
-
-
-
 </div>
 <div id="todolistview" class="hidden">
-    <h2>Fortschritt</h2>
-    <p class="right no_margin">
-        <a href="#" id="todolistview_show_pdfview">zurück zum PDF</a>
-    </p>
-    <h3 id="open">Offene Fehler</h3>
-    <table>
-        <thead>
-            <tr>
-                <th class="tiny_extra center">Nr.</th>
-                <th class="expand">Fehler</th>
-                <th class="tiny_extra center">Seite</th>
-                <th class="tiny"></th>
-            </tr>
-        </thead>
-        <tbody id="todolistview_table_open"></tbody>
-    </table>
-    <p class="right"><a href="#top">nach oben</a></p>
-
-    <h3 id="done">Erledigt</h3>
-    <table>
-        <thead>
-            <tr>
-                <th class="tiny_extra center">Nr.</th>
-                <th class="expand">Fehler</th>
-                <th class="tiny_extra center">Seite</th>
-                <th class="tiny"></th>
-            </tr>
-        </thead>
-        <tbody id="todolistview_table_done"></tbody>
-    </table>
-    <p class="right"><a href="#top">nach oben</a></p>
-
-    <h3 id="removed">Abgelehnt</h3>
-    <table>
-        <thead>
-            <tr>
-                <th class="tiny_extra center">Nr.</th>
-                <th class="expand">Fehler</th>
-                <th class="tiny_extra center">Seite</th>
-                <th class="tiny"></th>
-            </tr>
-        </thead>
-        <tbody id="todolistview_table_removed"></tbody>
-    </table>
-    <p class="right"><a href="#top">nach oben</a></p>
+    {% include 'result/todolist.html' %}
 </div>
 {% if waiting %}
 <footer>
