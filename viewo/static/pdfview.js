@@ -815,11 +815,16 @@ function onload(process) {
 function init() {
     navigator.init_listener()
     findingbox.init_listener()
+
     // Navigate thrue error pages
     window.addEventListener('keydown', event => {
         // Hands up for vim :)
         // TODO: REFACTOR
         const key = event.key
+        let active = document.activeElement.type
+        if (active == 'text' || active == 'textarea' || active == 'password') {
+            return
+        }
         if (key == 'l' || key == 'ArrowRight') {
             navigator.next_page()
             event.preventDefault()
