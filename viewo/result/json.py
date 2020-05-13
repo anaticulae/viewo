@@ -21,8 +21,22 @@ def tojson(
         pagesentences: dict = None,
         footnotes: list = None,
 ) -> str:
+
+    pages = pages_tojson(items, pagesentences)
+    footnotes = footnotes_tojson(footnotes)
+
+    raw = {
+        'status': 0,
+        'content': pages,
+        'footnotes': footnotes,
+    }
+    dumped = json.dumps(raw)
+    return dumped
+
+
+def pages_tojson(pages: list, pagesentences) -> dict:
     result = []
-    for item in items:
+    for item in pages:
         findings = [{
             'number': finding.number,
             'location': location_tojson(finding.location, pagesentences),
@@ -37,8 +51,11 @@ def tojson(
             'findings': findings,
         }
         result.append(pageraw)
-    footnotes = footnotes if footnotes else []
+    return result
 
+
+def footnotes_tojson(footnotes: list) -> dict:
+    footnotes = footnotes if footnotes else []
     # convert to raw
     footnotes = [[{
         'title': footnote.text,
@@ -47,14 +64,7 @@ def tojson(
         'error': '',
     } for footnote in content] for page, content in footnotes]
     footnotes = utila.flatten(footnotes)
-
-    raw = {
-        'status': 0,
-        'content': result,
-        'footnotes': footnotes,
-    }
-    dumped = json.dumps(raw)
-    return dumped
+    return footnotes
 
 
 def location_tojson(location, pagesentences: dict = None) -> dict:
