@@ -186,7 +186,8 @@ aside{
         vertical-align:top;
     }
     #pdfview_navigation_list button{
-        padding:10px;
+        min-width: 32px;
+        min-height: 32px;
     }
     #error_navigator,
     #pdfview_previous_page,
