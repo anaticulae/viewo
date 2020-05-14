@@ -33,6 +33,13 @@ class PDFViewProperties {
                 'password': '',
                 'subject': '',
                 'title': '',
+                'date': {
+                    'year': 2020,
+                    'month': 12,
+                    'day': 10,
+                    'hour': 12,
+                    'minute': '00',
+                }
             }
         }
         $('#properties_author')[0].value = config.author
@@ -46,5 +53,8 @@ class PDFViewProperties {
         // ?TODO JOIN KEYWORDS AND DISPLAY?
         $('#properties_keywords')[0].value = config.keywords
         $('#properties_keywords').click()
+
+        $('#properties_date')[0].value = `${config.date.year}-${config.date.month}-${config.date.day}`
+        $('#properties_time')[0].value = `${config.date.hour}:${config.date.minute}`
     }
 }
