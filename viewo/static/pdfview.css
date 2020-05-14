@@ -202,6 +202,11 @@ aside{
     main{
         display:block;
     }
+    article{
+        padding: 0px;
+        border:0px;
+        background-color: transparent;
+    }
 }
 
 .flex_content h4{
