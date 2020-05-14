@@ -72,4 +72,8 @@
     .hidden_inbounds{
         display:none;
     }
+    #pdfview_navigation_toggle_box{
+        /* TODO: ENABLE BUTTONS IN APP VIEW */
+        display: none;
+    }
 }

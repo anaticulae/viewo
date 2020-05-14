@@ -30,6 +30,11 @@ aside{
     cursor:pointer;
 }
 
+#pdfview_navigation_toggle_box{
+    padding:4px;
+    min-width:60px;
+}
+
 #error_list{
     background:white;
     border:1px solid black;
