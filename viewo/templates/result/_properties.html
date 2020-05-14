@@ -17,6 +17,11 @@
         border: solid black 1px;
     }
 
+    .date {
+        width: 160px;
+        border: solid black 1px;
+    }
+
     .keywords {
         height: 100px;
         padding-bottom: 5px;
@@ -60,37 +65,38 @@
         <legend>Eigenschaften</legend>
         <span class="label">Titel:</span>
         <input type="text" id="properties_title" class="data">
-        <span class="status right">✔</span>
+        <span id="properties_title_status" class="status right">✔</span>
         <br />
 
         <span class="label">Autor:</span>
         <input type="text" id="properties_author" class="data">
-        <span class="status right">✔</span>
+        <span id="properties_author_status" class="status right">✔</span>
         <br />
 
         <span class="label">Erstellt am:</span>
-        <input type="date" id="properties_date" class="data">
-        <span class="status right">✖</span>
+        <input type="date" id="properties_date" class="date">
+        <input type="time" id="properties_time" class="date">
+        <span id="properties_date_status" class="status right">✖</span>
         <br />
 
         <span class="label">Subject:</span>
         <input type="text" id="properties_subject" class="data">
-        <span class="status right">✖</span>
+        <span id="properties_subject_status" class="status right">✖</span>
         <br />
 
-        <span class="label top">Keywords:</span>
+        <span class="label top">Stichworte:</span>
         <textarea id="properties_keywords" class="data keywords"></textarea>
-        <span class="status right top">✖</span>
+        <span id="properties_keywords_status" class="status right top">✖</span>
         <br />
 
         <span class="label">Passwort:</span>
         <input type="password" id="properties_password" class="data">
-        <span class="status right">✖</span>
+        <span id="properties_password_status" class="status right">✖</span>
         <br />
 
         <span class="label">Outlines:</span>
         <input type="text" id="outlines" class="data">
-        <span class="status right">✖</span>
+        <span id="properties_outlines_status" class="status right">✖</span>
         <br />
         <span class="label"></span>
         <input class="download" type="submit" value="Download" id="submit" disabled="True" />

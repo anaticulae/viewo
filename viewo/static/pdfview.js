@@ -19,11 +19,12 @@ class ResultView {
         this.content = []
     }
 
-    update_content(content, footnotes) {
+    update_content(content, footnotes, properties) {
         // INTRODUCE EVENT LISTENER CONCEPT
         // add document style overview
         content[content.length - 1].title = 'Übersicht'
         this.footnotes = footnotes
+        this.properties = properties
 
         content.push(
             {
@@ -43,7 +44,7 @@ class ResultView {
         )
         content.push(
             {
-                'content': '',
+                'content': this.properties,
                 'findings': [],
                 'page': 1027,
                 'title': 'Eigenschaften',
@@ -173,7 +174,8 @@ class ResultView {
     }
 
     show_pdf_properties() {
-        $('#pdfview_properties').show()
+        pdfview_properties.update(result_view.properties)
+        pdfview_properties.show()
     }
 
     get current_page() {
@@ -315,7 +317,10 @@ class ResultView {
                 } catch (error) {
                     base.show_error()
                 }
-                result_view.update_content(downloaded.content, downloaded.footnotes)
+                result_view.update_content(downloaded.content,
+                    downloaded.footnotes,
+                    downloaded.properties,
+                )
                 if (downloaded.status == 1) {
                     // process is currently running
                     setTimeout(() => loop(process), 3000);
@@ -820,6 +825,7 @@ const navigator = new Navigator(result_view)
 const statuscounter = new FindingStatusCounter()
 const findingbox = new FindingBox(result_view)
 const todolist = new TodoListView(result_view)
+const pdfview_properties = new PDFViewProperties(result_view)
 
 
 function onload(process) {
@@ -867,6 +873,7 @@ function init() {
 
     todolist.init_listener()
     todolist.update_tables()
+    pdfview_properties.init_listener()
 
     base.show_connecting('Öffne Dokument...')
 
