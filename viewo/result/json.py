@@ -7,6 +7,7 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import contextlib
 import json
 
 import configo
@@ -97,8 +98,12 @@ def location_tojson(location, pagesentences: dict = None) -> dict:
     result = {
         'page': location.page,
     }
+    shortcut = ''
+    with contextlib.suppress(AttributeError):
+        # not every location type has a location shortcut
+        shortcut = location.shortcut
     # sentence, convert to words
-    if location.shortcut == 's':
+    if shortcut == 's':
         result['sentence'] = location.value
         if pagesentences is not None:
             words = word_index(pagesentences, location.page, location.value)
@@ -120,8 +125,10 @@ def message_replace(content: str) -> str:
 
 def selectable(location) -> int:
     """Page able only `location` is not selectable."""
-    if location.value is None:
-        return 0
+    with contextlib.suppress(AttributeError):
+        # TODO: REMOVE AFTER FIXING RANGED LOCATION IN PROTOCOL
+        if location.value is None:
+            return 0
     return 1
 
 
