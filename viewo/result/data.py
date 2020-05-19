@@ -82,8 +82,15 @@ def load_htmlview(path: str) -> list:
     assert os.path.exists(path), str(path)
     # Sort html pages by number, sort 0, 1, 2, 3, ..., 10, 11, 12 correctly.
     # Example: 0.html, cut file extention and make file name int-sortable.
-    files = sorted(
-        utila.file_list(path, 'html'), key=lambda x: int(str(x).split('.')[0]))
+    files = utila.file_list(path, 'html')
+    try:
+        # TODO: RELACE WITH UTILA CODE
+        files = sorted(files, key=lambda x: int(str(x).split('.')[0]))
+    except ValueError:
+        # TODO: REMOVE LATER
+        utila.error('error while sorting files')
+        utila.error(files)
+        return []
     content = [utila.file_read(os.path.join(path, item)) for item in files]
     return content
 
