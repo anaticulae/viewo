@@ -8,20 +8,17 @@ class PDFViewProperties {
     }
 
     init_listener() {
-        for (let trigger of ['input', 'click', 'change', 'reset']) {
-            // TODO: REMOVE THIS HACK
-            for (let propertie of ['title', 'author', 'subject', 'keywords']) {
-                let selected = $(`#properties_${propertie}_status`)
-                selected.text('✖')
-                $(`#properties_${propertie}`).on(trigger, function () {
-                    let green = $(`#properties_${propertie}`)[0].value.length > 0
-                    if (green) {
-                        selected.text('✔')
-                    } else {
-                        selected.text('✖')
-                    }
-                });
-            }
+        for (let property of ['title', 'author', 'subject', 'keywords']) {
+            let selected = $(`#properties_${property}_status`)
+            selected.text('✖')
+            $(`#properties_${property}`).on('input click change reset', function () {
+                let green = $(`#properties_${property}`)[0].value.length > 0
+                if (green) {
+                    selected.text('✔')
+                } else {
+                    selected.text('✖')
+                }
+            });
         }
     }
 
