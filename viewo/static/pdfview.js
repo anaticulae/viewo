@@ -19,12 +19,13 @@ class ResultView {
         this.content = []
     }
 
-    update_content(content, footnotes, properties) {
+    update_content(content, footnotes, properties, doctextstyle) {
         // INTRODUCE EVENT LISTENER CONCEPT
         // add document style overview
         content[content.length - 1].title = 'Übersicht'
         this.footnotes = footnotes
         this.properties = properties
+        this.doctextstyle = doctextstyle
 
         content.push(
             {
@@ -36,7 +37,7 @@ class ResultView {
         )
         content.push(
             {
-                'content': '',
+                'content': this.doctextstyle,
                 'findings': [],
                 'page': 1026,
                 'title': 'Darstellung',
@@ -320,6 +321,7 @@ class ResultView {
                 result_view.update_content(downloaded.content,
                     downloaded.footnotes,
                     downloaded.properties,
+                    downloaded.doctextstyle,
                 )
                 if (downloaded.status == 1) {
                     // process is currently running
