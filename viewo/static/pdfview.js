@@ -82,7 +82,7 @@ class ResultView {
         // not refactor!
         base.hide('#pdfview_content')
         $('#pdfview_overview').hide()
-        $('#pdfview_document_style').hide()
+        $('#pdfview_docstyle').hide()
         $('#pdfview_footnotes').hide()
         $('#pdfview_properties').hide()
         // TODO: REMOVE LATER
@@ -91,7 +91,7 @@ class ResultView {
         } else if (selected.page == 1025) {
             this.show_footnotes()
         } else if (selected.page == 1026) {
-            this.show_document_style()
+            this.show_docstyle()
         } else if (selected.page == 1027) {
             this.show_pdf_properties()
         } else {
@@ -133,8 +133,8 @@ class ResultView {
         }
     }
 
-    show_document_style() {
-        $('#pdfview_document_style').show()
+    show_docstyle() {
+        $('#pdfview_docstyle').show()
     }
 
     show_footnotes(update = false) {
