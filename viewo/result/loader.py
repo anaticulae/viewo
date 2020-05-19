@@ -10,6 +10,7 @@
 import collections
 import os
 
+import doctextstyle.serialize
 import iamraw
 import iamraw.path
 import link
@@ -65,3 +66,15 @@ def load_footnotes_fromprocess(process: str):
         utila.error(f'could not load: {path}')
         return None
     return load_footenotes(path)
+
+
+def load_doctextstyle_fromprocess(process: str):
+    result = link.resultview(process)
+    if not os.path.exists(result):
+        return None
+    path = os.path.join(result, 'doctextstyle__textstyle.yaml')
+    if not os.path.exists(path):
+        utila.error(f'could not load: {path}')
+        return None
+    loaded = doctextstyle.serialize.load_docstyle(path)
+    return loaded

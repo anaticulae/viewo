@@ -6,6 +6,7 @@
 # use or distribution is an offensive act against international law and may
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
+
 import flask
 
 import viewo.result.data
@@ -77,10 +78,12 @@ def waiting_resultview_status(process: str):
 
     pagesentences = viewo.result.loader.load_sentences_fromprocess(process)
     footnotes = viewo.result.loader.load_footnotes_fromprocess(process)
+    doctextstyle = viewo.result.loader.load_doctextstyle_fromprocess(process)
 
     dumped = viewo.result.json.tojson(
         loaded,
         pagesentences=pagesentences,
         footnotes=footnotes,
+        doctextstyle=doctextstyle,
     )
     return dumped

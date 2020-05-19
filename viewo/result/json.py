@@ -8,6 +8,7 @@
 # =============================================================================
 
 import contextlib
+import dataclasses
 import json
 
 import configo
@@ -21,21 +22,31 @@ def tojson(
         items: viewo.waiting.ResultPageViews,
         pagesentences: dict = None,
         footnotes: list = None,
+        doctextstyle=None,
         properties: dict = None,
 ) -> str:
 
     pages = pages_tojson(items, pagesentences)
     footnotes = footnotes_tojson(footnotes)
+    doctextstyle = doctextstyle_tojson(doctextstyle)
     properties = properties_tojson(properties)
 
     raw = {
         'status': 0,
         'content': pages,
         'footnotes': footnotes,
+        'doctextstyle': doctextstyle,
         'properties': properties,
     }
     dumped = json.dumps(raw)
     return dumped
+
+
+def doctextstyle_tojson(item) -> dict:
+    if not item:
+        return {}
+    result = dataclasses.asdict(item)
+    return result
 
 
 def properties_tojson(properties: dict) -> dict:
