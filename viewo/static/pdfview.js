@@ -133,10 +133,6 @@ class ResultView {
         }
     }
 
-    show_docstyle() {
-        $('#pdfview_docstyle').show()
-    }
-
     show_footnotes(update = false) {
         $('#pdfview_footnotes').show()
         let list = $('#pdfview_footnotes_list')
@@ -177,6 +173,11 @@ class ResultView {
     show_pdf_properties() {
         pdfview_properties.update(result_view.properties)
         pdfview_properties.show()
+    }
+
+    show_docstyle() {
+        pdfview_docstyle.update(result_view.doctextstyle)
+        pdfview_docstyle.show()
     }
 
     get current_page() {
@@ -828,6 +829,7 @@ const statuscounter = new FindingStatusCounter()
 const findingbox = new FindingBox(result_view)
 const todolist = new TodoListView(result_view)
 const pdfview_properties = new PDFViewProperties(result_view)
+const pdfview_docstyle = new PDFViewDocStyle(result_view)
 
 
 function onload(process) {
@@ -876,6 +878,7 @@ function init() {
     todolist.init_listener()
     todolist.update_tables()
     pdfview_properties.init_listener()
+    pdfview_docstyle.init_listener()
 
     base.show_connecting('Öffne Dokument...')
 
