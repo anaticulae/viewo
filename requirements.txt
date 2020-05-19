@@ -17,3 +17,6 @@ utila==1.21.1
 # load validation results
 protocol==0.9.1
 writers==0.3.10
+
+# hey: load generated data, remove later
+hey==2.6.1
