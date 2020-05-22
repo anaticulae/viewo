@@ -37,6 +37,17 @@ class PDFViewDocStyle {
         $('#docstyle_footnote_family').text(ct(style.footnote_family))
         $('#docstyle_footnote_size').text(pt(style.footnote_size))
         $('#docstyle_footnote_distance').text(pt(style.footnote_distance))
+
+        // border
+        $('#docstyle_content_left').text(cm(style.content_left))
+        $('#docstyle_content_right').text(cm(style.content_right))
+        $('#docstyle_content_top').text(cm(style.content_top))
+        $('#docstyle_content_bottom').text(cm(style.content_bottom))
+
+        $('#docstyle_content_rotated_left').text(cm(style.content_rotated_left))
+        $('#docstyle_content_rotated_right').text(cm(style.content_rotated_right))
+        $('#docstyle_content_rotated_top').text(cm(style.content_rotated_top))
+        $('#docstyle_content_rotated_bottom').text(cm(style.content_rotated_bottom))
     }
 }
 
@@ -46,4 +57,9 @@ function ct(item) {
 
 function pt(item) {
     return item != null ? `${item} pt` : `-`
+}
+
+function cm(item) {
+    // TODO: REMOVE THIS HACK
+    return item != null ? `${Math.round(item / 25.4 * 10) / 10} cm` : `-`
 }
