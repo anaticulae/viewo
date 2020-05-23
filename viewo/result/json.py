@@ -10,6 +10,7 @@
 import contextlib
 import dataclasses
 import json
+import re
 
 import configo
 import utila
@@ -127,10 +128,18 @@ def location_tojson(location, pagesentences: dict = None) -> dict:
 
 
 def message_replace(content: str) -> str:
+    """Replace rst pattern with html syntax
+
+    >>> message_replace('that is **?very 2.0!** important')
+    'that is <strong>?very 2.0!</strong> important'
+    """
     url = configo.docs_url()
     content = writers.replace(content, url)
     # TODO: REMOVE VIEW HACK LATER
     content = content.replace('<a href', '<br/><br/><a href')
+
+    # replace **[CONTENT]**-pattern with html `strong` pattern
+    content = re.sub(r'\*\*([^\*]+)\*\*', r'<strong>\1</strong>', content)
     return content
 
 
