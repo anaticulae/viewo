@@ -89,6 +89,25 @@ def load_doctextstyle_fromprocess(process: str):
                 'pagenumber_family',
                 'text_family',
         ]:
-            if getattr(loaded, key):
-                setattr(loaded, key, fontstore[getattr(loaded, key)].name)
+            if not getattr(loaded, key):
+                continue
+            font = getattr(loaded, key)
+            try:
+                font = fontstore[font].name
+            except KeyError:
+                utila.error(f'could not find font id: {font}')
+                continue
+            font = friendly_font(font)
+            setattr(loaded, key, font)
     return loaded
+
+
+def friendly_font(font: str) -> str:
+    """\
+    >>> friendly_font('TimesNewRoman')
+    'Times New Roman'
+    """
+    font = font.lower()
+    if font == 'timesnewroman':
+        return 'Times New Roman'
+    return font
