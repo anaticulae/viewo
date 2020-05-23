@@ -16,11 +16,9 @@ import configo
 import utila
 import writers
 
-import viewo.waiting
-
 
 def tojson(
-        items: viewo.waiting.ResultPageViews,
+        items: 'viewo.waiting.ResultPageViews',
         pagesentences: dict = None,
         footnotes: list = None,
         doctextstyle=None,

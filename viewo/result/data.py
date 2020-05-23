@@ -25,7 +25,7 @@ def load_resultview_result(process: str) -> str:
     return load_resultview(result, process)
 
 
-def load_resultview(path: str, process: str) -> viewo.waiting.ResultPageViews:
+def load_resultview(path: str, process: str) -> 'viewo.waiting.ResultPageViews':
     """Load result view and findings.
 
     Args:
