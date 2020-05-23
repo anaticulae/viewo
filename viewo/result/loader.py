@@ -77,4 +77,18 @@ def load_doctextstyle_fromprocess(process: str):
         utila.error(f'could not load: {path}')
         return None
     loaded = doctextstyle.serialize.load_docstyle(path)
+
+    fontstore = serializeraw.create_fontstore_frompath(result, prefix='oneline')
+    if fontstore:
+        # replace font ids with user readable font text
+        for key in [
+                'footnote_family',
+                'h1_family',
+                'h2_family',
+                'h3_family',
+                'pagenumber_family',
+                'text_family',
+        ]:
+            if getattr(loaded, key):
+                setattr(loaded, key, fontstore[getattr(loaded, key)].name)
     return loaded
