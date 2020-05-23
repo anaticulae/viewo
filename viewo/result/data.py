@@ -37,6 +37,16 @@ def load_resultview(path: str, process: str) -> viewo.waiting.ResultPageViews:
     assert os.path.exists(path), str(path)
     pagefindings = protocol.findings_from_path(path)
 
+    for item in pagefindings:
+        # TODO: REMOVE AFTER FIXING
+        # THIS STEP SHOULD NOT BE NECESSARY IF EVERY THING WORKS FINE IN
+        # QUEUEMO.
+        before = len(item.content)
+        item.content = utila.make_unique(item.content)
+        after = len(item.content)
+        if after != before:
+            utila.error(f'duplicated finding ids on page: {item.page}')
+
     result = []
     htmlpath = os.path.join(path, 'view')
     html = HtmlLookup(htmlpath)
