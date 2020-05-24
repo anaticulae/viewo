@@ -2,6 +2,50 @@
 
 Every noteable change is logged here.
 
+## v0.15.0
+
+### Feature
+
+* properties, convert font id to user friendly font name (09fef391bcf9)
+* add **-pattern to mark chars in message as <strong> (f21cd0844302)
+* add font face converter to properties view (e58e13777462)
+* link page content border to page output (75be7467a9f6)
+* link docstyle data to docstyle view (e07c65fa0b5f)
+* store doctextstyle data (772512b952a0)
+* add doctextstyle loader (5a0a266a8ac6)
+* link date to user input (29f53f05fc65)
+* disable page selection toggle in app view (b28a457d230d)
+* add fixed page selection button size (0214ed4df49a)
+* link protocol data to user interface (aa442d00ca5f)
+* add pdf document meta data to result view data protocol (102e698e7d43)
+* add pdf properties view (52d647e49329)
+* disable bottom scroll bar (8b8804755018)
+* add option to open footnote page directly (60dc4ad979d6)
+* add separator between different footnote pages (6f0d54f513ba)
+* use send footer data to display in footer view (ad4dae295019)
+* add footnotes loader (767620d99c7c)
+* add empty footnotes to result data service protocol (6cdad2518dc9)
+* improve app view (9d15257da20a)
+* add footnote view to display overview of detected footnotes (fe9b2a393202)
+* add optional title property to finding protocol (1b9821eeca3f)
+* add view document style overview (e47a7671c815)
+
+### Fix
+
+* adjust pdf style properties view (afe6ffb27a09)
+* fix problems with importing order when running dev server (cabb60627310)
+* remove duplicated findings which are a result of bad scheduling (3cec7209e2eb)
+* add logger to investigate a raw occurring problem (ad7cef7b20e2)
+* catch problems in incomplete `Ranged Location` definition (e770fe0ec4bd)
+* fix relation of error list to pdf view (892ea3ccf315)
+* remove distance between page selection and page content (f150d53ef086)
+* disable shortcuts on textual input (b1aa914d3451)
+* adjust pdf finding buttons (3ef49ac258d4)
+* minimize white space in app mode (65c83031cfff)
+* fix pdfview error view position (aef1013023cc)
+* do not update findings if not required (8604245e73c7)
+* adjust table size data (e71583ad453c)
+
 ## v0.14.0
 
 ### Feature
