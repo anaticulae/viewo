@@ -39,13 +39,13 @@ View
 
 * add hint that pdf is running in compatible mode
 
-* add dialog to extend pdf with user information: author, date, key words
-
 * add hint of missing outlines
 
 * add option to optimize pdf file?
 
 * add publication check
+
+* add data manager to resultview.js to simplify data transfers
 
 Fonts
 -----
