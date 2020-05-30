@@ -22,7 +22,9 @@ def load_resultview_result(process: str) -> str:
     result = link.resultview(process)
     if not os.path.exists(result):
         return None
-    return load_resultview(result, process)
+    with utila.profile(f'load resultview: {process}'):
+        loaded = load_resultview(result, process)
+    return loaded
 
 
 def load_resultview(path: str, process: str) -> 'viewo.waiting.ResultPageViews':
@@ -35,21 +37,20 @@ def load_resultview(path: str, process: str) -> 'viewo.waiting.ResultPageViews':
         Loaded HTML Page View
     """
     assert os.path.exists(path), str(path)
-    pagefindings = protocol.findings_from_path(path)
 
-    for item in pagefindings:
-        # TODO: REMOVE AFTER FIXING
-        # THIS STEP SHOULD NOT BE NECESSARY IF EVERY THING WORKS FINE IN
-        # QUEUEMO.
-        before = len(item.content)
-        item.content = utila.make_unique(item.content)
-        after = len(item.content)
-        if after != before:
-            utila.error(f'duplicated finding ids on page: {item.page}')
+    with utila.profile('load findings'):
+        pagefindings = load_findings(path)
 
+    with utila.profile('load html'):
+        html = load_html(path)
+
+    with utila.profile('render result view'):
+        rendered = render_resultpage_view(html, pagefindings, process)
+    return rendered
+
+
+def render_resultpage_view(html, pagefindings, process):
     result = []
-    htmlpath = os.path.join(path, 'view')
-    html = HtmlLookup(htmlpath)
     # load all pages not only the erroneous
     for page in pages(html, pagefindings):
         # for page, rendered in enumerate(html):
@@ -68,6 +69,26 @@ def load_resultview(path: str, process: str) -> 'viewo.waiting.ResultPageViews':
         )
         result.append(item)
     return result
+
+
+def load_findings(path: str):
+    pagefindings = protocol.findings_from_path(path)
+    for item in pagefindings:
+        # TODO: REMOVE AFTER FIXING
+        # THIS STEP SHOULD NOT BE NECESSARY IF EVERY THING WORKS FINE IN
+        # QUEUEMO.
+        before = len(item.content)
+        item.content = utila.make_unique(item.content)
+        after = len(item.content)
+        if after != before:
+            utila.error(f'duplicated finding ids on page: {item.page}')
+    return pagefindings
+
+
+def load_html(path: str):
+    htmlpath = os.path.join(path, 'view')
+    html = HtmlLookup(htmlpath)
+    return html
 
 
 def patch_images(html: str, process: int) -> str:
