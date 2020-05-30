@@ -60,6 +60,10 @@ class PDFViewDocStyle {
         $('#docstyle_content_rotated_right').text(cm(style.content_rotated_right))
         $('#docstyle_content_rotated_top').text(cm(style.content_rotated_top))
         $('#docstyle_content_rotated_bottom').text(cm(style.content_rotated_bottom))
+
+        // paper
+        $('#paper_width').text(cm(style.page_width))
+        $('#paper_height').text(cm(style.page_height))
     }
 }
 
