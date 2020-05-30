@@ -34,6 +34,12 @@ class PDFViewDocStyle {
         $('#docstyle_h3_after').text(pt(style.h3_after))
 
         // footnote
+        if (style.footnote_size != null) {
+            $('#docstyle_footnote_visible').show()
+        }
+        else {
+            $('#docstyle_footnote_visible').hide()
+        }
         $('#docstyle_footnote_family').text(ct(style.footnote_family))
         $('#docstyle_footnote_size').text(pt(style.footnote_size))
         $('#docstyle_footnote_distance').text(cm(style.footnote_distance))
@@ -44,6 +50,12 @@ class PDFViewDocStyle {
         $('#docstyle_content_top').text(cm(style.content_top))
         $('#docstyle_content_bottom').text(cm(style.content_bottom))
 
+        if (style.content_rotated_left != null) {
+            $('#docstyle_content_rotated_visible').show()
+        }
+        else {
+            $('#docstyle_content_rotated_visible').hide()
+        }
         $('#docstyle_content_rotated_left').text(cm(style.content_rotated_left))
         $('#docstyle_content_rotated_right').text(cm(style.content_rotated_right))
         $('#docstyle_content_rotated_top').text(cm(style.content_rotated_top))
