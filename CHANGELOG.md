@@ -2,6 +2,16 @@
 
 Every noteable change is logged here.
 
+## v0.15.1
+
+### Feature
+
+* disable footnote view if no footnotes are given (204f5bb2bda2)
+* link page dimension data to view (5a266f13cae3)
+* disable view item if not data is given (317655487ae0)
+* replace points with centimeter as distance unit (7699c7faa32d)
+* add profiling step to render result view (f99b76fbecf0)
+
 ## v0.15.0
 
 ### Feature
