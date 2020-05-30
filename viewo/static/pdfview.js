@@ -27,14 +27,16 @@ class ResultView {
         this.properties = properties
         this.doctextstyle = doctextstyle
 
-        content.push(
-            {
-                'content': this.footnotes,
-                'findings': [],
-                'page': 1025,
-                'title': 'Fußnoten',
-            }
-        )
+        if (this.footnotes.length > 0) {
+            content.push(
+                {
+                    'content': this.footnotes,
+                    'findings': [],
+                    'page': 1025,
+                    'title': 'Fußnoten',
+                }
+            )
+        }
         content.push(
             {
                 'content': this.doctextstyle,
