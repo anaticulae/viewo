@@ -15,7 +15,7 @@ class PDFViewDocStyle {
         // docstyle_fondocstyle
         $('#docstyle_text_family').text(ct(style.text_family))
         $('#docstyle_text_size').text(pt(style.text_size))
-        $('#docstyle_text_distance').text(pt(style.text_distance))
+        $('#docstyle_text_distance').text(cm(style.text_distance))
 
         // headlines
         $('#docstyle_h1_family').text(ct(style.h1_family))
@@ -36,7 +36,7 @@ class PDFViewDocStyle {
         // footnote
         $('#docstyle_footnote_family').text(ct(style.footnote_family))
         $('#docstyle_footnote_size').text(pt(style.footnote_size))
-        $('#docstyle_footnote_distance').text(pt(style.footnote_distance))
+        $('#docstyle_footnote_distance').text(cm(style.footnote_distance))
 
         // border
         $('#docstyle_content_left').text(cm(style.content_left))
