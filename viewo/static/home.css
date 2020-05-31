@@ -1,0 +1,35 @@
+#center{
+    height:350px;
+    width: 100%;
+}
+#welcome{
+    width:70%;
+    float:left;
+    margin-bottom: 10px;
+}
+#showroom{
+    overflow-y: scroll;
+    height: 100%;
+}
+#example{
+    width:95%;
+    height: 150px;
+    border: 1px solid black;
+    margin:5px;
+}
+
+@media only screen and (max-width:750px){
+    #welcome{
+        width:100%;
+    }
+    #showroom{
+        height: 120px;
+        display: block;
+        overflow-y: visible;
+    }
+    #example{
+        height:90%;
+        width: 150px;
+        float:left;
+    }
+}
