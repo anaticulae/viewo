@@ -2,6 +2,12 @@
 
 Every noteable change is logged here.
 
+## v0.15.2
+
+### Feature
+
+* add first draft of example view (04436246620a)
+
 ## v0.15.1
 
 ### Feature
