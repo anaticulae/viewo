@@ -53,24 +53,39 @@ def view_images(document: str = None, image: str = None):
 
 
 @result_.route(
-    '/result/<string:doc>/update/finding/<int:finding>/<int:status>',
+    '/result/<string:doc>/update/finding/<string:finding>/<int:status>',
     methods=['POST'],
 )
 def update_finding_status(  # pylint:disable=W0613
         doc: str = None,
         finding: int = None,
         status: int = None,
-):
+) -> str:
+    """Update finding status.
+
+    Args:
+        doc(str): document to update
+        finding(int): hash value of finding to update, flask support
+                      only possitive integers, therefore we have to use
+                      string and convert them here.
+        status(int): new status
+    Returns:
+        `done` if update was successful else `failed`
+    """
     source = link.ready(doc)
     invalid_document = not os.path.exists(source)
     if invalid_document:
         utila.error(f'could not load document: {source}')
-        return flask.redirect('result/failure')
+        return 'failed'
+    try:
+        finding = int(finding)
+    except ValueError:
+        return 'failed'
+
     status = problem_fromint(status)
     if not protocol.finding_status_update(source, finding, status):
-        utila.error(f'could not update: {finding}; status: {status}')
-    # TODO: REFACTOR THIS
-    return ''
+        utila.error(f'could not update: {finding} status: {status}')
+    return 'done'
 
 
 def problem_fromint(status: int) -> protocol.ProblemStatus:
