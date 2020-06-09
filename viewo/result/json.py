@@ -122,6 +122,12 @@ def location_tojson(location, pagesentences: dict = None) -> dict:
                             f' sentence: {location.value}')
             else:
                 result['words'] = words
+    elif shortcut == 'r':
+        # ranged location
+        line, linened = location.line, location.line_end
+        linened = line if linened is None else linened
+        lines = tuple(range(line, linened + 1))
+        result['lines'] = lines
     return result
 
 
