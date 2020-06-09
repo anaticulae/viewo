@@ -755,7 +755,7 @@ class TodoListView {
         let jump_to_page = `<a href = "#" id = "${openid}">${finding.title}</a>`
         let number = parent[0].rows.length + 1
         let raw =
-            `<tr>
+            `<tr id="${finding.number}">
                 <td class="center">${number}</td>
                 <td>${jump_to_page}</td>
                 <td class="center">${page_user}</td>
@@ -768,13 +768,16 @@ class TodoListView {
         if (status in OPEN) {
             $(`#${del}`).click(function () {
                 result_view.update_finding(finding.number, REMOVED)
+                $(`#${finding.number}`).hide()
             });
             $(`#${done}`).click(function () {
                 result_view.update_finding(finding.number, DONE)
+                $(`#${finding.number}`).hide()
             });
         } else {
             $(`#${restore}`).click(function () {
                 result_view.update_finding(finding.number, SELECTED)
+                $(`#${finding.number}`).hide()
             });
         }
     }
