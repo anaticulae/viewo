@@ -5,10 +5,9 @@
 <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='waiting.css') }}">
 <script src="{{ url_for('static', filename='waiting.js') }}"></script>
 <script type="text/javascript">
-    let go = function () {
+    $(document).ready(function () {
         result_waiting_view.onload("{{ process }}")
-    }
-    jQuery(document).ready(go);
+    })
 </script>
 {% endblock %}
 

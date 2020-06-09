@@ -8,11 +8,10 @@
 <script src="{{ url_for('static', filename='pdfview/docstyle.js') }}"></script>
 <script src="{{ url_for('static', filename='pdfview.js') }}"></script>
 <script type="text/javascript">
-    let go = function () {
+    $(document).ready(function () {
         init()
         onload("{{ process }}")
-    }
-    jQuery(document).ready(go);
+    })
 </script>
 {% endblock %}
 
