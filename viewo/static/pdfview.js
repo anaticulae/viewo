@@ -168,7 +168,6 @@ class ResultView {
             $(`#${href}`).click(function () {
                 $(`#openpage_${item.page}`).click()
             });
-
         }
     }
 
@@ -456,7 +455,6 @@ class FindingBox {
         } else {
             $('#error')[0].classList.remove('hidden_inbounds')
         }
-
     }
 
     update_finding_navigation() {
@@ -697,6 +695,7 @@ class FindingStatusCounter {
 }
 
 class TodoListView {
+
     constructor(result) {
         this.result = result
     }
@@ -729,6 +728,7 @@ class TodoListView {
             }
         }
     }
+
     create_finding_line(parent, finding) {
         let status = finding.status
         let action = ''
