@@ -487,6 +487,14 @@ class FindingBox {
                     word[0].classList.add('highlighted_text')
                 }
             }
+        } else if (finding.location['lines']) {
+            let page = finding.location['page']
+            for (let item of finding.location['lines']) {
+                let line = $(`#line${page}_${item}`)
+                if (line.length) {
+                    line[0].classList.add('highlighted_text')
+                }
+            }
         }
         else {
             $('#finding_' + finding.number).fadeIn()
@@ -502,7 +510,16 @@ class FindingBox {
                     word[0].classList.remove('highlighted_text')
                 }
             }
-        } {
+        } else if (finding.location['lines']) {
+            let page = finding.location['page']
+            for (let item of finding.location['lines']) {
+                let line = $(`#line${page}_${item}`)
+                if (line.length) {
+                    line[0].classList.remove('highlighted_text')
+                }
+            }
+        }
+        else {
             $('#finding_' + finding.number).fadeOut()
         }
     }
