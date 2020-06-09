@@ -93,7 +93,7 @@ def load_html(path: str):
 
 def patch_images(html: str, process: int) -> str:
     # TODO: REMOVE THIS HACK
-    utila.error('patch images')
+    utila.debug('patch images')
     html = html.replace('src="', f'src="{process}/')
     return html
 
