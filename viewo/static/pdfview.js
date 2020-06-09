@@ -379,6 +379,7 @@ class FindingBox {
             set_focus.focus()
         }
         this.result.error_selected = id
+        highlight_finding(this.result.selected_finding)
         this.update_finding_navigation()
         this.update_finding_text()
     }

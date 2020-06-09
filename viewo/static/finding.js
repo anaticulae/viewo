@@ -24,6 +24,9 @@ function count_by_finding_status(findings) {
 // TODO SIMPLIFY WITH VISIT PATTERN AND GENERATOR
 
 function show_finding(finding) {
+    if (finding.status != SELECTED) {
+        return
+    }
     if (finding.location['words']) {
         let page = finding.location['page']
         for (let item of finding.location['words']) {
@@ -70,6 +73,9 @@ function hide_finding(finding) {
 }
 
 function highlight_finding(finding) {
+    if (finding == null || finding.status != SELECTED) {
+        return
+    }
     if (finding.location['words']) {
         let page = finding.location['page']
         for (let item of finding.location['words']) {
