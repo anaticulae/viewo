@@ -20,3 +20,49 @@ function count_by_finding_status(findings) {
     }
     return { 'open': open, 'done': done, 'rejected': rejected }
 }
+
+function show_finding(finding) {
+    if (finding.location['words']) {
+        let page = finding.location['page']
+        for (let item of finding.location['words']) {
+            let word = $(`#word${page}_${item}`)
+            if (word.length) {
+                word[0].classList.add('highlighted_text')
+            }
+        }
+    } else if (finding.location['lines']) {
+        let page = finding.location['page']
+        for (let item of finding.location['lines']) {
+            let line = $(`#line${page}_${item}`)
+            if (line.length) {
+                line[0].classList.add('highlighted_text')
+            }
+        }
+    }
+    else {
+        $('#finding_' + finding.number).fadeIn()
+    }
+}
+
+function hide_finding(finding) {
+    if (finding.location['words']) {
+        let page = finding.location['page']
+        for (let item of finding.location['words']) {
+            let word = $(`#word${page}_${item}`)
+            if (word.length) {
+                word[0].classList.remove('highlighted_text')
+            }
+        }
+    } else if (finding.location['lines']) {
+        let page = finding.location['page']
+        for (let item of finding.location['lines']) {
+            let line = $(`#line${page}_${item}`)
+            if (line.length) {
+                line[0].classList.remove('highlighted_text')
+            }
+        }
+    }
+    else {
+        $('#finding_' + finding.number).fadeOut()
+    }
+}

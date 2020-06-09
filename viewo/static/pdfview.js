@@ -421,10 +421,10 @@ class FindingBox {
                     `type="checkbox" ${checked}>`
                 // this.open_finding(index)
                 if (item.status == SELECTED) {
-                    this.show_finding(item)
+                    show_finding(item)
                 }
                 else {
-                    this.hide_finding(item)
+                    hide_finding(item)
                 }
             }
             let node_selectable = `<li id="error_selected_${index}" class="finding_button">${selectable} ${text}</li>`
@@ -478,52 +478,6 @@ class FindingBox {
         }
     }
 
-    show_finding(finding) {
-        if (finding.location['words']) {
-            let page = finding.location['page']
-            for (let item of finding.location['words']) {
-                let word = $(`#word${page}_${item}`)
-                if (word.length) {
-                    word[0].classList.add('highlighted_text')
-                }
-            }
-        } else if (finding.location['lines']) {
-            let page = finding.location['page']
-            for (let item of finding.location['lines']) {
-                let line = $(`#line${page}_${item}`)
-                if (line.length) {
-                    line[0].classList.add('highlighted_text')
-                }
-            }
-        }
-        else {
-            $('#finding_' + finding.number).fadeIn()
-        }
-    }
-
-    hide_finding(finding) {
-        if (finding.location['words']) {
-            let page = finding.location['page']
-            for (let item of finding.location['words']) {
-                let word = $(`#word${page}_${item}`)
-                if (word.length) {
-                    word[0].classList.remove('highlighted_text')
-                }
-            }
-        } else if (finding.location['lines']) {
-            let page = finding.location['page']
-            for (let item of finding.location['lines']) {
-                let line = $(`#line${page}_${item}`)
-                if (line.length) {
-                    line[0].classList.remove('highlighted_text')
-                }
-            }
-        }
-        else {
-            $('#finding_' + finding.number).fadeOut()
-        }
-    }
-
     toggle_finding(finding) {
         this.open_finding(finding)
         this.toggle_selected_finding()
@@ -532,10 +486,10 @@ class FindingBox {
     toggle_selected_finding() {
         if (this.result.selected_finding.status == 1) {
             this.result.update_current_finding_status(0)
-            this.hide_finding(this.result.selected_finding)
+            hide_finding(this.result.selected_finding)
         } else {
             this.result.update_current_finding_status(1)
-            this.show_finding(this.result.selected_finding)
+            show_finding(this.result.selected_finding)
         }
     }
 
@@ -556,7 +510,7 @@ class FindingBox {
 
     update_box() {
         if (this.result.selected_finding != null) {
-            this.show_finding(result_view.selected_finding)
+            show_finding(result_view.selected_finding)
         }
         this.update_inbox_visibility()
         this.update_finding_navigation()
