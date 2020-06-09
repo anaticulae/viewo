@@ -21,6 +21,8 @@ function count_by_finding_status(findings) {
     return { 'open': open, 'done': done, 'rejected': rejected }
 }
 
+// TODO SIMPLIFY WITH VISIT PATTERN AND GENERATOR
+
 function show_finding(finding) {
     if (finding.location['words']) {
         let page = finding.location['page']
@@ -64,5 +66,27 @@ function hide_finding(finding) {
     }
     else {
         $('#finding_' + finding.number).fadeOut()
+    }
+}
+
+function highlight_finding(finding) {
+    if (finding.location['words']) {
+        let page = finding.location['page']
+        for (let item of finding.location['words']) {
+            let word = $(`#word${page}_${item}`)
+            word.fadeOut()
+            word.fadeIn()
+        }
+    } else if (finding.location['lines']) {
+        let page = finding.location['page']
+        for (let item of finding.location['lines']) {
+            let line = $(`#line${page}_${item}`)
+            line.fadeOut()
+            line.fadeIn()
+        }
+    }
+    else {
+        $('#finding_' + finding.number).fadeOut()
+        $('#finding_' + finding.number).fadeIn()
     }
 }
