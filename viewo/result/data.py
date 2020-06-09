@@ -81,7 +81,8 @@ def load_findings(path: str):
         item.content = utila.make_unique(item.content)
         after = len(item.content)
         if after != before:
-            utila.error(f'duplicated finding ids on page: {item.page}')
+            # we copy results twice
+            utila.debug(f'duplicated finding ids on page: {item.page}')
     return pagefindings
 
 
