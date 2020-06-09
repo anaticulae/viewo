@@ -68,7 +68,7 @@ function hide_finding(finding) {
         }
     }
     else {
-        $('#finding_' + finding.number).fadeOut()
+        $(`#finding_${finding.number}`).fadeOut('fast')
     }
 }
 
@@ -80,19 +80,16 @@ function highlight_finding(finding) {
         let page = finding.location['page']
         for (let item of finding.location['words']) {
             let word = $(`#word${page}_${item}`)
-            word.fadeOut()
-            word.fadeIn()
+            word.fadeOut('fast').fadeIn()
         }
     } else if (finding.location['lines']) {
         let page = finding.location['page']
         for (let item of finding.location['lines']) {
             let line = $(`#line${page}_${item}`)
-            line.fadeOut()
-            line.fadeIn()
+            line.fadeOut('fast').fadeIn()
         }
     }
     else {
-        $('#finding_' + finding.number).fadeOut()
-        $('#finding_' + finding.number).fadeIn()
+        $(`#finding_${finding.number}`).fadeOut('fast').fadeIn()
     }
 }
