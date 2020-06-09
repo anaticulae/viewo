@@ -407,12 +407,14 @@ class FindingBox {
             let item = this.result.findings[index]
             let text = item.title
             let selectable = ''
+
+            let status = item.status
+            if (status == DONE || status == REMOVED || status == IGNORED) {
+                // done, hidden or rejected
+                hide_finding(item)
+                continue
+            }
             if (item.selectable == '1') {
-                let status = item.status
-                if (status == DONE || status == REMOVED || status == IGNORED) {
-                    // done, hidden or rejected
-                    continue
-                }
                 // add optional checkbox to disable highlighted area in
                 // text view by user.
                 // TODO: CHECKED SEEMS TO BE WRONG
