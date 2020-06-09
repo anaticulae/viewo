@@ -7,11 +7,13 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import concurrent.futures
 import os
 
 import link
 import protocol
 import utila
+import utila.feature.processor
 
 import viewo.result.loader
 import viewo.utils
@@ -72,7 +74,7 @@ def render_resultpage_view(html, pagefindings, process):
 
 
 def load_findings(path: str):
-    pagefindings = protocol.findings_from_path(path)
+    pagefindings = findings_from_path(path)
     for item in pagefindings:
         # TODO: REMOVE AFTER FIXING
         # THIS STEP SHOULD NOT BE NECESSARY IF EVERY THING WORKS FINE IN
@@ -134,3 +136,27 @@ class HtmlLookup:
 
     def __len__(self):
         return len(self.data)
+
+
+def findings_from_path(path: str, worker: int = 10) -> protocol.PageFindings:
+    """Load Findings from `path` directory and group them by page as
+    `PageFindings`."""
+    assert os.path.isdir(path), str(path)
+    files = utila.file_list(path, include='yaml', recursive=True)
+    files = [item for item in files if utila.file_name(item).endswith('_user')]
+    paths = [os.path.join(path, item) for item in files]
+
+    # yaml parsing is cpu bound, therefore we need a process pool instead
+    # of thread pool.
+    executor = utila.feature.processor.select_executor()
+    # select executor is required to run in pytest
+    with executor(max_workers=worker) as executor:
+        todo = {
+            executor.submit(protocol.load_result, path): path for path in paths
+        }
+        findings = []
+        for job in concurrent.futures.as_completed(todo):
+            data = job.result()
+            findings.extend(data)
+    result = protocol.bypage(findings)
+    return result
