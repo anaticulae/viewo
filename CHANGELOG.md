@@ -2,6 +2,25 @@
 
 Every noteable change is logged here.
 
+## v0.16.0
+
+### Feature
+
+* delete line after changing finding status (03ab02112146)
+* improve loading performance due multi processing (edff24a9d1fb)
+* reduce fade out time (fd3bc84b473e)
+* highlight selected finding on selecting (6639fc253f83)
+* add method to temporary highlight an finding in view (f560a613f84b)
+* highlight ranged location in pdfview (b2b16dbaa6e1)
+* add ranged location to result view data provider (6412a1fe285b)
+
+### Fix
+
+* reduce logging level of duplicated finding (9663974f5247)
+* reduce log level (a5ae0dcb6fcb)
+* fix status update handler (d2fbd7ce99f4)
+* do not highlight removed items (8ba5fad7b239)
+
 ## v0.15.3
 
 ## v0.15.2
