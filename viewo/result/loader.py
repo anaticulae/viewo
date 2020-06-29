@@ -92,12 +92,11 @@ def load_doctextstyle_fromprocess(process: str):
             if not getattr(loaded, key):
                 continue
             font = getattr(loaded, key)
-            try:
-                font = fontstore[font].name
-            except KeyError:
+            font = fontstore[font]
+            if font is None:
                 utila.error(f'could not find font id: {font}')
                 continue
-            font = friendly_font(font)
+            font = friendly_font(font.name)
             setattr(loaded, key, font)
     return loaded
 
