@@ -22,10 +22,10 @@ def load_sentences(path: str) -> dict:
     # TODO: REFACTOR WITH FEEDBACK
     words = serializeraw.load_text(path)
     pagesentences = collections.defaultdict(list)
-    for page, pagecontent in words:
-        for _, sentences in pagecontent:
+    for page in words:
+        for _, sentences in page.content:
             for sentence in sentences:
-                pagesentences[page].append(sentence)
+                pagesentences[page.page].append(sentence)
     # enable KeyError
     pagesentences = dict(pagesentences)  # pylint:disable=R0204
     return pagesentences
