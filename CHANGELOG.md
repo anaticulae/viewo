@@ -2,6 +2,12 @@
 
 Every noteable change is logged here.
 
+## v0.16.3
+
+### Fix
+
+* adjust to new data format (5f393774031f)
+
 ## v0.16.2
 
 ## v0.16.1
