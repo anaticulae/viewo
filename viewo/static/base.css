@@ -157,7 +157,7 @@ td{
 
 .highlighted_text{
     text-decoration:underline;
-    background:rgb(255, 206, 206);
+    background:rgba(255, 206, 206, 0.20);
 }
 
 .highlighted_important{
