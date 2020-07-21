@@ -38,10 +38,9 @@ function show_finding(finding) {
     } else if (finding.location['lines']) {
         let page = finding.location['page']
         for (let item of finding.location['lines']) {
-            let line = $(`#line${page}_${item}`)
-            if (line.length) {
-                line[0].classList.add('highlighted_text')
-            }
+            $(`span#line${page}_${item}`).each(function () {
+                $(this)[0].classList.add('highlighted_text')
+            });
         }
     }
     else {
@@ -61,10 +60,9 @@ function hide_finding(finding) {
     } else if (finding.location['lines']) {
         let page = finding.location['page']
         for (let item of finding.location['lines']) {
-            let line = $(`#line${page}_${item}`)
-            if (line.length) {
-                line[0].classList.remove('highlighted_text')
-            }
+            $(`span#line${page}_${item}`).each(function () {
+                $(this)[0].classList.remove('highlighted_text')
+            });
         }
     }
     else {
@@ -84,9 +82,11 @@ function highlight_finding(finding) {
         }
     } else if (finding.location['lines']) {
         let page = finding.location['page']
+
         for (let item of finding.location['lines']) {
-            let line = $(`#line${page}_${item}`)
-            line.fadeOut('fast').fadeIn()
+            $(`span#line${page}_${item}`).each(function () {
+                $(this).fadeOut('fast').fadeIn()
+            });
         }
     }
     else {
