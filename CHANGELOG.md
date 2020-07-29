@@ -2,6 +2,16 @@
 
 Every noteable change is logged here.
 
+## v0.17.0
+
+### Feature
+
+* adjust highlighted text (8aece1fbe8ba)
+
+### Fix
+
+* highlight multiple id identifier (fcef11cf3151)
+
 ## v0.16.3
 
 ### Fix
