@@ -38,7 +38,7 @@ var result_waiting_view = {
             // done
             result_waiting_view.enable_fastview(processid)
         }
-        if (status[3] == 0) {
+        if (status[4] == 0) {
             // done
             result_waiting_view.enable_resultview(processid)
         }
