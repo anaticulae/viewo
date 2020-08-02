@@ -144,6 +144,8 @@ def message_replace(content: str) -> str:
 
     # replace **[CONTENT]**-pattern with html `strong` pattern
     content = re.sub(r'\*\*([^\*]+)\*\*', r'<strong>\1</strong>', content)
+    # replace newline
+    content = content.replace('\n', '<br/>')
     return content
 
 
