@@ -2,6 +2,16 @@
 
 Every noteable change is logged here.
 
+## v0.17.1
+
+### Feature
+
+* replace newlines with html line break (66533d0822cf)
+
+### Fix
+
+* enable document view after finishing document extraction (6536db95d182)
+
 ## v0.17.0
 
 ### Feature
