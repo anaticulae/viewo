@@ -11,7 +11,7 @@ PyYAML==5.1
 Flask==1.0.2
 
 configo==0.7.1
-link==0.4.18
+link==0.4.19
 utila==2.6.0
 
 # load validation results
@@ -19,4 +19,4 @@ protocol==1.2.1
 writers==0.3.24
 
 # hey: load generated data, remove later
-hey==3.9.0
+hey==3.10.0
