@@ -10,7 +10,6 @@
 import collections
 import os
 
-import doctextstyle.serialize
 import iamraw
 import iamraw.path
 import link
@@ -76,7 +75,7 @@ def load_doctextstyle_fromprocess(process: str):
     if not os.path.exists(path):
         utila.error(f'could not load: {path}')
         return None
-    loaded = doctextstyle.serialize.load_docstyle(path)
+    loaded = serializeraw.load_doctextstyle(path)
 
     fontstore = serializeraw.create_fontstore_frompath(result, prefix='oneline')
     if fontstore:
