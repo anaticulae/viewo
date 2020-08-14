@@ -238,7 +238,10 @@ class ResultView {
     }
 
     get get_next_finding() {
-        let findings = this.content[this.current_page].findings
+        let findings = this.content[this.current_page].findings.filter(s => visible(s))
+        if (findings.length == 0) {
+            return null
+        }
         let current_plus = this.current_finding + 1
         if (current_plus == findings.length) {
             current_plus = 0
@@ -252,7 +255,10 @@ class ResultView {
     }
 
     get get_prev_finding() {
-        let findings = this.content[this.current_page].findings
+        let findings = this.content[this.current_page].findings.filter(s => visible(s))
+        if (findings.length == 0) {
+            return null
+        }
         let current_minus = this.current_finding - 1
         if (current_minus < 0) {
             current_minus = findings.length - 1
@@ -447,7 +453,7 @@ class FindingBox {
     }
 
     update_inbox_visibility() {
-        if (this.result.findings.length == 0) {
+        if (this.result.findings.filter(s => visible(s)).length == 0) {
             // disable error bar if no error is provided
             $('#error')[0].classList.add('hidden_inbounds')
         } else {
@@ -456,7 +462,7 @@ class FindingBox {
     }
 
     update_finding_navigation() {
-        if (this.result.findings.length == 1) {
+        if (this.result.findings.filter(s => visible(s)).length == 1) {
             // use base.hide cause jquery introduce display object
             base.hide('#error_navigator')
         }
@@ -562,7 +568,7 @@ class Navigator {
                     // no page change possible, stay on page
                     return;
                 }
-            } while (this.result.content[current].findings.length == 0)
+            } while (this.result.content[current].findings.filter(s => visible(s)).length == 0)
             this.result.show_page(current)
         }
         else {
@@ -581,7 +587,7 @@ class Navigator {
                     // no page change possible, stay on page
                     return;
                 }
-            } while (this.result.content[current].findings.length == 0)
+            } while (this.result.content[current].findings.filter(s => visible(s)).length == 0)
             this.result.show_page(current)
         } else {
             let current = (this.result.current_page + 1) % this.result.available_pages
@@ -596,7 +602,7 @@ class Navigator {
         for (let page of this.result.content) {
             if (this.error_pages_only) {
                 // skip pages which contains no error
-                let no_findings = page.findings.length == 0
+                let no_findings = page.findings.filter(s => visible(s)).length == 0
                 if (no_findings) {
                     continue
                 }
