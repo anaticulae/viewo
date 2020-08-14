@@ -47,7 +47,7 @@ def view_images(document: str = None, image: str = None):
     if not os.path.exists(image):
         utila.error(f'could not load image: {image}')
         return flask.redirect('result/failure')
-    # contextmanager does not works here
+    # contextmanager does not work here
     response = flask.send_file(open(image, mode='rb'), mimetype='image')
     return response
 
@@ -91,8 +91,8 @@ def update_finding_status(  # pylint:disable=W0613
 def problem_fromint(status: int) -> protocol.ProblemStatus:
     if status in (0, 1):
         return protocol.ProblemStatus.OPEN
-    if status == 2:
-        return protocol.ProblemStatus.CLOSED
+    if status == 4:
+        return protocol.ProblemStatus.SOLVED
     return protocol.ProblemStatus.DISAGREE
 
 

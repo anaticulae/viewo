@@ -1,20 +1,35 @@
+"use strict";
+
+/**
+ *
+ */
+
 const NOT_SELECTED = 0
 const SELECTED = 1
 const OPEN = [NOT_SELECTED, SELECTED]
-const DONE = 2
-const IGNORED = 3
-const REMOVED = 4
+const REMOVED = 3
+// Remove WORKAROUND FIVE LATER
+const NOT_WANTED = [REMOVED, 5] // add DISAGREE,IGNORED later?
+const DONE = 4
+// const IGNORED = ?
+
+function visible(item) {
+    // Determine if item is visible by user or is already deleted, judged
+    // or something else.
+    let status = item.status
+    return OPEN.includes(status)
+}
 
 function count_by_finding_status(findings) {
     let done = 0
     let rejected = 0
     let open = 0
     for (let finding of findings) {
-        if (finding.status <= 1) {
+        if (OPEN.includes(finding.status)) {
             open += 1
         } else if (finding.status == DONE) {
             done += 1
-        } else if (finding.status > DONE) {
+        } else if (NOT_WANTED.includes(finding.status)) {
             rejected += 1
         }
     }

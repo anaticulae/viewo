@@ -407,9 +407,7 @@ class FindingBox {
             let item = this.result.findings[index]
             let text = item.title
             let selectable = ''
-
-            let status = item.status
-            if (status == DONE || status == REMOVED || status == IGNORED) {
+            if (visible(item) == false) {
                 // done, hidden or rejected
                 hide_finding(item)
                 continue
@@ -496,11 +494,6 @@ class FindingBox {
 
     current_finding_done() {
         this.result.update_current_finding_status(DONE)
-        this.update_box()
-    }
-
-    current_finding_ignore() {
-        this.result.update_current_finding_status(IGNORED)
         this.update_box()
     }
 
@@ -662,7 +655,7 @@ class FindingStatusCounter {
             open_todolistview(DONE)
         });
         $("#show_removed").click(function () {
-            open_todolistview(REMOVED)
+            open_todolistview(NOT_WANTED)
         });
         $("#show_open").click(function () {
             open_todolistview(OPEN)
@@ -787,7 +780,7 @@ function open_todolistview(category = DONE) {
     $('#pdfview').hide()
     $('#todolistview').show()
 
-    if (category == REMOVED) {
+    if (category == NOT_WANTED) {
         base.scroll_to('#removed')
     } else if (category == DONE) {
         base.scroll_to('#done')
