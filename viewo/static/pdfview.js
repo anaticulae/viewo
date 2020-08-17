@@ -118,7 +118,7 @@ class ResultView {
                         <img src="/static/images/result/right.png" alt="done" width="100%" height="100%" />
                     </button>
                     <button type="button" id="${done}">
-                        <img src="/static/images/result/trash.png" alt="delte" width="100%" height="100%" />
+                        <img src="/static/images/result/trash.png" alt="delete" width="100%" height="100%" />
                     </button>
                 </p>
             </div>
