@@ -83,9 +83,53 @@ def update_finding_status(  # pylint:disable=W0613
         return 'failed'
 
     status = problem_fromint(status)
+    before = protocol.finding_status(source, finding)
     if not protocol.finding_status_update(source, finding, status):
         utila.error(f'could not update: {finding} status: {status}')
+    else:
+        update_bookkeeping(source, status, before)
     return 'done'
+
+
+def update_bookkeeping(
+        source: str,
+        status: protocol.ProblemStatus,
+        before: protocol.ProblemStatus,
+):
+    jobpath = os.path.join(source, link.JOB_FILE_NAME)
+    loaded = link.load_job(jobpath)
+    # update BOOKKEEPING
+    if status == protocol.ProblemStatus.SOLVED:
+        # solved
+        updated = link.FindingStatus(
+            loaded.result.open - 1,
+            loaded.result.closed + 1,
+            loaded.result.excluded,
+        )
+    elif status == protocol.ProblemStatus.DISAGREE:
+        # removed
+        updated = link.FindingStatus(
+            loaded.result.open - 1,
+            loaded.result.closed,
+            loaded.result.excluded + 1,
+        )
+    elif status == protocol.ProblemStatus.OPEN:
+        # open
+        solved = before == protocol.ProblemStatus.SOLVED
+        deleted = before == protocol.ProblemStatus.DISAGREE
+        # yapf:disable
+        updated = link.FindingStatus(
+            loaded.result.open + 1,
+            loaded.result.closed if not solved else loaded.result.closed - 1,
+            loaded.result.excluded if not deleted else loaded.result.excluded - 1,
+        )
+        # yapf:enable
+    else:
+        utila.error(f'status: {status} not supported - {source}')
+        return
+    loaded.result = updated
+    dumped = link.dump_job(loaded)
+    utila.file_replace(jobpath, dumped)
 
 
 def problem_fromint(status: int) -> protocol.ProblemStatus:
