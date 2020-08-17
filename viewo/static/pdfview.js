@@ -848,6 +848,10 @@ function init() {
             findingbox.current_finding_delete()
             event.preventDefault()
         }
+        if (key == 'Enter') {
+            findingbox.current_finding_done()
+            event.preventDefault()
+        }
     })
 
     statuscounter.build()
