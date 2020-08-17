@@ -353,7 +353,6 @@ class ResultView {
 }
 
 
-
 class FindingBox {
 
     constructor(result) {
