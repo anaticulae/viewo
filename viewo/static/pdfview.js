@@ -239,7 +239,7 @@ class ResultView {
     }
 
     get get_next_finding() {
-        let findings = this.content[this.current_page].findings.filter(s => visible(s))
+        let findings = this.content[this.current_page].findings
         if (findings.length == 0) {
             return null
         }
@@ -248,6 +248,9 @@ class ResultView {
             current_plus = 0
         }
         for (let index = current_plus; index < findings.length; index++) {
+            if (visible(findings[index]) == false) {
+                continue
+            }
             if (findings[index].status <= SELECTED) {
                 return index
             }
@@ -256,7 +259,7 @@ class ResultView {
     }
 
     get get_prev_finding() {
-        let findings = this.content[this.current_page].findings.filter(s => visible(s))
+        let findings = this.content[this.current_page].findings
         if (findings.length == 0) {
             return null
         }
@@ -265,6 +268,9 @@ class ResultView {
             current_minus = findings.length - 1
         }
         for (let index = current_minus; index >= 0; index--) {
+            if (visible(findings[index]) == false) {
+                continue
+            }
             if (findings[index].status <= SELECTED) {
                 return index
             }
