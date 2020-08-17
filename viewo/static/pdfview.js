@@ -78,6 +78,7 @@ class ResultView {
         $('#error_page_content').html(selected.html)
 
         findingbox.update_findings()
+
         navigator.highlight_pagenumber(page)
 
         // use base cause jquery introduces trouble with display: block, do
@@ -369,6 +370,16 @@ class FindingBox {
     }
 
     open_finding(id) {
+        if (id == -1) {
+            // select first visible element
+            for (let index in this.result.findings) {
+                let item = this.result.findings[index]
+                if (visible(item)) {
+                    id = index
+                    break
+                }
+            }
+        }
         let old = $(`#error_selected_${this.result.error_selected}`)[0]
         let current = $(`#error_selected_${id}`)[0]
 
@@ -399,11 +410,12 @@ class FindingBox {
         this.open_finding(this.result.get_prev_finding)
     }
 
-    update_findings(current = 0) {
+    update_findings(current = -1) {
         /**
          * Update list of selectable findings of current page. If no
          * finding is detected for current page, finding box will be
          * disabled.
+         * Using current -1 selects the first visible element
          */
         let pdfview_navigation = $('#error_list')
         // TODO: CHECK FOR BETTER REMOVEMENT
