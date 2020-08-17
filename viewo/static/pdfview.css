@@ -65,6 +65,12 @@ aside{
     text-decoration:underline;
 }
 
+#error_operation{
+    background: white;
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
+
 #error_content{
     background:white;
     border:1px solid black;
