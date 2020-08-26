@@ -182,6 +182,17 @@ class ResultView {
         pdfview_docstyle.show()
     }
 
+    pagecontent(page) {
+        // determine content by index and if page is out of bounds, select
+        // page by page number.
+        let selected = this.content[page]
+        if (selected != undefined) {
+            return selected
+        }
+        selected = this.content.filter(s => (s.page == page))
+        return selected[0]
+    }
+
     get current_page() {
         return this.error_page
     }
@@ -230,7 +241,7 @@ class ResultView {
     }
 
     get selected_finding() {
-        let findings = this.content[this.current_page].findings
+        let findings = this.pagecontent(this.current_page).findings
         // let findings = this.findings
         if (this.current_finding < findings.length) {
             return findings[this.current_finding]
@@ -239,7 +250,7 @@ class ResultView {
     }
 
     get get_next_finding() {
-        let findings = this.content[this.current_page].findings
+        let findings = this.pagecontent(this.current_page).findings
         if (findings.length == 0) {
             return null
         }
@@ -259,7 +270,7 @@ class ResultView {
     }
 
     get get_prev_finding() {
-        let findings = this.content[this.current_page].findings
+        let findings = this.pagecontent(this.current_page).findings
         if (findings.length == 0) {
             return null
         }
@@ -569,7 +580,7 @@ class Navigator {
                 child.classList.remove('highlighted')
             }
         }
-        let pdfpage = this.result.content[page].page
+        let pdfpage = this.result.pagecontent(page).page
         let current = $(`#openpage_${pdfpage}`)
         if (current.length == 1) {
             current[0].classList.add('highlighted')
@@ -632,7 +643,8 @@ class Navigator {
             let btn = `<button type="button" id="openpage_${id}">${title}</button>`
             error_page_list.append(btn)
             $(`#openpage_${id}`).click(function () {
-                result_view.show_page(id)
+                let pagenumber = navigator.result.content.findIndex(s => (s == page))
+                result_view.show_page(pagenumber)
             });
         }
     }
