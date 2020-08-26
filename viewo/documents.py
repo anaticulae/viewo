@@ -28,6 +28,12 @@ def view_documents():
         if item.index in done:
             continue
         docs.append(item)
+    for item in docs:
+        # TODO: REMOVE THIS HACK LATER
+        if item not in ready:
+            # set to none to have waiting clock in view which symbol the
+            # use that document is in progress.
+            item.result = None
     # sort by date
     docs = sorted(
         docs,
