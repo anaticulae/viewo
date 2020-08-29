@@ -64,7 +64,7 @@ def upload_failure():
     return flask.render_template('upload/no_file.html')
 
 
-MAX_FILE_SIZE = 10 * 1024 * 1024
+MAX_FILE_SIZE = 20 * 1024 * 1024  # 20 MB
 HEADER_READ_SIZE = 1024
 FILE_READ_TIMEOUT = 10
 EXPECTED_PDFSTART = b'%PDF-1.'
@@ -77,19 +77,18 @@ def curlpdf(url: str):
                 timeout=FILE_READ_TIMEOUT,
         ) as webhandle:
             header = webhandle.read(HEADER_READ_SIZE)
-
             # %PDF-1.5 for example
             if not header[0:len(EXPECTED_PDFSTART)] == EXPECTED_PDFSTART:
                 utila.error(f'no pdf file: {url}')
                 return None
-
             content = webhandle.read(MAX_FILE_SIZE - HEADER_READ_SIZE)
+            if webhandle.read(1) != b'':
+                # there are some bytes left
+                utila.error(f'file too large: {url}')
+                return None
     except (ValueError, urllib.error.URLError):
         utila.error(f'invalid url: {url}')
         return None
-
-    # TODO: ADD FILE MAX CHECK
-
     filecontent = header + content
 
     class TmpFile:

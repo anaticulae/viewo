@@ -129,3 +129,26 @@ def test_upload_from_url_with_error(source, client):
 
     # check that no file was uploaded
     assert files_after == files_before
+
+
+def test_upload_from_url_too_large_file(client, testdir):
+    content = b'%PDF-1.5' + b'0' * 1024 * 1024 * 100  # 100 MB
+    pdf = str(os.path.join(testdir.tmpdir, 'upload.pdf'))
+    utila.file_create_binary(pdf, content)
+    source = f'file:///{pdf}'
+
+    # test that viewing the page renders without template errors
+    assert client.get('/').status_code == http.HTTPStatus.OK
+
+    # count files in todo folder
+    files_before = link.count_todo()
+
+    fields = werkzeug.datastructures.MultiDict([('url', source)])
+    response = client.post(UPLOAD_PATH, data=fields, follow_redirects=True)
+
+    assert response.status_code == http.HTTPStatus.OK
+
+    files_after = link.count_todo()
+
+    # check that no file was uploaded
+    assert files_after == files_before
