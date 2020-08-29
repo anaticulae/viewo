@@ -89,14 +89,12 @@ def test_upload_get_forward_to_documents(client):
     assert response.status_code == http.HTTPStatus.FOUND
 
 
-def test_upload_from_url(client):
+def upload(client, source: str, valid: bool = True):
     # test that viewing the page renders without template errors
     assert client.get('/').status_code == http.HTTPStatus.OK
 
     # count files in todo folder
     files_before = link.count_todo()
-
-    source = f'file:///{utila.forward_slash(power.MASTER072_PDF)}'
 
     fields = werkzeug.datastructures.MultiDict([('url', source)])
     response = client.post(UPLOAD_PATH, data=fields, follow_redirects=True)
@@ -106,7 +104,12 @@ def test_upload_from_url(client):
     files_after = link.count_todo()
 
     # check if file was uploaded
-    assert files_after == files_before + 1
+    assert files_after == (files_before + 1 if valid else files_before)
+
+
+def test_upload_from_url(client):
+    source = f'file:///{utila.forward_slash(power.MASTER072_PDF)}'
+    upload(client, source)
 
 
 @pytest.mark.parametrize('source', [
@@ -114,21 +117,7 @@ def test_upload_from_url(client):
     pytest.param(f'file:///{__file__}', id='no pdf'),
 ])
 def test_upload_from_url_with_error(source, client):
-    # test that viewing the page renders without template errors
-    assert client.get('/').status_code == http.HTTPStatus.OK
-
-    # count files in todo folder
-    files_before = link.count_todo()
-
-    fields = werkzeug.datastructures.MultiDict([('url', source)])
-    response = client.post(UPLOAD_PATH, data=fields, follow_redirects=True)
-
-    assert response.status_code == http.HTTPStatus.OK
-
-    files_after = link.count_todo()
-
-    # check that no file was uploaded
-    assert files_after == files_before
+    upload(client, source, valid=False)
 
 
 def test_upload_from_url_too_large_file(client, testdir):
@@ -137,18 +126,4 @@ def test_upload_from_url_too_large_file(client, testdir):
     utila.file_create_binary(pdf, content)
     source = f'file:///{pdf}'
 
-    # test that viewing the page renders without template errors
-    assert client.get('/').status_code == http.HTTPStatus.OK
-
-    # count files in todo folder
-    files_before = link.count_todo()
-
-    fields = werkzeug.datastructures.MultiDict([('url', source)])
-    response = client.post(UPLOAD_PATH, data=fields, follow_redirects=True)
-
-    assert response.status_code == http.HTTPStatus.OK
-
-    files_after = link.count_todo()
-
-    # check that no file was uploaded
-    assert files_after == files_before
+    upload(client, source, valid=False)
