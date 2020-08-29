@@ -2,6 +2,25 @@
 
 Every noteable change is logged here.
 
+## v0.18.0
+
+### Feature
+
+* enable clicking on additional non pdf pages (d4ca38d4d158)
+* move finding menu from left to right (733a3d0f204d)
+* add Enter key to solve current finding (e4d8747d559f)
+* add operation menu to decider findings (e15c99b2b84a)
+* update bookkeeping for every status update (8f92111e5b5d)
+* hide solved items in error todo view (b65a2cc07b65)
+
+### Fix
+
+* display waiting status in documents view correctly (3dd89b612ea8)
+* ensure that indexing works properly (e7e202bfaa67)
+* adjust selecting first visible element (76d730f0904e)
+* adjust back end and view data structure (1a3373a0fbc3)
+* fix outdated import (81b1586fbe8a)
+
 ## v0.17.1
 
 ### Feature
