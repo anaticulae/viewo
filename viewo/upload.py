@@ -9,40 +9,36 @@
 
 import os
 
-from flask import Blueprint
-from flask import flash
-from flask import redirect
-from flask import render_template
-from flask import request
-from link import create_todo
-from werkzeug.utils import secure_filename
+import flask
+import link
+import werkzeug.utils
 
-upload_ = Blueprint('upload', __name__)  # pylint:disable=invalid-name
+upload_ = flask.Blueprint('upload', __name__)  # pylint:disable=invalid-name
 
 
 @upload_.route('/upload', methods=['GET', 'POST'])
 def upload_pdf():
-    if request.method != 'POST':
-        return redirect('/documents')
+    if flask.request.method != 'POST':
+        return flask.redirect('/documents')
 
     # check if the post request has the file part
-    if 'file' not in request.files:
-        flash('No file transmitted')
-        return redirect('/upload/failure')
-    file = request.files['file']
+    if 'file' not in flask.request.files:
+        flask.flash('No file transmitted')
+        return flask.redirect('/upload/failure')
+    file = flask.request.files['file']
     # if user does not select file, browser also
     # submit an empty part without filename
     if file.filename == '':
-        flash('No selected file')
-        return redirect('/upload/failure')
+        flask.flash('No selected file')
+        return flask.redirect('/upload/failure')
 
-    filename = secure_filename(file.filename)
-    todo = create_todo(file, filename)
+    filename = werkzeug.utils.secure_filename(file.filename)
+    todo = link.create_todo(file, filename)
     _, process = os.path.split(todo)
     # file.save(join(current_app.config['TODO'], filename))
-    return redirect(f'/waiting/{process}')
+    return flask.redirect(f'/waiting/{process}')
 
 
 @upload_.route('/upload/failure')
 def upload_failure():
-    return render_template('upload/no_file.html')
+    return flask.render_template('upload/no_file.html')
