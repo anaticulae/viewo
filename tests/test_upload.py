@@ -7,24 +7,23 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-from http import HTTPStatus
-from os.path import exists
+import http
+import os
 
+import link
 import power
 import pytest
 import utila
-from link import count_todo
-from werkzeug.datastructures import MultiDict
+import werkzeug.datastructures
 
-from tests import MINIMAL
-from tests import decode
+import tests
 
 
 def post_file(client, page: str, field: str, path: str):
     """Upload file via http post command"""
     assert field, path
-    assert exists(path), path
-    fields = MultiDict([(field, open(path, 'rb'))])
+    assert os.path.exists(path), path
+    fields = werkzeug.datastructures.MultiDict([(field, open(path, 'rb'))])
     response = client.post(
         page,
         data=fields,
@@ -40,15 +39,20 @@ DOCUMENT_PATH = '/documents'
 def test_upload(client):
     """Upload one file and check if it is saved at common todo folder"""
     # test that viewing the page renders without template errors
-    assert client.get('/').status_code == HTTPStatus.OK
+    assert client.get('/').status_code == http.HTTPStatus.OK
 
     # count files in todo folder
-    files_before = count_todo()
+    files_before = link.count_todo()
 
-    response = post_file(client, page=UPLOAD_PATH, field='file', path=MINIMAL)
-    assert response.status_code == HTTPStatus.OK
+    response = post_file(
+        client,
+        page=UPLOAD_PATH,
+        field='file',
+        path=tests.MINIMAL,
+    )
+    assert response.status_code == http.HTTPStatus.OK
 
-    files_after = count_todo()
+    files_after = link.count_todo()
 
     # check if file was uploaded
     assert files_after == files_before + 1
@@ -57,16 +61,21 @@ def test_upload(client):
 def test_upload_with_wrong_field(client):
     """Upload one file and check if it is saved at common todo folder"""
     # test that viewing the page renders without template errors
-    assert client.get('/').status_code == HTTPStatus.OK
+    assert client.get('/').status_code == http.HTTPStatus.OK
 
     # count files in todo folder
-    files_before = count_todo()
+    files_before = link.count_todo()
 
     # Upload with wrong field
-    response = post_file(client, page=UPLOAD_PATH, field='o_o', path=MINIMAL)
-    assert response.status_code == HTTPStatus.OK
-    assert 'Fehler' in decode(response)
-    files_after = count_todo()
+    response = post_file(
+        client,
+        page=UPLOAD_PATH,
+        field='o_o',
+        path=tests.MINIMAL,
+    )
+    assert response.status_code == http.HTTPStatus.OK
+    assert 'Fehler' in tests.decode(response)
+    files_after = link.count_todo()
     # check that no file was uploaded
     assert files_after == files_before
 
@@ -77,24 +86,24 @@ def test_upload_get_forward_to_documents(client):
     location = response.headers['Location']
 
     assert DOCUMENT_PATH in location
-    assert response.status_code == HTTPStatus.FOUND
+    assert response.status_code == http.HTTPStatus.FOUND
 
 
 def test_upload_from_url(client):
     # test that viewing the page renders without template errors
-    assert client.get('/').status_code == HTTPStatus.OK
+    assert client.get('/').status_code == http.HTTPStatus.OK
 
     # count files in todo folder
-    files_before = count_todo()
+    files_before = link.count_todo()
 
     source = f'file:///{utila.forward_slash(power.MASTER072_PDF)}'
 
-    fields = MultiDict([('url', source)])
+    fields = werkzeug.datastructures.MultiDict([('url', source)])
     response = client.post(UPLOAD_PATH, data=fields, follow_redirects=True)
 
-    assert response.status_code == HTTPStatus.OK
+    assert response.status_code == http.HTTPStatus.OK
 
-    files_after = count_todo()
+    files_after = link.count_todo()
 
     # check if file was uploaded
     assert files_after == files_before + 1
@@ -106,17 +115,17 @@ def test_upload_from_url(client):
 ])
 def test_upload_from_url_with_error(source, client):
     # test that viewing the page renders without template errors
-    assert client.get('/').status_code == HTTPStatus.OK
+    assert client.get('/').status_code == http.HTTPStatus.OK
 
     # count files in todo folder
-    files_before = count_todo()
+    files_before = link.count_todo()
 
-    fields = MultiDict([('url', source)])
+    fields = werkzeug.datastructures.MultiDict([('url', source)])
     response = client.post(UPLOAD_PATH, data=fields, follow_redirects=True)
 
-    assert response.status_code == HTTPStatus.OK
+    assert response.status_code == http.HTTPStatus.OK
 
-    files_after = count_todo()
+    files_after = link.count_todo()
 
     # check that no file was uploaded
     assert files_after == files_before
