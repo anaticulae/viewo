@@ -18,6 +18,23 @@
     margin:5px;
 }
 
+#file_toggle_view{
+    border: 1px solid black;
+    background: ghostwhite;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+#file_toggle_view label{
+    display: inline-block;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.toggle input{
+    display: none;
+}
+
 @media only screen and (max-width:750px){
     #welcome{
         width:100%;

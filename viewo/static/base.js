@@ -66,7 +66,7 @@ base.new_image_button = function (parent, src, id = null, textid = null, link = 
     }
     raw += `<img src="/static/images/${src}" width="14" height="14" style="padding-left:5px" `
     if (alt != null) {
-        raw += `alt="${alt} "`
+        raw += `alt="${alt}"`
     }
     raw += '/>'
     raw += '</button>'

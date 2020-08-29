@@ -3,6 +3,7 @@
 {% block head %}
 {{ super() }}
 <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='home.css') }}">
+<script src="{{ url_for('static', filename='home.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -25,9 +26,25 @@
 
         <form method="post" action="upload" enctype="multipart/form-data">
             <fieldset>
-                <legend>Waehle dein Dokument und erhalte<br />sofort deine
-                    Auswertung</legend>
-                <input class="resource" type="file" name="file" required="required" />
+                <legend>Waehle dein Dokument und erhalte sofort deine Auswertung</legend>
+
+                <div style="width:150px;float:left;">Quelle:</div>
+                <div id="file_toggle_view" data-toggle="buttons">
+                    <label class="toggle">
+                        <input name="source" type="radio" value="local" checked="checked">Lokale Datei
+                    </label>
+                    <label class="toggle">
+                        <input name="source" type="radio" value="url">Webadresse
+                    </label>
+                </div>
+                <div id="file_local_view">
+                    <!-- Lokale Datei:
+                    <input class="resource" type="file" name="file" required="required" /> -->
+                </div>
+                <div id="file_url_view">
+                    <!-- Webadresse:
+                    <input class="resource" type="text" name="url" required="required" /> -->
+                </div>
                 <p>
                     Starte deine persoenliche Analyse jetzt:
                 </p>
