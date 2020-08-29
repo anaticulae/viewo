@@ -10,6 +10,9 @@
 from http import HTTPStatus
 from os.path import exists
 
+import power
+import pytest
+import utila
 from link import count_todo
 from werkzeug.datastructures import MultiDict
 
@@ -75,3 +78,45 @@ def test_upload_get_forward_to_documents(client):
 
     assert DOCUMENT_PATH in location
     assert response.status_code == HTTPStatus.FOUND
+
+
+def test_upload_from_url(client):
+    # test that viewing the page renders without template errors
+    assert client.get('/').status_code == HTTPStatus.OK
+
+    # count files in todo folder
+    files_before = count_todo()
+
+    source = f'file:///{utila.forward_slash(power.MASTER072_PDF)}'
+
+    fields = MultiDict([('url', source)])
+    response = client.post(UPLOAD_PATH, data=fields, follow_redirects=True)
+
+    assert response.status_code == HTTPStatus.OK
+
+    files_after = count_todo()
+
+    # check if file was uploaded
+    assert files_after == files_before + 1
+
+
+@pytest.mark.parametrize('source', [
+    pytest.param('http://invalid.dscom', id='invalid url'),
+    pytest.param(f'file:///{__file__}', id='no pdf'),
+])
+def test_upload_from_url_with_error(source, client):
+    # test that viewing the page renders without template errors
+    assert client.get('/').status_code == HTTPStatus.OK
+
+    # count files in todo folder
+    files_before = count_todo()
+
+    fields = MultiDict([('url', source)])
+    response = client.post(UPLOAD_PATH, data=fields, follow_redirects=True)
+
+    assert response.status_code == HTTPStatus.OK
+
+    files_after = count_todo()
+
+    # check that no file was uploaded
+    assert files_after == files_before
