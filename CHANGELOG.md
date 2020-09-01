@@ -2,6 +2,14 @@
 
 Every noteable change is logged here.
 
+## v0.19.0
+
+### Feature
+
+* add upper pdf file limit (c6e36842757d)
+* extend interface to download pdf from external web resource (c3a91f82aa4d)
+* add option to upload file via web link (91359ccfa495)
+
 ## v0.18.0
 
 ### Feature
