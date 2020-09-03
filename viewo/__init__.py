@@ -25,16 +25,16 @@ from flask import url_for
 from jinja2 import TemplateNotFound
 from utila import error
 
+from viewo.api.documents import documents_
+from viewo.api.public import welcome
+from viewo.api.result import result_
+from viewo.api.upload import upload_
+from viewo.api.waiting import waiting_
+from viewo.api.writing import writing_
 from viewo.config import MAX_FILE_SIZE
 from viewo.config import SECRET_KEY
 from viewo.config import STATIC
 from viewo.config import TEMPLATES
-from viewo.documents import documents_
-from viewo.public import welcome
-from viewo.result.blueprint import result_
-from viewo.upload import upload_
-from viewo.waiting.view import waiting_
-from viewo.writing.index import writing_
 
 __version__ = '0.19.0'
 

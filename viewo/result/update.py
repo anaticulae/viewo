@@ -1,0 +1,63 @@
+# =============================================================================
+# C O P Y R I G H T
+# -----------------------------------------------------------------------------
+# Copyright (c) 2020 by Helmut Konrad Fahrendholz. All rights reserved.
+# This file is property of Helmut Konrad Fahrendholz. Any unauthorized copy,
+# use or distribution is an offensive act against international law and may
+# be prosecuted under federal law. Its content is company confidential.
+# =============================================================================
+
+import os
+
+import link
+import protocol
+import utila
+
+
+def update_bookkeeping(
+        source: str,
+        status: protocol.ProblemStatus,
+        before: protocol.ProblemStatus,
+):
+    jobpath = os.path.join(source, link.JOB_FILE_NAME)
+    loaded = link.load_job(jobpath)
+    # update BOOKKEEPING
+    if status == protocol.ProblemStatus.SOLVED:
+        # solved
+        updated = link.FindingStatus(
+            loaded.result.open - 1,
+            loaded.result.closed + 1,
+            loaded.result.excluded,
+        )
+    elif status == protocol.ProblemStatus.DISAGREE:
+        # removed
+        updated = link.FindingStatus(
+            loaded.result.open - 1,
+            loaded.result.closed,
+            loaded.result.excluded + 1,
+        )
+    elif status == protocol.ProblemStatus.OPEN:
+        # open
+        solved = before == protocol.ProblemStatus.SOLVED
+        deleted = before == protocol.ProblemStatus.DISAGREE
+        # yapf:disable
+        updated = link.FindingStatus(
+            loaded.result.open + 1,
+            loaded.result.closed if not solved else loaded.result.closed - 1,
+            loaded.result.excluded if not deleted else loaded.result.excluded - 1,
+        )
+        # yapf:enable
+    else:
+        utila.error(f'status: {status} not supported - {source}')
+        return
+    loaded.result = updated
+    dumped = link.dump_job(loaded)
+    utila.file_replace(jobpath, dumped)
+
+
+def problem_fromint(status: int) -> protocol.ProblemStatus:
+    if status in (0, 1):
+        return protocol.ProblemStatus.OPEN
+    if status == 4:
+        return protocol.ProblemStatus.SOLVED
+    return protocol.ProblemStatus.DISAGREE

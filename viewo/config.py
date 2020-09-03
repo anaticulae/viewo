@@ -22,6 +22,8 @@ SECRET_KEY = b'helmut_max_power_abs29.nsTODOThisIsVerySecreyISwarTODO'
 TEMPLATES = os.path.join(ROOT, 'viewo/templates')
 STATIC = os.path.join(ROOT, 'viewo/static')
 
+MAX_FILE_SIZE = 20 * 1024 * 1024  # 20 MB
+
 
 def writing() -> str:
     """Return path to generated `writers club` content. If content is

@@ -16,7 +16,6 @@ import utila
 import utila.feature.processor
 
 import viewo.result.loader
-import viewo.utils
 import viewo.waiting
 
 
