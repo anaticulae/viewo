@@ -137,6 +137,7 @@ def message_replace(content: str) -> str:
     >>> message_replace('that is **?very 2.0!** important')
     'that is <strong>?very 2.0!</strong> important'
     """
+    # TODO: INTRODUCE MARKDOWN PACKAGE
     url = configo.docs_url()
     content = writers.replace(content, url)
     # TODO: REMOVE VIEW HACK LATER
