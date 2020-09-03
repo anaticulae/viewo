@@ -6,6 +6,7 @@
 # use or distribution is an offensive act against international law and may
 # be prosecuted under federal law. Its content is company confidential.
 #==============================================================================
+
 import os
 from os import environ
 from os.path import join
@@ -25,6 +26,7 @@ from flask import url_for
 from jinja2 import TemplateNotFound
 from utila import error
 
+import viewo.__patch__
 from viewo.api.documents import documents_
 from viewo.api.public import welcome
 from viewo.api.result import result_

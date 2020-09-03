@@ -13,6 +13,7 @@ import json
 import re
 
 import configo
+import iamraw.caption
 import utila
 import writers
 
@@ -23,18 +24,20 @@ def tojson(
         footnotes: list = None,
         doctextstyle=None,
         properties: dict = None,
+        captions: list = None,
 ) -> str:
-
     pages = pages_tojson(items, pagesentences)
     footnotes = footnotes_tojson(footnotes)
     doctextstyle = doctextstyle_tojson(doctextstyle)
     properties = properties_tojson(properties)
+    captions = iamraw.caption.pagecaptions_toraw(captions) if captions else []  # pylint:disable=E1101
 
     raw = {
         'status': 0,
         'content': pages,
-        'footnotes': footnotes,
+        'captions': captions,
         'doctextstyle': doctextstyle,
+        'footnotes': footnotes,
         'properties': properties,
     }
     dumped = json.dumps(raw)
@@ -71,7 +74,7 @@ def properties_tojson(properties: dict) -> dict:
     return result
 
 
-def pages_tojson(pages: list, pagesentences) -> dict:
+def pages_tojson(pages: list, pagesentences) -> list:
     result = []
     for item in pages:
         findings = [{

@@ -109,3 +109,15 @@ def friendly_font(font: str) -> str:
     if font == 'timesnewroman':
         return 'Times New Roman'
     return font
+
+
+def load_captions_fromprocess(process: str) -> iamraw.PageContentCaptions:
+    result = link.resultview(process)
+    if not os.path.exists(result):
+        return None
+    path = utila.pathconnector(result, 'caption', 'general_general')
+    if not os.path.exists(path):
+        utila.error(f'could not load: {path}')
+        return None
+    import caption.data  # pylint:disable=W0611 # TODO: REMOVE LATER
+    return serializeraw.load_captions(path)

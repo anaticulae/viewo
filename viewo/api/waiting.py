@@ -11,6 +11,7 @@ import flask
 
 import viewo.result.data
 import viewo.result.json
+import viewo.result.loader
 import viewo.waiting.data
 import viewo.waiting.fastview
 
@@ -79,11 +80,13 @@ def waiting_resultview_status(process: str):
     pagesentences = viewo.result.loader.load_sentences_fromprocess(process)
     footnotes = viewo.result.loader.load_footnotes_fromprocess(process)
     doctextstyle = viewo.result.loader.load_doctextstyle_fromprocess(process)
+    captions = viewo.result.loader.load_captions_fromprocess(process)
 
     dumped = viewo.result.json.tojson(
         loaded,
         pagesentences=pagesentences,
         footnotes=footnotes,
         doctextstyle=doctextstyle,
+        captions=captions,
     )
     return dumped
