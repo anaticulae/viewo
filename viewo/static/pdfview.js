@@ -19,13 +19,14 @@ class ResultView {
         this.content = []
     }
 
-    update_content(content, footnotes, properties, doctextstyle) {
+    update_content(content, footnotes, properties, doctextstyle, captions) {
         // INTRODUCE EVENT LISTENER CONCEPT
         // add document style overview
         content[content.length - 1].title = 'Übersicht'
         this.footnotes = footnotes
         this.properties = properties
         this.doctextstyle = doctextstyle
+        this.captions = captions
 
         if (this.footnotes.length > 0) {
             content.push(
@@ -37,11 +38,21 @@ class ResultView {
                 }
             )
         }
+        if (this.captions.length > 0) {
+            content.push(
+                {
+                    'content': this.captions,
+                    'findings': [],
+                    'page': 1026,
+                    'title': 'Unterschriften',
+                }
+            )
+        }
         content.push(
             {
                 'content': this.doctextstyle,
                 'findings': [],
-                'page': 1026,
+                'page': 1027,
                 'title': 'Darstellung',
             }
         )
@@ -49,7 +60,7 @@ class ResultView {
             {
                 'content': this.properties,
                 'findings': [],
-                'page': 1027,
+                'page': 1028,
                 'title': 'Eigenschaften',
             }
         )
@@ -88,14 +99,17 @@ class ResultView {
         $('#pdfview_docstyle').hide()
         $('#pdfview_footnotes').hide()
         $('#pdfview_properties').hide()
+        $('#pdfview_captions').hide()
         // TODO: REMOVE LATER
         if (selected.page == 1024 || selected.page == -1) {
             this.show_overview()
         } else if (selected.page == 1025) {
             this.show_footnotes()
         } else if (selected.page == 1026) {
-            this.show_docstyle()
+            this.show_captions()
         } else if (selected.page == 1027) {
+            this.show_docstyle()
+        } else if (selected.page == 1028) {
             this.show_pdf_properties()
         } else {
             base.show('#pdfview_content')
@@ -169,6 +183,45 @@ class ResultView {
             $(`#${href}`).click(function () {
                 $(`#openpage_${item.page}`).click()
             });
+        }
+    }
+
+    show_captions(update = false) {
+        $('#pdfview_captions').show()
+        let list = $('#pdfview_captions_list')
+        if (list[0].rows.length > 0 && !update) {
+            return
+        }
+        list.html('')
+        let current = null
+        let index = 0
+        for (let page of this.captions) {
+            for (let item of page.captions) {
+                let nr = index + 1
+                let userpage = Number(page.page) + 1
+                let status = '✔'
+                if (item.error != '') {
+                    status = '✖'
+                }
+                if (current != null && current != item.page) {
+                    list.append('<tr><td style="border-top:solid black 1px;" colspan="4"></td></tr>')
+                }
+                current = item.page
+
+                let href = `footnote_openpage_${index}`
+                let row = `
+            <tr>
+                <td class="center top">${nr}</td>
+                <td class="expand"><span id="${href}" class="click underline">${item.raw}</span></td>
+                <td class="center top">${userpage}</td>
+                <td class="center top">${status}</td>
+            </tr>`
+                list.append(row)
+                $(`#${href}`).click(function () {
+                    $(`#openpage_${page.page}`).click()
+                });
+            }
+            index += 1
         }
     }
 
@@ -348,6 +401,7 @@ class ResultView {
                     downloaded.footnotes,
                     downloaded.properties,
                     downloaded.doctextstyle,
+                    downloaded.captions,
                 )
                 if (downloaded.status == 1) {
                     // process is currently running
