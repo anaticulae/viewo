@@ -8,40 +8,23 @@
 #==============================================================================
 
 import os
-from os import environ
-from os.path import join
 
-from configo import environment
-from configo import export
-from flask import Blueprint
-from flask import Flask
-from flask import Response
-from flask import abort
-from flask import current_app
-from flask import flash
-from flask import redirect
-from flask import render_template
-from flask import request
-from flask import url_for
-from jinja2 import TemplateNotFound
-from utila import error
+import configo
+import flask
 
 import viewo.__patch__
+import viewo.config
 from viewo.api.documents import documents_
 from viewo.api.public import welcome
 from viewo.api.result import result_
 from viewo.api.upload import upload_
 from viewo.api.waiting import waiting_
 from viewo.api.writing import writing_
-from viewo.config import MAX_FILE_SIZE
-from viewo.config import SECRET_KEY
-from viewo.config import STATIC
-from viewo.config import TEMPLATES
 
 __version__ = '0.19.0'
 
 
-def create_application(config=None) -> Flask:
+def create_application(config=None) -> flask.Flask:
     """Setup flask application
 
     1. Set template and static folder
@@ -50,10 +33,10 @@ def create_application(config=None) -> Flask:
     4. Register blueprint for routing the user requests
     """
     # Flask determines template- and static-folder automatically.
-    app_ = Flask(__name__)
+    app_ = flask.Flask(__name__)
 
-    app_.config['MAX_CONTENT_LENGTH'] = MAX_FILE_SIZE
-    app_.secret_key = SECRET_KEY
+    app_.config['MAX_CONTENT_LENGTH'] = viewo.config.MAX_FILE_SIZE
+    app_.secret_key = viewo.config.SECRET_KEY
 
     configure(app_, config)
     init_error_handler(app_)
@@ -79,7 +62,7 @@ def configure(app_, config):
     if config is None:
         # Production environment
         # load the instance config, if it exists
-        common, todo, ready = environment()
+        common, todo, ready = configo.environment()
         app_.config['COMMON'] = common
         app_.config['TODO'] = todo
         app_.config['READY'] = ready
@@ -88,12 +71,12 @@ def configure(app_, config):
         # load the test config if passed in
         app_.config.update(config)
         try:
-            export(config['COMMON'], config['TODO'], config['READY'])
+            configo.export(config['COMMON'], config['TODO'], config['READY'])
         except KeyError:
-            export('', '', '')
+            configo.export('', '', '')
 
 
-def init_error_handler(app: Flask):  # pylint:disable=W0621
+def init_error_handler(app: flask.Flask):  # pylint:disable=W0621
     """Add errorhandler for unresolved resources
 
     Args:
@@ -102,7 +85,7 @@ def init_error_handler(app: Flask):  # pylint:disable=W0621
 
     @app.errorhandler(404)
     def not_found(_):  # pylint:disable=W0612,W0613
-        return render_template('public/error.html', errorpage='Die Seite')
+        return flask.render_template('public/error.html', errorpage='Die Seite')
 
 
 app = create_application()  # pylint:disable=C0103
