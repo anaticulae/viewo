@@ -2,6 +2,13 @@
 
 Every noteable change is logged here.
 
+## v0.20.0
+
+### Feature
+
+* add view to display list of extract captions (add6b9c29ff1)
+* extend interface to deliver extracted captions (4f2e2029a87a)
+
 ## v0.19.0
 
 ### Feature
