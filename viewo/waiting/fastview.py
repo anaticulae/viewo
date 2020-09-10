@@ -11,7 +11,7 @@ import json
 import os
 import re
 
-import protocol
+import serializeraw
 import utila
 
 import viewo.waiting
@@ -84,7 +84,7 @@ def load_fastview_group_result(path: str) -> viewo.waiting.FastViewGroupStatus:
         if not PATTERN.match(name):
             utila.error(f'{name} does not match file pattern - skip')
             continue
-        loaded = protocol.load_result(os.path.join(path, name))
+        loaded = serializeraw.load_findings(os.path.join(path, name))
         for finding in loaded:
             error.append(finding.solution.title)
     return viewo.waiting.FastViewGroupStatus(title=title, error=error)

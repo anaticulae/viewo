@@ -9,37 +9,37 @@
 
 import os
 
+import iamraw
 import link
-import protocol
 import utila
 
 
 def update_bookkeeping(
         source: str,
-        status: protocol.ProblemStatus,
-        before: protocol.ProblemStatus,
+        status: iamraw.ProblemStatus,
+        before: iamraw.ProblemStatus,
 ):
     jobpath = os.path.join(source, link.JOB_FILE_NAME)
     loaded = link.load_job(jobpath)
     # update BOOKKEEPING
-    if status == protocol.ProblemStatus.SOLVED:
+    if status == iamraw.ProblemStatus.SOLVED:
         # solved
         updated = link.FindingStatus(
             loaded.result.open - 1,
             loaded.result.closed + 1,
             loaded.result.excluded,
         )
-    elif status == protocol.ProblemStatus.DISAGREE:
+    elif status == iamraw.ProblemStatus.DISAGREE:
         # removed
         updated = link.FindingStatus(
             loaded.result.open - 1,
             loaded.result.closed,
             loaded.result.excluded + 1,
         )
-    elif status == protocol.ProblemStatus.OPEN:
+    elif status == iamraw.ProblemStatus.OPEN:
         # open
-        solved = before == protocol.ProblemStatus.SOLVED
-        deleted = before == protocol.ProblemStatus.DISAGREE
+        solved = before == iamraw.ProblemStatus.SOLVED
+        deleted = before == iamraw.ProblemStatus.DISAGREE
         # yapf:disable
         updated = link.FindingStatus(
             loaded.result.open + 1,
@@ -55,9 +55,9 @@ def update_bookkeeping(
     utila.file_replace(jobpath, dumped)
 
 
-def problem_fromint(status: int) -> protocol.ProblemStatus:
+def problem_fromint(status: int) -> iamraw.ProblemStatus:
     if status in (0, 1):
-        return protocol.ProblemStatus.OPEN
+        return iamraw.ProblemStatus.OPEN
     if status == 4:
-        return protocol.ProblemStatus.SOLVED
-    return protocol.ProblemStatus.DISAGREE
+        return iamraw.ProblemStatus.SOLVED
+    return iamraw.ProblemStatus.DISAGREE

@@ -10,10 +10,11 @@
 import concurrent.futures
 import os
 
+import iamraw
 import link
 import protocol
+import serializeraw
 import utila
-import utila.feature.processor
 
 import viewo.result.loader
 import viewo.waiting
@@ -137,7 +138,7 @@ class HtmlLookup:
         return len(self.data)
 
 
-def findings_from_path(path: str, worker: int = 10) -> protocol.PageFindings:
+def findings_from_path(path: str, worker: int = 10) -> iamraw.PageFindings:
     """Load Findings from `path` directory and group them by page as
     `PageFindings`."""
     assert os.path.isdir(path), str(path)
@@ -147,11 +148,12 @@ def findings_from_path(path: str, worker: int = 10) -> protocol.PageFindings:
 
     # yaml parsing is cpu bound, therefore we need a process pool instead
     # of thread pool.
-    executor = utila.feature.processor.select_executor()
+    executor = utila.select_executor()
     # select executor is required to run in pytest
     with executor(max_workers=worker) as executor:
         todo = {
-            executor.submit(protocol.load_result, path): path for path in paths
+            executor.submit(serializeraw.load_findings, path): path
+            for path in paths
         }
         findings = []
         for job in concurrent.futures.as_completed(todo):

@@ -43,7 +43,7 @@ import dataclasses
 import enum
 import typing
 
-import protocol
+import iamraw
 
 VERIFY = 'pdfinfo.json'
 FASTVIEW = 'fastview'
@@ -107,7 +107,7 @@ class FastViewStatus:
 class ResultPageView:
     page: int = None
     html: str = None
-    findings: protocol.Findings = dataclasses.field(default_factory=list)
+    findings: iamraw.Findings = dataclasses.field(default_factory=list)
 
     def __len__(self):
         return len(self.findings)
