@@ -22,12 +22,14 @@ class ResultView {
     update_content(content, footnotes, properties, doctextstyle, captions) {
         // INTRODUCE EVENT LISTENER CONCEPT
         // add document style overview
-        content[content.length - 1].title = 'Übersicht'
         this.footnotes = footnotes
         this.properties = properties
         this.doctextstyle = doctextstyle
         this.captions = captions
 
+        if (content[0].page == -1) {
+            content[0].title = 'Übersicht'
+        }
         if (this.footnotes.length > 0) {
             content.push(
                 {
