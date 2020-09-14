@@ -2,6 +2,12 @@
 
 Every noteable change is logged here.
 
+## v0.20.2
+
+### Fix
+
+* adjust error overview to the start of document (2d306f739087)
+
 ## v0.20.1
 
 ## v0.20.0
