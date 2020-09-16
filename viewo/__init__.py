@@ -14,12 +14,12 @@ import flask
 
 import viewo.__patch__
 import viewo.config
-from viewo.api.documents import documents_
 from viewo.api.public import welcome
 from viewo.api.result import result_
 from viewo.api.upload import upload_
 from viewo.api.waiting import waiting_
 from viewo.api.writing import writing_
+from viewo.view.documents import documents_
 
 __version__ = '0.20.3'
 
