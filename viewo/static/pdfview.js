@@ -124,6 +124,9 @@ class ResultView {
         let overview = $('#pdfview_overview')
         overview.html('')
         for (let finding of this.findings) {
+            if (visible(finding) == false) {
+                continue
+            }
             let del = `delete_${finding.number}`
             let done = `done_${finding.number}`
             let content = `
