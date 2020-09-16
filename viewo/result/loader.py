@@ -119,5 +119,4 @@ def load_captions_fromprocess(process: str) -> iamraw.PageContentCaptions:
     if not os.path.exists(path):
         utila.error(f'could not load: {path}')
         return None
-    import caption.data  # pylint:disable=W0611 # TODO: REMOVE LATER
     return serializeraw.load_captions(path)
