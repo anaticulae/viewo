@@ -36,6 +36,8 @@ Developer
 .. toctree::
   :maxdepth: 1
 
+  developer/rest
+
 
 Modules
 --------------------
