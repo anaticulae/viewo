@@ -21,7 +21,7 @@ from viewo.api.upload import upload_
 from viewo.api.waiting import waiting_
 from viewo.api.writing import writing_
 
-__version__ = '0.20.2'
+__version__ = '0.20.3'
 
 
 def create_application(config=None) -> flask.Flask:

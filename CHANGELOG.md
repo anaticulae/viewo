@@ -2,6 +2,13 @@
 
 Every noteable change is logged here.
 
+## v0.20.3
+
+### Fix
+
+* remove outdated import (3cf9ca2c2cdf)
+* hide solved findings in overview (8b040faf78a7)
+
 ## v0.20.2
 
 ### Fix
