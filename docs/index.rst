@@ -7,6 +7,7 @@ General
 .. toctree::
   :maxdepth: 1
 
+  api
   bugs
   todo
   questions
