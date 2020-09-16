@@ -13,6 +13,8 @@ resources
 
 Document root:
 
+* :class:`viewo.api.documents`
+
 .. code-block:: none
 
     documents/{document_id}

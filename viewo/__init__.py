@@ -14,6 +14,7 @@ import flask
 
 import viewo.__patch__
 import viewo.config
+from viewo.api.documents import api_documents
 from viewo.api.public import welcome
 from viewo.api.result import result_
 from viewo.api.upload import upload_
@@ -22,6 +23,8 @@ from viewo.api.writing import writing_
 from viewo.view.documents import documents_
 
 __version__ = '0.20.3'
+
+API_PREFIX = '/api/v0'
 
 
 def create_application(config=None) -> flask.Flask:
@@ -41,12 +44,16 @@ def create_application(config=None) -> flask.Flask:
     configure(app_, config)
     init_error_handler(app_)
 
+    # view
     app_.register_blueprint(documents_)
     app_.register_blueprint(upload_)
     app_.register_blueprint(result_)
     app_.register_blueprint(welcome)
     app_.register_blueprint(waiting_)
     app_.register_blueprint(writing_)
+
+    # data API
+    app_.register_blueprint(api_documents, url_prefix=API_PREFIX)
 
     return app_
 

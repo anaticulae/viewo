@@ -14,6 +14,7 @@ from os.path import join
 from flask import current_app
 from utila import file_read
 
+import viewo
 from viewo import create_application
 from viewo.config import ROOT
 from viewo.config import TEMPLATES
@@ -43,5 +44,12 @@ def decode(response) -> str:
 
 def content(client, request: str):
     response = client.get(request)
+    assert response.status_code == http.HTTPStatus.OK
+    return decode(response)
+
+
+def apicall(client, request: str):
+    cmd = viewo.API_PREFIX + request
+    response = client.get(cmd)
     assert response.status_code == http.HTTPStatus.OK
     return decode(response)
