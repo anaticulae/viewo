@@ -50,22 +50,33 @@ def document_get(documentid: str):
 
 @api_documents.route('/documents', methods=['POST'])
 def document_create() -> str:
-    if not flask.request.files:
-        return viewo.api.bad('missing `file` field')
-
-    pdf = flask.request.files['file']
-    filename = werkzeug.utils.secure_filename(pdf.filename)
-    if pdf.filename == '':
-        # if user does not select file, browser also submit an empty part
-        # without filename
-        return viewo.api.bad('empty `file` field')
+    if 'url' in flask.request.form:
+        posturl = flask.request.form['url']
+        try:
+            pdf = viewo.upload.curlpdf(posturl)
+        except viewo.upload.FileTooLarge:
+            return viewo.api.bad('file too large')
+        except viewo.upload.InvalidResource:
+            return viewo.api.bad('require pdf file')
+        except viewo.upload.InvalidUrl:
+            return viewo.api.bad('invalid url')
+        filename = 'cloud.pdf'
+    else:
+        if not flask.request.files:
+            return viewo.api.bad('missing `file` field')
+        pdf = flask.request.files['file']
+        filename = werkzeug.utils.secure_filename(pdf.filename)
+        if pdf.filename == '':
+            # if user does not select file, browser also submit an empty part
+            # without filename
+            return viewo.api.bad('empty `file` field')
 
     todo = link.create_todo(pdf, filename)
     _, resource = os.path.split(todo)
 
     result = viewo.api.success(
         document=flask.url_for(
-            f'api_documents.document_get',
+            'api_documents.document_get',
             documentid=resource,
         ),
         link=flask.url_for('writing.view_result', document=resource),

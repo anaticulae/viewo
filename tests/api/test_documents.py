@@ -8,9 +8,13 @@
 # =============================================================================
 
 import http
+import os
+
+import power
+import pytest
+import utila
 
 import tests
-import tests.api
 
 
 def test_api_documents_overview(client):
@@ -51,11 +55,39 @@ def test_api_delete_document_which_does_not_exists(client):
 
 
 def test_api_upload_document(client):
-    result = tests.apiupload(
-        client,
-        '/documents',
-        'file',
-        tests.MINIMAL,
-    )
+    result = tests.apiupload(client, '/documents', 'file', tests.MINIMAL)
     assert result['document']
     assert result['link']
+
+
+def test_api_upload_from_url(client):
+    source = f'file:///{utila.forward_slash(power.MASTER072_PDF)}'
+    result = tests.apipost(client, '/documents', data={'url': source})
+    assert result['document']
+
+
+@pytest.mark.parametrize('source, expected_error', [
+    pytest.param('http://invalid.dscom', 'invalid url', id='invalid url'),
+    pytest.param(f'file:///{__file__}', 'require pdf', id='no pdf'),
+])
+def test_api_upload_from_url_with_error(source, client, expected_error):
+    result = tests.apipost(
+        client,
+        '/documents',
+        data={'url': source},
+        expected=http.HTTPStatus.BAD_REQUEST,
+    )
+    assert expected_error in result['message']
+
+
+def test_api_upload_from_url_too_large_file(client, testdir):
+    content = b'%PDF-1.5' + b'0' * 1024 * 1024 * 100  # 100 MB
+    pdf = str(os.path.join(testdir.tmpdir, 'upload.pdf'))
+    utila.file_create_binary(pdf, content)
+    source = f'file:///{pdf}'
+    tests.apipost(
+        client,
+        page='/documents',
+        data={'url': source},
+        expected=http.HTTPStatus.BAD_REQUEST,
+    )
