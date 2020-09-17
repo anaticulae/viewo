@@ -7,9 +7,20 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import http
+
 import tests
 
 
 def test_api_documents_overview(client):
     result = tests.apicall(client, '/documents')
     assert '"documents"' in result
+
+
+def test_api_document_byid(client):
+    result = tests.apicall(
+        client,
+        '/documents/abc',
+        expected=http.HTTPStatus.NOT_FOUND,
+    )
+    assert '"not found"' in result

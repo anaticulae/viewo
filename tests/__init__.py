@@ -48,8 +48,8 @@ def content(client, request: str):
     return decode(response)
 
 
-def apicall(client, request: str):
+def apicall(client, request: str, expected=http.HTTPStatus.OK):
     cmd = viewo.API_PREFIX + request
     response = client.get(cmd)
-    assert response.status_code == http.HTTPStatus.OK
+    assert response.status_code == expected
     return decode(response)

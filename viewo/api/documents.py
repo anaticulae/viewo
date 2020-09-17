@@ -8,6 +8,7 @@
 # =============================================================================
 
 import json
+import os
 
 import configo
 import flask
@@ -22,6 +23,24 @@ def documents():
     collected = all_documents()
     dumped = json.dumps({
         'documents': collected,
+    })
+    return dumped
+
+
+@api_documents.route('/documents/<string:documentid>', methods=['GET'])
+def document_byid(documentid: str):
+    """Recieve document information selected by documentid. If document
+    does not exists, 404 Error will be raised."""
+    documentpath = link.document(documentid)  # pylint:disable=E1101
+    if documentpath is None:
+        return notfound(f'could not locate `{documentid}`')
+    source = os.path.join(link.document(documentid), link.JOB_FILE_NAME)  # pylint:disable=E1101
+    if not os.path.exists(source):
+        return notfound(f'could not locate `{documentid}` {source}')
+    # TODO: REPLACE WITH JSON METHOD
+    loaded = job_toraw(link.load_job(source))
+    dumped = json.dumps({
+        'document': loaded,
     })
     return dumped
 
@@ -51,3 +70,11 @@ def job_toraw(info: link.JobInfo) -> dict:
     if info.hashlink:
         result['hashlink'] = info.hashlink
     return result
+
+
+def notfound(message: str):
+    result = flask.jsonify({
+        'error': 'not found',
+        'message': message,
+    })
+    return result, 404
