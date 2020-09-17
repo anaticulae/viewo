@@ -41,6 +41,12 @@ List findings of selected document:
 
 * See: :py:func:`viewo.api.findings.present.findings`
 
+Select by status:
+
+.. code-block:: none
+
+    documents/{document_id}/findings?status=closed
+
 Select optional pages:
 
 .. code-block:: none
