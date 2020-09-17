@@ -43,6 +43,8 @@ Select finding by **document_id** and **finding_id**:
 
     documents/{document_id}/findings/{finding_id}
 
+* See: :py:func:`viewo.api.findings.present.finding_get`
+
 List of pages in document
 
 .. code-block:: none

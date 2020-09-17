@@ -28,3 +28,13 @@ def test_api_findings_overview_by_invalid_documentid(client):
         '/documents/invalid_documentid/findings',
         expected=http.HTTPStatus.NOT_FOUND,
     )
+
+
+def test_api_findings_byfindingid_notexists(docclient):
+    client, doc = docclient
+    tests.apicall(
+        client,
+        f'{doc}/findings/notexists',
+        prefix='',
+        expected=http.HTTPStatus.NOT_FOUND,
+    )
