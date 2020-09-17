@@ -13,6 +13,7 @@ from os.path import join
 
 from pytest import fixture
 
+import tests
 from viewo import create_application
 
 pytest_plugins = 'pytester'  # pylint: disable=invalid-name
@@ -47,6 +48,13 @@ def app(tmpdir):
 def client(app):  # pylint:disable=W0621
     """A test client for the app."""
     return app.test_client()
+
+
+@fixture
+def docclient(client):  # pylint:disable=W0621
+    result = tests.apiupload(client, '/documents', 'file', tests.MINIMAL)
+    doc = result['document']
+    return client, doc
 
 
 @fixture
