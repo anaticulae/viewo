@@ -58,8 +58,13 @@ def content(client, request: str):
     return decode(response)
 
 
-def apicall(client, request: str, expected=http.HTTPStatus.OK):
-    cmd = viewo.API_PREFIX + request
+def apicall(
+        client,
+        request: str,
+        prefix=viewo.API_PREFIX,
+        expected=http.HTTPStatus.OK,
+):
+    cmd = prefix + request
     response = client.get(cmd)
     assert response.status_code == expected
     return decode(response)
@@ -82,12 +87,13 @@ def apiupload(
         page: str,
         field: str,
         path: str,
+        prefix=viewo.API_PREFIX,
         expected=http.HTTPStatus.OK,
 ):
     """Upload file via http post command"""
     assert field, path
     assert os.path.exists(path), path
-    cmd = viewo.API_PREFIX + page
+    cmd = prefix + page
     fields = werkzeug.datastructures.MultiDict([(field, open(path, 'rb'))])
     response = client.post(cmd, data=fields, follow_redirects=True)
     assert response.status_code == expected
@@ -108,9 +114,10 @@ def apipost(
         client,
         page: str,
         data: dict,
+        prefix=viewo.API_PREFIX,
         expected=http.HTTPStatus.OK,
 ):
-    cmd = viewo.API_PREFIX + page
+    cmd = prefix + page
     result = client.post(cmd, data=data, follow_redirects=True)
     assert result.status_code == expected, str(result)
     return decode(result)
