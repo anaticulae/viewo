@@ -32,10 +32,10 @@ def upload_pdf():
     file_fromurl = None
     with contextlib.suppress(KeyError):
         posturl = flask.request.form['url']
-        file_fromurl = viewo.upload.curlpdf(posturl)
-        if not file_fromurl:
+        try:
+            file_fromurl = viewo.upload.curlpdf(posturl)
+        except viewo.upload.CurlError:
             return flask.redirect('/upload/failure')
-
     if not file_fromurl:  # POST FILE OPTION
         # check if the post request has the file part
         if 'file' not in flask.request.files:

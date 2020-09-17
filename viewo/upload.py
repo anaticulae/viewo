@@ -19,34 +19,51 @@ FILE_READ_TIMEOUT = 10
 EXPECTED_PDFSTART = b'%PDF-1.'
 
 
-def curlpdf(url: str):
+class CurlError(ValueError):
+
+    def __init__(self, url):
+        super().__init__()
+        self.url = url
+
+
+class FileTooLarge(CurlError):
+    pass
+
+
+class InvalidResource(CurlError):
+    pass
+
+
+class InvalidUrl(CurlError):
+    pass
+
+
+class TmpFile:
+
+    def __init__(self, content):
+        self.content = content
+
+    def save(self, path: str):
+        utila.file_replace_binary(path, self.content)
+
+
+def curlpdf(url: str) -> TmpFile:
     try:
-        with urllib.request.urlopen(
-                url,
-                timeout=FILE_READ_TIMEOUT,
-        ) as webhandle:
+        with urllib.request.urlopen(url, timeout=FILE_READ_TIMEOUT) as webhandle: # yapf:disable
             header = webhandle.read(HEADER_READ_SIZE)
             # %PDF-1.5 for example
             if not header[0:len(EXPECTED_PDFSTART)] == EXPECTED_PDFSTART:
                 utila.error(f'no pdf file: {url}')
-                return None
+                raise InvalidResource(url)
             todo = viewo.config.MAX_FILE_SIZE - HEADER_READ_SIZE
             content = webhandle.read(todo)
             if webhandle.read(1) != b'':
                 # there are some bytes left
                 utila.error(f'file too large: {url}')
-                return None
-    except (ValueError, urllib.error.URLError):
+                raise FileTooLarge(url)
+    except urllib.error.URLError as error:
         utila.error(f'invalid url: {url}')
-        return None
+        raise InvalidUrl(url) from error
+
     filecontent = header + content
-
-    class TmpFile:
-
-        def __init__(self, content):
-            self.content = content
-
-        def save(self, path: str):
-            utila.file_replace_binary(path, self.content)
-
     return TmpFile(filecontent)
