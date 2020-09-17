@@ -11,9 +11,11 @@ import contextlib
 import http
 import json
 import json.decoder
+import os
 from os.path import exists
 from os.path import join
 
+import werkzeug.datastructures
 from flask import current_app
 from utila import file_read
 
@@ -61,3 +63,42 @@ def apicall(client, request: str, expected=http.HTTPStatus.OK):
     response = client.get(cmd)
     assert response.status_code == expected
     return decode(response)
+
+
+def apidelete(
+        client,
+        request: str,
+        prefix=viewo.API_PREFIX,
+        expected=http.HTTPStatus.OK,
+):
+    cmd = prefix + request
+    response = client.delete(cmd)
+    assert response.status_code == expected
+    return decode(response)
+
+
+def apiupload(
+        client,
+        page: str,
+        field: str,
+        path: str,
+        expected=http.HTTPStatus.OK,
+):
+    """Upload file via http post command"""
+    assert field, path
+    assert os.path.exists(path), path
+    cmd = viewo.API_PREFIX + page
+    fields = werkzeug.datastructures.MultiDict([(field, open(path, 'rb'))])
+    response = client.post(cmd, data=fields, follow_redirects=True)
+    assert response.status_code == expected
+    return decode(response)
+
+
+def upload(client, file=MINIMAL):
+    result = apiupload(
+        client,
+        '/documents',
+        'file',
+        file,
+    )
+    return result
