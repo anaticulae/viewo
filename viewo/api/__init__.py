@@ -7,7 +7,10 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import functools
+
 import flask
+import link
 
 
 def success(message: str = 'completed', **args):
@@ -40,3 +43,17 @@ def internal(message: str):
         'message': message,
     })
     return result, 500
+
+
+def valid_document(function):
+
+    @functools.wraps(function)
+    def decorated_function(*args, **kwargs):
+        # TODO: ADD USER RIGHTS CHECK
+        documentid = kwargs['documentid']
+        documentpath = link.document(documentid)  # pylint:disable=E1101
+        if documentpath is None:
+            return notfound(f'could not locate `{documentid}`')
+        return function(*args, **kwargs)
+
+    return decorated_function

@@ -8,22 +8,18 @@
 # =============================================================================
 
 import flask
-import link
 
 import viewo.api
 import viewo.api.findings
 import viewo.api.findings.utils
 
 
+@viewo.api.valid_document
 @viewo.api.findings.api_findings.route(
     '/documents/<string:documentid>/findings',
     methods=['GET'],
 )
 def findings(documentid):
-    documentpath = link.document(documentid)  # pylint:disable=E1101
-    if documentpath is None:
-        return viewo.api.notfound(f'could not locate `{documentid}`')
-
     collected = viewo.api.findings.utils.all_findings(documentid)
     dumped = flask.jsonify({
         'findings': collected,

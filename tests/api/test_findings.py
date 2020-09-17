@@ -7,6 +7,8 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import http
+
 import tests
 
 
@@ -18,3 +20,11 @@ def test_api_findings_overview_bydocumentid(docclient):
         prefix='',
     )
     assert not result['findings']
+
+
+def test_api_findings_overview_by_invalid_documentid(client):
+    tests.apicall(
+        client,
+        '/documents/invalid_documentid/findings',
+        expected=http.HTTPStatus.NOT_FOUND,
+    )

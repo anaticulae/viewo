@@ -31,12 +31,10 @@ def documents():
     '/documents/<string:documentid>',
     methods=['GET'],
 )
+@viewo.api.valid_document
 def document_get(documentid: str):
     """Recieve document information selected by documentid. If document
     does not exists, 404 Error will be raised."""
-    documentpath = link.document(documentid)  # pylint:disable=E1101
-    if documentpath is None:
-        return viewo.api.notfound(f'could not locate `{documentid}`')
     source = os.path.join(link.document(documentid), link.JOB_FILE_NAME)  # pylint:disable=E1101
     if not os.path.exists(source):
         return viewo.api.notfound(f'could not locate `{documentid}')
