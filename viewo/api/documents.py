@@ -14,6 +14,7 @@ import configo
 import flask
 import link
 import link.job
+import werkzeug.utils
 
 api_documents = flask.Blueprint('api_documents', __name__)  # pylint:disable=C0103
 
@@ -28,7 +29,7 @@ def documents():
 
 
 @api_documents.route('/documents/<string:documentid>', methods=['GET'])
-def document_byid(documentid: str):
+def document_get(documentid: str):
     """Recieve document information selected by documentid. If document
     does not exists, 404 Error will be raised."""
     documentpath = link.document(documentid)  # pylint:disable=E1101
@@ -43,6 +44,44 @@ def document_byid(documentid: str):
         'document': loaded,
     })
     return dumped
+
+
+@api_documents.route('/documents', methods=['POST'])
+def document_create() -> str:
+    if not flask.request.files:
+        return bad('missing `file` field')
+
+    pdf = flask.request.files['file']
+    filename = werkzeug.utils.secure_filename(pdf.filename)
+    if pdf.filename == '':
+        # if user does not select file, browser also submit an empty part
+        # without filename
+        return bad('empty `file` field')
+
+    todo = link.create_todo(pdf, filename)
+    _, resource = os.path.split(todo)
+
+    result = success(
+        document=flask.url_for(
+            f'api_documents.document_get',
+            documentid=resource,
+        ),
+        link=flask.url_for('writing.view_result', document=resource),
+    )
+    return result
+
+
+@api_documents.route('/documents/<string:documentid>', methods=['DELETE'])
+def document_delete(documentid) -> str:
+    current = link.current(documentid)
+    if current is None:
+        return notfound(f'"{documentid}" does not exists')
+    if current == link.ProcessState.UNDEFINED:
+        return internal('unexpected state')
+    if current == link.ProcessState.DELETED:
+        return bad('resource was already deleted')
+    link.delete(documentid)
+    return success(f'deleted: {documentid}')
 
 
 def all_documents():

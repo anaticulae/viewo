@@ -11,13 +11,16 @@ documents
 resources
 ~~~~~~~~~
 
+
 Document root:
 
-* :class:`viewo.api.documents`
+* :py:class:`viewo.api.documents`
 
 .. code-block:: none
 
     documents/{document_id}
+
+* See: :py:func:`viewo.api.documents.document_get`
 
 List findings of selected document:
 
