@@ -29,6 +29,8 @@ List findings of selected document:
 
     documents/{document_id}/findings
 
+* See: :py:func:`viewo.api.findings.present.findings`
+
 Select optional pages:
 
 .. code-block:: none

@@ -1,0 +1,31 @@
+# =============================================================================
+# C O P Y R I G H T
+# -----------------------------------------------------------------------------
+# Copyright (c) 2020 by Helmut Konrad Fahrendholz. All rights reserved.
+# This file is property of Helmut Konrad Fahrendholz. Any unauthorized copy,
+# use or distribution is an offensive act against international law and may
+# be prosecuted under federal law. Its content is company confidential.
+# =============================================================================
+
+import flask
+import link
+
+import viewo.api
+import viewo.api.findings
+import viewo.api.findings.utils
+
+
+@viewo.api.findings.api_findings.route(
+    '/documents/<string:documentid>/findings',
+    methods=['GET'],
+)
+def findings(documentid):
+    documentpath = link.document(documentid)  # pylint:disable=E1101
+    if documentpath is None:
+        return viewo.api.notfound(f'could not locate `{documentid}`')
+
+    collected = viewo.api.findings.utils.all_findings(documentid)
+    dumped = flask.jsonify({
+        'findings': collected,
+    })
+    return dumped
