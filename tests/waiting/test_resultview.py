@@ -17,6 +17,7 @@ from tests.waiting import valid  # pylint:disable=W0611
 
 
 def validate_status(dumped: str):
+    dumped = str(dumped)
     assert 'page' in dumped
     assert 'html' in dumped
     assert 'findings' in dumped
@@ -48,7 +49,7 @@ def test_waiting_resultview_status_failure(valid, client, monkeypatch):  # pylin
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
         result = content(client, '/waiting/resultview/status/abcdc')
-    assert '{}' in result, str(result)
+    assert not result
 
 
 def test_waiting_resultview_status(valid, client, monkeypatch):  # pylint:disable=W0621

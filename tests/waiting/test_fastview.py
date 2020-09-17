@@ -19,7 +19,7 @@ def test_waiting_fastview_status(valid, client, monkeypatch):  # pylint:disable=
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
         result = content(client, '/waiting/fastview/status/12345678900')
-
+    result = str(result)
     assert 'title' in result, str(result)
     assert 'pages' in result, str(result)
     assert 'content' in result, str(result)
@@ -32,7 +32,7 @@ def test_waiting_fastview_status_failure(valid, client, monkeypatch):  # pylint:
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
         result = content(client, '/waiting/fastview/status/abcdc')
-    assert '{}' in result, str(result)
+    assert result == {}, str(result)
 
 
 def test_waiting_fastview(valid, client, monkeypatch):  # pylint:disable=W0621

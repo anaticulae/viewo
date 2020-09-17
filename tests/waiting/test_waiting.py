@@ -52,7 +52,7 @@ def test_waiting_status_invalid(client):
 
 def test_waiting_status_invalid_resource(client):
     result = content(client, '/waiting/status/1337')
-    assert result == '{}'
+    assert not result
 
 
 def test_waiting_status(no_validation, client, monkeypatch):  # pylint:disable=W0621

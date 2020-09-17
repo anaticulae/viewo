@@ -7,6 +7,7 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import contextlib
 import json
 import os
 
@@ -39,10 +40,10 @@ def jsonify(item: Status) -> str:
 
 
 def loads(content: str) -> Status:
-    loaded = json.loads(content)
-    result = Status()
-    result.status = State.fromstr(loaded['status'])
-    for item in loaded['states']:
+    with contextlib.suppress(TypeError):
+        content = json.loads(content)
+    result = Status(status=State.fromstr(content['status']))
+    for item in content['states']:
         parsed = State.fromstr(item)
         result.append(parsed)  # pylint:disable=E1101
     return result

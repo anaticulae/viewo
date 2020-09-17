@@ -14,7 +14,7 @@ import tests
 
 def test_api_documents_overview(client):
     result = tests.apicall(client, '/documents')
-    assert '"documents"' in result
+    assert not result['documents']
 
 
 def test_api_document_byid(client):
@@ -23,4 +23,4 @@ def test_api_document_byid(client):
         '/documents/abc',
         expected=http.HTTPStatus.NOT_FOUND,
     )
-    assert '"not found"' in result
+    assert 'not found' in result['error']

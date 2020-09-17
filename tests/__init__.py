@@ -7,7 +7,10 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import contextlib
 import http
+import json
+import json.decoder
 from os.path import exists
 from os.path import join
 
@@ -37,9 +40,14 @@ EXAMPLE_RESULT = join(EXAMPLE_READY, '1508790764/result')
 assert exists(EXAMPLE_RESULT), EXAMPLE_RESULT
 
 
-def decode(response) -> str:
+def decode(response) -> dict:
     """Read binary data from response and convert them to str"""
-    return response.data.decode('utf8')
+    result = response.data.decode('utf8')
+    with contextlib.suppress(json.decoder.JSONDecodeError):
+        # json format
+        return json.loads(result)
+    # html format
+    return result
 
 
 def content(client, request: str):
