@@ -43,6 +43,18 @@ Select finding by **document_id** and **finding_id**:
 
     documents/{document_id}/findings/{finding_id}
 
+List of pages in document
+
+.. code-block:: none
+
+    documents/{document_id}/pages
+
+List of a part of pages in document
+
+.. code-block:: none
+
+    documents/{document_id}/pages?range=start:end
+
 operation
 ~~~~~~~~~
 
