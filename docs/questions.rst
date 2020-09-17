@@ -16,3 +16,5 @@ contra:
   and states.
 
 Solution: In the current state, we do not store global state view
+
+The RESTful approach says: Do not store any client state information on the server.
