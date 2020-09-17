@@ -66,7 +66,7 @@ def apicall(
 ):
     cmd = prefix + request
     response = client.get(cmd)
-    assert response.status_code == expected
+    assert response.status_code == expected, str(response.status_code)
     return decode(response)
 
 
@@ -78,7 +78,7 @@ def apidelete(
 ):
     cmd = prefix + request
     response = client.delete(cmd)
-    assert response.status_code == expected
+    assert response.status_code == expected, str(response.status_code)
     return decode(response)
 
 
@@ -96,7 +96,7 @@ def apiupload(
     cmd = prefix + page
     fields = werkzeug.datastructures.MultiDict([(field, open(path, 'rb'))])
     response = client.post(cmd, data=fields, follow_redirects=True)
-    assert response.status_code == expected
+    assert response.status_code == expected, str(response.status_code)
     return decode(response)
 
 
