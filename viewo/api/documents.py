@@ -16,6 +16,8 @@ import link
 import link.job
 import werkzeug.utils
 
+import viewo.api
+
 api_documents = flask.Blueprint('api_documents', __name__)  # pylint:disable=C0103
 
 
@@ -34,10 +36,10 @@ def document_get(documentid: str):
     does not exists, 404 Error will be raised."""
     documentpath = link.document(documentid)  # pylint:disable=E1101
     if documentpath is None:
-        return notfound(f'could not locate `{documentid}`')
+        return viewo.api.notfound(f'could not locate `{documentid}`')
     source = os.path.join(link.document(documentid), link.JOB_FILE_NAME)  # pylint:disable=E1101
     if not os.path.exists(source):
-        return notfound(f'could not locate `{documentid}` {source}')
+        return viewo.api.notfound(f'could not locate `{documentid}` {source}')
     # TODO: REPLACE WITH JSON METHOD
     loaded = job_toraw(link.load_job(source))
     dumped = json.dumps({
@@ -49,19 +51,19 @@ def document_get(documentid: str):
 @api_documents.route('/documents', methods=['POST'])
 def document_create() -> str:
     if not flask.request.files:
-        return bad('missing `file` field')
+        return viewo.api.bad('missing `file` field')
 
     pdf = flask.request.files['file']
     filename = werkzeug.utils.secure_filename(pdf.filename)
     if pdf.filename == '':
         # if user does not select file, browser also submit an empty part
         # without filename
-        return bad('empty `file` field')
+        return viewo.api.bad('empty `file` field')
 
     todo = link.create_todo(pdf, filename)
     _, resource = os.path.split(todo)
 
-    result = success(
+    result = viewo.api.success(
         document=flask.url_for(
             f'api_documents.document_get',
             documentid=resource,
@@ -75,13 +77,13 @@ def document_create() -> str:
 def document_delete(documentid) -> str:
     current = link.current(documentid)
     if current is None:
-        return notfound(f'"{documentid}" does not exists')
+        return viewo.api.notfound(f'"{documentid}" does not exists')
     if current == link.ProcessState.UNDEFINED:
-        return internal('unexpected state')
+        return viewo.api.internal('unexpected state')
     if current == link.ProcessState.DELETED:
-        return bad('resource was already deleted')
+        return viewo.api.bad('resource was already deleted')
     link.delete(documentid)
-    return success(f'deleted: {documentid}')
+    return viewo.api.success(f'deleted: {documentid}')
 
 
 def all_documents():
@@ -109,35 +111,3 @@ def job_toraw(info: link.JobInfo) -> dict:
     if info.hashlink:
         result['hashlink'] = info.hashlink
     return result
-
-
-def success(message: str = 'completed', **args):
-    result = flask.jsonify({
-        'message': message,
-        **args,
-    })
-    return result, 200
-
-
-def notfound(message: str):
-    result = flask.jsonify({
-        'error': 'not found',
-        'message': message,
-    })
-    return result, 404
-
-
-def bad(message: str):
-    result = flask.jsonify({
-        'error': 'bad request',
-        'message': message,
-    })
-    return result, 400
-
-
-def internal(message: str):
-    result = flask.jsonify({
-        'error': 'internal',
-        'message': message,
-    })
-    return result, 500
