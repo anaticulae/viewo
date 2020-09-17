@@ -23,6 +23,16 @@ Document root:
 
 * See: :py:func:`viewo.api.documents.present.document_get`
 
+operation
+~~~~~~~~~
+
+**create**:
+
+**delete**:
+
+findings
+--------
+
 List findings of selected document:
 
 .. code-block:: none
@@ -45,6 +55,9 @@ Select finding by **document_id** and **finding_id**:
 
 * See: :py:func:`viewo.api.findings.present.finding_get`
 
+pages
+-----
+
 List of pages in document
 
 .. code-block:: none
@@ -56,14 +69,6 @@ List of a part of pages in document
 .. code-block:: none
 
     documents/{document_id}/pages?range=start:end
-
-operation
-~~~~~~~~~
-
-**create**:
-
-**delete**:
-
 
 user
 ----
