@@ -102,3 +102,15 @@ def upload(client, file=MINIMAL):
         file,
     )
     return result
+
+
+def apipost(
+        client,
+        page: str,
+        data: dict,
+        expected=http.HTTPStatus.OK,
+):
+    cmd = viewo.API_PREFIX + page
+    result = client.post(cmd, data=data, follow_redirects=True)
+    assert result.status_code == expected, str(result)
+    return decode(result)
