@@ -21,14 +21,29 @@ def test_api_documents_overview(client):
     result = tests.apicall(client, '/documents')
     assert not result['documents']
 
+    tests.apiupload(client, '/documents', 'file', tests.MINIMAL)
 
-def test_api_document_get(client):
+    result = tests.apicall(client, '/documents')
+    assert result['documents']
+
+
+def test_api_document_get_no_resource(client):
     result = tests.apicall(
         client,
         '/documents/abc',
         expected=http.HTTPStatus.NOT_FOUND,
     )
     assert 'not found' in result['error']
+
+
+def test_api_document_get_byid(client):
+    result = tests.apiupload(client, '/documents', 'file', tests.MINIMAL)
+    result = tests.apicall(
+        client,
+        result['document'],
+        prefix='',
+    )
+    assert result['document']['title']
 
 
 def test_api_delete_document_byid(client):
