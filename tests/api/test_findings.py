@@ -10,9 +10,8 @@
 import http
 
 import tests
-
-TEST_DOCUMENT = '1508790764'
-TEST_FINDING = '1644413926'
+from tests.api import TEST_DOCUMENT
+from tests.api import TEST_FINDING
 
 
 def test_api_findings_overview_bydocumentid(findingclient):

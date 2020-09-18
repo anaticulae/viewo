@@ -6,3 +6,6 @@
 # use or distribution is an offensive act against international law and may
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
+
+TEST_DOCUMENT = '1508790764'
+TEST_FINDING = '1644413926'
