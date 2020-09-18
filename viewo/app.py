@@ -15,6 +15,7 @@ import viewo.__patch__
 import viewo.config
 from viewo.api.documents import *  # pylint:disable=wildcard-import
 from viewo.api.findings import *  # pylint:disable=wildcard-import
+from viewo.api.pages import *  # pylint:disable=wildcard-import
 from viewo.api.public import welcome
 from viewo.api.result import result_
 from viewo.api.upload import upload_
@@ -51,6 +52,7 @@ def create_application(config=None) -> flask.Flask:
     # data API
     app_.register_blueprint(api_documents, url_prefix=viewo.config.API_PREFIX)
     app_.register_blueprint(api_findings, url_prefix=viewo.config.API_PREFIX)
+    app_.register_blueprint(api_pages, url_prefix=viewo.config.API_PREFIX)
 
     return app_
 

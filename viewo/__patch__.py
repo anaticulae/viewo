@@ -55,3 +55,13 @@ def document(document: str) -> str:  # pylint:disable=W0621
 
 
 link.document = document
+
+
+def resultview(document: str) -> str:  # pylint:disable=W0621
+    source = link.todo(document)
+    if os.path.exists(link.ready(document)):
+        source = link.ready(document)
+    return os.path.join(source, 'result')
+
+
+link.resultview = resultview
