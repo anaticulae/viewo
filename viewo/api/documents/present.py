@@ -57,3 +57,16 @@ def footnotes_get(documentid: str):
         'footnotes': simple,
     })
     return dumped
+
+
+@viewo.api.documents.api_documents.route(
+    '/documents/<string:documentid>/style',
+    methods=['GET'],
+)
+@viewo.api.valid_document
+def docstyle_get(documentid: str):
+    simple = viewo.api.documents.utils.style(documentid)
+    dumped = json.dumps({
+        'style': simple,
+    })
+    return dumped

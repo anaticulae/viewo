@@ -52,3 +52,14 @@ def footnotes(documentid):
         documentid=documentid,
     )
     return simple
+
+
+def style(documentid):
+    loaded = viewo.result.loader.load_doctextstyle_fromprocess(documentid)
+    raw = viewo.result.json.doctextstyle_tojson(loaded)
+    simple = {'resource': viewo.api.utils.simple_recursive(raw)}
+    simple['uri'] = flask.url_for(
+        'api_documents.docstyle_get',
+        documentid=documentid,
+    )
+    return simple
