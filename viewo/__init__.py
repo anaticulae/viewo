@@ -14,7 +14,7 @@ import flask
 
 import viewo.__patch__
 import viewo.config
-from viewo.api.documents import api_documents
+from viewo.api.documents import *
 from viewo.api.public import welcome
 from viewo.api.result import result_
 from viewo.api.upload import upload_
