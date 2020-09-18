@@ -9,6 +9,7 @@
 
 import configo
 import flask
+import iamraw.caption
 import link
 import link.job
 
@@ -60,6 +61,17 @@ def style(documentid):
     simple = {'resource': viewo.api.utils.simple_recursive(raw)}
     simple['uri'] = flask.url_for(
         'api_documents.docstyle_get',
+        documentid=documentid,
+    )
+    return simple
+
+
+def captions(documentid):
+    loaded = viewo.result.loader.load_captions_fromprocess(documentid)
+    raw = iamraw.caption.pagecaptions_toraw(loaded) if loaded else []
+    simple = {'resource': viewo.api.utils.simple_recursive(raw)}
+    simple['uri'] = flask.url_for(
+        'api_documents.captions_get',
         documentid=documentid,
     )
     return simple

@@ -70,3 +70,16 @@ def docstyle_get(documentid: str):
         'style': simple,
     })
     return dumped
+
+
+@viewo.api.documents.api_documents.route(
+    '/documents/<string:documentid>/captions',
+    methods=['GET'],
+)
+@viewo.api.valid_document
+def captions_get(documentid: str):
+    simple = viewo.api.documents.utils.captions(documentid)
+    dumped = json.dumps({
+        'captions': simple,
+    })
+    return dumped
