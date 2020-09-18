@@ -95,6 +95,3 @@ def init_error_handler(app: flask.Flask):  # pylint:disable=W0621
     @app.errorhandler(404)
     def not_found(_):  # pylint:disable=W0612,W0613
         return flask.render_template('public/error.html', errorpage='Die Seite')
-
-
-app = create_application()  # pylint:disable=C0103
