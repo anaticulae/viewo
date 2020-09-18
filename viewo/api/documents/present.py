@@ -44,3 +44,16 @@ def document_get(documentid: str):
         'document': loaded,
     })
     return dumped
+
+
+@viewo.api.documents.api_documents.route(
+    '/documents/<string:documentid>/footnotes',
+    methods=['GET'],
+)
+@viewo.api.valid_document
+def footnotes_get(documentid: str):
+    simple = viewo.api.documents.utils.footnotes(documentid)
+    dumped = json.dumps({
+        'footnotes': simple,
+    })
+    return dumped

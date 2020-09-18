@@ -8,8 +8,12 @@
 # =============================================================================
 
 import configo
+import flask
 import link
 import link.job
+
+import viewo.result.json
+import viewo.result.loader
 
 
 def all_documents():
@@ -37,3 +41,14 @@ def job_toraw(info: link.JobInfo) -> dict:
     if info.hashlink:
         result['hashlink'] = info.hashlink
     return result
+
+
+def footnotes(documentid):
+    loaded = viewo.result.loader.load_footnotes_fromprocess(documentid)
+    raw = viewo.result.json.footnotes_tojson(loaded)
+    simple = {'resource': viewo.api.utils.simple_recursive(raw)}
+    simple['uri'] = flask.url_for(
+        'api_documents.footnotes_get',
+        documentid=documentid,
+    )
+    return simple

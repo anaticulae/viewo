@@ -60,7 +60,7 @@ def apicall(
 ):
     cmd = prefix + request
     response = client.get(cmd)
-    assert response.status_code == expected, str(response.status_code)
+    assert response.status_code == expected, str(vars(response))
     return decode(response)
 
 

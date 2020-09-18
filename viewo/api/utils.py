@@ -15,6 +15,8 @@ def simple_recursive(item):
         return item.value
     if isinstance(item, list):
         return [simple_recursive(it) for it in item]
+    if isinstance(item, tuple):
+        return tuple([simple_recursive(it) for it in item])
     try:
         item = vars(item)
     except TypeError:
