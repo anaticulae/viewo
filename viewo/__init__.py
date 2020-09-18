@@ -25,8 +25,6 @@ from viewo.view.documents import documents_
 
 __version__ = '0.20.3'
 
-API_PREFIX = '/api/v0'
-
 
 def create_application(config=None) -> flask.Flask:
     """Setup flask application
@@ -54,8 +52,8 @@ def create_application(config=None) -> flask.Flask:
     app_.register_blueprint(writing_)
 
     # data API
-    app_.register_blueprint(api_documents, url_prefix=API_PREFIX)
-    app_.register_blueprint(api_findings, url_prefix=API_PREFIX)
+    app_.register_blueprint(api_documents, url_prefix=viewo.config.API_PREFIX)
+    app_.register_blueprint(api_findings, url_prefix=viewo.config.API_PREFIX)
 
     return app_
 

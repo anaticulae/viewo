@@ -6,6 +6,7 @@
 # use or distribution is an offensive act against international law and may
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
+
 import os
 import re
 
@@ -23,6 +24,8 @@ TEMPLATES = os.path.join(ROOT, 'viewo/templates')
 STATIC = os.path.join(ROOT, 'viewo/static')
 
 MAX_FILE_SIZE = 20 * 1024 * 1024  # 20 MB
+
+API_PREFIX = '/api/v0'
 
 
 def writing() -> str:

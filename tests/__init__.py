@@ -20,6 +20,7 @@ from flask import current_app
 from utila import file_read
 
 import viewo
+import viewo.config
 from viewo import create_application
 from viewo.config import ROOT
 from viewo.config import TEMPLATES
@@ -61,7 +62,7 @@ def content(client, request: str):
 def apicall(
         client,
         request: str,
-        prefix=viewo.API_PREFIX,
+        prefix=viewo.config.API_PREFIX,
         expected=http.HTTPStatus.OK,
 ):
     cmd = prefix + request
@@ -73,7 +74,7 @@ def apicall(
 def apidelete(
         client,
         request: str,
-        prefix=viewo.API_PREFIX,
+        prefix=viewo.config.API_PREFIX,
         expected=http.HTTPStatus.OK,
 ):
     cmd = prefix + request
@@ -87,7 +88,7 @@ def apiupload(
         page: str,
         field: str,
         path: str,
-        prefix=viewo.API_PREFIX,
+        prefix=viewo.config.API_PREFIX,
         expected=http.HTTPStatus.OK,
 ):
     """Upload file via http post command"""
@@ -114,7 +115,7 @@ def apipost(
         client,
         page: str,
         data: dict,
-        prefix=viewo.API_PREFIX,
+        prefix=viewo.config.API_PREFIX,
         expected=http.HTTPStatus.OK,
 ):
     cmd = prefix + page
