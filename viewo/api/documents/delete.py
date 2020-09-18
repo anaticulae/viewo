@@ -17,10 +17,9 @@ import viewo.api.documents
     '/documents/<string:documentid>',
     methods=['DELETE'],
 )
+@viewo.api.valid_document
 def document_delete(documentid) -> str:
     current = link.current(documentid)
-    if current is None:
-        return viewo.api.notfound(f'"{documentid}" does not exists')
     if current == link.ProcessState.UNDEFINED:
         return viewo.api.internal('unexpected state')
     if current == link.ProcessState.DELETED:
