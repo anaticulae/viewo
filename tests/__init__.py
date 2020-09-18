@@ -115,3 +115,41 @@ def apipost(
     result = client.post(cmd, data=data, follow_redirects=True)
     assert result.status_code == expected, str(result)
     return decode(result)
+
+
+def apiput(
+        client,
+        page: str,
+        data: dict,
+        prefix=viewo.config.API_PREFIX,
+        expected=http.HTTPStatus.OK,
+):
+    cmd = prefix + page
+    result = client.put(cmd, data=data, follow_redirects=True)
+    assert result.status_code == expected, str(result)
+    return decode(result)
+
+
+def finding_status(client, documentid: str, findingid: int) -> int:
+    result = apicall(
+        client,
+        f'/documents/{documentid}/findings/{findingid}',
+        expected=http.HTTPStatus.OK,
+    )
+    # TODO: UPDATE LATER
+    return result['finding']['solution']['status']
+
+
+def finding_status_update(
+        client,
+        documentid: str,
+        findingid: int,
+        status: int,
+        expected=http.HTTPStatus.OK,
+):
+    apiput(
+        client,
+        f'/documents/{documentid}/findings/{findingid}',
+        data={'status': status},
+        expected=expected,
+    )

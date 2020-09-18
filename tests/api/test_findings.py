@@ -11,6 +11,9 @@ import http
 
 import tests
 
+TEST_DOCUMENT = '1508790764'
+TEST_FINDING = '1644413926'
+
 
 def test_api_findings_overview_bydocumentid(findingclient):
     client = findingclient
@@ -48,3 +51,36 @@ def test_api_findings_byfindingid(findingclient):
         expected=http.HTTPStatus.OK,
     )
     assert result['finding']['uri']
+
+
+def test_api_finding_solve(findingclient):
+    client = findingclient
+
+    tests.finding_status_update(client, TEST_DOCUMENT, TEST_FINDING, status=4)
+    status = tests.finding_status(client, TEST_DOCUMENT, TEST_FINDING)
+    assert status == 4
+
+    tests.finding_status_update(client, TEST_DOCUMENT, TEST_FINDING, status=0)
+    status = tests.finding_status(client, TEST_DOCUMENT, TEST_FINDING)
+    assert status == 1
+
+    tests.finding_status_update(client, TEST_DOCUMENT, TEST_FINDING, status=4)
+    status = tests.finding_status(client, TEST_DOCUMENT, TEST_FINDING)
+    assert status == 4
+
+    tests.finding_status_update(client, TEST_DOCUMENT, TEST_FINDING, status=1)
+    status = tests.finding_status(client, TEST_DOCUMENT, TEST_FINDING)
+    assert status == 1
+
+
+def test_api_finding_solve_invalid(findingclient):
+    client = findingclient
+    tests.finding_status_update(
+        client,
+        TEST_DOCUMENT,
+        TEST_FINDING,
+        status=10,  # out of range
+        expected=http.HTTPStatus.BAD_REQUEST,
+    )
+    status = tests.finding_status(client, TEST_DOCUMENT, TEST_FINDING)
+    assert status == 1

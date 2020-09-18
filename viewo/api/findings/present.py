@@ -12,14 +12,13 @@ import flask
 import viewo.api
 import viewo.api.findings
 import viewo.api.findings.utils
-import viewo.api.utils
 
 
-@viewo.api.valid_document
 @viewo.api.findings.api_findings.route(
     '/documents/<string:documentid>/findings',
     methods=['GET'],
 )
+@viewo.api.valid_document
 def findings(documentid):
     collected = viewo.api.findings.utils.all_findings(documentid)
     if collected is None:
@@ -31,15 +30,14 @@ def findings(documentid):
     return dumped
 
 
-@viewo.api.valid_document
 @viewo.api.findings.api_findings.route(
     '/documents/<string:documentid>/findings/<string:findingid>',
     methods=['GET'],
 )
+@viewo.api.valid_document
+@viewo.api.valid_finding
 def finding_get(documentid, findingid):
     finding = viewo.api.findings.utils.load_finding(documentid, findingid)
-    if not finding:
-        return viewo.api.notfound(f'could not find: {findingid}')
     simple = viewo.api.findings.utils.finding_raw(finding, documentid)
     dumped = flask.jsonify({
         'finding': simple,

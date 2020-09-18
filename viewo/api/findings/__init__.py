@@ -11,4 +11,4 @@ import flask
 
 api_findings = flask.Blueprint('api_findings', __name__)  # pylint:disable=C0103
 
-__all__ = ['api_findings', 'present']
+__all__ = ['api_findings', 'present', 'update']

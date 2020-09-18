@@ -41,6 +41,14 @@ List findings of selected document:
 
 * See: :py:func:`viewo.api.findings.present.findings`
 
+Update status of finding via **PUT** status={0,1,2,4} request
+
+.. code-block:: none
+
+    documents/{document_id}/findings/{finding_id}
+
+* See: :py:func:`viewo.api.findings.update.finding_put`
+
 Select by status:
 
 .. code-block:: none

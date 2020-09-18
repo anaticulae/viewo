@@ -7,10 +7,13 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import contextlib
 import functools
 
 import flask
 import link
+
+import viewo.api.findings.utils
 
 
 def success(message: str = 'completed', **args):
@@ -54,6 +57,21 @@ def valid_document(function):
         documentpath = link.document(documentid)  # pylint:disable=E1101
         if documentpath is None:
             return notfound(f'could not locate `{documentid}`')
+        return function(*args, **kwargs)
+
+    return decorated_function
+
+
+def valid_finding(function):
+
+    @functools.wraps(function)
+    def decorated_function(*args, **kwargs):
+        # TODO: ADD USER RIGHTS CHECK
+        documentid = kwargs['documentid']
+        findingid = kwargs['findingid']
+        finding = viewo.api.findings.utils.load_finding(documentid, findingid)
+        if not finding:
+            return notfound(f'could not locate: {findingid}')
         return function(*args, **kwargs)
 
     return decorated_function
