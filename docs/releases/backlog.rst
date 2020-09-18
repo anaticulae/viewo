@@ -3,6 +3,14 @@
 backlog
 =======
 
+conftest
+--------
+
+* use queuemo to generate a test resource
+
+general
+-------
+
 * automate test data generation
 
 * refactor writing view / connection
