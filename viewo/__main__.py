@@ -6,3 +6,7 @@
 # use or distribution is an offensive act against international law and may
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
+
+import viewo.app
+
+app = viewo.app.create_application()  # pylint:disable=C0103

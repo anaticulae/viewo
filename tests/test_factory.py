@@ -7,10 +7,10 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-from viewo import create_application
+import viewo.app
 
 
 def test_config():
     """Test create_app without passing test config."""
-    assert not create_application().testing
-    assert create_application({'TESTING': True}).testing
+    assert not viewo.app.create_application().testing
+    assert viewo.app.create_application({'TESTING': True}).testing

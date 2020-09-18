@@ -16,7 +16,7 @@ import utila
 from pytest import fixture
 
 import tests
-from viewo import create_application
+import viewo.app
 
 pytest_plugins = 'pytester'  # pylint: disable=invalid-name
 
@@ -41,7 +41,7 @@ def app(testdir):
         'TODO': todo,
         'READY': ready,
     }
-    application = create_application(config=test_config)
+    application = viewo.app.create_application(config=test_config)
 
     yield application
 

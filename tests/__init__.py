@@ -21,7 +21,6 @@ from utila import file_read
 
 import viewo
 import viewo.config
-from viewo import create_application
 from viewo.config import ROOT
 from viewo.config import TEMPLATES
 
