@@ -8,11 +8,11 @@
 # =============================================================================
 
 import flask
-import protocol
 
 import viewo.api
 import viewo.api.findings
 import viewo.api.findings.utils
+import viewo.api.utils
 
 
 @viewo.api.valid_document
@@ -22,24 +22,26 @@ import viewo.api.findings.utils
 )
 def findings(documentid):
     collected = viewo.api.findings.utils.all_findings(documentid)
+    if collected is None:
+        return viewo.api.notfound(f'could not find: {documentid}')
+    simple = viewo.api.findings.utils.all_findings_raw(collected, documentid)
     dumped = flask.jsonify({
-        'findings': collected,
+        'findings': simple,
     })
     return dumped
 
 
+@viewo.api.valid_document
 @viewo.api.findings.api_findings.route(
     '/documents/<string:documentid>/findings/<string:findingid>',
     methods=['GET'],
 )
-@viewo.api.valid_document
 def finding_get(documentid, findingid):
-    collected = viewo.api.findings.utils.all_findings(documentid)
-    selected = protocol.select_findings(collected, findingid)
-    if not selected:
+    finding = viewo.api.findings.utils.load_finding(documentid, findingid)
+    if not finding:
         return viewo.api.notfound(f'could not find: {findingid}')
-    finding = selected[0]
+    simple = viewo.api.findings.utils.finding_raw(finding, documentid)
     dumped = flask.jsonify({
-        'finding': finding,
+        'finding': simple,
     })
     return dumped

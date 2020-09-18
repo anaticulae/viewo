@@ -7,8 +7,12 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import flask
+import iamraw
 import link
-import protocol
+import protocol.finding
+
+import viewo.api.utils
 
 
 def all_findings(documentid: str):
@@ -17,3 +21,40 @@ def all_findings(documentid: str):
         return None
     findings = protocol.findings_from_path(documentpath)
     return findings
+
+
+def load_finding(documentid, findingid):
+    # TODO: EXPERIMENTAL
+    documentpath = link.document(documentid)  # pylint:disable=E1101
+    for _, findings in protocol.finding.iter_findings(documentpath):
+        for finding in findings:
+            current = str(protocol.finding.hash_finding(finding))
+            if current == findingid:
+                return finding
+    return None
+
+
+def all_findings_raw(pages, documentid: str):
+    simple = viewo.api.utils.simple_recursive(pages)
+    for page in simple:
+        for finding in page['content']:
+            finding['uri'] = flask.url_for(
+                'api_findings.finding_get',
+                documentid=documentid,
+                findingid=finding['number'],
+            )
+    raw = {
+        'pages': simple,
+        'uri': flask.url_for('api_findings.findings', documentid=documentid),
+    }
+    return raw
+
+
+def finding_raw(finding: iamraw.Finding, documentid: str) -> dict:
+    simple = viewo.api.utils.simple_recursive(finding)
+    simple['uri'] = flask.url_for(
+        'api_findings.finding_get',
+        documentid=documentid,
+        findingid=finding.number,
+    )
+    return simple

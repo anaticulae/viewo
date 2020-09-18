@@ -12,14 +12,14 @@ import http
 import tests
 
 
-def test_api_findings_overview_bydocumentid(docclient):
-    client, doc = docclient
+def test_api_findings_overview_bydocumentid(findingclient):
+    client = findingclient
     result = tests.apicall(
         client,
-        f'{doc}/findings',
-        prefix='',
+        f'/documents/1508790764/findings',
     )
-    assert not result['findings']
+    assert result['findings']
+    assert result['findings']['uri']
 
 
 def test_api_findings_overview_by_invalid_documentid(client):
@@ -38,3 +38,13 @@ def test_api_findings_byfindingid_notexists(docclient):
         prefix='',
         expected=http.HTTPStatus.NOT_FOUND,
     )
+
+
+def test_api_findings_byfindingid(findingclient):
+    client = findingclient
+    result = tests.apicall(
+        client,
+        f'/documents/1508790764/findings/1644413926',
+        expected=http.HTTPStatus.OK,
+    )
+    assert result['finding']['uri']
