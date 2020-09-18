@@ -7,10 +7,12 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import os
 from os import makedirs
 from os.path import exists
 from os.path import join
 
+import utila
 from pytest import fixture
 
 import tests
@@ -20,11 +22,11 @@ pytest_plugins = 'pytester'  # pylint: disable=invalid-name
 
 
 @fixture
-def app(tmpdir):
+def app(testdir):
     """Create and configure a new app instance for each test."""
 
-    todo = join(tmpdir, 'todo')
-    ready = join(tmpdir, 'ready')
+    todo = join(testdir.tmpdir, 'todo')
+    ready = join(testdir.tmpdir, 'ready')
 
     makedirs(todo)
     makedirs(ready)
@@ -35,7 +37,7 @@ def app(tmpdir):
     # create the app with common test config
     test_config = {
         'TESTING': True,
-        'COMMON': tmpdir,
+        'COMMON': testdir.tmpdir,
         'TODO': todo,
         'READY': ready,
     }
@@ -55,6 +57,21 @@ def docclient(client):  # pylint:disable=W0621
     result = tests.apiupload(client, '/documents', 'file', tests.MINIMAL)
     doc = result['document']
     return client, doc
+
+
+@fixture
+def findingclient(client):  # pylint:disable=W0621
+    utila.copy_content(
+        tests.EXAMPLE_READY,
+        os.path.join(os.getcwd(), 'ready'),
+        recursive=True,
+    )
+    utila.copy_content(
+        tests.EXAMPLE_TODO,
+        os.path.join(os.getcwd(), 'todo'),
+        recursive=True,
+    )
+    return client
 
 
 @fixture
