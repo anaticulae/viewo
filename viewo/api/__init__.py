@@ -12,6 +12,7 @@ import functools
 
 import flask
 import link
+import utila
 
 import viewo.api.findings.utils
 
@@ -72,6 +73,25 @@ def valid_finding(function):
         finding = viewo.api.findings.utils.load_finding(documentid, findingid)
         if not finding:
             return notfound(f'could not locate: {findingid}')
+        return function(*args, **kwargs)
+
+    return decorated_function
+
+
+def valid_pages(function):
+
+    @functools.wraps(function)
+    def decorated_function(*args, **kwargs):
+        # TODO: ADD USER PAYMENT CHECK
+        documentid = kwargs['documentid']
+        with contextlib.suppress(KeyError):
+            pages = flask.request.args['range']
+            pagecount = viewo.api.pages.utils.pagecount(documentid)
+            selected = utila.parse_pages(pages, pagecount=pagecount)
+            if selected is None:
+                return bad(f'invalid page count: {pages}')
+            if len(selected) > pagecount:
+                return bad(f'invalid page count: {len(selected)}')
         return function(*args, **kwargs)
 
     return decorated_function

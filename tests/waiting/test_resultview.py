@@ -31,8 +31,9 @@ def test_waiting_resultview_load_resultview():
         '1508790764',
     )
     assert loaded, str(loaded)
-    # 2 pages
-    assert len(loaded) == 2, str(loaded)
+    pages = [item.page for item in loaded]
+    # 3 html pages and one findings page
+    assert pages == [0, 1, 2, 5]
 
 
 def test_waiting_resultview_tojson():

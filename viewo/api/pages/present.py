@@ -8,6 +8,7 @@
 # =============================================================================
 
 import flask
+import utila
 
 import viewo.api
 import viewo.api.pages
@@ -19,9 +20,17 @@ import viewo.api.pages.utils
     methods=['GET'],
 )
 @viewo.api.valid_document
+@viewo.api.valid_pages
 def pages(documentid):
-    simple = {'html': viewo.api.pages.utils.load_html(documentid)}
-    simple['uri'] = flask.url_for('api_pages.pages', documentid=documentid)
+    pagerange = flask.request.args.get('range', None)
+    if pagerange:
+        pagerange = utila.parse_pages(pagerange)
+
+    html = viewo.api.pages.utils.load_html(documentid, pagerange)
+    simple = {
+        'html': html,
+        'uri': flask.url_for('api_pages.pages', documentid=documentid),
+    }
 
     dumped = flask.jsonify({
         'pages': simple,
