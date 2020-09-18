@@ -25,11 +25,11 @@ def all_findings(documentid: str):
 
 def load_finding(documentid, findingid):
     # TODO: EXPERIMENTAL
+    findingid = str(findingid)
     documentpath = link.document(documentid)  # pylint:disable=E1101
     for _, findings in protocol.finding.iter_findings(documentpath):
         for finding in findings:
-            current = str(protocol.finding.hash_finding(finding))
-            if current == findingid:
+            if str(finding.number) == findingid:
                 return finding
     return None
 
