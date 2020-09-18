@@ -12,34 +12,28 @@ import http
 import json
 import json.decoder
 import os
-from os.path import exists
-from os.path import join
 
+import utila
 import werkzeug.datastructures
-from flask import current_app
-from utila import file_read
 
-import viewo
 import viewo.config
-from viewo.config import ROOT
-from viewo.config import TEMPLATES
 
-TEST_DATA = join(ROOT, 'tests/data')
-assert exists(TEST_DATA), TEST_DATA
+TEST_DATA = os.path.join(viewo.config.ROOT, 'tests/data')
+assert os.path.exists(TEST_DATA), TEST_DATA
 
-BASE_TEMPLATE = file_read(join(TEMPLATES, 'base.html'))
+BASE_TEMPLATE = utila.file_read(os.path.join(viewo.config.TEMPLATES, 'base.html')) # yapf:disable
 
-MINIMAL = join(TEST_DATA, 'minimal.pdf')
-assert exists(MINIMAL), MINIMAL
+MINIMAL = os.path.join(TEST_DATA, 'minimal.pdf')
+assert os.path.exists(MINIMAL), MINIMAL
 
-EXAMPLE_READY = join(TEST_DATA, 'ready')
-assert exists(EXAMPLE_READY), EXAMPLE_READY
+EXAMPLE_READY = os.path.join(TEST_DATA, 'ready')
+assert os.path.exists(EXAMPLE_READY), EXAMPLE_READY
 
-EXAMPLE_TODO = join(TEST_DATA, 'todo')
-assert exists(EXAMPLE_TODO), EXAMPLE_TODO
+EXAMPLE_TODO = os.path.join(TEST_DATA, 'todo')
+assert os.path.exists(EXAMPLE_TODO), EXAMPLE_TODO
 
-EXAMPLE_RESULT = join(EXAMPLE_READY, '1508790764/result')
-assert exists(EXAMPLE_RESULT), EXAMPLE_RESULT
+EXAMPLE_RESULT = os.path.join(EXAMPLE_READY, '1508790764/result')
+assert os.path.exists(EXAMPLE_RESULT), EXAMPLE_RESULT
 
 
 def decode(response) -> dict:

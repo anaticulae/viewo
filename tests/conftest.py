@@ -8,12 +8,9 @@
 # =============================================================================
 
 import os
-from os import makedirs
-from os.path import exists
-from os.path import join
 
+import pytest
 import utila
-from pytest import fixture
 
 import tests
 import viewo.app
@@ -21,18 +18,18 @@ import viewo.app
 pytest_plugins = 'pytester'  # pylint: disable=invalid-name
 
 
-@fixture
+@pytest.fixture
 def app(testdir):
     """Create and configure a new app instance for each test."""
 
-    todo = join(testdir.tmpdir, 'todo')
-    ready = join(testdir.tmpdir, 'ready')
+    todo = os.path.join(testdir.tmpdir, 'todo')
+    ready = os.path.join(testdir.tmpdir, 'ready')
 
-    makedirs(todo)
-    makedirs(ready)
+    os.makedirs(todo)
+    os.makedirs(ready)
 
-    assert exists(todo), todo
-    assert exists(ready), ready
+    assert os.path.exists(todo), todo
+    assert os.path.exists(ready), ready
 
     # create the app with common test config
     test_config = {
@@ -46,20 +43,20 @@ def app(testdir):
     yield application
 
 
-@fixture
+@pytest.fixture
 def client(app):  # pylint:disable=W0621
     """A test client for the app."""
     return app.test_client()
 
 
-@fixture
+@pytest.fixture
 def docclient(client):  # pylint:disable=W0621
     result = tests.apiupload(client, '/documents', 'file', tests.MINIMAL)
     doc = result['document']
     return client, doc
 
 
-@fixture
+@pytest.fixture
 def findingclient(client):  # pylint:disable=W0621
     utila.copy_content(
         tests.EXAMPLE_READY,
@@ -74,7 +71,7 @@ def findingclient(client):  # pylint:disable=W0621
     return client
 
 
-@fixture
+@pytest.fixture
 def runner(app):  # pylint:disable=W0621
     """A test runner for the app's Click commands."""
     return app.test_cli_runner()
