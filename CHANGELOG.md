@@ -2,6 +2,43 @@
 
 Every noteable change is logged here.
 
+## v1.0.0
+
+### Feature
+
+* add document properties provider (3f147a14a5d8)
+* add captions data provider (6deca45f3ce2)
+* add docstyle data provider (7e5cd1eda71b)
+* add footnotes provider (4e2700ab91c1)
+* add html pages provider (40f5759eab10)
+* add html pages provider (56ee454cb6ed)
+* add put request to update solution status (d43efc2cbe12)
+* add option to select findings by id (223fffa88d11)
+* add method to simplify objects (848f0b367670)
+* add method to get finding by document and finding id (3f15b0e4f0c1)
+* introduce decorator to check existence of document (66a87a3eda98)
+* add central findings entree point (1c8581acbafb)
+* introduce option to create documents via posting url (4d20713fe776)
+* introduce different exceptions to increase reporting ability (7232c04cef8e)
+* add methods to create and delete documents (2cebe014d7aa)
+* access document status by documentid (39d0b62ba66d)
+* patch link accessing deleted document state (0aedceb706e7)
+* add separate data API (b8b4b6c6bbe2)
+
+### Fix
+
+* use finding number instead of new hashing (bacb0ceb8ac3)
+* ensure to start app correctly (e50c5090627e)
+
+### Documentation
+
+* add option to select findings by status (bf5714e34440)
+* sort paragraph into new categories (4ec0f78b99f5)
+* add REST documentation for pages representation (acb92690393e)
+* add general API documentation overview (2915552a136d)
+* add REST basic developer information (fbdbe5af072c)
+* extend solution of state question (8945142f033b)
+
 ## v0.20.3
 
 ### Fix

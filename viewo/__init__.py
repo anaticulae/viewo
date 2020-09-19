@@ -7,4 +7,4 @@
 # be prosecuted under federal law. Its content is company confidential.
 #==============================================================================
 
-__version__ = '0.20.3'
+__version__ = '1.0.0'
