@@ -75,3 +75,13 @@ def captions(documentid):
         documentid=documentid,
     )
     return simple
+
+
+def properties(documentid):
+    raw = viewo.result.json.properties_tojson({})
+    simple = {'resource': raw}
+    simple['uri'] = flask.url_for(
+        'api_documents.properties_get',
+        documentid=documentid,
+    )
+    return simple

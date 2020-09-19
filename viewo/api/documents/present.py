@@ -83,3 +83,16 @@ def captions_get(documentid: str):
         'captions': simple,
     })
     return dumped
+
+
+@viewo.api.documents.api_documents.route(
+    '/documents/<string:documentid>/properties',
+    methods=['GET'],
+)
+@viewo.api.valid_document
+def properties_get(documentid: str):
+    simple = viewo.api.documents.utils.properties(documentid)
+    dumped = json.dumps({
+        'properties': simple,
+    })
+    return dumped
