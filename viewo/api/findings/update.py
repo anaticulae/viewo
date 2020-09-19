@@ -26,6 +26,11 @@ def finding_put(documentid, findingid):
         status = int(status)
     except ValueError:
         return viewo.api.bad(f'invalid status: {status}')
+    try:
+        # TODO: CHANGE <string:...?
+        findingid = int(findingid)
+    except ValueError:
+        return viewo.api.bad(f'invalid findingid: {findingid}')
     if status not in (0, 1, 2, 3, 4):
         return viewo.api.bad(f'invalid status: {status}')
     if not viewo.api.findings.utils.update_finding_status(
