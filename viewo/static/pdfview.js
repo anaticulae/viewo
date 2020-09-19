@@ -380,13 +380,15 @@ class ResultView {
     }
 
     update_finding(findingid, status) {
-        let url = `/result/${this.document}/update/finding/${findingid}/${status}`
-        fetch(url, { method: "POST" }).then(resp => {
-            if (status > SELECTED) {
-                // TODO: CHANGE HTTP RETURN VALUE
-                // this.remove_current_finding()
+        let url = `/api/v0/documents/${this.document}/findings/${findingid}`
+        $.ajax({
+            type: 'PUT',
+            url: url,
+            data: { 'status': status },
+            error: function (request, textStatus, error) {
+                // TODO: ADD ERROR HANDLER
             }
-        })
+        });
     }
 
     loop(process) {
