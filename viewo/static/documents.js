@@ -10,9 +10,11 @@ function delete_document(document) {
     let line = $(`#result_table_${document}`)
     line.hide()
 
-    let url = `/result/${document}/delete`
-    fetch(url, { method: "POST" }).then(resp => {
-    })
+    let url = `/api/v0/documents/${document}`
+    $.ajax({
+        type: 'DELETE',
+        url: url,
+    });
 }
 
 function add_password(document) {

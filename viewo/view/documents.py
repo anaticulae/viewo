@@ -7,8 +7,6 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import http
-
 import configo
 import flask
 import link
@@ -41,22 +39,3 @@ def view_documents():
         reverse=True,
     )
     return flask.render_template('documents/index.html', documents=docs)
-
-
-@documents_.route('/result/<string:document>/delete', methods=['POST', 'GET'])
-def delete_document(document) -> str:
-    """Set deletion mark.
-
-    Args:
-        document(str): document id
-    Returns:
-        result message.
-    """
-    current = link.current(document)
-    if current == link.ProcessState.UNDEFINED:
-        return '', http.HTTPStatus.FORBIDDEN.value
-    if current == link.ProcessState.DELETED:
-        return '', http.HTTPStatus.BAD_REQUEST.value
-    if not link.delete(document):
-        return '', http.HTTPStatus.BAD_REQUEST.value
-    return 'done', http.HTTPStatus.OK.value
