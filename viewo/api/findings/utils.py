@@ -63,8 +63,8 @@ def finding_raw(finding: iamraw.Finding, documentid: str) -> dict:
 
 def update_finding_status(documentid: str, findingid: int, status: int):
     source = link.document(documentid)  # pylint:disable=E1101
-    status = viewo.result.update.problem_fromint(int(status))
-    before = protocol.finding_status(source, int(findingid))
+    status = viewo.result.update.problem_fromint(status)
+    before = protocol.finding_status(source, findingid)
     if not protocol.finding_status_update(source, findingid, status):
         utila.error(f'could not update: {findingid} status: {status}')
         return False
