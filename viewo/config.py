@@ -8,7 +8,6 @@
 # =============================================================================
 
 import os
-import re
 
 import utila
 import writers
@@ -37,11 +36,3 @@ def writing() -> str:
         assert completed == utila.SUCCESS
     assert os.path.exists(result), str(result)
     return result
-
-
-def content(raw: str) -> str:
-    pattern = r'<body>(?P<content>.*)</body>'
-    matched = re.search(pattern, raw, re.DOTALL)
-    if not matched:
-        return raw
-    return matched['content']

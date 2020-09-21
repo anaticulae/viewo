@@ -8,13 +8,14 @@
 # =============================================================================
 
 import os
+import re
 
 import viewo.config
 
 
 def replace(content: str, source: str) -> str:
     # strip body
-    content = viewo.config.content(content)
+    content = body(content)
 
     docpage = os.path.join(viewo.config.writing(), 'index.html')
     if source == docpage:
@@ -24,3 +25,11 @@ def replace(content: str, source: str) -> str:
         content = content.replace('href="#', 'href="index.html#')
         content = content.replace('href="', 'href="writing/')
     return content
+
+
+def body(raw: str) -> str:
+    pattern = r'<body>(?P<content>.*)</body>'
+    matched = re.search(pattern, raw, re.DOTALL)
+    if not matched:
+        return raw
+    return matched['content']
