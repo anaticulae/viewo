@@ -49,15 +49,15 @@ class TmpFile:
 
 def curlpdf(url: str) -> TmpFile:
     try:
-        with urllib.request.urlopen(url, timeout=FILE_READ_TIMEOUT) as webhandle: # yapf:disable
-            header = webhandle.read(HEADER_READ_SIZE)
+        with urllib.request.urlopen(url, timeout=FILE_READ_TIMEOUT) as webfile:
+            header = webfile.read(HEADER_READ_SIZE)
             # %PDF-1.5 for example
             if not header[0:len(EXPECTED_PDFSTART)] == EXPECTED_PDFSTART:
                 utila.error(f'no pdf file: {url}')
                 raise InvalidResource(url)
             todo = viewo.config.MAX_FILE_SIZE - HEADER_READ_SIZE
-            content = webhandle.read(todo)
-            if webhandle.read(1) != b'':
+            content = webfile.read(todo)
+            if webfile.read(1) != b'':
                 # there are some bytes left
                 utila.error(f'file too large: {url}')
                 raise FileTooLarge(url)
