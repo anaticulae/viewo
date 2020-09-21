@@ -16,6 +16,7 @@ import werkzeug.utils
 
 import viewo.api
 import viewo.api.documents
+import viewo.upload
 
 
 @viewo.api.documents.api_documents.route('/documents', methods=['POST'])

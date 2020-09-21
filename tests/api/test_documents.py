@@ -10,6 +10,7 @@
 import http
 import os
 
+import link
 import power
 import pytest
 import utila
@@ -106,3 +107,43 @@ def test_api_upload_from_url_too_large_file(client, testdir):
         data={'url': source},
         expected=http.HTTPStatus.BAD_REQUEST,
     )
+
+
+def test_api_upload_file_url(client):
+    """Upload one file and check if it is saved at common todo folder"""
+    # test that viewing the page renders without template errors
+    assert client.get('/').status_code == http.HTTPStatus.OK
+
+    # count files in todo folder
+    files_before = link.count_todo()
+
+    tests.apiupload(
+        client,
+        page='/documents',
+        field='file',
+        path=tests.MINIMAL,
+    )
+    files_after = link.count_todo()
+    # check if file was uploaded
+    assert files_after == files_before + 1
+
+
+def test_api_upload_with_wrong_field(client):
+    """Upload one file and check if it is saved at common todo folder"""
+    # test that viewing the page renders without template errors
+    assert client.get('/').status_code == http.HTTPStatus.OK
+
+    # count files in todo folder
+    files_before = link.count_todo()
+
+    # Upload with wrong field
+    tests.apiupload(
+        client,
+        page='/documents',
+        field='o_o',
+        path=tests.MINIMAL,
+        expected=http.HTTPStatus.BAD_REQUEST,
+    )
+    files_after = link.count_todo()
+    # check that no file was uploaded
+    assert files_after == files_before
