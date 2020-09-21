@@ -7,6 +7,11 @@ var file_upload_view = {
         $("input[value='local']").on('click', function () {
             file_upload_view.open_file()
         });
+
+        $("#upload").submit(function (event) {
+            event.preventDefault();
+            file_upload_view.upload_selected()
+        });
         this.open_file()
     },
 
@@ -25,6 +30,44 @@ var file_upload_view = {
         $("#file_local_view").html(`Lokale Datei: <input
         class="resource" type="file" name="file" required="required"/>`)
     },
+
+    upload_selected: function () {
+        let url = $("input[name='url']")[0]
+        if (url == undefined) {
+            let file = $("input[name='file']")[0]
+            file_upload_view.upload_file(file.files)
+        } else {
+            url = url.value
+            file_upload_view.upload_url(url)
+        }
+    },
+
+    upload_url: function (public_url) {
+        let url = `/api/v0/documents`
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: { 'url': public_url },
+            error: function (request, textStatus, error) {
+                // TODO: ADD ERROR HANDLER
+            }
+        });
+    },
+
+    upload_file: function (files) {
+        let url = `/api/v0/documents`
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: { 'file': files },
+            error: function (request, textStatus, error) {
+                // TODO: ADD ERROR HANDLER
+            },
+            success: function (data, textStatus, request) {
+                // $.reddata['link']
+            }
+        });
+    }
 }
 
 $(document).ready(function () {
