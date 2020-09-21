@@ -6,7 +6,7 @@
     shortcut: p
     value: null
   msgid: E1200
-  number: '1644413926'
+  number: 1644413926
   solution: !!python/object:iamraw.Text
     description: "Das Dokument enthaelt keine Titelseite. \n\nFuegen Sie eine Titelseite\
       \ zum Dokument hinzu."
