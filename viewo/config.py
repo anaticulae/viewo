@@ -9,6 +9,7 @@
 
 import os
 
+import configo
 import utila
 import writers
 import writers.generator
@@ -25,6 +26,9 @@ STATIC = os.path.join(ROOT, 'viewo/static')
 MAX_FILE_SIZE = 20 * 1024 * 1024  # 20 MB
 
 API_PREFIX = '/api/v0'
+
+USERS = os.path.join(configo.share(), 'users')
+os.makedirs(USERS, exist_ok=True)
 
 
 def writing() -> str:
