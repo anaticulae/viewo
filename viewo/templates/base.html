@@ -32,6 +32,14 @@
     <!-- content starts here -->
     {% block content_container %}
     <div id="pagecontent">
+        <div class="container" id="nogoodnews">
+            {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
         <div id="display">{% block content %}{% endblock %}</div>
         <div id="message"></div>
     </div>
