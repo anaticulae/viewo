@@ -15,6 +15,7 @@ import link
 import utila
 
 import viewo.api.findings.utils
+import viewo.api.users.utils
 
 
 def success(message: str = 'completed', **args):
@@ -73,6 +74,20 @@ def valid_finding(function):
         finding = viewo.api.findings.utils.load_finding(documentid, findingid)
         if not finding:
             return notfound(f'could not locate: {findingid}')
+        return function(*args, **kwargs)
+
+    return decorated_function
+
+
+def valid_user(function):
+
+    @functools.wraps(function)
+    def decorated_function(*args, **kwargs):
+        # TODO: ADD USER RIGHTS CHECK
+        userid = kwargs['userid']
+        user = viewo.api.users.utils.user_fromid(userid)
+        if not user:
+            return notfound(f'could not locate: {userid}')
         return function(*args, **kwargs)
 
     return decorated_function
