@@ -9,6 +9,8 @@
 
 import os
 
+import utila
+
 import viewo.api.users.data
 import viewo.config
 
@@ -20,8 +22,19 @@ def users():
 
 
 def user_fromid(userid: str) -> 'viewo.api.users.data.User':
-    userpath = os.path.join(viewo.config.USERS, f'{userid}.yaml')
-    if not os.path.exists(userpath):
+    path = user_path(userid)
+    if not os.path.exists(path):
         return None
-    loaded = viewo.api.users.data.load_user(userpath)
+    loaded = viewo.api.users.data.load_user(path)
     return loaded
+
+
+def user_path(userid: str) -> str:
+    return os.path.join(viewo.config.USERS, f'{userid}.yaml')
+
+
+def user_update(user: 'viewo.api.users.data.User') -> bool:
+    dumped = viewo.api.users.data.dump_user(user)
+    path = user_path(user.userid)
+    utila.file_replace(path, dumped)
+    return True

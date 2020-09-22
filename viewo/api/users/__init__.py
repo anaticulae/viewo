@@ -11,4 +11,4 @@ import flask
 
 api_users = flask.Blueprint('api_users', __name__)  # pylint:disable=C0103
 
-__all__ = ['api_users', 'present']
+__all__ = ['api_users', 'present', 'update']
