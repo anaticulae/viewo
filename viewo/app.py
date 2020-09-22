@@ -20,6 +20,7 @@ from viewo.api.public import welcome
 from viewo.api.result import result_
 from viewo.api.waiting import waiting_
 from viewo.api.writing import writing_
+from viewo.view.agb import agb_
 from viewo.view.documents import documents_
 
 
@@ -46,6 +47,7 @@ def create_application(config=None) -> flask.Flask:
     app_.register_blueprint(welcome)
     app_.register_blueprint(waiting_)
     app_.register_blueprint(writing_)
+    app_.register_blueprint(agb_)
 
     # data API
     app_.register_blueprint(api_documents, url_prefix=viewo.config.API_PREFIX)
