@@ -7,6 +7,8 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import os
+
 import viewo.api.users.data
 import viewo.config
 
@@ -15,3 +17,11 @@ def users():
     common_user = viewo.api.users.data.load_users(viewo.config.USERS)
     raw = [viewo.api.users.data.user_raw(item) for item in common_user]
     return raw
+
+
+def user_fromid(userid: str) -> 'viewo.api.users.data.User':
+    userpath = os.path.join(viewo.config.USERS, f'{userid}.yaml')
+    if not os.path.exists(userpath):
+        return None
+    loaded = viewo.api.users.data.load_user(userpath)
+    return loaded

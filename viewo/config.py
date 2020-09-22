@@ -28,6 +28,10 @@ MAX_FILE_SIZE = 20 * 1024 * 1024  # 20 MB
 API_PREFIX = '/api/v0'
 
 USERS = os.path.join(configo.share(), 'users')
+
+PASSWORD_MIN_LENGTH = 8
+PASSWORD_MAX_LENGTH = 64
+
 os.makedirs(USERS, exist_ok=True)
 
 
