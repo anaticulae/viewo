@@ -49,6 +49,7 @@ if __name__ == "__main__":
             'viewo.api',
             'viewo.api.documents',
             'viewo.api.findings',
+            'viewo.api.users',
             'viewo.result',
             'viewo.waiting',
             'viewo.writing',
