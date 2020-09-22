@@ -50,6 +50,6 @@ def document_create() -> str:
             'api_documents.document_get',
             documentid=resource,
         ),
-        link=flask.url_for('writing.view_result', document=resource),
+        link=flask.url_for('waiting.waiting_view', process=resource),
     )
     return result

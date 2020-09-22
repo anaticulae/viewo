@@ -25,33 +25,43 @@
         </ul>
 
         <!-- <form method="post" action="upload" enctype="multipart/form-data"> -->
-        <form id="upload">
-            <fieldset>
-                <legend>Waehle dein Dokument und erhalte sofort deine Auswertung</legend>
+        <fieldset>
+            <legend>Waehle dein Dokument und erhalte sofort deine Auswertung</legend>
 
-                <div style="width:150px;float:left;">Quelle:</div>
-                <div id="file_toggle_view" data-toggle="buttons">
-                    <label class="toggle">
-                        <input name="source" type="radio" value="local" checked="checked">Lokale Datei
-                    </label>
-                    <label class="toggle">
-                        <input name="source" type="radio" value="url">Webadresse
-                    </label>
+            <div class="top-pad">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#file" data-toggle="tab">Lokale Datei</a></li>
+                    <li><a href="#url" data-toggle="tab">URL</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="file">
+                        <form id="file_upload" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <br />Wählen Sie Ihr PDF Document aus:
+                            </div>
+                            <input type="file" class="form-control form-group" name="file" required="required" />
+                            <div class="form-group">
+                                Starten Sie Ihre persönliche Analyse jetzt:
+                            </div>
+                            <input class="btn btn-default" type="submit" value="Los geht's" />
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="url">
+                        <form id="url_upload">
+                            <div class="form-group">
+                                <br />Webadresse oder Cloudspeicher:
+                            </div>
+                            <input class="form-control form-group" type="url" name="url" placeholder="https://"
+                                required="required" />
+                            <div class="form-group">
+                                Starten Sie Ihre persönliche Analyse jetzt:
+                            </div>
+                            <input class="btn btn-default" type="submit" value="Los geht's" />
+                        </form>
+                    </div>
                 </div>
-                <div id="file_local_view">
-                    <!-- Lokale Datei:
-                    <input class="resource" type="file" name="file" required="required" /> -->
-                </div>
-                <div id="file_url_view">
-                    <!-- Webadresse:
-                    <input class="resource" type="text" name="url" required="required" /> -->
-                </div>
-                <p>
-                    Starte deine persoenliche Analyse jetzt:
-                </p>
-                <input class="submit" type="submit" value="Los geht's" id="submit" />
-            </fieldset>
-        </form>
+            </div>
+        </fieldset>
     </div>
     <aside id="showroom">
         <div id="example">

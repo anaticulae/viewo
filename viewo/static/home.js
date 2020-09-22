@@ -1,45 +1,18 @@
 var file_upload_view = {
 
     init: function () {
-        $("input[value='url']").on('click', function () {
-            file_upload_view.open_url()
-        });
-        $("input[value='local']").on('click', function () {
-            file_upload_view.open_file()
-        });
-
-        $("#upload").submit(function (event) {
+        $("#file_upload").submit(function (event) {
             event.preventDefault();
-            file_upload_view.upload_selected()
+            let fd = new FormData()
+            let selected = $("input[name='file']")[0].files[0]
+            fd.append('file', selected)
+            file_upload_view.upload_file(fd)
         });
-        this.open_file()
-    },
-
-    open_url: function () {
-        $("input[name='source']").parent().css("background-color", "");
-        $("input[value='url']").parent().css("background-color", "gray");
-        $("#file_local_view").html('')
-        $("#file_url_view").html(`Webadresse: <input class="resource"
-        type="text" name="url" required="required" />`)
-    },
-
-    open_file: function () {
-        $("input[name='source']").parent().css("background-color", "");
-        $("input[value='local']").parent().css("background-color", "gray");
-        $("#file_url_view").html('')
-        $("#file_local_view").html(`Lokale Datei: <input
-        class="resource" type="file" name="file" required="required"/>`)
-    },
-
-    upload_selected: function () {
-        let url = $("input[name='url']")[0]
-        if (url == undefined) {
-            let file = $("input[name='file']")[0]
-            file_upload_view.upload_file(file.files)
-        } else {
-            url = url.value
+        $("#url_upload").submit(function (event) {
+            event.preventDefault();
+            let url = $("input[name='url']")[0].value
             file_upload_view.upload_url(url)
-        }
+        });
     },
 
     upload_url: function (public_url) {
@@ -48,8 +21,14 @@ var file_upload_view = {
             type: 'POST',
             url: url,
             data: { 'url': public_url },
-            error: function (request, textStatus, error) {
-                // TODO: ADD ERROR HANDLER
+            error: function (response) {
+                user_error(response.responseJSON['message'])
+            },
+            success: function (response) {
+                let forward = `Falls Sie nicht weitergeleitet werden klicken Sie
+                    <a href="${response['link']}">hier</a>.`
+                user_error(forward)
+                window.location.replace(response['link'])
             }
         });
     },
@@ -59,15 +38,28 @@ var file_upload_view = {
         $.ajax({
             type: 'POST',
             url: url,
-            data: { 'file': files },
-            error: function (request, textStatus, error) {
-                // TODO: ADD ERROR HANDLER
+            data: files,
+            contentType: false,
+            processData: false,
+            error: function (response) {
+                user_error(response.responseJSON['message'])
             },
-            success: function (data, textStatus, request) {
-                // $.reddata['link']
+            success: function (response) {
+                let forward = `Falls Sie nicht weitergeleitet werden klicken Sie
+                    <a href="${response['link']}">hier</a>.`
+                user_error(forward)
+                window.location.replace(response['link'])
             }
         });
     }
+}
+
+function user_error(message) {
+    let entry = `<div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                ${ message}
+                </div>`
+    $('#nogoodnews').append(entry)
 }
 
 $(document).ready(function () {
