@@ -7,6 +7,7 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import tests
 import viewo.api.users.data
 
 
@@ -50,3 +51,9 @@ def test_dump_users(testdir):
 
     loaded = viewo.api.users.data.load_users(outpath)
     assert loaded == users
+
+
+def test_api_users(client):
+    result = tests.apicall(client, '/users')
+    assert result['users']
+    assert result['users']['uri']
