@@ -2,6 +2,25 @@
 
 Every noteable change is logged here.
 
+## v1.1.0
+
+### Feature
+
+* add allgemeine geschaeftsbedingungen (affdb8fcb2c2)
+* replace resource selector with bootstrap components (bd94577db9ed)
+* add flashed message area to inform user (971d5ef2698b)
+* add bootstrap 3.4.1 dependency (26e70e673ea0)
+* use new upload mechanism (9d3126f0df5d)
+* use new delete API (102240957ec1)
+* use new API to change finding status (e2c9e35fa620)
+
+### Fix
+
+* check pdf header to ensure correct file type (be95e5d83dbb)
+* remove non required type cast (a687caa08201)
+* fix finding id test data (9fe73afc7cb7)
+* convert finding to required int (dcdb56f86d88)
+
 ## v1.0.0
 
 ### Feature
