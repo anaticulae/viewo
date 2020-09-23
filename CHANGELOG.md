@@ -2,6 +2,18 @@
 
 Every noteable change is logged here.
 
+## v1.2.0
+
+### Feature
+
+* add first draft to track user behavior (5dba1efa416f)
+* add update email and password view (a6888f2bdfad)
+* add userid checker decorator (fce87fd3dcf5)
+* add password checker (ba9d19c62b85)
+* add users list (c6fc072c9dc9)
+* add path to common users space (5e3877bb77db)
+* add data structure to dump and load users (e3e2f00c1b17)
+
 ## v1.1.0
 
 ### Feature
