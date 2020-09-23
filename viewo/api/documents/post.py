@@ -20,7 +20,7 @@ import viewo.upload
 
 
 @viewo.api.documents.api_documents.route('/documents', methods=['POST'])
-def document_create() -> str:
+def document_create() -> str:  # pylint:disable=too-many-return-statements
     if 'url' in flask.request.form:
         posturl = flask.request.form['url']
         try:
@@ -41,6 +41,10 @@ def document_create() -> str:
             # if user does not select file, browser also submit an empty part
             # without filename
             return viewo.api.bad('empty `file` field')
+        if not viewo.upload.valid_pdf(pdf.stream.read(viewo.upload.HEADER_READ_SIZE)): # yapf:disable
+            return viewo.api.bad('not a pdf file')
+        # reset stream
+        pdf.stream.seek(0)
 
     todo = link.create_todo(pdf, filename)
     _, resource = os.path.split(todo)

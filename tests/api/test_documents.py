@@ -76,6 +76,16 @@ def test_api_upload_document(client):
     assert result['link']
 
 
+def test_api_upload_document_wrong_datatype(client):
+    tests.apiupload(
+        client,
+        '/documents',
+        'file',
+        __file__,
+        expected=http.HTTPStatus.BAD_REQUEST,
+    )
+
+
 def test_api_upload_from_url(client):
     source = f'file:///{utila.forward_slash(power.MASTER072_PDF)}'
     result = tests.apipost(client, '/documents', data={'url': source})

@@ -67,3 +67,8 @@ def curlpdf(url: str) -> TmpFile:
 
     filecontent = header + content
     return TmpFile(filecontent)
+
+
+def valid_pdf(data):
+    typedef = data[0:len(EXPECTED_PDFSTART)]
+    return typedef == EXPECTED_PDFSTART
