@@ -26,7 +26,7 @@ def test_dump_users(testdir):
     outpath = str(testdir)
     assert not viewo.api.users.data.load_users(outpath)
 
-    users = [
+    users = [  #nosec
         viewo.api.users.data.User(
             email='hans@dampf.eu',
             password='securehash',

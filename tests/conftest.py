@@ -14,6 +14,7 @@ import utila
 
 import tests
 import viewo.app
+import viewo.config
 
 pytest_plugins = 'pytester'  # pylint: disable=invalid-name
 
@@ -38,6 +39,8 @@ def app(testdir):
         'TODO': todo,
         'READY': ready,
     }
+    # disable tracking in test run # TODO: MOVE TO CONFIG
+    viewo.config.VISITORS_TRACKING = False
     application = viewo.app.create_application(config=test_config)
 
     yield application
