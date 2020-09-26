@@ -9,7 +9,8 @@
 }
 #showroom{
     overflow-y: scroll;
-    height: 100%;
+    height: 468px;
+    padding: 10px;
 }
 #example{
     width:95%;
@@ -41,8 +42,10 @@
     }
     #showroom{
         height: 120px;
+        width: 100%;
         display: block;
         overflow-y: visible;
+        float: left;
     }
     #example{
         height:90%;
