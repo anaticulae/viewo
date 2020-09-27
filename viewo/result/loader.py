@@ -31,7 +31,7 @@ def load_sentences(path: str) -> dict:
 
 
 def load_sentences_fromprocess(process: str) -> str:
-    result = link.resultview(process)
+    result = link.resultview(process, done=True)
     if not os.path.exists(result):
         return None
     path = os.path.join(result, 'words__word_result.yaml')
@@ -57,7 +57,7 @@ def load_footenotes(path: str):
 
 
 def load_footnotes_fromprocess(process: str):
-    result = link.resultview(process)
+    result = link.resultview(process, done=True)
     if not os.path.exists(result):
         return None
     path = iamraw.path.headerfooters(result)
@@ -68,7 +68,7 @@ def load_footnotes_fromprocess(process: str):
 
 
 def load_doctextstyle_fromprocess(process: str):
-    result = link.resultview(process)
+    result = link.resultview(process, done=True)
     if not os.path.exists(result):
         return None
     path = os.path.join(result, 'doctextstyle__textstyle.yaml')
@@ -112,7 +112,7 @@ def friendly_font(font: str) -> str:
 
 
 def load_captions_fromprocess(process: str) -> iamraw.PageContentCaptions:
-    result = link.resultview(process)
+    result = link.resultview(process, done=True)
     if not os.path.exists(result):
         return None
     path = utila.pathconnector(result, 'caption', 'general_general')

@@ -35,7 +35,7 @@ def documents():
 def document_get(documentid: str):
     """Recieve document information selected by documentid. If document
     does not exists, 404 Error will be raised."""
-    source = os.path.join(link.document(documentid), link.JOB_FILE_NAME)  # pylint:disable=E1101
+    source = os.path.join(link.document(documentid), link.JOB_FILE_NAME)
     if not os.path.exists(source):
         return viewo.api.notfound(f'could not locate `{documentid}')
     # TODO: REPLACE WITH JSON METHOD

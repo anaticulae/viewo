@@ -17,7 +17,7 @@ import viewo.api.utils
 
 
 def all_findings(documentid: str):
-    documentpath = link.document(documentid)  # pylint:disable=E1101
+    documentpath = link.document(documentid)
     if documentpath is None:
         return None
     findings = protocol.findings_from_path(documentpath)
@@ -27,7 +27,7 @@ def all_findings(documentid: str):
 def load_finding(documentid, findingid):
     # TODO: EXPERIMENTAL
     findingid = str(findingid)
-    documentpath = link.document(documentid)  # pylint:disable=E1101
+    documentpath = link.document(documentid)
     for _, findings in protocol.finding.iter_findings(documentpath):
         for finding in findings:
             if str(finding.number) == findingid:
@@ -62,7 +62,7 @@ def finding_raw(finding: iamraw.Finding, documentid: str) -> dict:
 
 
 def update_finding_status(documentid: str, findingid: int, status: int):
-    source = link.document(documentid)  # pylint:disable=E1101
+    source = link.document(documentid)
     status = viewo.result.update.problem_fromint(status)
     before = protocol.finding_status(source, findingid)
     if not protocol.finding_status_update(source, findingid, status):

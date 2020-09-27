@@ -23,6 +23,8 @@ import viewo.waiting
 def load_resultview_result(process: str) -> str:
     result = link.resultview(process)
     if not os.path.exists(result):
+        result = link.resultview(process, done=True)
+    if not os.path.exists(result):
         return None
     with utila.profile(f'load resultview: {process}'):
         loaded = load_resultview(result, process)

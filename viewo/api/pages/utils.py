@@ -16,7 +16,7 @@ import viewo.result.data
 
 
 def load_html(documentid: str, pages: tuple = None) -> dict:
-    root = link.resultview(documentid)  # pylint:disable=E1101
+    root = link.resultview(documentid, done=True)
 
     loaded = viewo.result.data.load_html(root)
     selected = [loaded[page] for page in pages] if pages else loaded
@@ -26,6 +26,6 @@ def load_html(documentid: str, pages: tuple = None) -> dict:
 
 
 def pagecount(documentid: str) -> int:
-    root = link.resultview(documentid)  # pylint:disable=E1101
+    root = link.resultview(documentid, done=True)
     result = len(utila.file_list(root, include='html'))
     return result

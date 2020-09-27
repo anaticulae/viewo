@@ -56,7 +56,7 @@ def valid_document(function):
     def decorated_function(*args, **kwargs):
         # TODO: ADD USER RIGHTS CHECK
         documentid = kwargs['documentid']
-        documentpath = link.document(documentid)  # pylint:disable=E1101
+        documentpath = link.document(documentid)
         if documentpath is None:
             return notfound(f'could not locate `{documentid}`')
         return function(*args, **kwargs)
