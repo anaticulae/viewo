@@ -16,37 +16,38 @@ import utila
 result_ = flask.Blueprint('result', __name__)  # pylint:disable=C0103
 
 
-@result_.route('/result', defaults={'document': None})
-@result_.route('/result/<string:document>')
-def view_result(document: str = None):
-    if not document:
+@result_.route('/result', defaults={'documentid': None})
+@result_.route('/result/<string:documentid>')
+def view_result(documentid: str = None):
+    if not documentid:
         return flask.redirect(flask.url_for('documents.view_documents'))
 
-    invalid_document = not os.path.exists(link.ready(document))
+    invalid_document = not os.path.exists(link.ready(documentid))
     if invalid_document:
         return flask.redirect('result/failure')
 
     rendered = flask.render_template(
         'result/index.html',
-        process=document,
+        process=documentid,
         waiting=False,
     )
     return rendered
 
 
-@result_.route('/result/<string:document>/<string:image>')
-def view_images(document: str = None, image: str = None):
-    document = str(document)
-    source = link.ready(document)
+@result_.route('/result/<string:documentid>/<string:image>')
+def view_images(documentid: str = None, image: str = None):
+    source = link.ready(documentid)
     invalid_document = not os.path.exists(source)
     if invalid_document:
         utila.error(f'could not load document: {source}')
         return flask.redirect('result/failure')
+
     image = os.path.join(source, 'result/view/', image)
     if not os.path.exists(image):
         utila.error(f'could not load image: {image}')
         return flask.redirect('result/failure')
-    # contextmanager does not work here
+
+    # Hint: contextmanager does not work here
     response = flask.send_file(open(image, mode='rb'), mimetype='image')
     return response
 
