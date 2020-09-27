@@ -20,7 +20,7 @@ import viewo.waiting.data
 def run_status(client, todo: str, monkeypatch):
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: todo)
-        result = tests.content(client, '/waiting/status/12345678900')
+        result = tests.content(client, '/waiting/status/BAS45DFAC00JJ52K')
 
     assert result, str(result)
     loaded = viewo.waiting.data.loads(result)
@@ -40,7 +40,7 @@ def no_validation(valid):  # pylint:disable=W0621
     utila.file_remove(
         os.path.join(
             valid,
-            '12345678900',
+            'BAS45DFAC00JJ52K',
             viewo.waiting.VERIFY,
         ))
     return valid
@@ -51,7 +51,7 @@ def invalid_validation(valid):  # pylint:disable=W0621
     utila.file_replace(
         os.path.join(
             valid,
-            '12345678900',
+            'BAS45DFAC00JJ52K',
             viewo.waiting.VERIFY,
         ),
         '{}',

@@ -11,7 +11,7 @@ import http
 
 import tests
 
-TEST_DOCUMENT = '1508790764'
+TEST_DOCUMENT = 'E508AF0DF454GI30'
 
 
 def test_api_pages_overview(findingclient):

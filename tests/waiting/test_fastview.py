@@ -18,7 +18,7 @@ from tests.waiting import valid  # pylint:disable=W0611
 def test_waiting_fastview_status(valid, client, monkeypatch):  # pylint:disable=W0621
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
-        result = content(client, '/waiting/fastview/status/12345678900')
+        result = content(client, '/waiting/fastview/status/BAS45DFAC00JJ52K')
     result = str(result)
     assert 'title' in result, str(result)
     assert 'pages' in result, str(result)
@@ -38,7 +38,7 @@ def test_waiting_fastview_status_failure(valid, client, monkeypatch):  # pylint:
 def test_waiting_fastview(valid, client, monkeypatch):  # pylint:disable=W0621
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
-        result = content(client, '/waiting/fastview/12345678900')
+        result = content(client, '/waiting/fastview/BAS45DFAC00JJ52K')
 
     assert 'Schnelldurchsicht' in result, str(result)
 
@@ -63,7 +63,7 @@ def test_waiting_fastviewgroupstatus_jsonify():
 def test_waiting_load_groupstatus(monkeypatch):
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: EXAMPLE_TODO)
-        loaded = viewo.waiting.fastview.load_fastview_result('12345678900')
+        loaded = viewo.waiting.fastview.load_fastview_result('BAS45DFAC00JJ52K')
     assert loaded
     assert len(loaded[0].error) == 1, str(loaded[0])
     assert loaded[1].error == [], str(loaded[1])

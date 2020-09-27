@@ -18,7 +18,7 @@ def test_api_findings_overview_bydocumentid(findingclient):
     client = findingclient
     result = tests.apicall(
         client,
-        f'/documents/1508790764/findings',
+        f'/documents/E508AF0DF454GI30/findings',
     )
     assert result['findings']
     assert result['findings']['uri']
@@ -46,7 +46,7 @@ def test_api_findings_byfindingid(findingclient):
     client = findingclient
     result = tests.apicall(
         client,
-        f'/documents/1508790764/findings/1644413926',
+        f'/documents/E508AF0DF454GI30/findings/1644413926',
         expected=http.HTTPStatus.OK,
     )
     assert result['finding']['uri']

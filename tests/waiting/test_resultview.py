@@ -28,7 +28,7 @@ def validate_status(dumped: str):
 def test_waiting_resultview_load_resultview():
     loaded = viewo.result.data.load_resultview(
         EXAMPLE_RESULT,
-        '1508790764',
+        'E508AF0DF454GI30',
     )
     assert loaded, str(loaded)
     pages = [item.page for item in loaded]
@@ -39,7 +39,7 @@ def test_waiting_resultview_load_resultview():
 def test_waiting_resultview_tojson():
     loaded = viewo.result.data.load_resultview(
         EXAMPLE_RESULT,
-        '1508790764',
+        'E508AF0DF454GI30',
     )
     dumped = viewo.result.json.tojson(loaded)
     validate_status(dumped)
@@ -56,13 +56,13 @@ def test_waiting_resultview_status_failure(valid, client, monkeypatch):  # pylin
 def test_waiting_resultview_status(valid, client, monkeypatch):  # pylint:disable=W0621
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
-        result = content(client, '/waiting/resultview/status/12345678900')
+        result = content(client, '/waiting/resultview/status/BAS45DFAC00JJ52K')
     validate_status(result)
 
 
 def test_waiting_resultview(valid, client, monkeypatch):  # pylint:disable=W0621
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
-        result = content(client, '/waiting/resultview/12345678900')
+        result = content(client, '/waiting/resultview/BAS45DFAC00JJ52K')
     assert 'Gesamtdurchsicht' in result
     assert len(result) > 2000, str(result)

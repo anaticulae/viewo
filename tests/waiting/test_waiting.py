@@ -67,16 +67,16 @@ def test_waiting_status_verified(client, testdir, monkeypatch):
     """Test a state where pdf is uploaded and validated.
 
     This requires the following resources:
-        - pdf file with name process name in process folder like `12345678900`
+        - pdf file with name process name in process folder like `BAS45DFAC00JJ52K`
         - pdfinfo.json with validation result of pdf file
     """
     root = str(testdir)
-    todo = os.path.join(root, '12345678900')
+    todo = os.path.join(root, 'BAS45DFAC00JJ52K')
     os.makedirs(todo)
-    utila.file_create(os.path.join(todo, '12345678900'))  # fake pdf file
+    utila.file_create(os.path.join(todo, 'BAS45DFAC00JJ52K'))  # fake pdf file
 
     utila.file_copy(
-        os.path.join(EXAMPLE_TODO, '12345678900', viewo.waiting.VERIFY),
+        os.path.join(EXAMPLE_TODO, 'BAS45DFAC00JJ52K', viewo.waiting.VERIFY),
         os.path.join(todo, viewo.waiting.VERIFY),
     )
     loaded = run_status(client, root, monkeypatch)
@@ -105,7 +105,7 @@ def test_waiting_validation_invalid_result(
 ):  # pylint:disable=W0621
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: invalid_validation)
-        result = content(client, '/waiting/validation/12345678900')
+        result = content(client, '/waiting/validation/BAS45DFAC00JJ52K')
     assert ('Die hochgeladene Datei konnte <strong>'
             'nicht erfolgreich</strong>') in result, str(result)
 
@@ -113,7 +113,7 @@ def test_waiting_validation_invalid_result(
 def test_waiting_validation_result(valid, client, monkeypatch):  # pylint:disable=W0621
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
-        result = content(client, '/waiting/validation/12345678900')
+        result = content(client, '/waiting/validation/BAS45DFAC00JJ52K')
 
     assert ('Die PDF Datei konnte erfolgreich eingelesen'
             ' werden und wird nun analysiert.') in result, str(result)
