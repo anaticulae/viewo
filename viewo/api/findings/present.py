@@ -15,7 +15,7 @@ import viewo.api.findings.utils
 
 
 @viewo.api.findings.api_findings.route(
-    '/documents/<string:documentid>/findings',
+    '/documents/<string(length=16):documentid>/findings',
     methods=['GET'],
 )
 @viewo.api.valid_document
@@ -31,7 +31,7 @@ def findings(documentid):
 
 
 @viewo.api.findings.api_findings.route(
-    '/documents/<string:documentid>/findings/<string:findingid>',
+    '/documents/<string(length=16):documentid>/findings/<string:findingid>',
     methods=['GET'],
 )
 @viewo.api.valid_document

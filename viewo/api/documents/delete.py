@@ -14,7 +14,7 @@ import viewo.api.documents
 
 
 @viewo.api.documents.api_documents.route(
-    '/documents/<string:documentid>',
+    '/documents/<string(length=16):documentid>',
     methods=['DELETE'],
 )
 @viewo.api.valid_document

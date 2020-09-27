@@ -17,7 +17,7 @@ result_ = flask.Blueprint('result', __name__)  # pylint:disable=C0103
 
 
 @result_.route('/result', defaults={'documentid': None})
-@result_.route('/result/<string:documentid>')
+@result_.route('/result/<string(length=16):documentid>')
 def view_result(documentid: str = None):
     if not documentid:
         return flask.redirect(flask.url_for('documents.view_documents'))
@@ -34,7 +34,7 @@ def view_result(documentid: str = None):
     return rendered
 
 
-@result_.route('/result/<string:documentid>/<string:image>')
+@result_.route('/result/<string(length=16):documentid>/<string:image>')
 def view_images(documentid: str = None, image: str = None):
     source = link.ready(documentid)
     invalid_document = not os.path.exists(source)

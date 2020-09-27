@@ -16,7 +16,7 @@ import viewo.api.pages.utils
 
 
 @viewo.api.pages.api_pages.route(
-    '/documents/<string:documentid>/pages',
+    '/documents/<string(length=16):documentid>/pages',
     methods=['GET'],
 )
 @viewo.api.valid_document

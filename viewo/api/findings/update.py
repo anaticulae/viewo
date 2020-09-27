@@ -15,7 +15,7 @@ import viewo.api.findings.utils
 
 
 @viewo.api.findings.api_findings.route(
-    '/documents/<string:documentid>/findings/<string:findingid>',
+    '/documents/<string(length=16):documentid>/findings/<string:findingid>',
     methods=['PUT'],
 )
 @viewo.api.valid_document

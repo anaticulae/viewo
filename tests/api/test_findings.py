@@ -27,7 +27,7 @@ def test_api_findings_overview_bydocumentid(findingclient):
 def test_api_findings_overview_by_invalid_documentid(client):
     tests.apicall(
         client,
-        '/documents/invalid_documentid/findings',
+        '/documents/invalid_document/findings',
         expected=http.HTTPStatus.NOT_FOUND,
     )
 

@@ -28,7 +28,7 @@ def documents():
 
 
 @viewo.api.documents.api_documents.route(
-    '/documents/<string:documentid>',
+    '/documents/<string(length=16):documentid>',
     methods=['GET'],
 )
 @viewo.api.valid_document
@@ -47,7 +47,7 @@ def document_get(documentid: str):
 
 
 @viewo.api.documents.api_documents.route(
-    '/documents/<string:documentid>/footnotes',
+    '/documents/<string(length=16):documentid>/footnotes',
     methods=['GET'],
 )
 @viewo.api.valid_document
@@ -60,7 +60,7 @@ def footnotes_get(documentid: str):
 
 
 @viewo.api.documents.api_documents.route(
-    '/documents/<string:documentid>/style',
+    '/documents/<string(length=16):documentid>/style',
     methods=['GET'],
 )
 @viewo.api.valid_document
@@ -73,7 +73,7 @@ def docstyle_get(documentid: str):
 
 
 @viewo.api.documents.api_documents.route(
-    '/documents/<string:documentid>/captions',
+    '/documents/<string(length=16):documentid>/captions',
     methods=['GET'],
 )
 @viewo.api.valid_document
@@ -86,7 +86,7 @@ def captions_get(documentid: str):
 
 
 @viewo.api.documents.api_documents.route(
-    '/documents/<string:documentid>/properties',
+    '/documents/<string(length=16):documentid>/properties',
     methods=['GET'],
 )
 @viewo.api.valid_document
