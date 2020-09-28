@@ -14,6 +14,7 @@ import protocol.finding
 import utila
 
 import viewo.api.utils
+import viewo.result.update
 
 
 def all_findings(documentid: str):
