@@ -2,6 +2,17 @@
 
 Every noteable change is logged here.
 
+## v1.3.0
+
+### Feature
+
+* fix document id to 16 width (749b420d9c5e)
+* improve main example view (7ad254cb1b5d)
+
+### Fix
+
+* add missing import (e1625df70895)
+
 ## v1.2.3
 
 ## v1.2.2
