@@ -38,6 +38,7 @@ Developer
   :maxdepth: 1
 
   developer/rest
+  security
 
 
 Modules
