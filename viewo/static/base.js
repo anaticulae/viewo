@@ -35,11 +35,11 @@ base.show_message = function (headline, content = '') {
 }
 
 base.hide = function (item) {
-    $(item)[0].classList.add('hidden')
+    $(item)[0].classList.add('hidden_invisible')
 }
 
 base.show = function (item) {
-    $(item)[0].classList.remove('hidden')
+    $(item)[0].classList.remove('hidden_invisible')
 }
 
 base.remove = function (array, index) {

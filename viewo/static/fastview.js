@@ -1,23 +1,23 @@
 function openclose(selector) {
     let selected = document.getElementById(selector)
     let before = selected.classList.length
-    selected.classList.remove('hidden')
+    selected.classList.remove('hidden_invisible')
     if (selected.classList.length == before) {
-        selected.classList.add('hidden')
+        selected.classList.add('hidden_invisible')
     }
     else {
-        selected.classList.remove('hidden')
+        selected.classList.remove('hidden_invisible')
     }
 }
 
 function openclose_item(selected) {
     let before = selected.classList.length
-    selected.classList.remove('hidden')
+    selected.classList.remove('hidden_invisible')
     if (selected.classList.length == before) {
-        selected.classList.add('hidden')
+        selected.classList.add('hidden_invisible')
     }
     else {
-        selected.classList.remove('hidden')
+        selected.classList.remove('hidden_invisible')
     }
 }
 
@@ -116,7 +116,7 @@ function add_content(item) {
         orange = add_ol(ul, "fastview_group_warning")
         for (let warning of item.warning) {
             let created = add_li(orange, warning)
-            created.classList.add('hidden')
+            created.classList.add('hidden_invisible')
         }
     }
 
@@ -133,11 +133,11 @@ function add_content(item) {
         green = add_ol(ul, "fastview_group_good")
         for (let good of item.good) {
             let created = add_li(green, good)
-            created.classList.add('hidden')
+            created.classList.add('hidden_invisible')
         }
     }
     // hide common content
-    content.classList.add('hidden')
+    content.classList.add('hidden_invisible')
     view.appendChild(tr)
     return content
 }

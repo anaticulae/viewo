@@ -30,29 +30,29 @@
         <ul id="pdfview_navigation_list"></ul>
     </div>
 
-    <main id="pdfview_content" class="hidden">
+    <main id="pdfview_content" class="hidden_invisible">
         {% include 'result/_pdf.html' %}
     </main>
 
-    <main id="pdfview_overview" class="hidden"></main>
+    <main id="pdfview_overview" class="hidden_invisible"></main>
 
-    <main id="pdfview_docstyle" class="hidden">
+    <main id="pdfview_docstyle" class="hidden_invisible">
         {% include 'result/_style.html' %}
     </main>
 
-    <main id="pdfview_footnotes" class="hidden">
+    <main id="pdfview_footnotes" class="hidden_invisible">
         {% include 'result/_footnotes.html' %}
     </main>
 
-    <main id="pdfview_properties" class="hidden">
+    <main id="pdfview_properties" class="hidden_invisible">
         {% include 'result/_properties.html' %}
     </main>
 
-    <main id="pdfview_captions" class="hidden">
+    <main id="pdfview_captions" class="hidden_invisible">
         {% include 'result/_captions.html' %}
     </main>
 </div>
-<div id="todolistview" class="hidden">
+<div id="todolistview" class="hidden_invisible">
     {% include 'result/todolist.html' %}
 </div>
 {% if waiting %}
