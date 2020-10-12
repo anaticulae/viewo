@@ -12,6 +12,7 @@ import flask
 import viewo.api
 import viewo.api.findings
 import viewo.api.findings.utils
+import viewo.api.utils
 
 
 @viewo.api.findings.api_findings.route(
@@ -42,4 +43,41 @@ def finding_get(documentid, findingid):
     dumped = flask.jsonify({
         'finding': simple,
     })
+    return dumped
+
+
+@viewo.api.findings.api_findings.route(
+    '/documents/<string(length=16):documentid>/findings/compare/<string(length=16):partnerid>',
+    methods=['GET'],
+)
+@viewo.api.valid_partner
+@viewo.api.valid_document
+def compare(documentid, partnerid):
+    operation_raw = flask.request.args.get('operation', 'all').lower()
+    try:
+        operation = viewo.api.findings.utils.Comperator[operation_raw.upper()]
+    except KeyError:
+        return viewo.api.bad(f'invalid operation: {operation_raw}')
+    # comparation
+    compared = viewo.api.findings.utils.compare(
+        documentid,
+        partnerid,
+        operation=operation,
+    )
+    # convert answer
+    simple = viewo.api.findings.utils.compare_raw(compared)
+    result = {
+        'compared': {
+            'compared': simple,
+            'current': documentid,
+            'partnerid': partnerid,
+        }
+    }
+    result['compared']['uri'] = flask.url_for(
+        'api_findings.compare',
+        documentid=documentid,
+        partnerid=partnerid,
+        operation=operation_raw,
+    )
+    dumped = flask.jsonify(result)
     return dumped

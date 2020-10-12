@@ -64,6 +64,21 @@ def valid_document(function):
     return decorated_function
 
 
+# TODO: IMPROVE DECORATOR KNOWLEDGE
+def valid_partner(function):
+
+    @functools.wraps(function)
+    def decorated_function(*args, **kwargs):
+        # TODO: ADD USER RIGHTS CHECK
+        documentid = kwargs['partnerid']
+        documentpath = link.document(documentid)
+        if documentpath is None:
+            return notfound(f'could not locate `{documentid}`')
+        return function(*args, **kwargs)
+
+    return decorated_function
+
+
 def valid_finding(function):
 
     @functools.wraps(function)

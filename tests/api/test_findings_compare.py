@@ -1,0 +1,69 @@
+# =============================================================================
+# C O P Y R I G H T
+# -----------------------------------------------------------------------------
+# Copyright (c) 2020 by Helmut Konrad Fahrendholz. All rights reserved.
+# This file is property of Helmut Konrad Fahrendholz. Any unauthorized copy,
+# use or distribution is an offensive act against international law and may
+# be prosecuted under federal law. Its content is company confidential.
+# =============================================================================
+
+import http
+
+import pytest
+import utila
+
+import tests
+import tests.api
+import viewo.api.findings.utils
+
+
+@pytest.mark.usefixtures('findingclient')
+def test_api_findings_compare_two_documents_all():
+    compared = viewo.api.findings.utils.compare(
+        tests.api.TEST_DOCUMENT,
+        tests.api.TEST_DOCUMENT,
+    )
+    selected = utila.select_page(compared, page=5)
+    assert selected.current
+    assert selected.other
+    assert selected.current == selected.other
+
+
+@pytest.mark.usefixtures('findingclient')
+def test_api_findings_compare_two_documents_diff():
+    compared = viewo.api.findings.utils.compare(
+        tests.api.TEST_DOCUMENT,
+        tests.api.TEST_DOCUMENT,
+        operation=viewo.api.findings.utils.Comperator.DIFF,
+    )
+    selected = utila.select_page(compared, page=5)
+    assert not selected.current
+    assert not selected.other
+
+
+def test_api_compare_findings_all(findingclient):
+    client = findingclient
+    result = tests.apicall(
+        client,
+        f'/documents/E508AF0DF454GI30/findings/compare/E508AF0DF454GI30',
+    )
+    assert result['compared']
+    assert result['compared']['uri']
+
+
+def test_api_compare_findings_invalid_partnerid(findingclient):
+    client = findingclient
+    tests.apicall(
+        client,
+        f'/documents/E508AF0DF454GI30/findings/compare/INVALIDINVALIDIN',
+        expected=http.HTTPStatus.NOT_FOUND,
+    )
+
+
+def test_api_compare_findings_invalid_operation(findingclient):
+    client = findingclient
+    tests.apicall(
+        client,
+        f'/documents/E508AF0DF454GI30/findings/compare/E508AF0DF454GI30?operation=invalid',
+        expected=http.HTTPStatus.BAD_REQUEST,
+    )
