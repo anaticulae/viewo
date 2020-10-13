@@ -20,12 +20,21 @@ import viewo.result.loader
 def all_documents():
     todos, dones = link.collect_jobs(configo.share())
     result = []
+    ready_indexes = {item.index for item in dones}
+
     for todo in todos:
-        dumped = job_toraw(todo)
-        result.append(dumped)
+        if todo.index in ready_indexes:
+            continue
+        result.append(todo)
     for done in dones:
-        dumped = job_toraw(done)
-        result.append(dumped)
+        result.append(done)
+
+    result = sorted(
+        result,
+        key=lambda item: link.sortable_date(item.date),
+        reverse=True,
+    )
+    result = [job_toraw(job) for job in result]
     return result
 
 
