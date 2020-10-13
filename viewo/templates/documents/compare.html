@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% block head %}
+{{ super() }}
+<script type="text/javascript" src="{{ url_for('static', filename='documents_compare.js') }}"></script>
+{% endblock %}
+
+<h2>Dokument Vergleich</h2>
+
+<div id="documents_compare">
+    <div>
+        <label style="width:100px;">Aktuell:</label>
+        <select name="current" id="documents_compare_current_list" style="width:300px;">
+            <!-- <option value="10">10</option> -->
+        </select>
+        <label style="width:100px;margin-left:50px;">Zuvor:</label>
+        <select name="partner" id="documents_compare_partner_list" style="width:300px;">
+            <!-- <option value="10">10</option> -->
+        </select>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <td width="48%" id="documents_compare_current">Akutell</td>
+                <td width="4%" id="documents_compare_partner">Seiten</td>
+                <td width="48%" id="documents_compare_partner" class="right">Zuvor</td>
+            </tr>
+        </thead>
+        <tbody id="documents_compare_content"></tbody>
+        <tfoot>
+            <tr>
+                <td id="documents_compare_no_data" colspan="3" class="center">Loading...</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div id="documents_compare_error" class="well">
+    Could not reach server.
+</div>
+
+{% endblock %}

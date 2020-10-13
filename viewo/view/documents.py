@@ -39,3 +39,8 @@ def view_documents():
         reverse=True,
     )
     return flask.render_template('documents/index.html', documents=docs)
+
+
+@documents_.route('/compare_document', methods=['GET'])
+def compare_document():
+    return flask.render_template('documents/compare.html')
