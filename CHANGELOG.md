@@ -2,6 +2,22 @@
 
 Every noteable change is logged here.
 
+## v1.4.0
+
+### Feature
+
+* add view to compare findings of two documents (e1966cc86ffd)
+* add method to compare findings of two documents (511817581097)
+
+### Fix
+
+* sort documents by date (9fd93895bc55)
+* solve naming collision with bootstrap (4f20431da1b7)
+
+### Documentation
+
+* add section security to discuss and collect questions (a2eba1c0bc33)
+
 ## v1.3.0
 
 ### Feature
