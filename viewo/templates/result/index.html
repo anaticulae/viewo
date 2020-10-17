@@ -26,10 +26,10 @@
     <div id="pdfview_navigation">
         <span id="pdfview_navigation_toggle_box">
             <!-- previous page -->
-            <button type="button" id="pdfview_previous_page" style="margin-top: 2px; margin-bottom: 2px;">&lt;</button>
+            {{ button(id='pdfview_previous_page', caption='&al;', style='margin-top: 2px; margin-bottom: 2px;')}}<br />
             <!-- next page -->
-            <button type="button" id="pdfview_next_page">&gt;</button><br />
-            <button type="button" id="pdfview_navigation_toggle">hide</button>
+            {{ button(id='pdfview_next_page', caption='&gt;')}}<br />
+            {{ button(id='pdfview_navigation_toggle', caption='hide')}}
         </span>
         <ul id="pdfview_navigation_list"></ul>
     </div>
@@ -62,7 +62,7 @@
 {% if waiting %}
 <footer>
     <p>
-        <a href="/waiting/{{ process }}">zum Wartebereich</a>
+        {{ href(url='waiting.waiting_view', caption='zum Wartebereich', process=process) }}
     </p>
 </footer>
 {% endif %}

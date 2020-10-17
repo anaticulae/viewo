@@ -2,8 +2,11 @@
 
 {% block head %}
 {{ super() }}
-<link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='home.css') }}">
-<script src="{{ url_for('static', filename='home.js') }}"></script>
+
+{{ css('home.css') }}
+
+{{ js('home.js') }}
+
 {% endblock %}
 
 {% block content %}

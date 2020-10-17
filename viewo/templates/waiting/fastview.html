@@ -2,9 +2,9 @@
 
 {% block content %}
 
-<link rel="stylesheet" type="text/css" media="screen"
-    href="{{ url_for('static', filename='fastview.css') }}">
-<script src="{{ url_for('static', filename='fastview.js') }}"></script>
+{{ css('fastview.css') }}
+
+{{ js('fastview.js') }}
 
 <h2>Schnelldurchsicht</h2>
 
@@ -24,7 +24,7 @@
 
 <footer>
     <p>
-        <a href="/waiting/{{ process }}">zum Wartebereich</a>
+        {{ href(url='waiting.waiting_view', caption='zum Wartebereich', process=process) }}
     </p>
 </footer>
 
