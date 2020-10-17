@@ -12,81 +12,76 @@
 {% block content %}
 <h2>checkitweg.de</h2>
 
-<div id="center">
-    <div id="welcome">
-        <p>
-            Fehlerfrei, sei dabei!
-        </p>
+<div id="welcome">
+    <p>
+        Fehlerfrei, sei dabei!
+    </p>
 
-        <ul>
-            <li>Ueberpruefe deine Arbeit in nur wenigen Sekunden</li>
-            <li>Rechtschreibung</li>
-            <li>Regeln</li>
-            <li>Layout</li>
-            <li>Ueberpruefe 500 verschiedene Regeln</li>
-            <li>Kostenlos und automatisiert</li>
-        </ul>
+    <ul>
+        <li>Überprüfen Sie Ihre Arbeit in nur wenigen Minuten</li>
+        <li>Rechtschreibung</li>
+        <li>Regeln</li>
+        <li>Layout</li>
+        <li>Überprüfen Sie 500 verschiedene Regeln</li>
+        <li>Kostenlos und automatisiert</li>
+    </ul>
 
-        <fieldset>
-            <legend>Waehle dein Dokument und erhalte sofort deine Auswertung</legend>
+    <fieldset>
+        <legend>Wählen Sie Ihr Dokument und erhalten Sie sofort Ihre Auswertung</legend>
 
-            <div class="top-pad">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#file" data-toggle="tab">Lokale Datei</a></li>
-                    <li><a href="#url" data-toggle="tab">URL</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane active" id="file">
-                        <form id="file_upload" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <br />Wählen Sie Ihr PDF Document aus:
-                            </div>
-                            <input type="file" class="form-control form-group" name="file" required="required" />
-                            {{ accept_legal() }}
-                        </form>
-                    </div>
-                    <div class="tab-pane" id="url">
-                        <form id="url_upload">
-                            <div class="form-group">
-                                <br />Webadresse oder Cloudspeicher:
-                            </div>
-                            <input class="form-control form-group" type="url" name="url" placeholder="https://"
-                                required="required" />
-                            {{ accept_legal() }}
-                        </form>
-                    </div>
+        <div class="top-pad">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#file" data-toggle="tab">Lokale Datei</a></li>
+                <li><a href="#url" data-toggle="tab">URL</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="file">
+                    <form id="file_upload" enctype="multipart/form-data">
+                        <div class="form-group"><br />Wählen Sie Ihr PDF Document aus:</div>
+                        <input type="file" class="form-control form-group" name="file" required="required"
+                            style="max-width:600px;" />
+                        {{ accept_legal() }}
+                    </form>
+                </div>
+                <div class="tab-pane" id="url">
+                    <form id="url_upload">
+                        <div class="form-group"> <br />Webadresse oder Cloudspeicher:</div>
+                        <input class="form-control form-group" type="url" name="url" placeholder="https://"
+                            required="required" style="max-width:600px;" />
+                        {{ accept_legal() }}
+                    </form>
                 </div>
             </div>
-        </fieldset>
-    </div>
-    <aside id="showroom" class="top-pad">
-        <div class="well">
-            <h3>Beispiel 1</h3>
-            Seiten: 72<br />
-            Fehler: 1000<br />
         </div>
-        <div class="well">
-            <h3>Beispiel 2</h3>
-            Seiten: 72<br />
-            Fehler: 1000<br />
-        </div>
-        <div class="well">
-            <h3>Beispiel 3</h3>
-            Seiten: 72<br />
-            Fehler: 1000<br />
-        </div>
-        <div class="well">
-            <h3>Beispiel 3</h3>
-            Seiten: 72<br />
-            Fehler: 1000<br />
-        </div>
-        <div class="well">
-            <h3>Beispiel 4</h3>
-            Seiten: 72<br />
-            Fehler: 1000<br />
-        </div>
-    </aside>
+    </fieldset>
 </div>
+<aside id="showroom" class="top-pad">
+    <div class="well">
+        <h3>Beispiel 1</h3>
+        Seiten: 72<br />
+        Fehler: 1000<br />
+    </div>
+    <div class="well">
+        <h3>Beispiel 2</h3>
+        Seiten: 72<br />
+        Fehler: 1000<br />
+    </div>
+    <div class="well">
+        <h3>Beispiel 3</h3>
+        Seiten: 72<br />
+        Fehler: 1000<br />
+    </div>
+    <div class="well">
+        <h3>Beispiel 3</h3>
+        Seiten: 72<br />
+        Fehler: 1000<br />
+    </div>
+    <div class="well">
+        <h3>Beispiel 4</h3>
+        Seiten: 72<br />
+        Fehler: 1000<br />
+    </div>
+</aside>
 {% endblock %}
 
 {% macro accept_legal() -%}

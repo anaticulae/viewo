@@ -1,16 +1,13 @@
-#center{
-    height:350px;
-    width: 100%;
-}
 #welcome{
     width:70%;
     float:left;
     margin-bottom: 10px;
 }
 #showroom{
-    overflow-y: scroll;
-    height: 468px;
-    padding: 10px;
+    overflow-y: auto;
+    padding-left:20px;
+    /* padding: 10px; */
+    width: 30%;
 }
 #example{
     width:95%;

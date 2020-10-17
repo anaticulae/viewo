@@ -30,11 +30,11 @@
 {%- endmacro %}
 
 
-{% macro href(caption, url='#') -%}
+{% macro href(caption, url='#', class='') -%}
 {% if url != '#' %}
 {% set url = url_for(url, **kwargs) %}
 {% endif %}
-<a href="{{url}}">{{ caption }}</a>
+<a href="{{url}}" {% if class %} class="{{ class }}" {% endif %}>{{ caption }}</a>
 {%- endmacro %}
 
 

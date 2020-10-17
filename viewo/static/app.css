@@ -59,8 +59,9 @@
     .mastertoc h2{
         display:none;
     }
-    #content{
-        overflow:hidden;
+    #wrapper{
+        max-width: 1280px;
+        /* overflow:hidden; */
     }
     .wrapper{
         border:0px;
