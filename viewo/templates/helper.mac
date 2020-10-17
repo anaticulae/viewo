@@ -2,7 +2,6 @@
 <script type="text/javascript" src="{{ url_for('static', filename=source) }}"></script>
 {%- endmacro %}
 
-
 {% macro css(source) -%}
 <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename=source) }}">
 {%- endmacro %}
@@ -12,19 +11,19 @@
 {% if url != '#' %}
 {% set url = url_for(url, **kwargs) %}
 {% endif %}
-<a href="{{url}}">{{caption}}</a>
+<a href="{{url}}">{{ caption }}</a>
 {%- endmacro %}
 
 
 {% macro button(id='', caption='', img='', alt='', style='', class='', data_dismiss='') -%}
-<button type="button" {% if id %} id="{{id}}" {% endif %} {% if style %} style="{{style}}" {% endif %} {% if class %}
-    class="{{class}}" {% endif %} {% if data_dismiss %} data-dismiss="{{data_dismiss}}" {% endif %}>
+<button type="button" {% if id %} id="{{ id }}" {% endif %} {% if style %} style="{{ style }}" {% endif %}
+    {% if class %} class="{{ class}}" {% endif %} {% if data_dismiss %} data-dismiss="{{ data_dismiss }}" {% endif %}>
     {% if img %}
-    <img src="{{ url_for('static', filename=img) }}" {% if alt %} alt="{{alt}}" {% endif %} width="100%"
+    <img src="{{ url_for('static', filename=img) }}" {% if alt %} alt="{{ alt }}" {% endif %} width="100%"
         height="100%" />
     {% endif %}
     {% if caption %}
-    {{caption}}
+    {{ caption }}
     {% endif %}
 </button>
 {%- endmacro %}
