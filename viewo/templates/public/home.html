@@ -39,15 +39,7 @@
                                 <br />Wählen Sie Ihr PDF Document aus:
                             </div>
                             <input type="file" class="form-control form-group" name="file" required="required" />
-                            <div class="form-group">
-                                <input type="checkbox" class="form-group" name="file" required="required" />
-                                Ich habe die <a href="{{url_for('legal.agb')}}">allgemeinen
-                                    Geschäftsbedingungen</a> gelesen
-                            </div>
-                            <div class="form-group">
-                                Starten Sie Ihre persönliche Analyse jetzt:
-                            </div>
-                            <input class="btn btn-default" type="submit" value="Los geht's" />
+                            {{ accept_legal() }}
                         </form>
                     </div>
                     <div class="tab-pane" id="url">
@@ -57,15 +49,7 @@
                             </div>
                             <input class="form-control form-group" type="url" name="url" placeholder="https://"
                                 required="required" />
-                            <div class="form-group">
-                                <input type="checkbox" class="form-group" name="file" required="required" />
-                                Ich habe die <a href="{{url_for('legal.agb')}}">allgemeinen
-                                    Geschäftsbedingungen</a> gelesen
-                            </div>
-                            <div class="form-group">
-                                Starten Sie Ihre persönliche Analyse jetzt:
-                            </div>
-                            <input class="btn btn-default" type="submit" value="Los geht's" />
+                            {{ accept_legal() }}
                         </form>
                     </div>
                 </div>
@@ -101,3 +85,15 @@
     </aside>
 </div>
 {% endblock %}
+
+{% macro accept_legal() -%}
+<div class="form-group">
+    <input type="checkbox" class="form-group" name="file" required="required" />
+    Ich habe die <a href="{{url_for('legal.agb')}}">allgemeinen
+        Geschäftsbedingungen</a> gelesen
+</div>
+<div class="form-group">
+    Starten Sie Ihre persönliche Analyse jetzt:
+</div>
+<input class="btn btn-default" type="submit" value="Los geht's" />
+{%- endmacro %}
