@@ -8,10 +8,27 @@
 # =============================================================================
 
 import flask
+import legal
 
-agb_ = flask.Blueprint('agb', __name__)  # pylint:disable=C0103
+legal_ = flask.Blueprint('legal', __name__)  # pylint:disable=C0103
 
 
-@agb_.route('/agb', methods=['GET'])
-def view():
-    return flask.render_template('public/agb.html')
+@legal_.route('/agb', methods=['GET'])
+def agb():
+    return flask.render_template('public/legal/agb.html', agb=legal.agb())
+
+
+@legal_.route('/impressum', methods=['GET'])
+def impressum():
+    return flask.render_template(
+        'public/legal/impressum.html',
+        impressum=legal.impressum(),
+    )
+
+
+@legal_.route('/privacy', methods=['GET'])
+def privacy():
+    return flask.render_template(
+        'public/legal/privacy.html',
+        privacy=legal.privacy(),
+    )
