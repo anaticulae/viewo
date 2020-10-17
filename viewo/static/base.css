@@ -103,14 +103,10 @@ input.submit{
 }
 
 table{
-    background:white;
-    border:solid 1px black;
     width:100%;
 }
 
 th{
-    border-bottom:2px solid black;
-    background:rgb(195, 212, 230);
     padding:4px;
 }
 
@@ -122,10 +118,10 @@ td{
     text-align:center;
 }
 .score{
-    width:50px;
+    width:80px;
 }
 .date{
-    min-width:130px;
+    min-width:150px;
 }
 .document_title{
     max-width:100%;
@@ -136,12 +132,6 @@ td{
 
 .failed{
     background:rgb(255, 206, 206)
-}
-
-.main_wrapper{
-    min-width:640px;
-    max-width:1024px;
-    margin:1px auto 1px auto;
 }
 
 .content{
