@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 
 {% block head %}
+
 {{ super() }}
-<link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='pdfview.css') }}">
-<script src="{{ url_for('static', filename='finding.js') }}"></script>
-<script src="{{ url_for('static', filename='pdfview/properties.js') }}"></script>
-<script src="{{ url_for('static', filename='pdfview/docstyle.js') }}"></script>
-<script src="{{ url_for('static', filename='pdfview.js') }}"></script>
+
+{{ css('pdfview.css') }}
+
+{{ js('finding.js') }}
+{{ js('pdfview/properties.js') }}
+{{ js('pdfview/docstyle.js') }}
+{{ js('pdfview.js') }}
+
 <script type="text/javascript">
     $(document).ready(function () {
         init()
