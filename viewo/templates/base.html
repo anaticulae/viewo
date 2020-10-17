@@ -9,10 +9,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Willkommen - Marhaban</title>
 
-    {{ css('lib/bootstrap.min.css')}}
-    {{ css('lib/bootstrap-theme.min.css')}}
-    {{ css('base.css')}}
-    {{ css('app.css')}}
+    {{ css('lib/bootstrap.min.css') }}
+    {{ css('lib/bootstrap-theme.min.css') }}
+    {{ css('base.css') }}
+    {{ css('app.css') }}
 
     {{ js('base.js') }}
     {{ js('lib/jquery.js') }}
@@ -21,7 +21,7 @@
     {% block head %}{% endblock %}
 </head>
 
-<body class=" main_wrapper">
+<body class="main_wrapper">
     <!-- logo starts here -->
     <img src="{{ url_for('static', filename='images/logo.jpg') }}" width="100%" style="margin:0px;padding:0px;"
         id="logo" alt="page logo">
@@ -29,9 +29,9 @@
     <!-- navigation stars here -->
     <nav class="main">
         <ul>
-            <li>{{href('Home', 'welcome.show_welcome')}}</li>
-            <li>{{href('Dokumente', 'documents.view_documents')}}</li>
-            <li>{{href('Schreibhilfe', 'welcome.show_welcome', page='writing')}}</li>
+            <li>{{ href('Home', 'welcome.show_welcome') }}</li>
+            <li>{{ href('Dokumente', 'documents.view_documents') }}</li>
+            <li>{{ href('Schreibhilfe', 'welcome.show_welcome', page='writing') }}</li>
         </ul>
     </nav>
     <!-- content starts here -->
@@ -40,7 +40,7 @@
         <div class="container" id="nogoodnews">
             {% for message in get_flashed_messages() %}
             <div class="alert alert-warning">
-                {{ button(caption='&times;', class='close', data_dismiss='alert')}}
+                {{ button(caption='&times;', class='close', data_dismiss='alert') }}
                 {{ message }}
             </div>
             {% endfor %}
@@ -52,9 +52,9 @@
     <!-- footer starts here  -->
     <footer>
         <p>
-            {{href('Impressum', 'legal.impressum')}} |
-            {{href('Allgemeine Geschäftsbedingungen', 'legal.agb')}} |
-            {{href('Datenschutzerklärung', 'legal.privacy')}}<br />
+            {{ href('Impressum', 'legal.impressum') }} |
+            {{ href('Allgemeine Geschäftsbedingungen', 'legal.agb') }} |
+            {{ href('Datenschutzerklärung', 'legal.privacy') }}<br />
             Copyright &copy; 2019-2020 by checkitweg.de
         </p>
     </footer>

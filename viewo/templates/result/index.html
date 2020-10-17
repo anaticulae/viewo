@@ -11,7 +11,7 @@
 {{ js('pdfview/docstyle.js') }}
 {{ js('pdfview.js') }}
 
-{{ js_ready(['init(); onload("', process, '")']|join('') )}}
+{{ js_ready(['init(); onload("', process, '")']|join('')) }}
 
 {% endblock %}
 
@@ -22,10 +22,10 @@
     <div id="pdfview_navigation">
         <span id="pdfview_navigation_toggle_box">
             <!-- previous page -->
-            {{ button(id='pdfview_previous_page', caption='&al;', style='margin-top: 2px; margin-bottom: 2px;')}}<br />
+            {{ button(id='pdfview_previous_page', caption='&al;', style='margin-top: 2px; margin-bottom: 2px;') }}<br />
             <!-- next page -->
-            {{ button(id='pdfview_next_page', caption='&gt;')}}<br />
-            {{ button(id='pdfview_navigation_toggle', caption='hide')}}
+            {{ button(id='pdfview_next_page', caption='&gt;') }}<br />
+            {{ button(id='pdfview_navigation_toggle', caption='hide') }}
         </span>
         <ul id="pdfview_navigation_list"></ul>
     </div>
