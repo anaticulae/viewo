@@ -2,6 +2,13 @@
 
 Every noteable change is logged here.
 
+## v1.5.0
+
+### Feature
+
+* add option to download legal files (7ad34185ea58)
+* use legal package to show impressum, agb and privacy (5d7667301111)
+
 ## v1.4.1
 
 ## v1.4.0
