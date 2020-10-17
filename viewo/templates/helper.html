@@ -1,0 +1,18 @@
+{% macro js(source) -%}
+<script type="text/javascript" src="{{ url_for('static', filename=source) }}"></script>
+{%- endmacro %}
+
+{% macro css(source) -%}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename=source) }}">
+{%- endmacro %}
+
+{% macro href(caption, url='#', page='') -%}
+{% if url != '#' %}
+{% if page != '' %}
+{% set url = url_for(url, page=page) %}
+{% else %}
+{% set url = url_for(url) %}
+{% endif %}
+{% endif %}
+<a href="{{url}}">{{caption}}</a>
+{%- endmacro %}

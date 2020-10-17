@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html lang="de">
 
+{% from 'helper.html' import js, css, href %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Willkommen - Marhaban</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/bootstrap-theme.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='base.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app.css') }}">
-    <script type="text/javascript" src="{{ url_for('static', filename='base.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='lib/jquery.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='lib/bootstrap.min.js') }}"></script>
+
+    {{ css('lib/bootstrap.min.css')}}
+    {{ css('lib/bootstrap-theme.min.css')}}
+    {{ css('base.css')}}
+    {{ css('app.css')}}
+
+    {{ js('base.js') }}
+    {{ js('lib/jquery.js') }}
+    {{ js('lib/bootstrap.min.js') }}
+
     {% block head %}{% endblock %}
 </head>
 
-<body class="main_wrapper">
+<body class=" main_wrapper">
     <!-- logo starts here -->
     <img src="{{ url_for('static', filename='images/logo.jpg') }}" width="100%" style="margin:0px;padding:0px;"
         id="logo" alt="page logo">
@@ -24,9 +29,9 @@
     <!-- navigation stars here -->
     <nav class="main">
         <ul>
-            <li><a href="{{url_for('welcome.show_welcome')}}">Home</a></li>
-            <li><a href="{{url_for('documents.view_documents')}}">Dokumente</a></li>
-            <li><a href="{{url_for('welcome.show_welcome', page='writing')}}">Schreibhilfe</a></li>
+            <li>{{href('Home', 'welcome.show_welcome')}}</li>
+            <li>{{href('Dokumente', 'documents.view_documents')}}</li>
+            <li>{{href('Schreibhilfe', 'welcome.show_welcome', page='writing')}}</li>
         </ul>
     </nav>
     <!-- content starts here -->
@@ -47,10 +52,10 @@
     <!-- footer starts here  -->
     <footer>
         <p>
-            <a href="{{url_for('legal.impressum')}}">Impressum</a> |
-            <a href="{{url_for('legal.agb')}}">Allgemeine Geschäftsbedingungen</a> |
-            <a href="{{url_for('legal.privacy')}}">Datenschutzerklärung</a> <br />
-            Copyright &copy; 2019-2020 by checkitweg.de</a>
+            {{href('Impressum', 'legal.impressum')}} |
+            {{href('Allgemeine Geschäftsbedingungen', 'legal.agb')}} |
+            {{href('Datenschutzerklärung', 'legal.privacy')}}<br />
+            Copyright &copy; 2019-2020 by checkitweg.de
         </p>
     </footer>
 </body>
