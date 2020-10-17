@@ -2,6 +2,29 @@
 <script type="text/javascript" src="{{ url_for('static', filename=source) }}"></script>
 {%- endmacro %}
 
+
+{% macro js_ready(script) -%}
+<script type="text/javascript">
+    $(document).ready(function () {
+        {{ script }}
+    })
+</script>
+{%- endmacro %}
+
+
+{% macro onload(process, module='') -%}
+<script type="text/javascript">
+    $(document).ready(function () {
+        {% if module %}
+        {{module}}.onload("{{process}}")
+        {% else %}
+        onload("{{process}}")
+        {% endif %}
+    })
+</script>
+{%- endmacro %}
+
+
 {% macro css(source) -%}
 <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename=source) }}">
 {%- endmacro %}

@@ -11,12 +11,8 @@
 {{ js('pdfview/docstyle.js') }}
 {{ js('pdfview.js') }}
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        init()
-        onload("{{ process }}")
-    })
-</script>
+{{ js_ready(['init(); onload("', process, '")']|join('') )}}
+
 {% endblock %}
 
 {% block content %}

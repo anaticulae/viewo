@@ -7,11 +7,8 @@
 
 {{ js('waiting.js') }}
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        result_waiting_view.onload("{{ process }}")
-    })
-</script>
+{{ onload(process, module='result_waiting_view') }}
+
 {% endblock %}
 
 {% block content %}
