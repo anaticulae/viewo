@@ -32,3 +32,12 @@ def privacy():
         'public/legal/privacy.html',
         privacy=legal.privacy(),
     )
+
+
+@legal_.route('/download/<path:filename>')
+def download_legal(filename):
+    return flask.send_from_directory(
+        flask.safe_join(legal.ROOT, f'legal/text/'),
+        filename,
+        as_attachment=True,
+    )
