@@ -2,6 +2,15 @@
 
 Every noteable change is logged here.
 
+## v2.0.0
+
+### Feature
+
+* use general table style (9542faed1814)
+* use new table style (2940b511135c)
+* introduce new layout (afe98858e70a)
+* add bootstrap toogle and uri lib (e2a07bc03671)
+
 ## v1.5.0
 
 ### Feature
