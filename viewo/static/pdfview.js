@@ -953,5 +953,4 @@ function init() {
     pdfview_docstyle.init_listener()
 
     base.show_connecting('Öffne Dokument...')
-
 }

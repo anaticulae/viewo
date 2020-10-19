@@ -28,6 +28,10 @@ footer{
     padding-right:20px;
 }
 
+nav{
+    color:black;
+}
+
 nav.main{
     border:black solid 2px;
     display:inline-block;
@@ -136,6 +140,20 @@ td{
 
 .content{
     max-width:1280px;
+}
+
+div.content div.wrapper {
+    display: flex;
+}
+
+.wrapper #content{
+    /* overwrite wclub style */
+    padding-left: 25px;
+    border-left: 1px solid #eeeeee;
+}
+
+.wrapper nav ul{
+    color: transparent;
 }
 
 #progress{
