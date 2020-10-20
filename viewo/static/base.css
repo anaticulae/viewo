@@ -149,7 +149,9 @@ div.content div.wrapper {
 .wrapper #content{
     /* overwrite wclub style */
     padding-left: 25px;
-    border-left: 1px solid #eeeeee;
+    border-left: 1px solid #eee;
+    border-right: 1px solid #eee;
+    width:100%;
 }
 
 .wrapper nav ul{
