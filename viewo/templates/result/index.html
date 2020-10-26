@@ -11,7 +11,10 @@
 {{ js('pdfview/docstyle.js') }}
 {{ js('pdfview.js') }}
 
-{{ js_ready(['init(); onload("', process, '")']|join('')) }}
+{% call js_ready() %}
+init()
+onload('{{process}}')
+{% endcall %}
 
 {% endblock %}
 

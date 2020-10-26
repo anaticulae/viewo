@@ -3,10 +3,10 @@
 {%- endmacro %}
 
 
-{% macro js_ready(script) -%}
+{% macro js_ready() -%}
 <script type="text/javascript">
     $(document).ready(function () {
-        {{ script }}
+        {{ caller() }}
     })
 </script>
 {%- endmacro %}
