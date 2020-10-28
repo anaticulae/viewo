@@ -2,6 +2,19 @@
 
 Every noteable change is logged here.
 
+## v2.1.0
+
+### Feature
+
+* highlight article direct link (0e3fdbbc1cac)
+* add right border line (bf25c2f70b4d)
+* overwrite wclub style (a00aae580bc1)
+
+### Fix
+
+* ensure header is visible in app view (de2ad26da4aa)
+* fix forward button and message position (debfd1a8121d)
+
 ## v2.0.0
 
 ### Feature
