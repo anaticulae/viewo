@@ -18,15 +18,12 @@ import viewo.api.findings.utils
 
 
 @pytest.mark.usefixtures('findingclient')
-def test_api_findings_compare_two_documents_all():
+def test_api_findings_compare_two_documents_equal():
     compared = viewo.api.findings.utils.compare(
         tests.api.TEST_DOCUMENT,
         tests.api.TEST_DOCUMENT,
     )
-    selected = utila.select_page(compared, page=5)
-    assert selected.current
-    assert selected.other
-    assert selected.current == selected.other
+    assert compared == []
 
 
 @pytest.mark.usefixtures('findingclient')
@@ -36,9 +33,8 @@ def test_api_findings_compare_two_documents_diff():
         tests.api.TEST_DOCUMENT,
         operation=viewo.api.findings.utils.Comperator.DIFF,
     )
-    selected = utila.select_page(compared, page=5)
-    assert not selected.current
-    assert not selected.other
+    # TODO: AUTOMATE TEST DATA GENERATOR AND ADD DIFF EXAMPLE
+    assert compared == []
 
 
 def test_api_compare_findings_all(findingclient):

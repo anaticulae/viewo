@@ -100,6 +100,9 @@ def compare(
     partnerpath = link.document(partnerid)
     if partnerpath is None:
         return None
+    if documentid == partnerid:
+        # equal documents
+        return []
     document = protocol.findings_from_path(documentpath)
     partner = protocol.findings_from_path(partnerpath)
     compared = []
