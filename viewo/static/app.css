@@ -68,7 +68,7 @@
         padding:0px;
     }
     footer{
-        display:none;
+        min-height: 35px;
     }
     .hidden_inbounds{
         display:none;
