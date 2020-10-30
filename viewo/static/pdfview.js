@@ -9,6 +9,8 @@
 
 // TODO: REQUIRE DATA MANAGER
 
+const PAGESTEP = 15.0
+
 class ResultView {
 
     constructor() {
@@ -429,6 +431,7 @@ class FindingBox {
 
     constructor(result) {
         this.result = result
+        this.paged = 0
     }
 
     init_listener() {
@@ -487,18 +490,22 @@ class FindingBox {
         this.open_finding(this.result.get_prev_finding)
     }
 
-    update_findings(current = -1) {
+    update_findings(current = -1, paged = 0) {
         /**
          * Update list of selectable findings of current page. If no
          * finding is detected for current page, finding box will be
          * disabled.
          * Using current -1 selects the first visible element
          */
+        this.paged = paged
         let pdfview_navigation = $('#error_list')
         // TODO: CHECK FOR BETTER REMOVEMENT
         pdfview_navigation.html('')
 
-        for (let index in this.result.findings) {
+        this.update_finding_pageable()
+
+        for (let index in this.result.findings.slice(this.paged * PAGESTEP, (this.paged + 1) * PAGESTEP)) {
+            index = this.paged * PAGESTEP + parseInt(index)
             let item = this.result.findings[index]
             let text = item.title
             let selectable = ''
@@ -539,6 +546,27 @@ class FindingBox {
         }
         this.update_inbox_visibility()
         this.open_finding(current)
+    }
+
+    update_finding_pageable() {
+        let pagenumbers = Math.floor((this.result.findings.length - 1) / PAGESTEP)
+        if (pagenumbers == 0) {
+            return
+        }
+        $('#error_list').append(`<li id="error_list_pageable" class="center" style="font-size:20px"></li>`)
+        for (let page = 0; page <= pagenumbers; page++) {
+            let label = `${page * Math.round(PAGESTEP)}`
+            let link = `<a id="error_list_pageable_${page}">${label}</a>&nbsp;`
+            $('#error_list_pageable').append(link)
+            $(`#error_list_pageable_${page}`).click(function () {
+                // findingbox.paged = page
+                findingbox.update_findings(-1, page)
+                $(`#error_list_pageable_${page}`)[0].classList.add('highlighted')
+            });
+        }
+        if (this.paged == 0 && $(`#error_list_pageable_0`)[0]) {
+            $(`#error_list_pageable_0`)[0].classList.add('highlighted')
+        }
     }
 
     update_inbox_visibility() {
