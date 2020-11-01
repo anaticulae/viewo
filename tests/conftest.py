@@ -9,14 +9,52 @@
 
 import os
 
+import link
+import power
 import pytest
 import utila
+import utilatest
 
 import tests
+import viewo
 import viewo.app
 import viewo.config
 
-pytest_plugins = 'pytester'  # pylint: disable=invalid-name
+pytest_plugins = ['pytester', 'xdist']  # pylint: disable=invalid-name
+
+PACKAGE = viewo.PACKAGE
+
+power.setup(viewo.ROOT)
+
+RESOURCES = [
+    power.HOME018_PDF,
+]
+
+
+@pytest.mark.usefixtures('session')
+def pytest_sessionstart():
+    power.run()
+
+
+def extract(files):
+    simplified = utilatest.simplify_testfile_names(files + [power.REPOSITORY])
+    for source, dest in zip(files, simplified):
+        run_queuemo(source, power.generated(), dest)
+
+
+def run_queuemo(source, generated, dest):
+    """Run queuemo to analyze document. Keep attentation to valid
+    document/todo-name."""
+    todoname = dest[-16:]  # 16 accepted document id length TODO: USE GLOBAL
+    workpath = os.path.join(generated, todoname)
+    if os.path.exists(workpath):
+        return
+    utila.log(f'generate {workpath}')
+    workspace = link.create_todo(source, todopath=generated, todoname=todoname)
+
+    # run single queuemo instance in workspace, write output to same workspace
+    cmd = f'queuemo_single -i {workspace} -V'
+    utila.run(cmd)
 
 
 @pytest.fixture
