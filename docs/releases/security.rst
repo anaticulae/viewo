@@ -1,7 +1,7 @@
 .. _security:
 
 security
-=======
+========
 
 before release
 --------------

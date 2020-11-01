@@ -24,7 +24,7 @@ code quality
 ------------
 
 before
-~~~~~
+~~~~~~
 
 * Total coverage: 78.39%
 * Your code has been rated at 10.00/10

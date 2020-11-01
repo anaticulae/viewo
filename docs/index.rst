@@ -11,6 +11,7 @@ General
   bugs
   todo
   questions
+  pages/readme
 
 Quality
 -------
@@ -38,7 +39,7 @@ Developer
   :maxdepth: 1
 
   developer/rest
-  security
+  releases/security
 
 
 Modules
