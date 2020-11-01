@@ -16,9 +16,10 @@ import os
 import utila
 import werkzeug.datastructures
 
+import viewo
 import viewo.config
 
-TEST_DATA = os.path.join(viewo.config.ROOT, 'tests/data')
+TEST_DATA = os.path.join(viewo.ROOT, 'tests/data')
 assert os.path.exists(TEST_DATA), TEST_DATA
 
 BASE_TEMPLATE = utila.file_read(os.path.join(viewo.config.TEMPLATES, 'base.html')) # yapf:disable

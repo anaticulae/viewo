@@ -14,14 +14,14 @@ import utila
 import writers
 import writers.generator
 
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+import viewo
 
 MAX_FILE_SIZE = 16 * 1024 * 1024  # 16 Megabyte
 
 SECRET_KEY = b'helmut_max_power_abs29.nsTODOThisIsVerySecreyISwarTODO'
 
-TEMPLATES = os.path.join(ROOT, 'viewo/templates')
-STATIC = os.path.join(ROOT, 'viewo/static')
+TEMPLATES = os.path.join(viewo.ROOT, 'viewo/templates')
+STATIC = os.path.join(viewo.ROOT, 'viewo/static')
 
 MAX_FILE_SIZE = 20 * 1024 * 1024  # 20 MB
 
