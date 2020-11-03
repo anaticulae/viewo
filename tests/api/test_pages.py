@@ -11,14 +11,12 @@ import http
 
 import tests
 
-TEST_DOCUMENT = 'ework_homework25'
-
 
 def test_api_pages_overview(findingclient):
     client = findingclient
     result = tests.apicall(
         client,
-        f'/documents/{TEST_DOCUMENT}/pages',
+        f'/documents/{tests.TEST_DOCUMENT}/pages',
     )
     assert result['pages']
     assert result['pages']['uri']
@@ -28,7 +26,7 @@ def test_api_pages_overview_range(findingclient):
     client = findingclient
     result = tests.apicall(
         client,
-        f'/documents/{TEST_DOCUMENT}/pages?range=1',
+        f'/documents/{tests.TEST_DOCUMENT}/pages?range=1',
     )
     assert result['pages']
     assert result['pages']['uri']
@@ -36,7 +34,7 @@ def test_api_pages_overview_range(findingclient):
 
     result = tests.apicall(
         client,
-        f'/documents/{TEST_DOCUMENT}/pages?range=0:3',
+        f'/documents/{tests.TEST_DOCUMENT}/pages?range=0:3',
     )
     assert len(result['pages']['html']) == 3
 
@@ -45,7 +43,7 @@ def test_api_pages_overview_invalid_range(findingclient):
     client = findingclient
     tests.apicall(
         client,
-        f'/documents/{TEST_DOCUMENT}/pages?range=0:xxx-10:-50',
+        f'/documents/{tests.TEST_DOCUMENT}/pages?range=0:xxx-10:-50',
         expected=http.HTTPStatus.BAD_REQUEST,
     )
 

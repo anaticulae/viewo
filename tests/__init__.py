@@ -27,6 +27,9 @@ assert os.path.exists(TEST_DATA), TEST_DATA
 
 BASE_TEMPLATE = utila.file_read(os.path.join(viewo.config.TEMPLATES, 'base.html')) # yapf:disable
 
+TEST_DOCUMENT = 'ework_homework25'
+TEST_FINDING = '1543648946'
+
 MINIMAL = power.DOCU07_PDF
 assert os.path.exists(MINIMAL), MINIMAL
 
@@ -35,7 +38,7 @@ EXAMPLE_READY = power.generated()
 EXAMPLE_TODO = os.path.join(TEST_DATA, 'todo')
 assert os.path.exists(EXAMPLE_TODO), EXAMPLE_TODO
 
-EXAMPLE_RESULT = os.path.join(EXAMPLE_READY, 'ework_homework25/result')
+EXAMPLE_RESULT = os.path.join(EXAMPLE_READY, TEST_DOCUMENT, 'result')
 
 
 def decode(

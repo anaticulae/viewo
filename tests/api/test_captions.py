@@ -8,13 +8,12 @@
 # =============================================================================
 
 import tests
-from tests.api import TEST_DOCUMENT
 
 
 def test_api_captions_overview(findingclient):
     result = tests.apicall(
         findingclient,
-        f'/documents/{TEST_DOCUMENT}/captions',
+        f'/documents/{tests.TEST_DOCUMENT}/captions',
     )
     assert result['captions']
     assert result['captions']['uri']

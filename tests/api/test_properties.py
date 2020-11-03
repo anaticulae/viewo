@@ -8,13 +8,12 @@
 # =============================================================================
 
 import tests
-from tests.api import TEST_DOCUMENT
 
 
 def test_api_properties_overview(findingclient):
     result = tests.apicall(
         findingclient,
-        f'/documents/{TEST_DOCUMENT}/properties',
+        f'/documents/{tests.TEST_DOCUMENT}/properties',
     )
     assert result['properties']
     assert result['properties']['uri']

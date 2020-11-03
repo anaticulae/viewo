@@ -10,15 +10,13 @@
 import http
 
 import tests
-from tests.api import TEST_DOCUMENT
-from tests.api import TEST_FINDING
 
 
 def test_api_findings_overview_bydocumentid(findingclient):
     client = findingclient
     result = tests.apicall(
         client,
-        f'/documents/{TEST_DOCUMENT}/findings',
+        f'/documents/{tests.TEST_DOCUMENT}/findings',
     )
     assert result['findings']
     assert result['findings']['uri']
@@ -46,7 +44,7 @@ def test_api_findings_byfindingid(findingclient):
     client = findingclient
     result = tests.apicall(
         client,
-        f'/documents/{TEST_DOCUMENT}/findings/{TEST_FINDING}',
+        f'/documents/{tests.TEST_DOCUMENT}/findings/{tests.TEST_FINDING}',
         expected=http.HTTPStatus.OK,
     )
     assert result['finding']['uri']
@@ -55,20 +53,56 @@ def test_api_findings_byfindingid(findingclient):
 def test_api_finding_solve(findingclient):
     client = findingclient
 
-    tests.finding_status_update(client, TEST_DOCUMENT, TEST_FINDING, status=4)
-    status = tests.finding_status(client, TEST_DOCUMENT, TEST_FINDING)
+    tests.finding_status_update(
+        client,
+        tests.TEST_DOCUMENT,
+        tests.TEST_FINDING,
+        status=4,
+    )
+    status = tests.finding_status(
+        client,
+        tests.TEST_DOCUMENT,
+        tests.TEST_FINDING,
+    )
     assert status == 4
 
-    tests.finding_status_update(client, TEST_DOCUMENT, TEST_FINDING, status=0)
-    status = tests.finding_status(client, TEST_DOCUMENT, TEST_FINDING)
+    tests.finding_status_update(
+        client,
+        tests.TEST_DOCUMENT,
+        tests.TEST_FINDING,
+        status=0,
+    )
+    status = tests.finding_status(
+        client,
+        tests.TEST_DOCUMENT,
+        tests.TEST_FINDING,
+    )
     assert status == 1
 
-    tests.finding_status_update(client, TEST_DOCUMENT, TEST_FINDING, status=4)
-    status = tests.finding_status(client, TEST_DOCUMENT, TEST_FINDING)
+    tests.finding_status_update(
+        client,
+        tests.TEST_DOCUMENT,
+        tests.TEST_FINDING,
+        status=4,
+    )
+    status = tests.finding_status(
+        client,
+        tests.TEST_DOCUMENT,
+        tests.TEST_FINDING,
+    )
     assert status == 4
 
-    tests.finding_status_update(client, TEST_DOCUMENT, TEST_FINDING, status=1)
-    status = tests.finding_status(client, TEST_DOCUMENT, TEST_FINDING)
+    tests.finding_status_update(
+        client,
+        tests.TEST_DOCUMENT,
+        tests.TEST_FINDING,
+        status=1,
+    )
+    status = tests.finding_status(
+        client,
+        tests.TEST_DOCUMENT,
+        tests.TEST_FINDING,
+    )
     assert status == 1
 
 
@@ -76,10 +110,14 @@ def test_api_finding_solve_invalid(findingclient):
     client = findingclient
     tests.finding_status_update(
         client,
-        TEST_DOCUMENT,
-        TEST_FINDING,
+        tests.TEST_DOCUMENT,
+        tests.TEST_FINDING,
         status=10,  # out of range
         expected=http.HTTPStatus.BAD_REQUEST,
     )
-    status = tests.finding_status(client, TEST_DOCUMENT, TEST_FINDING)
+    status = tests.finding_status(
+        client,
+        tests.TEST_DOCUMENT,
+        tests.TEST_FINDING,
+    )
     assert status == 1

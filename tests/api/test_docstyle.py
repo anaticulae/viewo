@@ -8,13 +8,12 @@
 # =============================================================================
 
 import tests
-from tests.api import TEST_DOCUMENT
 
 
 def test_api_style_overview(findingclient):
     result = tests.apicall(
         findingclient,
-        f'/documents/{TEST_DOCUMENT}/style',
+        f'/documents/{tests.TEST_DOCUMENT}/style',
     )
     assert result['style']
     assert result['style']['uri']

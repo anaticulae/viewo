@@ -19,8 +19,8 @@ import viewo.api.findings.utils
 @pytest.mark.usefixtures('findingclient')
 def test_api_findings_compare_two_documents_equal():
     compared = viewo.api.findings.utils.compare(
-        tests.api.TEST_DOCUMENT,
-        tests.api.TEST_DOCUMENT,
+        tests.TEST_DOCUMENT,
+        tests.TEST_DOCUMENT,
     )
     assert compared == []
 
@@ -28,8 +28,8 @@ def test_api_findings_compare_two_documents_equal():
 @pytest.mark.usefixtures('findingclient')
 def test_api_findings_compare_two_documents_diff():
     compared = viewo.api.findings.utils.compare(
-        tests.api.TEST_DOCUMENT,
-        tests.api.TEST_DOCUMENT,
+        tests.TEST_DOCUMENT,
+        tests.TEST_DOCUMENT,
         operation=viewo.api.findings.utils.Comperator.DIFF,
     )
     # TODO: AUTOMATE TEST DATA GENERATOR AND ADD DIFF EXAMPLE
@@ -40,7 +40,7 @@ def test_api_compare_findings_all(findingclient):
     client = findingclient
     result = tests.apicall(
         client,
-        f'/documents/ework_homework25/findings/compare/ework_homework25',
+        f'/documents/{tests.TEST_DOCUMENT}/findings/compare/{tests.TEST_DOCUMENT}',
     )
     assert result['compared']
     assert result['compared']['uri']
@@ -50,7 +50,7 @@ def test_api_compare_findings_invalid_partnerid(findingclient):
     client = findingclient
     tests.apicall(
         client,
-        f'/documents/ework_homework25/findings/compare/INVALIDINVALIDIN',
+        f'/documents/{tests.TEST_DOCUMENT}/findings/compare/INVALIDINVALIDIN',
         expected=http.HTTPStatus.NOT_FOUND,
     )
 
@@ -59,6 +59,6 @@ def test_api_compare_findings_invalid_operation(findingclient):
     client = findingclient
     tests.apicall(
         client,
-        f'/documents/ework_homework25/findings/compare/ework_homework25?operation=invalid',
+        f'/documents/{tests.TEST_DOCUMENT}/findings/compare/{tests.TEST_DOCUMENT}?operation=invalid',
         expected=http.HTTPStatus.BAD_REQUEST,
     )

@@ -6,6 +6,3 @@
 # use or distribution is an offensive act against international law and may
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
-
-TEST_DOCUMENT = 'ework_homework25'
-TEST_FINDING = '1543648946'

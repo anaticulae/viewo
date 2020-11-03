@@ -6,29 +6,29 @@
 # use or distribution is an offensive act against international law and may
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
+
 import os
 
-from tests import EXAMPLE_READY
-from tests import decode
+import tests
 
 
 def test_call_result(client):
     response = client.get('/result', follow_redirects=True)
-    content = decode(response)
+    content = tests.decode(response)
     assert content
     assert len(content) > 2000, content
 
 
 def test_call_result_document_does_not_exist(client):
     response = client.get('/result/1020304050', follow_redirects=True)
-    content = decode(response)
+    content = tests.decode(response)
     assert content
     assert 'Fehler' in content
 
 
 def test_call_result_document_and_imagedoes_not_exist(client):
     response = client.get('/result/1020304050/1.png', follow_redirects=True)
-    content = decode(response)
+    content = tests.decode(response)
     assert content
     assert 'Fehler' in content
 
@@ -36,18 +36,19 @@ def test_call_result_document_and_imagedoes_not_exist(client):
 def test_call_result_e508af0df454gi30(client, monkeypatch):
     with monkeypatch.context() as context:
         # Remove all environment vars
-        context.setattr(os, 'environ', {'SHARED_READY': EXAMPLE_READY})
-        response = client.get('/result/ework_homework25')
-    content = decode(response)
+        context.setattr(os, 'environ', {'SHARED_READY': tests.EXAMPLE_READY})
+        response = client.get('/result/{tests.TEST_DOCUMENT}')
+    content = tests.decode(response)
     assert content
 
 
 def test_call_result_e508af0df454gi30_image_access(client, monkeypatch):
     with monkeypatch.context() as context:
         # Remove all environment vars
-        context.setattr(os, 'environ', {'SHARED_READY': EXAMPLE_READY})
+        context.setattr(os, 'environ', {'SHARED_READY': tests.EXAMPLE_READY})
         response = client.get(
-            '/result/ework_homework25/1aeca77e39768cc3ec0ddb765d4ded1a.png')
+            f'/result/{tests.TEST_DOCUMENT}/1aeca77e39768cc3ec0ddb765d4ded1a.png'
+        )
     assert response.status_code == 200, response
     # ensure that PNG is donwloaded
     assert b'PNG' in response.data, response

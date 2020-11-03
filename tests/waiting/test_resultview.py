@@ -10,10 +10,9 @@
 import configo
 import utila
 
+import tests
 import viewo.result.data
 import viewo.result.json
-from tests import EXAMPLE_RESULT
-from tests import content
 from tests.waiting import valid  # pylint:disable=W0611
 
 
@@ -28,8 +27,8 @@ def validate_status(dumped: str):
 
 def test_waiting_resultview_load_resultview():
     loaded = viewo.result.data.load_resultview(
-        EXAMPLE_RESULT,
-        'ework_homework25',
+        tests.EXAMPLE_RESULT,
+        tests.TEST_DOCUMENT,
     )
     assert loaded, str(loaded)
     pages = [item.page for item in loaded]
@@ -40,8 +39,8 @@ def test_waiting_resultview_load_resultview():
 
 def test_waiting_resultview_tojson():
     loaded = viewo.result.data.load_resultview(
-        EXAMPLE_RESULT,
-        'ework_homework25',
+        tests.EXAMPLE_RESULT,
+        tests.TEST_DOCUMENT,
     )
     dumped = viewo.result.json.tojson(loaded)
     validate_status(dumped)
@@ -51,20 +50,23 @@ def test_waiting_resultview_tojson():
 def test_waiting_resultview_status_failure(valid, client, monkeypatch):  # pylint:disable=W0621
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
-        result = content(client, '/waiting/resultview/status/abcdc')
+        result = tests.content(client, '/waiting/resultview/status/abcdc')
     assert not result
 
 
 def test_waiting_resultview_status(valid, client, monkeypatch):  # pylint:disable=W0621
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
-        result = content(client, '/waiting/resultview/status/BAS45DFAC00JJ52K')
+        result = tests.content(
+            client,
+            '/waiting/resultview/status/BAS45DFAC00JJ52K',
+        )
     validate_status(result)
 
 
 def test_waiting_resultview(valid, client, monkeypatch):  # pylint:disable=W0621
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
-        result = content(client, '/waiting/resultview/BAS45DFAC00JJ52K')
+        result = tests.content(client, '/waiting/resultview/BAS45DFAC00JJ52K')
     assert 'Gesamtdurchsicht' in result
     assert len(result) > 2000, str(result)

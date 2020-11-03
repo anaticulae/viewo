@@ -8,13 +8,12 @@
 # =============================================================================
 
 import tests
-from tests.api import TEST_DOCUMENT
 
 
 def test_api_footnotes_overview(findingclient):
     result = tests.apicall(
         findingclient,
-        f'/documents/{TEST_DOCUMENT}/footnotes',
+        f'/documents/{tests.TEST_DOCUMENT}/footnotes',
     )
     assert result['footnotes']
     assert result['footnotes']['uri']
