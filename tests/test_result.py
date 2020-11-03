@@ -34,7 +34,6 @@ def test_call_result_document_and_imagedoes_not_exist(client):
 
 
 def test_call_result_e508af0df454gi30(client, monkeypatch):
-
     with monkeypatch.context() as context:
         # Remove all environment vars
         context.setattr(os, 'environ', {'SHARED_READY': EXAMPLE_READY})
@@ -44,11 +43,10 @@ def test_call_result_e508af0df454gi30(client, monkeypatch):
 
 
 def test_call_result_e508af0df454gi30_image_access(client, monkeypatch):
-
     with monkeypatch.context() as context:
         # Remove all environment vars
         context.setattr(os, 'environ', {'SHARED_READY': EXAMPLE_READY})
         response = client.get('/result/E508AF0DF454GI30/attention.png')
-    assert response._status_code == 200, response  # pylint:disable=W0212
+    assert response.status_code == 200, response
     # ensure that PNG is donwloaded
     assert b'PNG' in response.data, response
