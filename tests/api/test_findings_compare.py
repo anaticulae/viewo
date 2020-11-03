@@ -10,7 +10,6 @@
 import http
 
 import pytest
-import utila
 
 import tests
 import tests.api
