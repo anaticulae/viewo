@@ -40,7 +40,7 @@ def test_api_compare_findings_all(findingclient):
     client = findingclient
     result = tests.apicall(
         client,
-        f'/documents/E508AF0DF454GI30/findings/compare/E508AF0DF454GI30',
+        f'/documents/ework_homework25/findings/compare/ework_homework25',
     )
     assert result['compared']
     assert result['compared']['uri']
@@ -50,7 +50,7 @@ def test_api_compare_findings_invalid_partnerid(findingclient):
     client = findingclient
     tests.apicall(
         client,
-        f'/documents/E508AF0DF454GI30/findings/compare/INVALIDINVALIDIN',
+        f'/documents/ework_homework25/findings/compare/INVALIDINVALIDIN',
         expected=http.HTTPStatus.NOT_FOUND,
     )
 
@@ -59,6 +59,6 @@ def test_api_compare_findings_invalid_operation(findingclient):
     client = findingclient
     tests.apicall(
         client,
-        f'/documents/E508AF0DF454GI30/findings/compare/E508AF0DF454GI30?operation=invalid',
+        f'/documents/ework_homework25/findings/compare/ework_homework25?operation=invalid',
         expected=http.HTTPStatus.BAD_REQUEST,
     )

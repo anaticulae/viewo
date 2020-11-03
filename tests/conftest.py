@@ -39,6 +39,8 @@ def extract(files):
     simplified = utilatest.simplify_testfile_names(files + [power.REPOSITORY])
     for source, dest in zip(files, simplified):
         run_queuemo(source, power.generated(), dest)
+    assert os.path.exists(tests.EXAMPLE_READY), tests.EXAMPLE_READY
+    assert os.path.exists(tests.EXAMPLE_RESULT), tests.EXAMPLE_RESULT
 
 
 def run_queuemo(source, generated, dest):

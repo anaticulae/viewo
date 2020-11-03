@@ -30,14 +30,12 @@ BASE_TEMPLATE = utila.file_read(os.path.join(viewo.config.TEMPLATES, 'base.html'
 MINIMAL = power.DOCU07_PDF
 assert os.path.exists(MINIMAL), MINIMAL
 
-EXAMPLE_READY = os.path.join(TEST_DATA, 'ready')
-assert os.path.exists(EXAMPLE_READY), EXAMPLE_READY
+EXAMPLE_READY = power.generated()
 
 EXAMPLE_TODO = os.path.join(TEST_DATA, 'todo')
 assert os.path.exists(EXAMPLE_TODO), EXAMPLE_TODO
 
-EXAMPLE_RESULT = os.path.join(EXAMPLE_READY, 'E508AF0DF454GI30/result')
-assert os.path.exists(EXAMPLE_RESULT), EXAMPLE_RESULT
+EXAMPLE_RESULT = os.path.join(EXAMPLE_READY, 'ework_homework25/result')
 
 
 def decode(

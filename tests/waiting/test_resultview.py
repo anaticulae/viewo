@@ -8,6 +8,7 @@
 # =============================================================================
 
 import configo
+import utila
 
 import viewo.result.data
 import viewo.result.json
@@ -28,18 +29,19 @@ def validate_status(dumped: str):
 def test_waiting_resultview_load_resultview():
     loaded = viewo.result.data.load_resultview(
         EXAMPLE_RESULT,
-        'E508AF0DF454GI30',
+        'ework_homework25',
     )
     assert loaded, str(loaded)
     pages = [item.page for item in loaded]
-    # 3 html pages and one findings page
-    assert pages == [0, 1, 2, 5]
+    # 25 html pages and x findings page
+    # TODO: REPLACE WITH UTILA CODE
+    assert pages == list(utila.ranged_tuple(0, 25))
 
 
 def test_waiting_resultview_tojson():
     loaded = viewo.result.data.load_resultview(
         EXAMPLE_RESULT,
-        'E508AF0DF454GI30',
+        'ework_homework25',
     )
     dumped = viewo.result.json.tojson(loaded)
     validate_status(dumped)

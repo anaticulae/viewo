@@ -11,7 +11,7 @@ import http
 
 import tests
 
-TEST_DOCUMENT = 'E508AF0DF454GI30'
+TEST_DOCUMENT = 'ework_homework25'
 
 
 def test_api_pages_overview(findingclient):

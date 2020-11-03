@@ -37,7 +37,7 @@ def test_call_result_e508af0df454gi30(client, monkeypatch):
     with monkeypatch.context() as context:
         # Remove all environment vars
         context.setattr(os, 'environ', {'SHARED_READY': EXAMPLE_READY})
-        response = client.get('/result/E508AF0DF454GI30')
+        response = client.get('/result/ework_homework25')
     content = decode(response)
     assert content
 
@@ -46,7 +46,8 @@ def test_call_result_e508af0df454gi30_image_access(client, monkeypatch):
     with monkeypatch.context() as context:
         # Remove all environment vars
         context.setattr(os, 'environ', {'SHARED_READY': EXAMPLE_READY})
-        response = client.get('/result/E508AF0DF454GI30/attention.png')
+        response = client.get(
+            '/result/ework_homework25/1aeca77e39768cc3ec0ddb765d4ded1a.png')
     assert response.status_code == 200, response
     # ensure that PNG is donwloaded
     assert b'PNG' in response.data, response

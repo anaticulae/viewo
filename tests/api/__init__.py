@@ -7,5 +7,5 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-TEST_DOCUMENT = 'E508AF0DF454GI30'
-TEST_FINDING = '1644413926'
+TEST_DOCUMENT = 'ework_homework25'
+TEST_FINDING = '1543648946'
