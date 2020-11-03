@@ -20,6 +20,8 @@ import werkzeug.datastructures
 import viewo
 import viewo.config
 
+power.setup(viewo.ROOT)
+
 TEST_DATA = os.path.join(viewo.ROOT, 'tests/data')
 assert os.path.exists(TEST_DATA), TEST_DATA
 
