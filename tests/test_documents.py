@@ -19,10 +19,10 @@ def test_documents_view_no_documents(client):
     assert 'Fehler' not in result
 
 
-def test_documents_view(client, monkeypatch):
+def test_documents_view(findingclient, monkeypatch, testdir):
     with monkeypatch.context() as context:
-        context.setattr(configo, 'share', lambda: tests.TEST_DATA)
-        result = tests.content(client, '/documents')
+        context.setattr(configo, 'share', lambda: testdir.tmpdir)
+        result = tests.content(findingclient, '/documents')
     assert len(result) > 300, str(result)
     assert 'Keine Dokumente verfügbar!' not in result, str(result)
     assert 'Fehler' not in result, str(result)
