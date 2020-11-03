@@ -13,6 +13,7 @@ import json
 import json.decoder
 import os
 
+import power
 import utila
 import werkzeug.datastructures
 
@@ -24,7 +25,7 @@ assert os.path.exists(TEST_DATA), TEST_DATA
 
 BASE_TEMPLATE = utila.file_read(os.path.join(viewo.config.TEMPLATES, 'base.html')) # yapf:disable
 
-MINIMAL = os.path.join(TEST_DATA, 'minimal.pdf')
+MINIMAL = power.DOCU07_PDF
 assert os.path.exists(MINIMAL), MINIMAL
 
 EXAMPLE_READY = os.path.join(TEST_DATA, 'ready')
