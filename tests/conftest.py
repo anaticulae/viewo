@@ -28,6 +28,7 @@ power.setup(viewo.ROOT)
 
 RESOURCES = [
     power.HOME018_PDF,
+    power.HOME025_PDF,
 ]
 
 
