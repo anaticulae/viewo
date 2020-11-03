@@ -13,7 +13,7 @@ from tests import decode
 
 
 def test_call_result(client):
-    response = client.get('/result')
+    response = client.get('/result', follow_redirects=True)
     content = decode(response)
     assert content
     # assert len(content) > len(BASE_TEMPLATE), content

@@ -38,9 +38,14 @@ EXAMPLE_RESULT = os.path.join(EXAMPLE_READY, 'E508AF0DF454GI30/result')
 assert os.path.exists(EXAMPLE_RESULT), EXAMPLE_RESULT
 
 
-def decode(response) -> dict:
+def decode(
+        response,
+        expected=None,
+) -> dict:
     """Read binary data from response and convert them to str"""
     result = response.data.decode('utf8')
+    if expected is not None:
+        assert response.status_code == expected
     with contextlib.suppress(json.decoder.JSONDecodeError):
         # json format
         return json.loads(result)
@@ -48,9 +53,13 @@ def decode(response) -> dict:
     return result
 
 
-def content(client, request: str):
+def content(
+        client,
+        request: str,
+        expected=http.HTTPStatus.OK,
+):
     response = client.get(request)
-    assert response.status_code == http.HTTPStatus.OK
+    assert response.status_code == expected, request
     return decode(response)
 
 
@@ -62,8 +71,8 @@ def apicall(
 ):
     cmd = prefix + request
     response = client.get(cmd)
-    assert response.status_code == expected, str(vars(response))
-    return decode(response)
+    assert response.status_code == expected, request
+    return decode(response, expected=expected)
 
 
 def apidelete(
@@ -74,8 +83,8 @@ def apidelete(
 ):
     cmd = prefix + request
     response = client.delete(cmd)
-    assert response.status_code == expected, str(response.status_code)
-    return decode(response)
+    assert response.status_code == expected, request
+    return decode(response, expected=expected)
 
 
 def apiupload(
@@ -89,11 +98,11 @@ def apiupload(
     """Upload file via http post command"""
     assert field, path
     assert os.path.exists(path), path
-    cmd = prefix + page
+    request = prefix + page
     fields = werkzeug.datastructures.MultiDict([(field, open(path, 'rb'))])
-    response = client.post(cmd, data=fields, follow_redirects=True)
-    assert response.status_code == expected, str(response.status_code)
-    return decode(response)
+    response = client.post(request, data=fields, follow_redirects=True)
+    assert response.status_code == expected, request
+    return decode(response, expected=expected)
 
 
 def upload(client, file=MINIMAL):
@@ -113,10 +122,10 @@ def apipost(
         prefix=viewo.config.API_PREFIX,
         expected=http.HTTPStatus.OK,
 ):
-    cmd = prefix + page
-    result = client.post(cmd, data=data, follow_redirects=True)
-    assert result.status_code == expected, str(result)
-    return decode(result)
+    request = prefix + page
+    response = client.post(request, data=data, follow_redirects=True)
+    assert response.status_code == expected, request
+    return decode(response, expected=expected)
 
 
 def apiput(
@@ -126,10 +135,10 @@ def apiput(
         prefix=viewo.config.API_PREFIX,
         expected=http.HTTPStatus.OK,
 ):
-    cmd = prefix + page
-    result = client.put(cmd, data=data, follow_redirects=True)
-    assert result.status_code == expected, str(result)
-    return decode(result)
+    request = prefix + page
+    response = client.put(request, data=data, follow_redirects=True)
+    assert response.status_code == expected, request
+    return decode(response, expected=expected)
 
 
 def finding_status(client, documentid: str, findingid: int) -> int:
