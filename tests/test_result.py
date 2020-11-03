@@ -16,7 +16,7 @@ def test_call_result(client):
     response = client.get('/result', follow_redirects=True)
     content = decode(response)
     assert content
-    # assert len(content) > len(BASE_TEMPLATE), content
+    assert len(content) > 2000, content
 
 
 def test_call_result_document_does_not_exist(client):
