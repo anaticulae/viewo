@@ -8,10 +8,6 @@
 # =============================================================================
 
 import json
-import os
-
-import link
-import link.job
 
 import viewo.api
 import viewo.api.documents
@@ -33,13 +29,11 @@ def documents():
 )
 @viewo.api.valid_document
 def document_get(documentid: str):
-    """Recieve document information selected by documentid. If document
+    """Receive document information selected by documentid. If document
     does not exists, 404 Error will be raised."""
-    source = os.path.join(link.document(documentid), link.JOB_FILE_NAME)
-    if not os.path.exists(source):
+    loaded = viewo.api.documents.utils.document_info(documentid)
+    if not loaded:
         return viewo.api.notfound(f'could not locate `{documentid}')
-    # TODO: REPLACE WITH JSON METHOD
-    loaded = viewo.api.documents.utils.job_toraw(link.load_job(source))
     dumped = json.dumps({
         'document': loaded,
     })

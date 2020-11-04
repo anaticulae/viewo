@@ -7,14 +7,19 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import json
+import os
+
 import configo
 import flask
 import iamraw.caption
 import link
 import link.job
+import utila
 
 import viewo.result.json
 import viewo.result.loader
+import viewo.waiting
 
 
 def all_documents():
@@ -94,3 +99,19 @@ def properties(documentid):
         documentid=documentid,
     )
     return simple
+
+
+def document_info(documentid) -> dict:
+    docpath = link.document(documentid)
+    source = os.path.join(docpath, link.JOB_FILE_NAME)
+    if not os.path.exists(source):
+        return None
+    loaded = viewo.api.documents.utils.job_toraw(link.load_job(source))
+
+    # append document length
+    pdfinfo = os.path.join(docpath, viewo.waiting.VERIFY)
+    if os.path.exists(pdfinfo):
+        pdfinfo = json.loads(utila.file_read(pdfinfo))
+        # TODO: REPLACE WITH JSON METHOD
+        loaded['pages'] = pdfinfo['pages']
+    return loaded
