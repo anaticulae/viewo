@@ -27,11 +27,14 @@ def pages(documentid):
         pagerange = utila.parse_pages(pagerange)
 
     html = viewo.api.pages.utils.load_html(documentid, pagerange)
-    simple = {
-        'html': html,
-        'uri': flask.url_for('api_pages.pages', documentid=documentid),
-    }
-
+    uri = flask.url_for('api_pages.pages', documentid=documentid)
+    if pagerange is None:
+        uri = flask.url_for(
+            'api_pages.pages',
+            documentid=documentid,
+            range=utila.simplify_pages(pagerange),
+        )
+    simple = {'html': html, 'uri': uri}
     dumped = flask.jsonify({
         'pages': simple,
     })
