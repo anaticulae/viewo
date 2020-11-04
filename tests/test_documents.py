@@ -26,3 +26,9 @@ def test_documents_view(findingclient, monkeypatch, testdir):
     assert len(result) > 300, str(result)
     assert 'Keine Dokumente verfügbar!' not in result, str(result)
     assert 'Fehler' not in result, str(result)
+
+
+def test_documents_compare(client):
+    result = tests.content(client, '/compare_document')
+    assert len(result) > 300, str(result)
+    assert 'Dokument Vergleich' in result
