@@ -9,6 +9,7 @@
 
 import collections
 import enum
+import os
 import typing
 
 import flask
@@ -37,12 +38,17 @@ def all_findings(documentid: str, pages: tuple = None):
     documentpath = link.document(documentid)
     if documentpath is None:
         return None
-    findings = protocol.findings_from_path(documentpath)
-    # skip non selected findings
-    findings = [
-        finding for finding in findings
-        if not utila.should_skip(finding.page, pages)
-    ]
+    optimizedpath = link.optimized(documentid, done=True)
+    if os.path.exists(optimizedpath):
+        findings = protocol.load_grouped(optimizedpath, pages=pages)
+    else:
+        utila.error('using outdated finding collector!')
+        findings = protocol.findings_from_path(documentpath)
+        # skip non selected findings
+        findings = [
+            finding for finding in findings
+            if not utila.should_skip(finding.page, pages)
+        ]
     return findings
 
 
