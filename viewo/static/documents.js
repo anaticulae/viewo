@@ -10,7 +10,7 @@ function delete_document(document) {
     let line = $(`#result_table_${document}`)
     line.hide()
 
-    let url = `/api/v0/documents/${document}`
+    let url = `${API}/documents/${document}`
     $.ajax({
         type: 'DELETE',
         url: url,

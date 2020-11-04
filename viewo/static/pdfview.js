@@ -382,7 +382,7 @@ class ResultView {
     }
 
     update_finding(findingid, status) {
-        let url = `/api/v0/documents/${this.document}/findings/${findingid}`
+        let url = `${API}/documents/${this.document}/findings/${findingid}`
         $.ajax({
             type: 'PUT',
             url: url,
@@ -773,7 +773,6 @@ class FindingStatusCounter {
         $("#show_open").click(function () {
             open_todolistview(OPEN)
         });
-
         this.update_values()
     }
 
@@ -797,7 +796,6 @@ class FindingStatusCounter {
         let counted = count_by_finding_status(result_view.document_findings)
         this.update_values(counted.done, counted.rejected, counted.open)
     }
-
 }
 
 class TodoListView {

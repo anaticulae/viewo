@@ -1,6 +1,7 @@
 "use strict";
 
 var base = {}
+const API = '/api/v0'
 
 base.show_done = function (content = null) {
     base.hide('#message')

@@ -16,7 +16,7 @@ var file_upload_view = {
     },
 
     upload_url: function (public_url) {
-        let url = `/api/v0/documents`
+        let url = `${API}/documents`
         $.ajax({
             type: 'POST',
             url: url,
@@ -34,7 +34,7 @@ var file_upload_view = {
     },
 
     upload_file: function (files) {
-        let url = `/api/v0/documents`
+        let url = `${API}/documents`
         $.ajax({
             type: 'POST',
             url: url,

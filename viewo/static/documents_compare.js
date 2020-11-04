@@ -14,7 +14,7 @@ var documents_compare = {
     },
 
     update_documents_list: function () {
-        $.ajax('/api/v0/documents', {
+        $.ajax(`${API}/documents`, {
             method: "GET",
             dataType: "json",
             success: function (response) {
@@ -44,7 +44,7 @@ var documents_compare = {
 
         let publish = $('#documents_compare_content')
         publish.html('')
-        let url = `/api/v0/documents/${current.val()}/findings/compare/${partner.val()}?operation=diff`
+        let url = `${API}/documents/${current.val()}/findings/compare/${partner.val()}?operation=diff`
         $.ajax(url, {
             method: "GET",
             dataType: "json",
