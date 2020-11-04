@@ -44,8 +44,12 @@ def user_hash(ip, environment) -> int:
 
 
 def oneline(data, limit: int = 256):
-    """Remove newlines and shrink content to `limit` to avoid logging to
-    mutch data."""
+    r"""Remove newlines and shrink content to `limit` to avoid logging to
+    mutch data.
+
+    >>> oneline('first\nnewline')
+    'first%NL%newline'
+    """
     data = data.replace('\r\n', '%WNL%')
     data = data.replace('\n', '%NL%')
     data = data.replace(' ', '%WS%')
