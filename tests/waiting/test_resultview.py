@@ -13,7 +13,7 @@ import utila
 import tests
 import viewo.result.data
 import viewo.result.json
-from tests.waiting import valid  # pylint:disable=W0611
+from tests.waiting import valid  # pylint:disable=W0611,C0412
 
 
 def validate_status(dumped: str):

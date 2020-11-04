@@ -114,8 +114,11 @@ def valid_pages(function):
     def decorated_function(*args, **kwargs):
         # TODO: ADD USER PAYMENT CHECK
         documentid = kwargs['documentid']
-        with contextlib.suppress(KeyError):
-            pages = flask.request.args['range']
+        # with contextlib.suppress(KeyError):
+        pages = flask.request.args.get('range', None)
+        if pages is None:
+            pages = flask.request.args.get('pages', None)
+        if pages is not None:
             pagecount = viewo.api.pages.utils.pagecount(documentid)
             selected = utila.parse_pages(pages, pagecount=pagecount)
             if selected is None:

@@ -33,11 +33,16 @@ class Comperator(enum.Enum):
     DIFF = enum.auto()
 
 
-def all_findings(documentid: str):
+def all_findings(documentid: str, pages: tuple = None):
     documentpath = link.document(documentid)
     if documentpath is None:
         return None
     findings = protocol.findings_from_path(documentpath)
+    # skip non selected findings
+    findings = [
+        finding for finding in findings
+        if not utila.should_skip(finding.page, pages)
+    ]
     return findings
 
 
@@ -52,8 +57,8 @@ def load_finding(documentid, findingid):
     return None
 
 
-def all_findings_raw(pages, documentid: str):
-    simple = viewo.api.utils.simple_recursive(pages)
+def all_findings_raw(content, documentid: str, pages: tuple = None):
+    simple = viewo.api.utils.simple_recursive(content)
     for page in simple:
         for finding in page['content']:
             finding['uri'] = flask.url_for(
@@ -61,9 +66,18 @@ def all_findings_raw(pages, documentid: str):
                 documentid=documentid,
                 findingid=finding['number'],
             )
+
+    uri = flask.url_for('api_findings.findings', documentid=documentid)
+    if pages is not None:
+        pages = utila.simplify_pages(pages)
+        uri = flask.url_for(
+            'api_findings.findings',
+            documentid=documentid,
+            pages=pages,
+        )
     raw = {
         'pages': simple,
-        'uri': flask.url_for('api_findings.findings', documentid=documentid),
+        'uri': uri,
     }
     return raw
 

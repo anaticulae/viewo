@@ -8,10 +8,12 @@
 # =============================================================================
 
 import flask
+import utila
 
 import viewo.api
 import viewo.api.findings
 import viewo.api.findings.utils
+import viewo.api.pages.utils
 import viewo.api.utils
 
 
@@ -20,11 +22,20 @@ import viewo.api.utils
     methods=['GET'],
 )
 @viewo.api.valid_document
+@viewo.api.valid_pages
 def findings(documentid):
-    collected = viewo.api.findings.utils.all_findings(documentid)
+    pages_selected = pages(documentid)
+    collected = viewo.api.findings.utils.all_findings(
+        documentid,
+        pages=pages_selected,
+    )
     if collected is None:
         return viewo.api.notfound(f'could not find: {documentid}')
-    simple = viewo.api.findings.utils.all_findings_raw(collected, documentid)
+    simple = viewo.api.findings.utils.all_findings_raw(
+        collected,
+        documentid,
+        pages=pages_selected,
+    )
     dumped = flask.jsonify({
         'findings': simple,
     })
@@ -81,3 +92,12 @@ def compare(documentid, partnerid):
     )
     dumped = flask.jsonify(result)
     return dumped
+
+
+def pages(documentid: str) -> tuple:
+    raw = flask.request.args.get('pages', None)
+    if raw is None:
+        return None
+    pagecount = viewo.api.pages.utils.pagecount(documentid)
+    selected = utila.parse_pages(raw, pagecount=pagecount)
+    return selected

@@ -59,7 +59,9 @@ Select optional pages:
 
 .. code-block:: none
 
-    documents/{document_id}/findings?pages=start:end
+    documents/{document_id}/findings?pages={start|start:end}
+
+* See: :py:func:`viewo.api.findings.present.findings`
 
 Select finding by **document_id** and **finding_id**:
 
