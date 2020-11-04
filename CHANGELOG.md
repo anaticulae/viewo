@@ -2,6 +2,26 @@
 
 Every noteable change is logged here.
 
+## v2.2.0
+
+### Feature
+
+* add page count to document info (3cd08abf1bdc)
+* add range parameter to uri of requested data (54be8082960f)
+* add optimized finding collector (556362bcf0da)
+* add pages selector to filter findings (70e480a45703)
+* add option to open a part of findings per page (18a3dd5b4346)
+* detect equal documents (381213e3fbe7)
+
+### Fix
+
+* fix utila pages converter (8ecfb230362a)
+* adjust table size (a86d835e2067)
+
+### Documentation
+
+* fix document generation (352d6c90750f)
+
 ## v2.1.0
 
 ### Feature
