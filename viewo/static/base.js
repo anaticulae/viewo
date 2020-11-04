@@ -2,6 +2,7 @@
 
 var base = {}
 const API = '/api/v0'
+const TIMEOUT = 3000
 
 base.show_done = function (content = null) {
     base.hide('#message')

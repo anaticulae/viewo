@@ -21,7 +21,12 @@ var file_upload_view = {
             type: 'POST',
             url: url,
             data: { 'url': public_url },
+            timeout: TIMEOUT,
             error: function (response) {
+                if (response.status == 0) {
+                    connection_error()
+                    return
+                }
                 user_error(response.responseJSON['message'])
             },
             success: function (response) {
@@ -41,7 +46,12 @@ var file_upload_view = {
             data: files,
             contentType: false,
             processData: false,
+            timeout: TIMEOUT,
             error: function (response) {
+                if (response.status == 0) {
+                    connection_error()
+                    return
+                }
                 user_error(response.responseJSON['message'])
             },
             success: function (response) {
@@ -57,9 +67,13 @@ var file_upload_view = {
 function user_error(message) {
     let entry = `<div class="alert alert-warning">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                ${ message}
+                ${message}
                 </div>`
     $('#nogoodnews').append(entry)
+}
+
+function connection_error() {
+    user_error('Service nicht erreichbar!')
 }
 
 $(document).ready(function () {
