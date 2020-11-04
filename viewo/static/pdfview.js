@@ -147,11 +147,11 @@ class ResultView {
             `
             $('#pdfview_overview').append(content)
             $(`#${del}`).click(function () {
-                result_view.update_finding(finding.number, REMOVED)
+                resultview.update_finding(finding.number, REMOVED)
                 $(`#flex_content_${finding.number}`).hide()
             });
             $(`#${done}`).click(function () {
-                result_view.update_finding(finding.number, DONE)
+                resultview.update_finding(finding.number, DONE)
                 $(`#flex_content_${finding.number}`).hide()
             });
         }
@@ -233,12 +233,12 @@ class ResultView {
     }
 
     show_pdf_properties() {
-        pdfview_properties.update(result_view.properties)
+        pdfview_properties.update(resultview.properties)
         pdfview_properties.show()
     }
 
     show_docstyle() {
-        pdfview_docstyle.update(result_view.doctextstyle)
+        pdfview_docstyle.update(resultview.doctextstyle)
         pdfview_docstyle.show()
     }
 
@@ -399,7 +399,7 @@ class ResultView {
             method: "GET",
             dataType: "json",
             success: function (response) {
-                result_view.update_content(
+                resultview.update_content(
                     response.content,
                     response.footnotes,
                     response.properties,
@@ -616,7 +616,7 @@ class FindingBox {
 
     update_box() {
         if (this.result.selected_finding != null) {
-            show_finding(result_view.selected_finding)
+            show_finding(resultview.selected_finding)
         }
         this.update_inbox_visibility()
         this.update_finding_navigation()
@@ -722,7 +722,7 @@ class Navigator {
             error_page_list.append(btn)
             $(`#openpage_${id}`).click(function () {
                 let pagenumber = navigator.result.content.findIndex(s => (s == page))
-                result_view.show_page(pagenumber)
+                resultview.show_page(pagenumber)
             });
         }
     }
@@ -793,7 +793,7 @@ class FindingStatusCounter {
     }
 
     update() {
-        let counted = count_by_finding_status(result_view.document_findings)
+        let counted = count_by_finding_status(resultview.document_findings)
         this.update_values(counted.done, counted.rejected, counted.open)
     }
 }
@@ -806,7 +806,7 @@ class TodoListView {
 
     init_listener() {
         $("#todolistview_show_pdfview").click(function () {
-            open_pdfview(result_view.current_page)
+            open_pdfview(resultview.current_page)
         });
     }
 
@@ -871,16 +871,16 @@ class TodoListView {
         });
         if (status in OPEN) {
             $(`#${del}`).click(function () {
-                result_view.update_finding(finding.number, REMOVED)
+                resultview.update_finding(finding.number, REMOVED)
                 $(`#${finding.number}`).hide()
             });
             $(`#${done}`).click(function () {
-                result_view.update_finding(finding.number, DONE)
+                resultview.update_finding(finding.number, DONE)
                 $(`#${finding.number}`).hide()
             });
         } else {
             $(`#${restore}`).click(function () {
-                result_view.update_finding(finding.number, SELECTED)
+                resultview.update_finding(finding.number, SELECTED)
                 $(`#${finding.number}`).hide()
             });
         }
@@ -903,20 +903,20 @@ function open_todolistview(category = DONE) {
 function open_pdfview(page = 0) {
     $('#todolistview').hide()
     $('#pdfview').show()
-    result_view.show_page(page)
+    resultview.show_page(page)
 }
 
-const result_view = new ResultView()
-const navigator = new Navigator(result_view)
+const resultview = new ResultView()
+const navigator = new Navigator(resultview)
 const statuscounter = new FindingStatusCounter()
-const findingbox = new FindingBox(result_view)
-const todolist = new TodoListView(result_view)
-const pdfview_properties = new PDFViewProperties(result_view)
-const pdfview_docstyle = new PDFViewDocStyle(result_view)
+const findingbox = new FindingBox(resultview)
+const todolist = new TodoListView(resultview)
+const pdfview_properties = new PDFViewProperties(resultview)
+const pdfview_docstyle = new PDFViewDocStyle(resultview)
 
 
 function onload(process) {
-    result_view.loop(process)
+    resultview.loop(process)
 }
 
 
