@@ -186,21 +186,22 @@ function add_ol(parent, style) {
 }
 
 function loop(process) {
-    let ajax = new XMLHttpRequest()
-    ajax.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            let downloaded = this.responseText
-            downloaded = JSON.parse(downloaded)
-
-            update_view(downloaded.content)
-            if (downloaded.status == 1) {
+    $.ajax(`/waiting/fastview/status/${process}`, {
+        method: "GET",
+        dataType: "json",
+        success: function (response) {
+            update_view(response.content)
+            if (response.status == 1) {
                 // process is currently running
                 setTimeout(() => loop(process), 3000);
             }
+
+        },
+        error: function () {
+            // TODO: IMPROVE ERROR HANDLER
+            base.show_error()
         }
-    }
-    ajax.open("GET", '/waiting/fastview/status/' + process, true)
-    ajax.send()
+    })
 }
 
 function onload(process) {

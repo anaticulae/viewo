@@ -394,35 +394,24 @@ class ResultView {
     }
 
     loop(process) {
-        // this.document = Number(process) // 16 bits are to short, investigate later
         this.document = process
-        // TODO: MOVE TO SEPARATE DATA MANAGER?
-        let ajax = new XMLHttpRequest()
-        ajax.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                let downloaded = this.responseText
-                try {
-                    downloaded = JSON.parse(downloaded)
-                } catch (error) {
-                    base.show_error()
-                }
-                result_view.update_content(downloaded.content,
-                    downloaded.footnotes,
-                    downloaded.properties,
-                    downloaded.doctextstyle,
-                    downloaded.captions,
+        $.ajax(`/waiting/resultview/status/${process}`, {
+            method: "GET",
+            dataType: "json",
+            success: function (response) {
+                result_view.update_content(
+                    response.content,
+                    response.footnotes,
+                    response.properties,
+                    response.doctextstyle,
+                    response.captions,
                 )
-                if (downloaded.status == 1) {
-                    // process is currently running
-                    setTimeout(() => loop(process), 3000);
-                }
+            },
+            error: function () {
+                // TODO: IMPROVE ERROR HANDLER
+                base.show_error()
             }
-            // else { staus ==404?
-            //     base.show_error('Verbindung zum Server nicht möglich.')
-            // }
-        }
-        ajax.open("GET", `/waiting/resultview/status/${process}`, true)
-        ajax.send()
+        })
     }
 }
 

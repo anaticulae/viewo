@@ -58,27 +58,21 @@ var result_waiting_view = {
     },
 
     loop: function (process) {
-        let ajax = new XMLHttpRequest()
-        ajax.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                let downloaded = this.responseText
-                downloaded = JSON.parse(downloaded)
-
-                if (downloaded.states == undefined) {
-                    // TODO: VERIFY LATER
-                    base.show_error()
-                    return
-                }
-                result_waiting_view.update(process, downloaded.states)
-
-                if (downloaded.status == 1) {
+        $.ajax(`/waiting/status/${process}`, {
+            method: "GET",
+            dataType: "json",
+            success: function (response) {
+                result_waiting_view.update(process, response.states)
+                if (response.status == 1) {
                     // process is currently running
                     setTimeout(() => result_waiting_view.loop(process), 3000);
                 }
+            },
+            error: function () {
+                // TODO: IMPROVE ERROR HANDLER
+                base.show_error()
             }
-        }
-        ajax.open("GET", `/waiting/status/${process}`, true)
-        ajax.send()
+        })
     },
 
     onload: function (process) {
