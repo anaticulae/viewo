@@ -396,8 +396,7 @@ class ResultView {
     loop(process) {
         this.document = process
         $.ajax(`/waiting/resultview/status/${process}`, {
-            method: "GET",
-            dataType: "json",
+            dataType: 'json',
             success: function (response) {
                 resultview.update_content(
                     response.content,

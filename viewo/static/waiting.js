@@ -59,8 +59,7 @@ var result_waiting_view = {
 
     loop: function (process) {
         $.ajax(`/waiting/status/${process}`, {
-            method: "GET",
-            dataType: "json",
+            dataType: 'json',
             success: function (response) {
                 result_waiting_view.update(process, response.states)
                 if (response.status == 1) {
