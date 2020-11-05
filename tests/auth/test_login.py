@@ -32,7 +32,7 @@ def test_auth_login_click(client, monkeypatch):
             '/login',
             dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
         )
-    '<h2>Dokumente</h2>' in result
+    assert '<h2>Dokumente</h2>' in result
 
 
 def test_auth_login_invalid_password(client, monkeypatch):
@@ -61,3 +61,14 @@ def test_auth_logout_click(user_client, monkeypatch):
             dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
         )
     assert 'Login erfolgreich' in result
+
+
+def test_auth_for_required_page(client, monkeypatch):
+    """Ensure that logging in for private page forwards correctly."""
+    with tests.test_user(monkeypatch):
+        result = tests.post(
+            client,
+            '/login?next=account',
+            dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
+        )
+    assert '<h1>Account</h1>' in result

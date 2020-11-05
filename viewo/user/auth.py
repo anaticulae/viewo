@@ -24,7 +24,7 @@ def show_login():
 def show_logout():
     flask_login.logout_user()
     flask.flash('Logout erfolgreich.')
-    return flask.render_template('private/login.html')
+    return flask.redirect(flask.url_for('viewo_user.show_login'))
 
 
 @viewo.user.viewo_user.route('/login', methods=['POST'])
