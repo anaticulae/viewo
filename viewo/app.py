@@ -14,6 +14,7 @@ import viewo
 import viewo.__patch__
 import viewo.config
 import viewo.tracking
+import viewo.user.setup
 from viewo.api.documents import *  # pylint:disable=wildcard-import
 from viewo.api.findings import *  # pylint:disable=wildcard-import
 from viewo.api.pages import *  # pylint:disable=wildcard-import
@@ -23,6 +24,7 @@ from viewo.api.users import *  # pylint:disable=wildcard-import
 from viewo.api.visitors import *  # pylint:disable=wildcard-import
 from viewo.api.waiting import waiting_
 from viewo.api.writing import writing_
+from viewo.user import *  # pylint:disable=wildcard-import
 from viewo.view.documents import documents_
 from viewo.view.legal import legal_
 
@@ -45,12 +47,13 @@ def create_application(config=None) -> flask.Flask:
     init_error_handler(app_)
 
     # view
+    app_.register_blueprint(viewo_user)
     app_.register_blueprint(documents_)
-    app_.register_blueprint(result_)
-    app_.register_blueprint(welcome)
-    app_.register_blueprint(waiting_)
-    app_.register_blueprint(writing_)
     app_.register_blueprint(legal_)
+    app_.register_blueprint(result_)
+    app_.register_blueprint(waiting_)
+    app_.register_blueprint(welcome)
+    app_.register_blueprint(writing_)
 
     # data API
     app_.register_blueprint(api_documents, url_prefix=viewo.config.API_PREFIX)
@@ -58,6 +61,8 @@ def create_application(config=None) -> flask.Flask:
     app_.register_blueprint(api_pages, url_prefix=viewo.config.API_PREFIX)
     app_.register_blueprint(api_users, url_prefix=viewo.config.API_PREFIX)
     app_.register_blueprint(api_visitors, url_prefix=viewo.config.API_PREFIX)
+
+    viewo.user.setup.create_loginmanager(app_)
 
     # track every user request
     app_.before_request(viewo.tracking.before_each_request)

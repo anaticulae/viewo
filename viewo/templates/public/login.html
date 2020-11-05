@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Login</h1>
+
+<p>
+    Um auf das Dokument zuzugreifen geben Sie bitte Ihren Benutzernamen
+    und Passwort ein.
+</p>
+
+<div class="container">
+    <form method="POST" action="{{ url_for('viewo_user.show_login') }}" role="form" class="form-horizontal">
+        <div class="form-group">
+            <labbel for="document" class="col-sm-2 control-label">Benutzer:</labbel>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="user" value="{{user}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <labbel for="password" class="col-sm-2 control-label">Passwort:</labbel>
+            <div class="col-sm-3">
+                <input type="password" class="form-control" name="password" value="{{password}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <labbel class="col-sm-2 control-label"></labbel>
+            <div class="col-sm-3">
+                <button type="submit" class="btn btn-default">Anmelden</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

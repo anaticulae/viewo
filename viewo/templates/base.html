@@ -46,6 +46,12 @@
                         <li>{{ href('Home', 'welcome.show_welcome', class='js-nav-link') }}</li>
                         <li>{{ href('Dokumente', 'documents.view_documents', class='js-nav-link') }}</li>
                         <li>{{ href('Schreibhilfe', 'welcome.show_welcome', page='writing', class='js-nav-link') }}
+                            <!-- TODO: REPLACE WITH ICON -->
+                            {% if current_user.is_authenticated %}
+                        <li>{{ href('Logout', 'viewo_user.show_logout', class='js-nav-link') }}
+                            {% else %}
+                        <li>{{ href('Login', 'viewo_user.show_login', class='js-nav-link') }}
+                            {% endif %}
                         </li>
                     </ul>
                     <form class="navbar-form navbar-right" id="pause-form"></form>

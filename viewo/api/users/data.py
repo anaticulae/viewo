@@ -65,3 +65,7 @@ def dump_user(user: User) -> str:
     raw = vars(user)
     dumped = yaml.safe_dump(raw)
     return dumped
+
+
+def verify_password(user: str, password: str):
+    return user == 'test' and password == 'test'
