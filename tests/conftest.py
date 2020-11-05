@@ -92,6 +92,18 @@ def client(app):  # pylint:disable=W0621
 
 
 @pytest.fixture
+def user_client(client, monkeypatch):  # pylint:disable=W0621
+    with tests.test_user(monkeypatch):
+        result = tests.post(
+            client,
+            '/login',
+            dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
+        )
+    assert 'Login erfolgreich' in result
+    return client
+
+
+@pytest.fixture
 def docclient(client):  # pylint:disable=W0621
     result = tests.apiupload(client, '/documents', 'file', tests.MINIMAL)
     doc = result['document']

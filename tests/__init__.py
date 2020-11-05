@@ -40,6 +40,24 @@ assert os.path.exists(EXAMPLE_TODO), EXAMPLE_TODO
 
 EXAMPLE_RESULT = os.path.join(EXAMPLE_READY, TEST_DOCUMENT, 'result')
 
+TEST_USER = 'wuestee'
+TEST_PASSWORD = 'watahhh'
+
+
+@contextlib.contextmanager
+def test_user(monkeypatch):
+    with monkeypatch.context() as context:
+
+        def verify_password(user: str, password: str) -> bool:
+            return user == TEST_USER and password == TEST_PASSWORD
+
+        context.setattr(
+            viewo.api.users.data,
+            'verify_password',
+            verify_password,
+        )
+        yield
+
 
 def decode(
         response,
