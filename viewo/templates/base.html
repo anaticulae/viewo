@@ -48,11 +48,12 @@
                         <li>{{ href('Schreibhilfe', 'welcome.show_welcome', page='writing', class='js-nav-link') }}
                             <!-- TODO: REPLACE WITH ICON -->
                             {% if current_user.is_authenticated %}
-                        <li>{{ href('Logout', 'viewo_user.show_logout', class='js-nav-link') }}
-                            {% else %}
-                        <li>{{ href('Login', 'viewo_user.show_login', class='js-nav-link') }}
-                            {% endif %}
+                        <li>{{ href(img('images/account.png', width=24), 'viewo_user.show_account', class='js-nav-link') }}
                         </li>
+                        <li>{{ href('Logout', 'viewo_user.show_logout', class='js-nav-link') }}</li>
+                        {% else %}
+                        <li>{{ href('Login', 'viewo_user.show_login', class='js-nav-link') }}</li>
+                        {% endif %}
                     </ul>
                     <form class="navbar-form navbar-right" id="pause-form"></form>
                 </div>
