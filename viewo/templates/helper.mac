@@ -29,6 +29,11 @@
 <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename=source) }}">
 {%- endmacro %}
 
+{% macro img(source, width='') -%}
+<img src="{{ url_for('static', filename=source) }}"
+{% if width %} width="{{ width }}" {% endif %}
+>
+{%- endmacro %}
 
 {% macro href(caption, url='#', class='') -%}
 {% if url != '#' %}
