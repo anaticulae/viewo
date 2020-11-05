@@ -118,6 +118,17 @@ def upload(client, file=MINIMAL):
     return result
 
 
+def post(
+        client,
+        page: str,
+        data: dict,
+        expected=http.HTTPStatus.OK,
+):
+    response = client.post(page, data=data, follow_redirects=True)
+    assert response.status_code == expected, page
+    return decode(response, expected=expected)
+
+
 def apipost(
         client,
         page: str,
@@ -126,9 +137,7 @@ def apipost(
         expected=http.HTTPStatus.OK,
 ):
     request = prefix + page
-    response = client.post(request, data=data, follow_redirects=True)
-    assert response.status_code == expected, request
-    return decode(response, expected=expected)
+    return post(client, page=request, data=data, expected=expected)
 
 
 def apiput(
