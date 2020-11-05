@@ -43,12 +43,15 @@
 {%- endmacro %}
 
 
-{% macro button(id='', caption='', img='', alt='', style='', class='', data_dismiss='') -%}
-<button type="button" {% if id %} id="{{ id }}" {% endif %} {% if style %} style="{{ style }}" {% endif %}
-    {% if class %} class="{{ class}}" {% endif %} {% if data_dismiss %} data-dismiss="{{ data_dismiss }}" {% endif %}>
+{% macro button(id='', caption='', img='', alt='', style='', class='', data_dismiss='', width='100%', height='100%') -%}
+<button type="button" {% if id %} id="{{ id }}" {% endif %}
+    {% if style %} style="{{ style }}" {% endif %}
+    {% if class %} class="{{ class}}" {% endif %}
+    {% if data_dismiss %} data-dismiss="{{ data_dismiss }}" {% endif %}
+    >
     {% if img %}
-    <img src="{{ url_for('static', filename=img) }}" {% if alt %} alt="{{ alt }}" {% endif %} width="100%"
-        height="100%" />
+    <img src="{{ url_for('static', filename=img) }}" {% if alt %}
+        alt="{{ alt }}" {% endif %} width="{{width}}" height="{{height}}" />
     {% endif %}
     {% if caption %}
     {{ caption }}
