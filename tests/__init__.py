@@ -78,9 +78,12 @@ def content(
         client,
         request: str,
         expected=http.HTTPStatus.OK,
+        raw: bool = False,
 ):
-    response = client.get(request)
-    assert response.status_code == expected, request
+    response = client.get(request, follow_redirects=True)
+    assert response.status_code == expected, request + str(response)
+    if raw:
+        return response
     return decode(response)
 
 
@@ -92,7 +95,7 @@ def apicall(
 ):
     cmd = prefix + request
     response = client.get(cmd)
-    assert response.status_code == expected, request
+    assert response.status_code == expected, request + str(response)
     return decode(response, expected=expected)
 
 
@@ -104,7 +107,7 @@ def apidelete(
 ):
     cmd = prefix + request
     response = client.delete(cmd)
-    assert response.status_code == expected, request
+    assert response.status_code == expected, request + str(response)
     return decode(response, expected=expected)
 
 
@@ -122,7 +125,7 @@ def apiupload(
     request = prefix + page
     fields = werkzeug.datastructures.MultiDict([(field, open(path, 'rb'))])
     response = client.post(request, data=fields, follow_redirects=True)
-    assert response.status_code == expected, request
+    assert response.status_code == expected, request + str(response)
     return decode(response, expected=expected)
 
 
@@ -167,7 +170,7 @@ def apiput(
 ):
     request = prefix + page
     response = client.put(request, data=data, follow_redirects=True)
-    assert response.status_code == expected, request
+    assert response.status_code == expected, request + str(response)
     return decode(response, expected=expected)
 
 
