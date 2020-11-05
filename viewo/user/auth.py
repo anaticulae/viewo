@@ -16,7 +16,7 @@ import viewo.user
 
 @viewo.user.viewo_user.route('/login')
 def show_login():
-    return flask.render_template('public/login.html')
+    return flask.render_template('private/login.html')
 
 
 @viewo.user.viewo_user.route('/logout')
@@ -24,7 +24,7 @@ def show_login():
 def show_logout():
     flask_login.logout_user()
     flask.flash('Logout erfolgreich.')
-    return flask.render_template('public/login.html')
+    return flask.render_template('private/login.html')
 
 
 @viewo.user.viewo_user.route('/login', methods=['POST'])
@@ -41,7 +41,7 @@ def check_login():
         flask.flash('Benutzerdaten fehlerhaft.')
         # ask user again
         return flask.render_template(
-            'public/login.html',
+            'private/login.html',
             user=user,
             password=password,
         )

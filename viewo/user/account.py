@@ -16,4 +16,4 @@ import viewo.user
 @viewo.user.viewo_user.route('/account')
 @flask_login.login_required
 def show_account():
-    return flask.render_template('public/account.html')
+    return flask.render_template('private/account.html')
