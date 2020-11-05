@@ -57,6 +57,11 @@ nav.main{
     max-width: 1280px;
 }
 
+#nogoodnews{
+    /* distance between menu-bar and error information list */
+    margin-top: 25px;
+}
+
 footer{
     border:black solid 2px;
     margin-bottom:5px;
