@@ -11,4 +11,4 @@ import flask
 
 viewo_user = flask.Blueprint('viewo_user', __name__)  # pylint:disable=invalid-name
 
-__all__ = ['viewo_user', 'account', 'auth', 'register', 'setup']
+__all__ = ['viewo_user', 'account', 'auth', 'loginmanager', 'register']

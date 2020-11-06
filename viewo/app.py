@@ -14,7 +14,7 @@ import viewo
 import viewo.__patch__
 import viewo.config
 import viewo.tracking
-import viewo.user.setup
+import viewo.user.loginmanager
 from viewo.api.documents import *  # pylint:disable=wildcard-import
 from viewo.api.findings import *  # pylint:disable=wildcard-import
 from viewo.api.pages import *  # pylint:disable=wildcard-import
@@ -62,7 +62,7 @@ def create_application(config=None) -> flask.Flask:
     app_.register_blueprint(api_users, url_prefix=viewo.config.API_PREFIX)
     app_.register_blueprint(api_visitors, url_prefix=viewo.config.API_PREFIX)
 
-    viewo.user.setup.create_loginmanager(app_)
+    viewo.user.loginmanager.create_loginmanager(app_)
 
     # track every user request
     app_.before_request(viewo.tracking.before_each_request)
