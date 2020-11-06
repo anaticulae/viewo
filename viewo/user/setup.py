@@ -18,7 +18,16 @@ def create_loginmanager(app):
     loginmanager.init_app(app)
 
     loginmanager._user_callback = load_user  # pylint:disable=W0212
+    loginmanager.localize_callback = localize_callback
 
 
 def load_user(userid):
     return viewo.user.FlaskUser(identifier=userid)
+
+
+def localize_callback(message: str) -> str:
+    if message == flask_login.LOGIN_MESSAGE:
+        return 'Bitte einloggen um Zugriff zu erhalten.'
+    if message == flask_login.LOGIN_MESSAGE:
+        return 'Bitte erneut einloggen um Zugriff zu erhalten.'
+    return message
