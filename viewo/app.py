@@ -18,7 +18,6 @@ import viewo.user.setup
 from viewo.api.documents import *  # pylint:disable=wildcard-import
 from viewo.api.findings import *  # pylint:disable=wildcard-import
 from viewo.api.pages import *  # pylint:disable=wildcard-import
-from viewo.api.public import welcome
 from viewo.api.result import result_
 from viewo.api.users import *  # pylint:disable=wildcard-import
 from viewo.api.visitors import *  # pylint:disable=wildcard-import
@@ -27,6 +26,7 @@ from viewo.api.writing import writing_
 from viewo.user import *  # pylint:disable=wildcard-import
 from viewo.view.documents import documents_
 from viewo.view.legal import legal_
+from viewo.view.welcome import welcome
 
 
 def create_application(config=None) -> flask.Flask:
