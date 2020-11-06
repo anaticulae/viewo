@@ -31,3 +31,16 @@ def delete_account_execute():
     flask_login.logout_user()
     flask.flash('Daten erfolgreich gelöscht.')
     return flask.redirect(flask.url_for('welcome.show_welcome'))
+
+
+@viewo.user.viewo_user.route('/account/change')
+@flask_login.login_required
+def account_change_ask():
+    return flask.render_template('private/account/change.html')
+
+
+@viewo.user.viewo_user.route('/account/change', methods=['POST'])
+@flask_login.login_required
+def account_change():
+    flask.flash('Daten erfolgreich geändert.')
+    return flask.render_template('private/account/change.html')
