@@ -9,7 +9,7 @@
 
 import flask_login
 
-import viewo.user
+import viewo.user.data
 
 
 def create_loginmanager(app):
@@ -22,7 +22,7 @@ def create_loginmanager(app):
 
 
 def load_user(userid):
-    return viewo.user.FlaskUser(identifier=userid)
+    return viewo.user.data.FlaskUser(identifier=userid)
 
 
 def localize_callback(message: str) -> str:

@@ -12,6 +12,7 @@ import flask_login
 
 import viewo.api.users.data
 import viewo.user
+import viewo.user.data
 
 
 @viewo.user.viewo_user.route('/login')
@@ -59,4 +60,4 @@ def check_login():
 
 
 def open_user(user: str) -> 'viewo.user.FlaskUser':
-    return viewo.user.FlaskUser(identifier=user)
+    return viewo.user.data.FlaskUser(identifier=user)
