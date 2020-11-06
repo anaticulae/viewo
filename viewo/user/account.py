@@ -16,4 +16,18 @@ import viewo.user
 @viewo.user.viewo_user.route('/account')
 @flask_login.login_required
 def show_account():
-    return flask.render_template('private/account.html')
+    return flask.render_template('private/account/index.html')
+
+
+@viewo.user.viewo_user.route('/account/delete')
+@flask_login.login_required
+def delete_account_ask():
+    return flask.render_template('private/account/delete.html')
+
+
+@viewo.user.viewo_user.route('/account/delete', methods=['POST'])
+@flask_login.login_required
+def delete_account_execute():
+    flask_login.logout_user()
+    flask.flash('Daten erfolgreich gelöscht.')
+    return flask.redirect(flask.url_for('welcome.show_welcome'))
