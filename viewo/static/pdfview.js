@@ -207,9 +207,13 @@ class ResultView {
             return
         }
         list.html('')
+        let captions = page_content(CAPTIONS)
+        if (empty(captions)) {
+            return
+        }
         let current = null
         let index = 0
-        for (let page of this.captions) {
+        for (let page of captions) {
             for (let item of page.captions) {
                 let nr = index + 1
                 let userpage = Number(page.page) + 1
@@ -240,12 +244,14 @@ class ResultView {
     }
 
     show_pdf_properties() {
-        pdfview_properties.update(resultview.properties)
+        let properties = page_content(PROPERTIES)
+        pdfview_properties.update(properties)
         pdfview_properties.show()
     }
 
     show_docstyle() {
-        pdfview_docstyle.update(resultview.doctextstyle)
+        let docstyle = page_content(DOCSTYLE)
+        pdfview_docstyle.update(docstyle)
         pdfview_docstyle.show()
     }
 

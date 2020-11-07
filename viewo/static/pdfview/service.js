@@ -20,9 +20,12 @@ class DocumentService {
         this.documentid = documentid
         this.content = []
         this.update_pagenumbers()
-        // TODO: WAIT FOR PAGENUMBERS
-        this.update_pagecontent()
-        this.update_footnotes()
+        this.update_pagecontent(null, function ready() {
+            service.update_footnotes()
+            service.update_captions()
+            service.update_properties()
+            service.update_docstyle()
+        })
     }
 
     update_pagenumbers() {
@@ -41,7 +44,37 @@ class DocumentService {
         rpc(`/documents/${this.documentid}/footnotes`, function (response) {
             if (response.footnotes.resource.length) {
                 update_content(FOOTNOTES, response.footnotes.resource)
+            } else {
+                update_content(FOOTNOTES, SPECIALCONTENT_EMPTY)
             }
+            navigator.update_page_navigator()
+        })
+    }
+
+    update_captions() {
+        rpc(`/documents/${this.documentid}/captions`, function (response) {
+            let captions = response.captions.resource
+            if (captions.length) {
+                update_content(CAPTIONS, captions)
+            } else {
+                update_content(CAPTIONS, SPECIALCONTENT_EMPTY)
+            }
+            navigator.update_page_navigator()
+        })
+    }
+
+    update_properties() {
+        rpc(`/documents/${this.documentid}/properties`, function (response) {
+            let properties = response.properties.resource
+            update_content(PROPERTIES, properties)
+            navigator.update_page_navigator()
+        })
+    }
+
+    update_docstyle() {
+        rpc(`/documents/${this.documentid}/style`, function (response) {
+            let style = response.style.resource
+            update_content(DOCSTYLE, style)
             navigator.update_page_navigator()
         })
     }
