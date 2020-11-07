@@ -68,7 +68,7 @@ class DocumentService {
     }
 
     get pages() {
-        if (this.content == undefined || this.content == null) {
+        if (this.empty) {
             return []
         }
         let result = []
@@ -78,6 +78,10 @@ class DocumentService {
         return result
     }
 
+    get empty() {
+        return this.content == null || this.content.length == 0
+    }
+
 }
 
 function update_content(index, content) {
@@ -85,9 +89,18 @@ function update_content(index, content) {
     service.content[index].content = content
 }
 
-function page_content(index) {
-    let selected = service.content.find(s => (s.page == index))
+function page_content(pagenumber) {
+    let selected = service.content.find(s => (s.page == pagenumber))
     return selected.content
+}
+
+function page(pagenumber) {
+    let selected = service.content.find(s => (s.page == pagenumber))
+    return selected
+}
+
+function empty(content) {
+    return content == SPECIALCONTENT || content == SPECIALCONTENT_EMPTY
 }
 
 function defaultpages(pagenumbers) {

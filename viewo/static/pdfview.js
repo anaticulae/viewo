@@ -77,24 +77,28 @@ class ResultView {
         todolist.update_tables()
     }
 
-    show_page(page) {
+    show_page(pagenumber) {
         // Open selected `page` and update findings.
-        if (this.content == undefined) {
+        if (service.empty) {
             return
         }
-        if (this.content == []) {
+        if (empty(pagenumber)) {
             return
         }
-        let selected = this.content[page]
-        if (selected == undefined) {
-            return
-        }
+        let selected = page(pagenumber)
         this.error_page = page
-        $('#error_page_content').html(selected.html)
+        if (selected.content == null) {
+            service.update_pagecontent(pagenumber, function () {
+                resultview.show_page(pagenumber)
+            })
+            return
+        }
 
-        findingbox.update_findings()
+        $('#error_page_content').html(selected.content)
 
-        navigator.highlight_pagenumber(page)
+        // findingbox.update_findings()
+
+        navigator.highlight_pagenumber(pagenumber)
 
         // use base cause jquery introduces trouble with display: block, do
         // not refactor!
@@ -164,11 +168,14 @@ class ResultView {
             return
         }
         list.html('')
+        let footnotes = page_content(FOOTNOTES)
+        if (empty(footnotes)) {
+            return
+        }
         let current = null
-        for (let index in this.footnotes) {
-            let item = this.footnotes[index]
-            let nr = Number(index) + 1
-            let userpage = Number(item.page) + 1
+        for (let index in footnotes) {
+            let item = footnotes[index]
+            let userpage = parseInt(item.page) + 1
             let status = '✔'
             if (item.error != '') {
                 status = '✖'
@@ -181,10 +188,10 @@ class ResultView {
             let href = `footnote_openpage_${index}`
             let row = `
             <tr>
-                <td class="center top">${nr}</td>
-                <td class="expand"><span id="${href}" class="click underline">${item.title}</span></td>
-                <td class="center top">${userpage}</td>
-                <td class="center top">${status}</td>
+            <td class="center top">${item.number}</td>
+            <td class="expand"><span id="${href}" class="click underline">${item.title}</span></td>
+            <td class="center top">${userpage}</td>
+            <td class="center top">${status}</td>
             </tr>`
             list.append(row)
             $(`#${href}`).click(function () {
@@ -218,10 +225,10 @@ class ResultView {
                 let href = `footnote_openpage_${index}`
                 let row = `
             <tr>
-                <td class="center top">${nr}</td>
-                <td class="expand"><span id="${href}" class="click underline">${item.raw}</span></td>
-                <td class="center top">${userpage}</td>
-                <td class="center top">${status}</td>
+            <td class="center top">${nr}</td>
+            <td class="expand"><span id="${href}" class="click underline">${item.raw}</span></td>
+            <td class="center top">${userpage}</td>
+            <td class="center top">${status}</td>
             </tr>`
                 list.append(row)
                 $(`#${href}`).click(function () {
@@ -245,7 +252,7 @@ class ResultView {
     pagecontent(page) {
         // determine content by index and if page is out of bounds, select
         // page by page number.
-        let selected = this.content[page]
+        let selected = service.content[page]
         if (selected != undefined) {
             return selected
         }
@@ -302,6 +309,9 @@ class ResultView {
 
     get selected_finding() {
         let findings = this.pagecontent(this.current_page).findings
+        if (findings == undefined) {
+            return null
+        }
         // let findings = this.findings
         if (this.current_finding < findings.length) {
             return findings[this.current_finding]
@@ -657,8 +667,8 @@ class Navigator {
                 child.classList.remove('highlighted')
             }
         }
-        let pdfpage = this.result.pagecontent(page).page
-        let current = $(`#openpage_${pdfpage}`)
+        // let pdfpage = this.result.pagecontent(page).page
+        let current = $(`#openpage_${page}`)
         if (current.length == 1) {
             current[0].classList.add('highlighted')
         }
@@ -704,25 +714,15 @@ class Navigator {
         let error_page_list = $('#pdfview_navigation_list')
         // TODO: CHECK FOR BETTER REMOVEMENT
         error_page_list.html('')
-        for (let page of this.result.content) {
-            if (this.error_pages_only) {
-                // skip pages which contains no error
-                let no_findings = page.findings.filter(s => visible(s)).length == 0
-                if (no_findings) {
-                    continue
-                }
-            }
-            let id = page.page
-            let title = Number(id) + 1
-            if (page.hasOwnProperty('title')) {
-                title = page.title
-            }
-            let btn = `<button type="button" id="openpage_${id}">${title}</button>`
+        for (let page of service.pages) {
+            let btn = `<button type="button" id="openpage_${page.page}">${page.title}</button>`
             error_page_list.append(btn)
-            $(`#openpage_${id}`).click(function () {
-                let pagenumber = navigator.result.content.findIndex(s => (s == page))
-                resultview.show_page(pagenumber)
+            $(`#openpage_${page.page}`).click(function () {
+                resultview.show_page(page.page)
             });
+            if (page.content == SPECIALCONTENT_EMPTY) {
+                $(`#openpage_${page.page}`).hide()
+            }
         }
     }
 
@@ -858,14 +858,14 @@ class TodoListView {
         let jump_to_page = `<a href = "#" id = "${openid}">${finding.title}</a>`
         let number = parent[0].rows.length + 1
         let raw =
-            `<tr id="${finding.number}">
-                <td class="center">${number}</td>
-                <td>${jump_to_page}</td>
-                <td class="center">${page_user}</td>
-                <td class="center">${action}</td>
-            </tr>`
+            `< tr id = "${finding.number}" >
+            <td class="center">${number}</td>
+            <td>${jump_to_page}</td>
+            <td class="center">${page_user}</td>
+            <td class="center">${action}</td>
+            </tr > `
         parent.append(raw)
-        $(`#${openid} `).click(function () {
+        $(`#${openid}`).click(function () {
             open_pdfview(page)
         });
         if (status in OPEN) {
@@ -913,11 +913,9 @@ const todolist = new TodoListView(resultview)
 const pdfview_properties = new PDFViewProperties(resultview)
 const pdfview_docstyle = new PDFViewDocStyle(resultview)
 
-
 function onload(process) {
-    resultview.loop(process)
+    service.update(process)
 }
-
 
 function init() {
     navigator.init_listener()
