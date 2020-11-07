@@ -19,7 +19,12 @@ def load_html(documentid: str, pages: tuple = None) -> dict:
     root = link.resultview(documentid, done=True)
 
     loaded = viewo.result.data.load_html(root)
-    selected = [loaded[page] for page in pages] if pages else loaded
+    if pages is None:
+        selected = loaded
+    else:
+        # ensure valid page numbers
+        selected = [page for page in pages if 0 <= page < len(loaded)]
+        selected = [loaded[page] for page in selected]
 
     simple = viewo.api.utils.simple_recursive(selected)
     return simple
