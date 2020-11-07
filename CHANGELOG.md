@@ -2,6 +2,22 @@
 
 Every noteable change is logged here.
 
+## v2.3.0
+
+### Feature
+
+* add account change view (4c1eb9253358)
+* add account delete view (cc245096f688)
+* localize messages (34a92f340227)
+* add macro to display image (4aa2b6ddeb19)
+* add first draft of login (52f77620b741)
+* add distance between menu and error information list (cd6d7838edc0)
+* add server timeout information (6567cf714a24)
+
+### Fix
+
+* fix forward private pages (e9c26d1ba222)
+
 ## v2.2.0
 
 ### Feature
