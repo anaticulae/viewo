@@ -37,7 +37,7 @@ class ResultView {
                 {
                     'content': this.footnotes,
                     'findings': [],
-                    'page': 1025,
+                    'page': FOOTNOTES,
                     'title': 'Fußnoten',
                 }
             )
@@ -47,7 +47,7 @@ class ResultView {
                 {
                     'content': this.captions,
                     'findings': [],
-                    'page': 1026,
+                    'page': CAPTIONS,
                     'title': 'Unterschriften',
                 }
             )
@@ -56,7 +56,7 @@ class ResultView {
             {
                 'content': this.doctextstyle,
                 'findings': [],
-                'page': 1027,
+                'page': DOCSTYLE,
                 'title': 'Darstellung',
             }
         )
@@ -64,7 +64,7 @@ class ResultView {
             {
                 'content': this.properties,
                 'findings': [],
-                'page': 1028,
+                'page': PROPERTIES,
                 'title': 'Eigenschaften',
             }
         )
@@ -105,15 +105,15 @@ class ResultView {
         $('#pdfview_properties').hide()
         $('#pdfview_captions').hide()
         // TODO: REMOVE LATER
-        if (selected.page == 1024 || selected.page == -1) {
+        if (selected.page == 1024 || selected.page == OVERVIEW) {
             this.show_overview()
-        } else if (selected.page == 1025) {
+        } else if (selected.page == FOOTNOTES) {
             this.show_footnotes()
-        } else if (selected.page == 1026) {
+        } else if (selected.page == CAPTIONS) {
             this.show_captions()
-        } else if (selected.page == 1027) {
+        } else if (selected.page == DOCSTYLE) {
             this.show_docstyle()
-        } else if (selected.page == 1028) {
+        } else if (selected.page == PROPERTIES) {
             this.show_pdf_properties()
         } else {
             base.show('#pdfview_content')
