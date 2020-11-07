@@ -40,7 +40,7 @@ def test_auth_login_invalid_password(client, monkeypatch):
         result = tests.post(
             client,
             '/login',
-            dict(user=tests.TEST_USER, password='wrong password'),
+            dict(user=tests.TEST_USER, password='wrong password'),  # nosec
         )
     assert 'Benutzerdaten fehlerhaft' in result
     # login view visible
