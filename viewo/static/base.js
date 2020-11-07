@@ -79,3 +79,7 @@ base.new_image_button = function (parent, src, id = null, textid = null, link = 
     //     });
     // }
 }
+
+function rpc(url, callback) {
+    $.getJSON(`${API}${url}`, {}, callback)
+}
