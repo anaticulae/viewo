@@ -118,13 +118,13 @@ def valid_pages(function):
         pages = flask.request.args.get('range', None)
         if pages is None:
             pages = flask.request.args.get('pages', None)
-        if pages is not None:
+        else:
             pagecount = viewo.api.pages.utils.pagecount(documentid)
             selected = utila.parse_pages(pages, pagecount=pagecount)
             if selected is None:
                 return bad(f'invalid page count: {pages}')
             if len(selected) > pagecount:
-                return bad(f'invalid page count: {len(selected)}')
+                return bad(f'invalid page count: {len(selected)}>{pagecount}')
         return function(*args, **kwargs)
 
     return decorated_function
