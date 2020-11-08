@@ -89,12 +89,37 @@ class DocumentService {
                 update_content(current, page)
                 current += 1
             }
+            // start download findings
+            service.update_pagefindings(current, function () {
+                findingbox.update_findings(current)
+            })
             if (response.pages.html.length) {
                 if (callback != null) {
                     callback()
                 }
             } else {
                 // NO CONTENT WAS PROVIDED BY THIS CALL
+                // TODO: INFORM ABOUT LOADING ERROR?
+            }
+        })
+    }
+
+    update_pagefindings(current = null, callback = null) {
+        if (current == null) {
+            current = 0
+        }
+        let end = current + 5
+        rpc(`/documents/${this.documentid}/findings?pages=${current}:${end}`, function (response) {
+            let findings = response.findings.pages
+            for (let pagefindings of findings) {
+                update_findings(pagefindings.page, pagefindings.content)
+            }
+            if (findings.length) {
+                if (callback != null) {
+                    callback()
+                }
+            } else {
+                // NO FINDINGS WHERE PROVIDED BY THIS CALL
                 // TODO: INFORM ABOUT LOADING ERROR?
             }
         })
@@ -115,11 +140,26 @@ class DocumentService {
         return this.content == null || this.content.length == 0
     }
 
+    pagefindings(pagenumber) {
+        let current = page(pagenumber)
+        if (current.findings == null) {
+            // signal that findings are already called
+            current.findings = []
+            // update findings
+            service.update_pagefindings(pagenumber)
+        }
+        return current.findings
+    }
 }
 
 function update_content(index, content) {
     index = service.content.findIndex(s => (s.page == index))
     service.content[index].content = content
+}
+
+function update_findings(index, findings) {
+    let current = page(index)
+    current.findings = findings
 }
 
 function page_content(pagenumber) {
@@ -134,6 +174,48 @@ function page(pagenumber) {
 
 function empty(content) {
     return content == SPECIALCONTENT || content == SPECIALCONTENT_EMPTY
+}
+
+function visible_findings(pagenumber) {
+    let selected = page(pagenumber)
+    if (selected == undefined || selected.findings == undefined) {
+        return []
+    }
+    let findings = selected.findings.filter(s => visible(s))
+    return findings
+}
+
+function next_page(pagenumber) {
+    let index = service.content.findIndex(s => (s.page == pagenumber))
+    index += 1
+    if (index == service.content.length) {
+        return service.content[0].page
+    }
+    return service.content[index].page
+}
+
+function next_page_visible(pagenumber) {
+    let current = pagenumber
+    do {
+        current = next_page(current)
+    } while (empty(page_content(current)) && current != pagenumber)
+    return current
+}
+
+function previous_page(pagenumber) {
+    let index = service.content.findIndex(s => (s.page == pagenumber))
+    if (index == 0) {
+        return service.content[service.content.length - 1].page
+    }
+    return service.content[index - 1].page
+}
+
+function previous_page_visible(pagenumber) {
+    let current = pagenumber
+    do {
+        current = previous_page(current)
+    } while (empty(page_content(current)) && current != pagenumber)
+    return current
 }
 
 function defaultpages(pagenumbers) {
