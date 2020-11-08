@@ -144,7 +144,8 @@ def message_replace(content: str) -> str:
     url = configo.docs_url()
     content = writers.replace(content, url)
     # TODO: REMOVE VIEW HACK LATER
-    content = content.replace('<a href', '<br/><br/><a href')
+    # TODO: REPLACE WITH <<VDIST>>(vertical distance)
+    content = content.replace('<a href', '<br/><a href')
 
     # replace **[CONTENT]**-pattern with html `strong` pattern
     content = re.sub(r'\*\*([^\*]+)\*\*', r'<strong>\1</strong>', content)

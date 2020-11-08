@@ -19,6 +19,7 @@ import protocol.finding
 import utila
 
 import viewo.api.utils
+import viewo.result.json
 import viewo.result.update
 
 ComparedFinding = collections.namedtuple(
@@ -49,6 +50,7 @@ def all_findings(documentid: str, pages: tuple = None):
             finding for finding in findings
             if not utila.should_skip(finding.page, pages)
         ]
+    findings = [convert_style_markup(page) for page in findings]
     return findings
 
 
@@ -151,3 +153,10 @@ def compare_raw(pages: ComparedListFinding):
         }
         result.append(raw)
     return result
+
+
+def convert_style_markup(findings: iamraw.PageFinding) -> iamraw.PageFinding:
+    for finding in findings.content:
+        finding.solution.description = viewo.result.json.message_replace(
+            finding.solution.description)
+    return findings
