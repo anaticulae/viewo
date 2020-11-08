@@ -17,64 +17,20 @@ class ResultView {
         this.document = null
         this.error_page = null
         this.error_selected = null
-        this.footnotes = []
-        this.content = []
+        this.hide_all()
     }
 
     update_content(content, footnotes, properties, doctextstyle, captions) {
         // INTRODUCE EVENT LISTENER CONCEPT
         // add document style overview
-        this.footnotes = footnotes
-        this.properties = properties
-        this.doctextstyle = doctextstyle
-        this.captions = captions
 
-        if (content[0].page == -1) {
-            content[0].title = 'Übersicht'
-        }
-        if (this.footnotes.length > 0) {
-            content.push(
-                {
-                    'content': this.footnotes,
-                    'findings': [],
-                    'page': FOOTNOTES,
-                    'title': 'Fußnoten',
-                }
-            )
-        }
-        if (this.captions.length > 0) {
-            content.push(
-                {
-                    'content': this.captions,
-                    'findings': [],
-                    'page': CAPTIONS,
-                    'title': 'Unterschriften',
-                }
-            )
-        }
-        content.push(
-            {
-                'content': this.doctextstyle,
-                'findings': [],
-                'page': DOCSTYLE,
-                'title': 'Darstellung',
-            }
-        )
-        content.push(
-            {
-                'content': this.properties,
-                'findings': [],
-                'page': PROPERTIES,
-                'title': 'Eigenschaften',
-            }
-        )
-        this.content = content
-        navigator.update_page_navigator()
-        this.show_page(0)
-        navigator.set_on_valid_hidden_page()
-        base.show_done()
-        statuscounter.update()
-        todolist.update_tables()
+        // this.content = content
+        // navigator.update_page_navigator()
+        // this.show_page(0)
+        // navigator.set_on_valid_hidden_page()
+        // base.show_done()
+        // statuscounter.update()
+        // todolist.update_tables()
     }
 
     show_page(pagenumber) {
@@ -102,12 +58,7 @@ class ResultView {
 
         // use base cause jquery introduces trouble with display: block, do
         // not refactor!
-        base.hide('#pdfview_content')
-        $('#pdfview_overview').hide()
-        $('#pdfview_docstyle').hide()
-        $('#pdfview_footnotes').hide()
-        $('#pdfview_properties').hide()
-        $('#pdfview_captions').hide()
+        this.hide_all()
         // TODO: REMOVE LATER
         if (selected.page == 1024 || selected.page == OVERVIEW) {
             this.show_overview()
@@ -124,9 +75,17 @@ class ResultView {
         }
     }
 
+    hide_all() {
+        base.hide('#pdfview_content')
+        $('#pdfview_overview').hide()
+        $('#pdfview_docstyle').hide()
+        $('#pdfview_footnotes').hide()
+        $('#pdfview_properties').hide()
+        $('#pdfview_captions').hide()
+    }
+
     show_overview() {
         $('#pdfview_overview').show()
-
         let overview = $('#pdfview_overview')
         overview.html('')
         for (let finding of this.findings) {
@@ -253,17 +212,6 @@ class ResultView {
         let docstyle = page_content(DOCSTYLE)
         pdfview_docstyle.update(docstyle)
         pdfview_docstyle.show()
-    }
-
-    pagecontent(page) {
-        // determine content by index and if page is out of bounds, select
-        // page by page number.
-        let selected = service.content[page]
-        if (selected != undefined) {
-            return selected
-        }
-        selected = this.content.filter(s => (s.page == page))
-        return selected[0]
     }
 
     get current_page() {
@@ -407,26 +355,6 @@ class ResultView {
                 // TODO: ADD ERROR HANDLER
             }
         });
-    }
-
-    loop(process) {
-        this.document = process
-        $.ajax(`/waiting/resultview/status/${process}`, {
-            dataType: 'json',
-            success: function (response) {
-                resultview.update_content(
-                    response.content,
-                    response.footnotes,
-                    response.properties,
-                    response.doctextstyle,
-                    response.captions,
-                )
-            },
-            error: function () {
-                // TODO: IMPROVE ERROR HANDLER
-                base.show_error()
-            }
-        })
     }
 }
 
@@ -920,6 +848,7 @@ const pdfview_properties = new PDFViewProperties(resultview)
 const pdfview_docstyle = new PDFViewDocStyle(resultview)
 
 function onload(process) {
+    resultview.hide_all()
     service.update(process)
 }
 
