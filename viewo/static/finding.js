@@ -16,6 +16,13 @@ const DONE = 4
 function visible(item) {
     // Determine if item is visible by user or is already deleted, judged
     // or something else.
+    if (item == undefined) {
+        // TODO: REMOVE LATER
+        return
+    }
+    if (item.solution != undefined) {
+        item = item.solution
+    }
     let status = item.status
     return OPEN.includes(status)
 }
@@ -86,7 +93,7 @@ function hide_finding(finding) {
 }
 
 function highlight_finding(finding) {
-    if (finding == null || finding.status != SELECTED) {
+    if (finding == null || finding.solution.status != SELECTED) {
         return
     }
     if (finding.location['words']) {

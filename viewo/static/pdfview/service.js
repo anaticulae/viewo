@@ -85,8 +85,8 @@ class DocumentService {
         }
         let end = current + 5
         rpc(`/documents/${this.documentid}/pages?range=${current}:${end}`, function (response) {
-            for (let page of response.pages.html) {
-                update_content(current, page)
+            for (let html of response.pages.html) {
+                update_content(current, html)
                 current += 1
             }
             // start download findings

@@ -14,23 +14,9 @@ const PAGESTEP = 15.0
 class ResultView {
 
     constructor() {
-        this.document = null
         this.error_page = null
         this.error_selected = null
         this.hide_all()
-    }
-
-    update_content(content, footnotes, properties, doctextstyle, captions) {
-        // INTRODUCE EVENT LISTENER CONCEPT
-        // add document style overview
-
-        // this.content = content
-        // navigator.update_page_navigator()
-        // this.show_page(0)
-        // navigator.set_on_valid_hidden_page()
-        // base.show_done()
-        // statuscounter.update()
-        // todolist.update_tables()
     }
 
     show_page(pagenumber) {
@@ -42,7 +28,9 @@ class ResultView {
             return
         }
         let selected = page(pagenumber)
-        this.error_page = page
+        this.error_page = pagenumber
+        this.error_selected = 0
+        findingbox.paged = 0
         if (selected.content == null) {
             service.update_pagecontent(pagenumber, function () {
                 resultview.show_page(pagenumber)
@@ -52,9 +40,9 @@ class ResultView {
 
         $('#error_page_content').html(selected.content)
 
-        // findingbox.update_findings()
-
         navigator.highlight_pagenumber(pagenumber)
+        findingbox.update_findings()
+
 
         // use base cause jquery introduces trouble with display: block, do
         // not refactor!
@@ -71,12 +59,12 @@ class ResultView {
         } else if (selected.page == PROPERTIES) {
             this.show_pdf_properties()
         } else {
-            base.show('#pdfview_content')
+            $('#pdfview_content').show()
         }
     }
 
     hide_all() {
-        base.hide('#pdfview_content')
+        $('#pdfview_content').hide()
         $('#pdfview_overview').hide()
         $('#pdfview_docstyle').hide()
         $('#pdfview_footnotes').hide()
@@ -219,11 +207,10 @@ class ResultView {
     }
 
     get current_finding() {
-        if (this.error_selected == null) {
+        if (resultview.error_selected == null) {
             return null
         }
-        // TODO: REMOVE THIS HACK
-        return Number(this.error_selected)
+        return parseInt(resultview.error_selected)
     }
 
     get available_pages() {
@@ -262,11 +249,10 @@ class ResultView {
     }
 
     get selected_finding() {
-        let findings = this.pagecontent(this.current_page).findings
+        let findings = page(this.current_page).findings
         if (findings == undefined) {
             return null
         }
-        // let findings = this.findings
         if (this.current_finding < findings.length) {
             return findings[this.current_finding]
         }
@@ -274,19 +260,19 @@ class ResultView {
     }
 
     get get_next_finding() {
-        let findings = this.pagecontent(this.current_page).findings
+        let findings = visible_findings(resultview.current_page)
         if (findings.length == 0) {
             return null
         }
-        let current_plus = this.current_finding + 1
-        if (current_plus == findings.length) {
+        let current_plus = resultview.current_finding + 1
+        if (current_plus == findingbox.finding_max) {
             current_plus = 0
         }
-        for (let index = current_plus; index < findings.length; index++) {
+        for (let index = current_plus; index < findingbox.finding_max; index++) {
             if (visible(findings[index]) == false) {
                 continue
             }
-            if (findings[index].status <= SELECTED) {
+            if (findings[index].solution.status <= SELECTED) {
                 return index
             }
         }
@@ -294,19 +280,19 @@ class ResultView {
     }
 
     get get_prev_finding() {
-        let findings = this.pagecontent(this.current_page).findings
+        let findings = visible_findings(resultview.current_page)
         if (findings.length == 0) {
             return null
         }
-        let current_minus = this.current_finding - 1
+        let current_minus = resultview.current_finding - 1
         if (current_minus < 0) {
-            current_minus = findings.length - 1
+            current_minus = findingbox.finding_max - 1
         }
         for (let index = current_minus; index >= 0; index--) {
             if (visible(findings[index]) == false) {
                 continue
             }
-            if (findings[index].status <= SELECTED) {
+            if (findings[index].solution.status <= SELECTED) {
                 return index
             }
         }
@@ -318,7 +304,7 @@ class ResultView {
             return
         }
         let findingid = Number(this.selected_finding.number)
-        this.selected_finding.status = status // remove finding
+        this.selected_finding.solution.status = status // remove finding
 
         this.update_finding(findingid, status)
 
@@ -327,7 +313,7 @@ class ResultView {
     }
 
     update_current_finding() {
-        if (this.selected_finding.status <= SELECTED) {
+        if (this.selected_finding.solution.status <= SELECTED) {
             return
         }
         let next = this.get_next_finding
@@ -346,7 +332,7 @@ class ResultView {
     }
 
     update_finding(findingid, status) {
-        let url = `${API}/documents/${this.document}/findings/${findingid}`
+        let url = `${API}/documents/${service.documentid}/findings/${findingid}`
         $.ajax({
             type: 'PUT',
             url: url,
@@ -384,8 +370,9 @@ class FindingBox {
     open_finding(id) {
         if (id == -1) {
             // select first visible element
-            for (let index in this.result.findings) {
-                let item = this.result.findings[index]
+            let selected = service.pagefindings(resultview.error_page)
+            for (let index in selected) {
+                let item = selected[index]
                 if (visible(item)) {
                     id = index
                     break
@@ -436,39 +423,42 @@ class FindingBox {
 
         this.update_finding_pageable()
 
-        for (let index in this.result.findings.slice(this.paged * PAGESTEP, (this.paged + 1) * PAGESTEP)) {
+        let pagefindings = visible_findings(resultview.error_page)
+        for (let index in pagefindings.slice(this.paged * PAGESTEP, (this.paged + 1) * PAGESTEP)) {
+            let index_paged = index
             index = this.paged * PAGESTEP + parseInt(index)
-            let item = this.result.findings[index]
-            let text = item.title
+            let finding = pagefindings[index]
+            let text = finding.solution.title
             let selectable = ''
-            if (visible(item) == false) {
+            if (visible(finding) == false) {
                 // done, hidden or rejected
-                hide_finding(item)
+                hide_finding(finding)
                 continue
             }
-            if (item.selectable == '1') {
+            if (finding.location != undefined) {
                 // add optional checkbox to disable highlighted area in
                 // text view by user.
                 // TODO: CHECKED SEEMS TO BE WRONG
-                let checked = item.status == SELECTED ? 'checked="True"' : ''
-                selectable = `<input id="error_selector_checkbox_${index}" ` +
+                let checked = finding.solution.status == SELECTED ? 'checked="True"' : ''
+                selectable = `<input id="error_selector_checkbox_${index_paged}" ` +
                     `type="checkbox" ${checked}>`
                 // this.open_finding(index)
-                if (item.status == SELECTED) {
-                    show_finding(item)
+                if (finding.solution.status == SELECTED) {
+                    show_finding(finding)
                 }
                 else {
-                    hide_finding(item)
+                    hide_finding(finding)
                 }
             }
-            let node_selectable = `<li id="error_selected_${index}" class="finding_button">${selectable} ${text}</li>`
+            let node_selectable = `<li id="error_selected_${index_paged}" ` +
+                `class="finding_button">${selectable} ${text}</li>`
             pdfview_navigation.append(node_selectable)
-            $(`#error_selector_checkbox_${index}`).click(function () {
+            $(`#error_selector_checkbox_${index_paged}`).click(function () {
                 findingbox.toggle_finding(index)
             });
-            $(`#error_selected_${index}`).click(function () {
+            $(`#error_selected_${index_paged}`).click(function () {
                 findingbox.open_finding(index)
-            });
+            })
         }
         this.result.error_selected = 0
         let mark = $('#error_selected_0')
@@ -481,8 +471,9 @@ class FindingBox {
     }
 
     update_finding_pageable() {
-        let pagenumbers = Math.floor((this.result.findings.length - 1) / PAGESTEP)
-        if (pagenumbers == 0) {
+        let pagefindings = service.pagefindings(resultview.error_page)
+        let pagenumbers = Math.floor((pagefindings.length - 1) / PAGESTEP)
+        if (pagenumbers <= 0) {
             return
         }
         $('#error_list').append(`<li id="error_list_pageable" class="center" style="font-size:20px"></li>`)
@@ -502,7 +493,9 @@ class FindingBox {
     }
 
     update_inbox_visibility() {
-        if (this.result.findings.filter(s => visible(s)).length == 0) {
+        let pagefindings = service.pagefindings(resultview.error_page)
+        pagefindings = pagefindings.filter(s => visible(s))
+        if (pagefindings.length == 0) {
             // disable error bar if no error is provided
             $('#error')[0].classList.add('hidden_inbounds')
         } else {
@@ -511,7 +504,9 @@ class FindingBox {
     }
 
     update_finding_navigation() {
-        if (this.result.findings.filter(s => visible(s)).length == 1) {
+        let pagefindings = service.pagefindings(resultview.error_page)
+        pagefindings = pagefindings.filter(s => visible(s))
+        if (pagefindings.length == 1) {
             // use base.hide cause jquery introduce display object
             base.hide('#error_navigator')
         }
@@ -527,8 +522,9 @@ class FindingBox {
             $('#error_message_headline').html('')
         }
         else {
-            $('#error_message').html(message.message)
-            $('#error_message_headline').html(message.title)
+            let solution = message.solution
+            $('#error_message').html(solution.description)
+            $('#error_message_headline').html(solution.title)
         }
     }
 
@@ -561,9 +557,16 @@ class FindingBox {
         if (this.result.selected_finding != null) {
             show_finding(resultview.selected_finding)
         }
+        // this.update_findings(this.current_finding)
         this.update_inbox_visibility()
         this.update_finding_navigation()
         this.update_finding_text()
+    }
+
+    get finding_max() {
+        let pagefindings = visible_findings(resultview.error_page)
+        let max = pagefindings.length - this.paged * PAGESTEP
+        return Math.min(PAGESTEP, max)
     }
 
 }
@@ -575,7 +578,8 @@ class Navigator {
         this.result = result
         // If True, only show pages which contains an error. Start in error
         // mode to show the findings first.
-        this.error_pages_only = true
+        this.error_pages_only = false
+        this.items = 0
     }
 
     init_listener() {
@@ -609,6 +613,7 @@ class Navigator {
     }
 
     previous_page() {
+        findingbox.paged = 0
         if (this.error_pages_only) {
             let current = this.result.current_page
             do {
@@ -621,13 +626,13 @@ class Navigator {
             this.result.show_page(current)
         }
         else {
-            let current = (this.result.current_page - 1 + this.result.available_pages)
-            current = current % this.result.available_pages
-            this.result.show_page(current)
+            let previous = previous_page_visible(this.result.current_page)
+            this.result.show_page(previous)
         }
     }
 
     next_page() {
+        findingbox.paged = 0
         if (this.error_pages_only) {
             let current = this.result.current_page
             do {
@@ -639,8 +644,8 @@ class Navigator {
             } while (this.result.content[current].findings.filter(s => visible(s)).length == 0)
             this.result.show_page(current)
         } else {
-            let current = (this.result.current_page + 1) % this.result.available_pages
-            this.result.show_page(current)
+            let next = next_page_visible(this.result.current_page)
+            this.result.show_page(next)
         }
     }
 
