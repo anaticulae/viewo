@@ -67,6 +67,7 @@ class Navigator {
             let previous = previous_page_visible(this.result.current_page)
             this.result.show_page(previous)
         }
+        service.smooth(this.result.current_page)
     }
 
     next_page() {
@@ -85,6 +86,7 @@ class Navigator {
             let next = next_page_visible(this.result.current_page)
             this.result.show_page(next)
         }
+        service.smooth(this.result.current_page)
     }
 
     update_page_navigator() {

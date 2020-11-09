@@ -14,6 +14,7 @@ class DocumentService {
         this.documentid = null
         this.content = null
         this.pagenumbers = null
+        this.waiting = false
     }
 
     update(documentid) {
@@ -110,6 +111,8 @@ class DocumentService {
         }
         let end = current + 5
         rpc(`/documents/${this.documentid}/findings?pages=${current}:${end}`, function (response) {
+            let pagerange = response.findings.range
+            empty_findings(pagerange)
             let findings = response.findings.pages
             for (let pagefindings of findings) {
                 update_findings(pagefindings.page, pagefindings.content)
@@ -149,6 +152,49 @@ class DocumentService {
             service.update_pagefindings(pagenumber)
         }
         return current.findings
+    }
+
+    smooth(pagenumber, lookaround = 5) {
+        // before before and after
+        if (this.waiting) {
+            return
+        }
+        let index = service.content.findIndex(s => (s.page == pagenumber))
+        let start = Math.max(0, index - lookaround)
+        let end = Math.min(service.content.length, index + lookaround)
+        let selected = service.content.slice(start, end)
+        let range = []
+        for (let item of selected) {
+            if (item.findings == null && item.hasOwnProperty('findings')) {
+                range.push(item.page)
+            }
+        }
+        if (range.length == 0) {
+            return
+        }
+        this.waiting = true
+        start = Math.min(...range)
+        end = Math.max(...range)
+        let callrange = start == end ? start : `${start}:${end}`
+        rpc(`/documents/${this.documentid}/findings?pages=${callrange}`, function (response) {
+            let pagerange = response.findings.range
+            empty_findings(pagerange)
+            let findings = response.findings.pages
+            for (let pagefindings of findings) {
+                update_findings(pagefindings.page, pagefindings.content)
+            }
+            service.waiting = false
+        })
+    }
+}
+
+function empty_findings(pagerange) {
+    let splitted = pagerange.split(':')
+    let start = parseInt(splitted[0])
+    let end = parseInt(splitted[1])
+    end = Math.min(end, service.pagenumbers - 1)
+    for (let index = start; index <= end; index++) {
+        update_findings(index, [])
     }
 }
 
