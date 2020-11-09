@@ -2,6 +2,26 @@
 
 Every noteable change is logged here.
 
+## v2.4.0
+
+### Feature
+
+* add pages attribute (0c74513d5742)
+* improve finding pre loader (d32cef6b1bd6)
+* add page range flag to findings result (2232675a7b16)
+* fix finding navigator (f331fa969c6f)
+* replace styled markup with html commands (4c1bde86a27e)
+* extend service methods (f2fcdfe97208)
+* enable properties, captions, and style view (4eaf058c4986)
+* use first draft of fast data delivery (c0f53202822b)
+* introduce service to encapsulate data transfer (720d1723ca7f)
+* add json remote process call shortcut (800c7399786f)
+
+### Fix
+
+* clarify pages error handler (4ecbce963f9d)
+* handle invalid page numbers gracefully (713be2a96695)
+
 ## v2.3.0
 
 ### Feature
