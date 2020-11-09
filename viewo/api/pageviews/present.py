@@ -11,30 +11,30 @@ import flask
 import utila
 
 import viewo.api
-import viewo.api.pages
-import viewo.api.pages.utils
+import viewo.api.pageviews
+import viewo.api.pageviews.utils
 
 
-@viewo.api.pages.api_pages.route(
-    '/documents/<string(length=16):documentid>/pages',
+@viewo.api.pageviews.api_pageviews.route(
+    '/documents/<string(length=16):documentid>/pageviews',
     methods=['GET'],
 )
 @viewo.api.valid_document
 @viewo.api.valid_pages
-def pages(documentid):
-    pages_raw = flask.request.args.get('range', None)
+def pageviews(documentid):
+    pages_raw = flask.request.args.get('pages', None)
     if pages_raw:
         pagerange = utila.parse_pages(pages_raw)
     else:
         pagerange, pages_raw = None, ':'
 
-    html = viewo.api.pages.utils.load_html(documentid, pagerange)
-    uri = flask.url_for('api_pages.pages', documentid=documentid)
+    html = viewo.api.pageviews.utils.load_html(documentid, pagerange)
+    uri = flask.url_for('api_pageviews.pageviews', documentid=documentid)
     if pagerange is not None:
         uri = flask.url_for(
-            'api_pages.pages',
+            'api_pageviews.pageviews',
             documentid=documentid,
-            range=pages_raw,
+            pages=pages_raw,
         )
     simple = {
         'html': html,
@@ -42,6 +42,6 @@ def pages(documentid):
         'uri': uri,
     }
     dumped = flask.jsonify({
-        'pages': simple,
+        'pageviews': simple,
     })
     return dumped

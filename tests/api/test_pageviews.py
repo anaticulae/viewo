@@ -16,34 +16,34 @@ def test_api_pages_overview(findingclient):
     client = findingclient
     result = tests.apicall(
         client,
-        f'/documents/{tests.TEST_DOCUMENT}/pages',
+        f'/documents/{tests.TEST_DOCUMENT}/pageviews',
     )
-    assert result['pages']
-    assert result['pages']['uri']
+    assert result['pageviews']
+    assert result['pageviews']['uri']
 
 
 def test_api_pages_overview_range(findingclient):
     client = findingclient
     result = tests.apicall(
         client,
-        f'/documents/{tests.TEST_DOCUMENT}/pages?range=1',
+        f'/documents/{tests.TEST_DOCUMENT}/pageviews?pages=1',
     )
-    assert result['pages']
-    assert result['pages']['uri']
-    assert len(result['pages']['html']) == 1
+    assert result['pageviews']
+    assert result['pageviews']['uri']
+    assert len(result['pageviews']['html']) == 1
 
     result = tests.apicall(
         client,
-        f'/documents/{tests.TEST_DOCUMENT}/pages?range=0:3',
+        f'/documents/{tests.TEST_DOCUMENT}/pageviews?pages=0:3',
     )
-    assert len(result['pages']['html']) == 3
+    assert len(result['pageviews']['html']) == 3
 
 
 def test_api_pages_overview_invalid_range(findingclient):
     client = findingclient
     tests.apicall(
         client,
-        f'/documents/{tests.TEST_DOCUMENT}/pages?range=0:xxx-10:-50',
+        f'/documents/{tests.TEST_DOCUMENT}/pageviews?pages=0:xxx-10:-50',
         expected=http.HTTPStatus.BAD_REQUEST,
     )
 
@@ -52,11 +52,11 @@ def test_api_pages_overview_invalid_document(findingclient):
     client = findingclient
     tests.apicall(
         client,
-        f'/documents/invalid_document/pages',
+        f'/documents/invalid_document/pageviews',
         expected=http.HTTPStatus.NOT_FOUND,
     )
     tests.apicall(
         client,
-        f'/documents/invalid_document/pages?range=0:xxx-10:-50',
+        f'/documents/invalid_document/pageviews?pages=0:xxx-10:-50',
         expected=http.HTTPStatus.NOT_FOUND,
     )

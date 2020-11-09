@@ -85,8 +85,8 @@ def all_findings_raw(content, documentid: str, pages: tuple = None):
         )
         pagerange = pages
     raw = {
-        'pages': simple,
-        'range': pagerange,
+        'pagefindings': simple,
+        'pages': pagerange,
         'uri': uri,
     }
     return raw

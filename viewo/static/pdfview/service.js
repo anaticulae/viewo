@@ -85,8 +85,8 @@ class DocumentService {
             current = 0
         }
         let end = current + 5
-        rpc(`/documents/${this.documentid}/pages?range=${current}:${end}`, function (response) {
-            for (let html of response.pages.html) {
+        rpc(`/documents/${this.documentid}/pageviews?pages=${current}:${end}`, function (response) {
+            for (let html of response.pageviews.html) {
                 update_content(current, html)
                 current += 1
             }
@@ -94,7 +94,7 @@ class DocumentService {
             service.update_pagefindings(current, function () {
                 findingbox.update_findings(current)
             })
-            if (response.pages.html.length) {
+            if (response.pageviews.html.length) {
                 if (callback != null) {
                     callback()
                 }
@@ -111,9 +111,9 @@ class DocumentService {
         }
         let end = current + 5
         rpc(`/documents/${this.documentid}/findings?pages=${current}:${end}`, function (response) {
-            let pagerange = response.findings.range
+            let pagerange = response.findings.pages
             empty_findings(pagerange)
-            let findings = response.findings.pages
+            let findings = response.findings.pagefindings
             for (let pagefindings of findings) {
                 update_findings(pagefindings.page, pagefindings.content)
             }
@@ -177,9 +177,9 @@ class DocumentService {
         end = Math.max(...range)
         let callrange = start == end ? start : `${start}:${end}`
         rpc(`/documents/${this.documentid}/findings?pages=${callrange}`, function (response) {
-            let pagerange = response.findings.range
+            let pagerange = response.findings.pages
             empty_findings(pagerange)
-            let findings = response.findings.pages
+            let findings = response.findings.pagefindings
             for (let pagefindings of findings) {
                 update_findings(pagefindings.page, pagefindings.content)
             }

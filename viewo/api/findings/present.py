@@ -13,7 +13,7 @@ import utila
 import viewo.api
 import viewo.api.findings
 import viewo.api.findings.utils
-import viewo.api.pages.utils
+import viewo.api.pageviews.utils
 import viewo.api.utils
 
 
@@ -98,6 +98,6 @@ def pages(documentid: str) -> tuple:
     raw = flask.request.args.get('pages', None)
     if raw is None:
         return None
-    pagecount = viewo.api.pages.utils.pagecount(documentid)
+    pagecount = viewo.api.pageviews.utils.pagecount(documentid)
     selected = utila.parse_pages(raw, pagecount=pagecount)
     return selected

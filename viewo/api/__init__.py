@@ -115,11 +115,11 @@ def valid_pages(function):
         # TODO: ADD USER PAYMENT CHECK
         documentid = kwargs['documentid']
         # with contextlib.suppress(KeyError):
-        pages = flask.request.args.get('range', None)
+        pages = flask.request.args.get('pages', None)
         if pages is None:
             pages = flask.request.args.get('pages', None)
         else:
-            pagecount = viewo.api.pages.utils.pagecount(documentid)
+            pagecount = viewo.api.pageviews.utils.pagecount(documentid)
             selected = utila.parse_pages(pages, pagecount=pagecount)
             if selected is None:
                 return bad(f'invalid page count: {pages}')

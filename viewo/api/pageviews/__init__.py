@@ -9,6 +9,6 @@
 
 import flask
 
-api_pages = flask.Blueprint('api_pages', __name__)  # pylint:disable=C0103
+api_pageviews = flask.Blueprint('api_pageviews', __name__)  # pylint:disable=C0103
 
-__all__ = ['api_pages', 'present']
+__all__ = ['api_pageviews', 'present']

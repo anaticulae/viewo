@@ -78,17 +78,17 @@ List of pages in document
 
 .. code-block:: none
 
-    documents/{document_id}/pages
+    documents/{document_id}/pageviews
 
-* See: :py:func:`viewo.api.pages.present`
+* See: :py:func:`viewo.api.pageviews.present`
 
 List of a part of pages in document
 
 .. code-block:: none
 
-    documents/{document_id}/pages?range={start|start:end}
+documents/{document_id}/pageviews?pages={start|start:end}
 
-* See: :py:func:`viewo.api.pages.present`
+* See: :py:func:`viewo.api.pageviews.present`
 
 user
 ----
