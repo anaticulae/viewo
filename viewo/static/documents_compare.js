@@ -23,8 +23,8 @@ var documents_compare = {
                 current_list.html('')
                 partner_list.html('')
                 for (let item of docs) {
-                    current_list.append(`<option value="${item['index']}">${item['date']} ${item['title']}</option>`)
-                    partner_list.append(`<option value="${item['index']}">${item['date']} ${item['title']}</option>`)
+                    current_list.append(`<option value="${item['name']}">${item['date']} ${item['title']}</option>`)
+                    partner_list.append(`<option value="${item['name']}">${item['date']} ${item['title']}</option>`)
                 }
                 documents_compare.update_selected()
             },

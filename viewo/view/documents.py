@@ -21,9 +21,9 @@ def view_documents():
     todo, ready = link.collect_jobs(common, skip_removed=True)
 
     docs = list(ready)
-    done = {item.index for item in ready}
+    done = {item.name for item in ready}
     for item in todo:
-        if item.index in done:
+        if item.name in done:
             continue
         docs.append(item)
     for item in docs:

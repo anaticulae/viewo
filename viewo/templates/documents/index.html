@@ -35,7 +35,7 @@
     </thead>
     <tbody>
         {% for row in documents %}
-        <tr id="result_table_{{row['index']}}">
+        <tr id="result_table_{{row['name']}}">
             {% if row['result'] == 'failed' %}
             {#
                 process failed, only fast view is visible
@@ -45,28 +45,28 @@
             <td class="date failed">{{row['date']}}</td>
             <td class="score failed">failed</td>
             <td class="right">
-                <a href="#delete" onclick="delete_document('{{row['index']}}')"><img
+                <a href="#delete" onclick="delete_document('{{row['name']}}')"><img
                         src="/static/images/result/trash.png" alt="delete" width="16" height="16" /></a>
             </td>
-            <td class="status failed"><a href="waiting/{{row['index']}}">failed</a></td>
+            <td class="status failed"><a href="waiting/{{row['name']}}">failed</a></td>
 
             {% elif row['result'] %}
             {# process succeed #}
-            <td><a href="result/{{row['index']}}">{{row['title']}}</a></td>
+            <td><a href="result/{{row['name']}}">{{row['title']}}</a></td>
             <td class="date">{{row['date']}}</td>
             <td class="score">
                 {{row['result'].closed+row['result'].excluded}}/{{row['result'].open+row['result'].closed+row['result'].excluded}}
             </td>
             <td class="right">
-                <a href="#share" onclick="share_document('{{row['index']}}')">
+                <a href="#share" onclick="share_document('{{row['name']}}')">
                     <img src="/static/images/result/share.png" alt="share" width="16" height="16" /></a>
-                <a href="#lock" onclick="add_password('{{row['index']}}')">
+                <a href="#lock" onclick="add_password('{{row['name']}}')">
                     <img src="/static/images/result/lock.png" alt="lock" width="16" height="16" /></a>
-                <a href="#delete" onclick="delete_document('{{row['index']}}')"><img
+                <a href="#delete" onclick="delete_document('{{row['name']}}')"><img
                         src="/static/images/result/trash.png" alt="delete" width="16" height="16" /></a>
             </td>
             <td class="status">
-                <a href="result/{{row['index']}}">
+                <a href="result/{{row['name']}}">
                     <img src="/static/images/result/document.png" alt="open" width="16" height="16" />
                 </a>
             </td>
@@ -77,11 +77,11 @@
             <td class="date">{{row['date']}}</td>
             <td class="score">-</td>
             <td class="right">
-                <a href="#delete" onclick="delete_document('{{row['index']}}')"><img
+                <a href="#delete" onclick="delete_document('{{row['name']}}')"><img
                         src="/static/images/result/trash.png" alt="delete" width="16" height="16" /></a>
             </td>
             <td class="status">
-                <a href="waiting/{{row['index']}}">
+                <a href="waiting/{{row['name']}}">
                     <img src="/static/images/animation/loader.gif" alt="in progress" width="16" height="16" />
                 </a>
             </td>

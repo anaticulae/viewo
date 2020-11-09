@@ -25,10 +25,10 @@ import viewo.waiting
 def all_documents():
     todos, dones = link.collect_jobs(configo.share())
     result = []
-    ready_indexes = {item.index for item in dones}
+    ready_indexes = {item.name for item in dones}
 
     for todo in todos:
-        if todo.index in ready_indexes:
+        if todo.name in ready_indexes:
             continue
         result.append(todo)
     for done in dones:
@@ -48,7 +48,7 @@ def job_toraw(info: link.JobInfo) -> dict:
         'title': info.title,
         'date': info.date,
         'result': link.job.findingstatus_toraw(info.result),
-        'index': info.index,
+        'name': info.name,
         'done': info.done,
     }
     if info.password:
