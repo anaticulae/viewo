@@ -22,19 +22,25 @@ import viewo.api.pages.utils
 @viewo.api.valid_document
 @viewo.api.valid_pages
 def pages(documentid):
-    pagerange = flask.request.args.get('range', None)
-    if pagerange:
-        pagerange = utila.parse_pages(pagerange)
+    pages_raw = flask.request.args.get('range', None)
+    if pages_raw:
+        pagerange = utila.parse_pages(pages_raw)
+    else:
+        pagerange, pages_raw = None, ':'
 
     html = viewo.api.pages.utils.load_html(documentid, pagerange)
     uri = flask.url_for('api_pages.pages', documentid=documentid)
-    if pagerange is None:
+    if pagerange is not None:
         uri = flask.url_for(
             'api_pages.pages',
             documentid=documentid,
-            range=utila.simplify_pages(pagerange),
+            range=pages_raw,
         )
-    simple = {'html': html, 'uri': uri}
+    simple = {
+        'html': html,
+        'pages': pages_raw,
+        'uri': uri,
+    }
     dumped = flask.jsonify({
         'pages': simple,
     })
