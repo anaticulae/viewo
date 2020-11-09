@@ -1,6 +1,7 @@
 "use strict";
 
-/** Result View
+/**
+    Result View
 
     Navigator
     ShowHide/Selector
@@ -102,9 +103,11 @@ class Navigator {
         }
     }
 
+    /**
+     * Switch between all page numbers of the document and the pages ith
+     * errors only.
+     */
     toggle_pages() {
-        /** Switch between all page numbers of the document and the pages
-            with errors only. **/
         let toggle = $('#pdfview_navigation_toggle')[0]
         if (this.error_pages_only) {
             toggle.innerText = 'hide'
