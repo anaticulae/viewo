@@ -9,16 +9,20 @@
 
 import configo
 import flask
+import flask_login
 import link
+import utila
 
 documents_ = flask.Blueprint('documents', __name__)  # pylint:disable=C0103
 
 
 @documents_.route('/documents', methods=['GET'])
 def view_documents():
+    public = utila.str2bool(flask.request.args.get('public', False))
+    owner = userid(public=public)
     common = configo.share()
     # TODO: USE SKIP_REMOVED
-    todo, ready = link.collect_jobs(common, skip_removed=True)
+    todo, ready = link.collect_jobs(common, skip_removed=True, owner=owner)
 
     docs = list(ready)
     done = {item.name for item in ready}
@@ -44,3 +48,13 @@ def view_documents():
 @documents_.route('/compare_document', methods=['GET'])
 def compare_document():
     return flask.render_template('documents/compare.html')
+
+
+def userid(public: bool = True):
+    user = flask_login.current_user.get_id()
+    if not public:
+        return user
+    if user:
+        # add public documents to user
+        user = {link.PUBLIC_OWNER, user}
+    return user
