@@ -32,6 +32,11 @@ nav{
     color:black;
 }
 
+h1{
+    padding-top:40px;
+    padding-bottom:40px;
+}
+
 nav.main{
     border:black solid 2px;
     display:inline-block;

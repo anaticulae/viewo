@@ -71,4 +71,4 @@ def test_auth_for_required_page(client, monkeypatch):
             '/login?next=account',
             dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
         )
-    assert '<h1>Account</h1>' in result
+    assert '<h1>Account Übersicht</h1>' in result
