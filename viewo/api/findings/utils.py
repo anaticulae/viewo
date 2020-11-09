@@ -74,7 +74,7 @@ def all_findings_raw(content, documentid: str, pages: tuple = None):
                 documentid=documentid,
                 findingid=finding['number'],
             )
-
+    pagerange = ':'
     uri = flask.url_for('api_findings.findings', documentid=documentid)
     if pages is not None:
         pages = utila.simplify_pages(pages)
@@ -83,8 +83,10 @@ def all_findings_raw(content, documentid: str, pages: tuple = None):
             documentid=documentid,
             pages=pages,
         )
+        pagerange = pages
     raw = {
         'pages': simple,
+        'range': pagerange,
         'uri': uri,
     }
     return raw
