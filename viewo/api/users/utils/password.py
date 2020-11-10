@@ -13,6 +13,7 @@ import viewo.config
 
 # TODO: HOLY SECURE VALUE # CONFIGO!
 PASSWORD_SALT = 'THISISSALT'
+PASSWORD_RANDOM_LENGTH = 16
 
 
 class PasswordError(ValueError):
@@ -45,6 +46,11 @@ def valid(password: str) -> bool:
     if len(password) > viewo.config.PASSWORD_MAX_LENGTH:
         raise PasswordTooLong
     return True
+
+
+def generate() -> str:
+    random = utila.tmpname(PASSWORD_RANDOM_LENGTH)
+    return random
 
 
 def hashed(password: str) -> str:
