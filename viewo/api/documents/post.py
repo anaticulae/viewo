@@ -20,6 +20,7 @@ import viewo.api.documents
 import viewo.api.users.utils.password
 import viewo.api.users.utils.user
 import viewo.upload
+import viewo.user.auth  # TODO: REFACTOR
 
 
 @viewo.api.documents.api_documents.route('/documents', methods=['POST'])
@@ -54,6 +55,8 @@ def document_create() -> str:  # pylint:disable=too-many-return-statements
         # generate new random user
         password = viewo.api.users.utils.password.generate()
         userid = viewo.api.users.utils.user.create_user(password).userid
+        # TODO: REFACTOR
+        viewo.user.auth.login_user(userid)
     else:
         password = ''
 

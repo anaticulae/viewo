@@ -48,15 +48,19 @@ def check_login():
         )
 
     # login
-    user = open_user(user)
-    flask_login.login_user(user)
-    flask.flash('Login erfolgreich.')
+    login_user(user)
 
     # forward to next page
     forward = flask.request.args.get('next')
     if forward is None:
         return flask.redirect(flask.url_for('documents.view_documents'))
     return flask.redirect(forward)
+
+
+def login_user(user: str):
+    user = open_user(user)
+    flask_login.login_user(user)
+    flask.flash('Login erfolgreich.')
 
 
 def open_user(user: str) -> 'viewo.user.FlaskUser':
