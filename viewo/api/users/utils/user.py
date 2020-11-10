@@ -67,13 +67,17 @@ def user_update(user: 'viewo.api.users.data.User') -> bool:
     return True
 
 
-def create_user(password: str):
+def create_user(password: str, userid: str = None):
     # validate password
     password = viewo.api.users.utils.password.hashed(password)
     # generate new random user name
-    random = utila.tmpname(USER_LENGTH)
-    while os.path.exists(user_path(random)):
+    if not userid:
         random = utila.tmpname(USER_LENGTH)
+        while os.path.exists(user_path(random)):
+            random = utila.tmpname(USER_LENGTH)
+    else:
+        # do not generate random `userid`
+        random = userid
     new = viewo.api.users.data.User(userid=random, password=password)
     # write to user database
     user_update(new)

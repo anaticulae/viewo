@@ -11,11 +11,24 @@ import viewo.api.users.utils
 import viewo.api.users.utils.user
 
 
-def create_user():
+def create_user(userid: str = None, password: str = None) -> tuple:
     """Private service to generate new user.
+
+    Args:
+        userid(str): unique userid to indentify user - if None, random
+                     userid is created
+        password(str): clear text password - if None, random password is
+                     created
+    Returns:
+        userid, password
 
     TODO: THINK ABOUT CONVERTING TO HTTP/PUBLIC SERVICE.
     """
-    password = viewo.api.users.utils.password.generate()
-    userid = viewo.api.users.utils.user.create_user(password).userid
+    if not password:
+        password = viewo.api.users.utils.password.generate()
+    created = viewo.api.users.utils.user.create_user(
+        password=password,
+        userid=userid,
+    )
+    userid = created.userid
     return userid, password
