@@ -8,6 +8,7 @@
 # =============================================================================
 
 import flask
+import flask_login
 
 import viewo.api.users
 import viewo.api.users.utils.password
@@ -19,6 +20,7 @@ import viewo.api.users.utils.user
     methods=['PUT'],
 )
 @viewo.api.valid_user
+@flask_login.login_required
 def user_put(userid):
     # TODO: SECURE INPUT
     email = flask.request.form.get('email', None)
