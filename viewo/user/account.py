@@ -10,6 +10,7 @@
 import flask
 import flask_login
 
+import viewo.api.users.utils.user
 import viewo.user
 
 
@@ -36,11 +37,28 @@ def delete_account_execute():
 @viewo.user.viewo_user.route('/account/change')
 @flask_login.login_required
 def account_change_ask():
-    return flask.render_template('private/account/change.html')
+    return render_user()
 
 
 @viewo.user.viewo_user.route('/account/change', methods=['POST'])
 @flask_login.login_required
 def account_change():
     flask.flash('Daten erfolgreich geändert.')
-    return flask.render_template('private/account/change.html')
+    return render_user()
+
+
+def render_user():
+    current = user()
+    email = current.email or ''
+    rendered = flask.render_template(
+        'private/account/change.html',
+        user=current.userid,
+        email=email,
+    )
+    return rendered
+
+
+def user():
+    userid = flask_login.current_user.get_id()
+    current = viewo.api.users.utils.user.user_fromid(userid)
+    return current
