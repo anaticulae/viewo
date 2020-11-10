@@ -8,11 +8,17 @@
 # =============================================================================
 
 import flask
-import flask_login
 
 import viewo.api.users
 import viewo.api.users.utils.password
 import viewo.api.users.utils.user
+
+PASSWORD_WRONG = 'WRONG PASSWORD'
+PASSWORD_INVALID = 'INVALID PASSWORD DEFINITION'
+PASSWORD_NEW_TOO_SHORT = 'NEW PASSWORD TOO SHORT'
+PASSWORD_NEW_TOO_LONG = 'NEW PASSWORD TOO LONG'
+PASSWORD_DOES_NOT_MATCH = 'NEW AND REPEAT DOES NOT MATCH'
+PASSWORD_UPDATED = 'updated'
 
 
 @viewo.api.users.api_users.route(
@@ -20,30 +26,46 @@ import viewo.api.users.utils.user
     methods=['PUT'],
 )
 @viewo.api.valid_user
-@flask_login.login_required
+@viewo.api.login_required_api
 def user_put(userid):
     # TODO: SECURE INPUT
-    email = flask.request.form.get('email', None)
     password = flask.request.form.get('password', None)
-
-    if email is None and password is None:
-        return viewo.api.bad(f'could not update email or password')
-
     user = viewo.api.users.utils.user.user_fromid(userid)
+    try:
+        if not viewo.api.users.data.verify_password(userid, password):
+            return viewo.api.bad(PASSWORD_WRONG)
+    except viewo.api.users.utils.password.PasswordError:
+        # password does not match requirements
+        return viewo.api.bad(PASSWORD_INVALID)
+
+    email = flask.request.form.get('email', None)
+
+    password_new = flask.request.form.get('password_new', None)
+    password_new_repeat = flask.request.form.get('password_new_repeat', None)
+
+    if not email and not password_new:
+        return viewo.api.bad('nothing to update')
+
     if email is not None:
         # TODO: VALIDATE EMAIL
         user.email = email
-    if password is not None:
+
+    if password_new:
         try:
-            viewo.api.users.utils.password.valid(password)
-        except viewo.api.users.utils.password.PasswordTooLong:
-            return viewo.api.bad('password too long')
+            viewo.api.users.utils.password.valid(password_new)
         except viewo.api.users.utils.password.PasswordTooShort:
-            return viewo.api.bad('password too short')
-        # secure hash
-        hashed = viewo.api.users.utils.password.hashed(password)
+            return viewo.api.bad(PASSWORD_NEW_TOO_SHORT)
+        except viewo.api.users.utils.password.PasswordTooLong:
+            return viewo.api.bad(PASSWORD_NEW_TOO_LONG)
+
+    if password_new != password_new_repeat:
+        return viewo.api.bad(PASSWORD_DOES_NOT_MATCH)
+
+    if password_new:
+        # hash password and update user
+        hashed = viewo.api.users.utils.password.hashed(password_new)
         user.password = hashed
 
     if not viewo.api.users.utils.user.user_update(user):
         return viewo.api.bad('could not update user')
-    return viewo.api.success('updated')
+    return viewo.api.success(PASSWORD_UPDATED)
