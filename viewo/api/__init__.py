@@ -60,9 +60,25 @@ def valid_document(function):
         documentpath = link.document(documentid)
         if documentpath is None:
             return notfound(f'could not locate `{documentid}`')
+        if not accessable(documentid):
+            return notfound('not accessable')
         return function(*args, **kwargs)
 
     return decorated_function
+
+
+def accessable(documentid: str):
+    userid = flask_login.current_user.get_id()
+    try:
+        # TODO: INVESTIGATE THIS HACK
+        job = link.load_jobinfo(documentid, done=False)
+    except FileNotFoundError:
+        return True
+    if job.owner == link.PUBLIC_OWNER:
+        return True
+    if userid is None:
+        return False
+    return userid == job.owner
 
 
 # TODO: IMPROVE DECORATOR KNOWLEDGE
