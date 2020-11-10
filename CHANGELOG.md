@@ -2,6 +2,38 @@
 
 Every noteable change is logged here.
 
+## v2.5.0
+
+### Feature
+
+* extend document access check (8afc7c4a0b96)
+* show user documents only (6a92132cb7a2)
+* use new API to update data in place (941d4efa6117)
+* improve user update behavior (24c7d0012fef)
+* validate min and max password length (bf2327ec39cb)
+* secure rpc calls by different error handler (610f29014a4a)
+* add option to choose userid and password (90b8735b65c2)
+* add private service to create user (d751408cb818)
+* ensure to have rights to alter user data (65623c489c4b)
+* request public information about logged in user (7454f4f13140)
+* extend account change form (fdc349e4b7ee)
+* catch invalid password and return as invalid password (20d2c86febbc)
+* extend fake user (9bc9af68b4f3)
+* register document for current user (d6b803b1ce63)
+* login user after uploading document (73b37bee6b69)
+* add owner for every uploaded document (f31d9d54d6c6)
+* add method to generate random passwords (a2f167f0d297)
+* add parameter to add user password while creation (6fa6d38f8653)
+* load password from user data base (1792882cf6bc)
+* add method to create random user (1592232862d5)
+* add method to validate user name (29334e5f4f3d)
+* add filter to show documents owned by user (8e2fcd9a7c6f)
+
+### Fix
+
+* do not store plain text password (2699e3ab8d2f)
+* make loading path absolute (e5c1fc0c2330)
+
 ## v2.4.0
 
 ### Feature
