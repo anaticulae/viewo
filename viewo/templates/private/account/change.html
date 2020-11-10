@@ -25,17 +25,18 @@
         <div class="form-group">
             <labbel for="password" class="col-sm-2 control-label">Neues Passwort:</labbel>
             <div class="col-sm-2">
-                <input type="password" class="form-control" name="new_password" value="{{new_password}}">
+                <input type="password" class="form-control" name="password_new" minlength="8" maxlength="64">
             </div>
-            <labbel for="password" class="col-sm-2 control-label">Wiederholen:</labbel>
+            <labbel for=" password" class="col-sm-2 control-label">Wiederholen:</labbel>
             <div class="col-sm-2">
-                <input type="password" class="form-control" name="new_password_repeat" value="{{new_password_repeat}}">
+                <input type="password" class="form-control" name="password_new_repeat" minlength="8" maxlength="64">
             </div>
         </div>
         <div class="form-group">
             <labbel for="user" class="col-sm-2 control-label">Passwort:</labbel>
             <div class="col-sm-6">
-                <input type="password" class="form-control" name="password" required="True">
+                <input type="password" class="form-control" name="password" required="True" minlength="8"
+                    maxlength="64">
             </div>
         </div>
 
