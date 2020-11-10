@@ -10,12 +10,15 @@
 import os
 
 import flask
+import flask_login
 import link
 import link.job
 import werkzeug.utils
 
 import viewo.api
 import viewo.api.documents
+import viewo.api.users.utils.password
+import viewo.api.users.utils.user
 import viewo.upload
 
 
@@ -46,10 +49,20 @@ def document_create() -> str:  # pylint:disable=too-many-return-statements
         # reset stream
         pdf.stream.seek(0)
 
-    todo = link.create_todo(pdf, filename)
+    userid = flask_login.current_user.get_id()
+    if not userid:
+        # generate new random user
+        password = viewo.api.users.utils.password.generate()
+        userid = viewo.api.users.utils.user.create_user(password).userid
+    else:
+        password = ''
+
+    todo = link.create_todo(pdf, filename, owner=userid)
     _, resource = os.path.split(todo)
 
     result = viewo.api.success(
+        userid=userid,
+        password=password,
         document=flask.url_for(
             'api_documents.document_get',
             documentid=resource,
