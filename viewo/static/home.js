@@ -64,18 +64,6 @@ var file_upload_view = {
     }
 }
 
-function user_error(message) {
-    let entry = `<div class="alert alert-warning">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                ${message}
-                </div>`
-    $('#nogoodnews').append(entry)
-}
-
-function connection_error() {
-    user_error('Service nicht erreichbar!')
-}
-
 $(document).ready(function () {
     file_upload_view.init()
 })

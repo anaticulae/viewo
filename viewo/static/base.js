@@ -83,3 +83,23 @@ base.new_image_button = function (parent, src, id = null, textid = null, link = 
 function rpc(url, callback) {
     $.getJSON(`${API}${url}`, {}, callback)
 }
+
+function user_error(message) {
+    let entry = `<div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                ${message}
+                </div>`
+    $('#nogoodnews').append(entry)
+}
+
+function user_info(message) {
+    let entry = `<div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                ${message}
+                </div>`
+    $('#nogoodnews').append(entry)
+}
+
+function connection_error() {
+    user_error('Service nicht erreichbar!')
+}
