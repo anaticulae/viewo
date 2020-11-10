@@ -7,6 +7,8 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import http
+
 import tests
 
 
@@ -21,3 +23,12 @@ def test_api_user_get(user_client):
     assert result['user']['email'] == tests.TEST_EMAIL
     assert result['user']['user'] == tests.TEST_USER
     assert result['uri']
+
+
+def test_api_user_not_logged_in(client):
+    result = tests.apicall(
+        client,
+        f'/users/{tests.TEST_USER}',
+        expected=http.HTTPStatus.NOT_FOUND,
+    )
+    assert 'login required' == result['message']

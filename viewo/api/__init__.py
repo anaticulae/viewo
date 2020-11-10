@@ -11,6 +11,7 @@ import contextlib
 import functools
 
 import flask
+import flask_login
 import link
 import utila
 
@@ -128,3 +129,14 @@ def valid_pages(function):
         return function(*args, **kwargs)
 
     return decorated_function
+
+
+def login_required_api(func):
+
+    @functools.wraps(func)
+    def decorated_view(*args, **kwargs):
+        if not flask_login.current_user.is_authenticated:
+            return notfound('login required')
+        return func(*args, **kwargs)
+
+    return decorated_view

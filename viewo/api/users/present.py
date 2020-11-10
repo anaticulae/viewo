@@ -8,8 +8,8 @@
 # =============================================================================
 
 import flask
-import flask_login
 
+import viewo.api
 import viewo.api.users
 import viewo.api.users.utils
 import viewo.api.users.utils.user
@@ -21,7 +21,7 @@ import viewo.config
     methods=['GET'],
 )
 @viewo.api.valid_user
-@flask_login.login_required
+@viewo.api.login_required_api
 def user_get(userid: str):
     user = viewo.api.users.utils.user.userpublic_fromid(userid)
     simple = {
