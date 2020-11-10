@@ -11,12 +11,13 @@ import flask
 
 import viewo.api.users
 import viewo.api.users.utils
+import viewo.api.users.utils.user
 import viewo.config
 
 
 @viewo.api.users.api_users.route('users', methods=['GET'])
 def users():
-    users_ = viewo.api.users.utils.users()
+    users_ = viewo.api.users.utils.user.users()
     simple = {
         'users': users_,
         'uri': flask.url_for('api_users.users'),

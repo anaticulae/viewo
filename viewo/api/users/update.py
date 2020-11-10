@@ -10,8 +10,8 @@
 import flask
 
 import viewo.api.users
-import viewo.api.users.utils
 import viewo.api.users.utils.password
+import viewo.api.users.utils.user
 
 
 @viewo.api.users.api_users.route(
@@ -27,7 +27,7 @@ def user_put(userid):
     if email is None and password is None:
         return viewo.api.bad(f'could not update email or password')
 
-    user = viewo.api.users.utils.user_fromid(userid)
+    user = viewo.api.users.utils.user.user_fromid(userid)
     if email is not None:
         # TODO: VALIDATE EMAIL
         user.email = email
@@ -40,6 +40,6 @@ def user_put(userid):
             return viewo.api.bad('password too short')
         user.password = password
 
-    if not viewo.api.users.utils.user_update(user):
+    if not viewo.api.users.utils.user.user_update(user):
         return viewo.api.bad('could not update user')
     return viewo.api.success('updated')

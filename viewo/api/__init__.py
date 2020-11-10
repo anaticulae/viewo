@@ -15,7 +15,7 @@ import link
 import utila
 
 import viewo.api.findings.utils
-import viewo.api.users.utils
+import viewo.api.users.utils.user
 
 
 def success(message: str = 'completed', **args):
@@ -100,7 +100,7 @@ def valid_user(function):
     def decorated_function(*args, **kwargs):
         # TODO: ADD USER RIGHTS CHECK
         userid = kwargs['userid']
-        user = viewo.api.users.utils.user_fromid(userid)
+        user = viewo.api.users.utils.user.user_fromid(userid)
         if not user:
             return notfound(f'could not locate: {userid}')
         return function(*args, **kwargs)
