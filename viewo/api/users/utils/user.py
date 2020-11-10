@@ -56,6 +56,12 @@ def create_user(password: str):
     return new
 
 
+def user_document_append(userid: str, documentid: str):
+    user = user_fromid(userid)
+    user.append_document(documentid)
+    user_update(user)
+
+
 def valid_username(name) -> False:
     """\
     >>> valid_username('not a valid user')

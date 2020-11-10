@@ -19,11 +19,19 @@ import viewo.api.users.utils.password
 
 @dataclasses.dataclass(unsafe_hash=True)
 class User:
+
     email: str = None
     password: str = None
     documents: list = dataclasses.field(default_factory=list)
     payed: int = None
     userid: str = None
+
+    def append_document(self, documentid: str):
+        assert documentid not in self.documents  # pylint:disable=E1135
+        self.documents.append(documentid)  # pylint:disable=E1101
+
+    def __getitem__(self, index):
+        return self.documents[index]  # pylint:disable=E1136
 
 
 Users = typing.List[User]

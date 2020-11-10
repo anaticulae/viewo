@@ -63,6 +63,8 @@ def document_create() -> str:  # pylint:disable=too-many-return-statements
     todo = link.create_todo(pdf, filename, owner=userid)
     _, resource = os.path.split(todo)
 
+    viewo.api.users.utils.user.user_document_append(userid, resource)
+
     result = viewo.api.success(
         userid=userid,
         password=password,
