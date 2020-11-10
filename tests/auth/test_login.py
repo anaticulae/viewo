@@ -10,65 +10,60 @@
 import tests
 
 
-def test_auth_login_open(client):
-    result = tests.content(client, '/login')
+def test_auth_login_open(test_client):
+    result = tests.content(test_client, '/login')
     assert 'Benutzer:' in result
     assert 'Passwort:' in result
 
 
-def test_auth_login_click(client, monkeypatch):
+def test_auth_login_click(test_client):
     # run login
-    with tests.test_user(monkeypatch):
-        result = tests.post(
-            client,
-            '/login',
-            dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
-        )
+    result = tests.post(
+        test_client,
+        '/login',
+        dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
+    )
     assert 'Login erfolgreich' in result
     # run login again, forward to document list
-    with tests.test_user(monkeypatch):
-        result = tests.post(
-            client,
-            '/login',
-            dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
-        )
+    result = tests.post(
+        test_client,
+        '/login',
+        dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
+    )
     assert '<h2>Dokumente</h2>' in result
 
 
-def test_auth_login_invalid_password(client, monkeypatch):
-    with tests.test_user(monkeypatch):
-        result = tests.post(
-            client,
-            '/login',
-            dict(user=tests.TEST_USER, password='wrong password'),  # nosec
-        )
+def test_auth_login_invalid_password(test_client):
+    result = tests.post(
+        test_client,
+        '/login',
+        dict(user=tests.TEST_USER, password='wrong password'),  # nosec
+    )
     assert 'Benutzerdaten fehlerhaft' in result
     # login view visible
     assert '<h1>Login</h1>' in result
 
 
-def test_auth_logout_click(user_client, monkeypatch):
+def test_auth_logout_click(user_client):
     """Use fixture with logged in user. Click logout and login again."""
     # logout
     result = tests.content(user_client, '/logout')
     assert 'Logout erfolgreich' in result
 
     # login again
-    with tests.test_user(monkeypatch):
-        result = tests.post(
-            user_client,
-            '/login',
-            dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
-        )
+    result = tests.post(
+        user_client,
+        '/login',
+        dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
+    )
     assert 'Login erfolgreich' in result
 
 
-def test_auth_for_required_page(client, monkeypatch):
+def test_auth_for_required_page(test_client):
     """Ensure that logging in for private page forwards correctly."""
-    with tests.test_user(monkeypatch):
-        result = tests.post(
-            client,
-            '/login?next=account',
-            dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
-        )
+    result = tests.post(
+        test_client,
+        '/login?next=account',
+        dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
+    )
     assert '<h1>Account Übersicht</h1>' in result
