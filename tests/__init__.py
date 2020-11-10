@@ -42,6 +42,7 @@ EXAMPLE_RESULT = os.path.join(EXAMPLE_READY, TEST_DOCUMENT, 'result')
 
 TEST_USER = 'eewuesteewuestee'
 TEST_PASSWORD = 'EEWUESTEEWUESTEE'
+TEST_EMAIL = 'dertestbaer@helm.com'
 
 
 @contextlib.contextmanager

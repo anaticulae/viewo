@@ -109,6 +109,14 @@ def user_client(test_client):  # pylint:disable=W0621
         dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
     )
     assert 'Login erfolgreich' in result
+    # add users email
+    result = tests.apiput(
+        test_client,
+        f'/users/{tests.TEST_USER}',
+        data={
+            'email': tests.TEST_EMAIL,
+            'password': tests.TEST_PASSWORD,
+        })
     return test_client
 
 
