@@ -15,6 +15,7 @@ import utila
 import yaml
 
 import viewo.api.users.utils.password
+import viewo.api.users.utils.user
 
 
 @dataclasses.dataclass(unsafe_hash=True)
@@ -77,9 +78,12 @@ def dump_user(user: User) -> str:
     return dumped
 
 
-def verify_password(user: str, password: str):
-    loaded = load_user(user)
-    if not loaded:
+def verify_password(userid: str, password: str):
+    user = viewo.api.users.utils.user.user_fromid(userid)
+    if not user:
         return False
-    password = viewo.api.users.utils.password.hashed(password)
+    try:
+        password = viewo.api.users.utils.password.hashed(password)
+    except viewo.api.users.utils.password.PasswordError:
+        return False
     return password == user.password
