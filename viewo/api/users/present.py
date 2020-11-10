@@ -8,11 +8,28 @@
 # =============================================================================
 
 import flask
+import flask_login
 
 import viewo.api.users
 import viewo.api.users.utils
 import viewo.api.users.utils.user
 import viewo.config
+
+
+@viewo.api.users.api_users.route(
+    '/users/<string(length=16):userid>',
+    methods=['GET'],
+)
+@viewo.api.valid_user
+@flask_login.login_required
+def user_get(userid: str):
+    user = viewo.api.users.utils.user.userpublic_fromid(userid)
+    simple = {
+        'user': user,
+        'uri': flask.url_for('api_users.user_get', userid=userid)
+    }
+    dumped = flask.jsonify(simple)
+    return dumped
 
 
 @viewo.api.users.api_users.route('users', methods=['GET'])

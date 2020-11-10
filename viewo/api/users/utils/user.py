@@ -39,6 +39,23 @@ def user_fromid(userid: str) -> 'viewo.api.users.data.User':
     return loaded
 
 
+def userpublic_fromid(userid: str) -> dict:
+    """Returns public data which are not security/data privacy
+    relevant."""
+    user = user_fromid(userid)
+    if not user:
+        return None
+    result = {
+        'user': userid,
+        'documents': [item for item in user.documents],
+    }
+    if user.email:
+        result['email'] = user.email
+    if user.payed is not None:
+        result['payed'] = user.payed
+    return result
+
+
 def user_path(userid: str) -> str:
     return os.path.join(viewo.config.USERS, f'{userid}.yaml')
 
