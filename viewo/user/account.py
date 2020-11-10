@@ -36,18 +36,7 @@ def delete_account_execute():
 
 @viewo.user.viewo_user.route('/account/change')
 @flask_login.login_required
-def account_change_ask():
-    return render_user()
-
-
-@viewo.user.viewo_user.route('/account/change', methods=['POST'])
-@flask_login.login_required
 def account_change():
-    flask.flash('Daten erfolgreich geändert.')
-    return render_user()
-
-
-def render_user():
     current = user()
     email = current.email or ''
     rendered = flask.render_template(
