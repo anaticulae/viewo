@@ -40,8 +40,8 @@ assert os.path.exists(EXAMPLE_TODO), EXAMPLE_TODO
 
 EXAMPLE_RESULT = os.path.join(EXAMPLE_READY, TEST_DOCUMENT, 'result')
 
-TEST_USER = 'wuestee'
-TEST_PASSWORD = 'watahhh'
+TEST_USER = 'eewuesteewuestee'
+TEST_PASSWORD = 'EEWUESTEEWUESTEE'
 
 
 @contextlib.contextmanager
