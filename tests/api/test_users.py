@@ -31,4 +31,4 @@ def test_api_user_not_logged_in(client):
         f'/users/{tests.TEST_USER}',
         expected=http.HTTPStatus.NOT_FOUND,
     )
-    assert 'login required' == result['message']
+    assert result['message'] == 'login required'
