@@ -40,7 +40,9 @@ def user_put(userid):
             return viewo.api.bad('password too long')
         except viewo.api.users.utils.password.PasswordTooShort:
             return viewo.api.bad('password too short')
-        user.password = password
+        # secure hash
+        hashed = viewo.api.users.utils.password.hashed(password)
+        user.password = hashed
 
     if not viewo.api.users.utils.user.user_update(user):
         return viewo.api.bad('could not update user')
