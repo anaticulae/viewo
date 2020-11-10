@@ -17,6 +17,7 @@ import werkzeug.utils
 
 import viewo.api
 import viewo.api.documents
+import viewo.api.users.post
 import viewo.api.users.utils.password
 import viewo.api.users.utils.user
 import viewo.upload
@@ -53,8 +54,7 @@ def document_create() -> str:  # pylint:disable=too-many-return-statements
     userid = flask_login.current_user.get_id()
     if not userid:
         # generate new random user
-        password = viewo.api.users.utils.password.generate()
-        userid = viewo.api.users.utils.user.create_user(password).userid
+        userid, password = viewo.api.users.post.create_user()
         # TODO: REFACTOR
         viewo.user.auth.login_user(userid)
     else:
