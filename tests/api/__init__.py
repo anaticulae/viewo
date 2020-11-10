@@ -7,6 +7,8 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import http
+
 import tests
 
 
@@ -28,7 +30,7 @@ def password_change(
         password_new,
         password_new_repeat,
         password=tests.TEST_PASSWORD,
-        expected='updated',
+        expected=('updated', http.HTTPStatus.OK),
 ):
     data = {
         'password': password,
@@ -39,8 +41,9 @@ def password_change(
         client,
         f'/users/{tests.TEST_USER}',
         data=data,
+        expected=expected[1],
     )
-    assert result['message'] == expected
+    assert result['message'] == expected[0], str(result)
 
 
 def email_change(
