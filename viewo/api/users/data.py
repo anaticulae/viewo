@@ -14,6 +14,9 @@ import typing
 import utila
 import yaml
 
+# TODO: HOLY SECURE VALUE
+PASSWORD_SALT = 'THISISSALT'
+
 
 @dataclasses.dataclass(unsafe_hash=True)
 class User:
@@ -68,4 +71,11 @@ def dump_user(user: User) -> str:
 
 
 def verify_password(user: str, password: str):
-    return user == 'test' and password == 'test'
+    if user == 'test' and password == 'test':
+        # TODO: REMOVE DUMMY USER
+        return True
+    loaded = load_user(user)
+    if not loaded:
+        return False
+    password = utila.secure_hash(password, salt=PASSWORD_SALT)  # pylint:disable=E1101
+    return password == user.password
