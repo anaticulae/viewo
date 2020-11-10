@@ -44,7 +44,7 @@ def load_users(path: str) -> Users:
     users = utila.file_list(path)
     users = utila.files_sort(users)
 
-    loaded = [load_user(item) for item in users]
+    loaded = [load_user(os.path.join(path, item)) for item in users]
     return loaded
 
 
