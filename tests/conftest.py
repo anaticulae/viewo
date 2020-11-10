@@ -92,6 +92,16 @@ def client(app):  # pylint:disable=W0621
 
 
 @pytest.fixture
+def testclient(client):  # pylint:disable=W0621
+    """A test client for the app."""
+    viewo.api.users.post.create_user(
+        userid=tests.TEST_USER,
+        password=tests.TEST_PASSWORD,
+    )
+    return client
+
+
+@pytest.fixture
 def user_client(client, monkeypatch):  # pylint:disable=W0621
     with tests.test_user(monkeypatch):
         result = tests.post(
