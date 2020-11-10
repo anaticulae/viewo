@@ -36,3 +36,11 @@ def simplify_pages(numbers: tuple) -> str:
 
 
 utila.simplify_pages = simplify_pages
+
+
+def secure_hash(data: bytes, digits: int = 64, salt: str = None) -> str:  # pylint:disable=W0613
+    # TODO: INTRODUCE SECURE ONE
+    return utila.freehash(data, digits=digits)
+
+
+utila.secure_hash = secure_hash
