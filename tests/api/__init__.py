@@ -16,9 +16,44 @@ def login(client, userid=tests.TEST_USER, password=tests.TEST_PASSWORD):
         '/login',
         dict(user=userid, password=password),
     )
-    print(result)
     assert 'Login erfolgreich' in result
 
 
 def logout(client):
     tests.content(client, '/logout')
+
+
+def password_change(
+        client,
+        password_new,
+        password_new_repeat,
+        password=tests.TEST_PASSWORD,
+        expected='updated',
+):
+    data = {
+        'password': password,
+        'password_new': password_new,
+        'password_new_repeat': password_new_repeat,
+    }
+    result = tests.apiput(
+        client,
+        f'/users/{tests.TEST_USER}',
+        data=data,
+    )
+    assert result['message'] == expected
+
+
+def email_change(
+        client,
+        email: str = tests.TEST_EMAIL,
+        userid: str = tests.TEST_USER,
+        password: str = tests.TEST_PASSWORD,
+):
+    tests.apiput(
+        client,
+        f'/users/{userid}',
+        data={
+            'email': email,
+            'password': password,
+        },
+    )

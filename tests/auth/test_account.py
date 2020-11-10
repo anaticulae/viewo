@@ -17,21 +17,6 @@ def test_account_show(user_client):
 
 
 def test_account_change_password(user_client):
-    data = {
-        'password': tests.TEST_PASSWORD,
-        'password_new': 'helmistoll',
-        'password_new_repeat': 'helmistoll',
-    }
-    result = tests.apiput(
-        user_client,
-        f'/users/{tests.TEST_USER}',
-        data=data,
-    )
-    assert_done(result)
-
+    tests.api.password_change(user_client, 'helmistoll', 'helmistoll')
     tests.api.logout(user_client)
-    tests.api.login(user_client, tests.TEST_USER, 'helmistoll')
-
-
-def assert_done(result):
-    assert result['message'] == 'updated'
+    tests.api.login(user_client, tests.TEST_USER, password='helmistoll')
