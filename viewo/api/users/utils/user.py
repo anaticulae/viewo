@@ -14,6 +14,8 @@ import utila
 import viewo.api.users.data
 import viewo.config
 
+USER_LENGTH = 8  # TODO: HOLY VALUE
+
 
 def users():
     common_user = viewo.api.users.data.load_users(viewo.config.USERS)
@@ -38,3 +40,17 @@ def user_update(user: 'viewo.api.users.data.User') -> bool:
     path = user_path(user.userid)
     utila.file_replace(path, dumped)
     return True
+
+
+def valid_username(name) -> False:
+    """\
+    >>> valid_username('not a valid user')
+    False
+    >>> valid_username('012ABxxF')
+    True
+    >>> valid_username(' 12  xxx')
+    False
+    """
+    if not len(name) == USER_LENGTH:
+        return False
+    return all(item.isalnum() for item in name)
