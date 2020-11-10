@@ -14,8 +14,7 @@ import typing
 import utila
 import yaml
 
-# TODO: HOLY SECURE VALUE
-PASSWORD_SALT = 'THISISSALT'
+import viewo.api.users.utils.password
 
 
 @dataclasses.dataclass(unsafe_hash=True)
@@ -77,5 +76,5 @@ def verify_password(user: str, password: str):
     loaded = load_user(user)
     if not loaded:
         return False
-    password = utila.secure_hash(password, salt=PASSWORD_SALT)  # pylint:disable=E1101
+    password = viewo.api.users.utils.password.hashed(password)
     return password == user.password

@@ -7,7 +7,12 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import utila
+
 import viewo.config
+
+# TODO: HOLY SECURE VALUE # CONFIGO!
+PASSWORD_SALT = 'THISISSALT'
 
 
 class PasswordError(ValueError):
@@ -40,3 +45,9 @@ def valid(password: str) -> bool:
     if len(password) > viewo.config.PASSWORD_MAX_LENGTH:
         raise PasswordTooLong
     return True
+
+
+def hashed(password: str) -> str:
+    valid(password)
+    password = utila.secure_hash(password, salt=PASSWORD_SALT)  # pylint:disable=E1101
+    return password
