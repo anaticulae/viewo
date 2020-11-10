@@ -29,6 +29,7 @@ def delete_account_ask():
 @viewo.user.viewo_user.route('/account/delete', methods=['POST'])
 @flask_login.login_required
 def delete_account_execute():
+    # TODO: ADD DELETE BEHAVIOR
     flask_login.logout_user()
     flask.flash('Daten erfolgreich gelöscht.')
     return flask.redirect(flask.url_for('welcome.show_welcome'))
