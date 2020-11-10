@@ -110,7 +110,7 @@ def user_client(test_client):  # pylint:disable=W0621
     )
     assert 'Login erfolgreich' in result
     # add users email
-    result = tests.apiput(
+    tests.apiput(
         test_client,
         f'/users/{tests.TEST_USER}',
         data={
