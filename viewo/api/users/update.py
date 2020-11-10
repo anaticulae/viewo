@@ -26,7 +26,7 @@ PASSWORD_UPDATED = 'updated'
     methods=['PUT'],
 )
 @viewo.api.valid_user
-@viewo.api.login_required_api
+@viewo.api.login_required_api  # pylint:disable=R0911,R1260
 def user_put(userid):
     # TODO: SECURE INPUT
     password = flask.request.form.get('password', None)
