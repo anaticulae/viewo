@@ -14,7 +14,7 @@ import utila
 import viewo.api.users.data
 import viewo.config
 
-USER_LENGTH = 8  # TODO: HOLY VALUE
+USER_LENGTH = 16  # TODO: HOLY VALUE
 
 
 def users():
@@ -42,11 +42,20 @@ def user_update(user: 'viewo.api.users.data.User') -> bool:
     return True
 
 
+def create_user():
+    random = utila.tmpname(USER_LENGTH)
+    while os.path.exists(user_path(random)):
+        random = utila.tmpname(USER_LENGTH)
+    new = viewo.api.users.data.User(userid=random)
+    user_update(new)
+    return new
+
+
 def valid_username(name) -> False:
     """\
     >>> valid_username('not a valid user')
     False
-    >>> valid_username('012ABxxF')
+    >>> valid_username('012ABxxF012ABxxF')
     True
     >>> valid_username(' 12  xxx')
     False
