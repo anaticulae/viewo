@@ -25,6 +25,13 @@ def users():
 
 
 def user_fromid(userid: str) -> 'viewo.api.users.data.User':
+    if userid == 'test':
+        fake = viewo.api.users.data.User(
+            userid='test',
+            password=viewo.api.users.utils.password.hashed('testtest'),
+            email='test@testo.te',
+        )
+        return fake
     path = user_path(userid)
     if not os.path.exists(path):
         return None

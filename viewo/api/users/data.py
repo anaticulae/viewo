@@ -78,9 +78,6 @@ def dump_user(user: User) -> str:
 
 
 def verify_password(user: str, password: str):
-    if user == 'test' and password == 'test':
-        # TODO: REMOVE DUMMY USER
-        return True
     loaded = load_user(user)
     if not loaded:
         return False
