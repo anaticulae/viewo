@@ -22,8 +22,12 @@ import viewo.result.loader
 import viewo.waiting
 
 
-def all_documents():
-    todos, dones = link.collect_jobs(configo.share())
+def all_documents(userid: str = None):
+    todos, dones = link.collect_jobs(
+        configo.share(),
+        skip_removed=True,
+        owner=userid,
+    )
     result = []
     ready_indexes = {item.name for item in dones}
 

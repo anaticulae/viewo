@@ -9,6 +9,8 @@
 
 import json
 
+import flask_login
+
 import viewo.api
 import viewo.api.documents
 import viewo.api.documents.utils
@@ -16,7 +18,8 @@ import viewo.api.documents.utils
 
 @viewo.api.documents.api_documents.route('/documents', methods=['GET'])
 def documents():
-    collected = viewo.api.documents.utils.all_documents()
+    userid = flask_login.current_user.get_id()
+    collected = viewo.api.documents.utils.all_documents(userid=userid)
     dumped = json.dumps({
         'documents': collected,
     })
