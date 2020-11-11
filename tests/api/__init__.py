@@ -60,3 +60,13 @@ def email_change(
             'password': password,
         },
     )
+
+
+def upload_minimal(client):
+    result = tests.apiupload(
+        client,
+        page='/documents',
+        field='file',
+        path=tests.MINIMAL,
+    )
+    return result

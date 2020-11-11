@@ -17,6 +17,7 @@ import power
 import utila
 import werkzeug.datastructures
 
+import tests
 import viewo
 import viewo.config
 
