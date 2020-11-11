@@ -21,6 +21,7 @@
 <script type="text/javascript" src="{{ url_for('static', filename='documents.js') }}"></script>
 {% endblock %}
 
+{% if current_user.is_authenticated %}
 <div class="container-fluid">
     <div class="form-group col-md-6 col-sm-6">
         <p><a href="{{ url_for('documents.compare_document') }}">Vergleichen</a></p>
@@ -36,6 +37,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 
 
 
