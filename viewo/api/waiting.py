@@ -8,6 +8,7 @@
 # =============================================================================
 
 import flask
+import flask_login
 
 import viewo.result.data
 import viewo.result.json
@@ -19,8 +20,14 @@ waiting_ = flask.Blueprint('waiting', __name__)  # pylint:disable=C0103
 
 
 @waiting_.route('/waiting/<string:process>')
+@flask_login.login_required
 def waiting_view(process):
-    return flask.render_template('waiting/index.html', process=process)
+    password = flask.session.get('password_raw', '')
+    return flask.render_template(
+        'waiting/index.html',
+        process=process,
+        password_raw=password,
+    )
 
 
 @waiting_.route('/waiting/fastview/<string:process>')

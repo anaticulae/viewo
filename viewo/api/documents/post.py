@@ -10,6 +10,7 @@
 import os
 
 import flask
+import flask.globals
 import flask_login
 import link
 import link.job
@@ -55,6 +56,8 @@ def document_create() -> str:  # pylint:disable=too-many-return-statements
     if not userid:
         # generate new random user
         userid, password = viewo.api.users.post.create_user()
+        # TODO: CHECK FOR SECURITY ISSUES
+        flask.globals.session['password_raw'] = password
         # TODO: REFACTOR
         viewo.user.auth.login_user(userid)
     else:

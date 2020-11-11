@@ -12,6 +12,38 @@
 {% endblock %}
 
 {% block content %}
+
+{% if password_raw %}
+<div>
+    <h2>Account-Informationen</h2>
+    <p style="width:600px; text-align: justify;">
+        Es wurde automatisch ein Account angelegt durch den Sie jeder Zeit
+        Zugriff auf ihre Analye haben. Bitte notieren Sie sich die
+        Benuzterdaten und wahren Sie diese gut auf. Es ist möglich diese
+        Daten unter <a href="{{ url_for('viewo_user.account_change') }}">Account ändern</a> anpassen.
+        Falls Sie die Benutzerdaten vergessen haben, ist <u>kein Zugriff auf
+            die Daten mehr möglich</u>.
+    </p>
+    <ul>
+        <li>Benutzername: {{current_user.get_id()}}</li>
+        <li>Passwort: <a id="password_show">hier anzeigen</a></li>
+    </ul>
+
+</div>
+
+<script type="text/javascript">
+    function show_password() {
+        $("#password_show").text("{{password_raw}}")
+    }
+    function hide_password() {
+        $("#password_show").text('anzeigen')
+    }
+    $("#password_show").mouseover(show_password);
+    $("#password_show").mouseout(hide_password);
+</script>
+
+{% endif %}
+
 <h2>Wartebereich</h2>
 
 <p id="progress_info">
