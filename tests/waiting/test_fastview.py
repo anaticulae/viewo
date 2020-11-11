@@ -9,18 +9,20 @@
 
 import configo
 
+import tests
 import tests.api
+import tests.waiting
 import viewo.waiting
 import viewo.waiting.fastview
-from tests import EXAMPLE_TODO
-from tests import content
-from tests.waiting import valid  # pylint:disable=W0611
 
 
-def test_waiting_fastview_status(valid, client, monkeypatch):  # pylint:disable=W0621
+def test_waiting_fastview_status(valid, client, monkeypatch):
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
-        result = content(client, '/waiting/fastview/status/BAS45DFAC00JJ52K')
+        result = tests.content(
+            client,
+            '/waiting/fastview/status/BAS45DFAC00JJ52K',
+        )
     result = str(result)
     assert 'title' in result, str(result)
     assert 'pages' in result, str(result)
@@ -30,18 +32,18 @@ def test_waiting_fastview_status(valid, client, monkeypatch):  # pylint:disable=
     assert 'warning' in result, str(result)
 
 
-def test_waiting_fastview_status_failure(valid, client, monkeypatch):  # pylint:disable=W0621
+def test_waiting_fastview_status_failure(valid, client, monkeypatch):
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
-        result = content(client, '/waiting/fastview/status/abcdc')
+        result = tests.content(client, '/waiting/fastview/status/abcdc')
     assert result == {}, str(result)
 
 
-def test_waiting_fastview(valid, client, monkeypatch):  # pylint:disable=W0621
+def test_waiting_fastview(valid, client, monkeypatch):
     tests.api.login(client)
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
-        result = content(client, '/waiting/fastview/BAS45DFAC00JJ52K')
+        result = tests.content(client, '/waiting/fastview/BAS45DFAC00JJ52K')
 
     assert 'Schnelldurchsicht' in result, str(result)
 
@@ -65,7 +67,7 @@ def test_waiting_fastviewgroupstatus_jsonify():
 
 def test_waiting_load_groupstatus(monkeypatch):
     with monkeypatch.context() as context:
-        context.setattr(configo, 'todo', lambda: EXAMPLE_TODO)
+        context.setattr(configo, 'todo', lambda: tests.EXAMPLE_TODO)
         loaded = viewo.waiting.fastview.load_fastview_result('BAS45DFAC00JJ52K')
     assert loaded
     assert len(loaded[0].error) == 1, str(loaded[0])

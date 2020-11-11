@@ -14,7 +14,6 @@ import tests
 import tests.api
 import viewo.result.data
 import viewo.result.json
-from tests.waiting import valid  # pylint:disable=W0611,C0412
 
 
 def validate_status(dumped: str):
@@ -48,14 +47,14 @@ def test_waiting_resultview_tojson():
     assert len(dumped) > 450, str(dumped)
 
 
-def test_waiting_resultview_status_failure(valid, client, monkeypatch):  # pylint:disable=W0621
+def test_waiting_resultview_status_failure(valid, client, monkeypatch):
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
         result = tests.content(client, '/waiting/resultview/status/abcdc')
     assert not result
 
 
-def test_waiting_resultview_status(valid, client, monkeypatch):  # pylint:disable=W0621
+def test_waiting_resultview_status(valid, client, monkeypatch):
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
         result = tests.content(
@@ -65,7 +64,7 @@ def test_waiting_resultview_status(valid, client, monkeypatch):  # pylint:disabl
     validate_status(result)
 
 
-def test_waiting_resultview(valid, client, monkeypatch):  # pylint:disable=W0621
+def test_waiting_resultview(valid, client, monkeypatch):
     tests.api.login(client)
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
