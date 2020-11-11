@@ -56,12 +56,11 @@ def document_create() -> str:  # pylint:disable=too-many-return-statements
     if not userid:
         # generate new random user
         userid, password = viewo.api.users.post.create_user()
-        # TODO: CHECK FOR SECURITY ISSUES
-        flask.globals.session['password_raw'] = password
         # TODO: REFACTOR
         viewo.user.auth.login_user(userid)
     else:
         password = ''
+    viewo.user.auth.public_password_set(password)
 
     todo = link.create_todo(pdf, filename, owner=userid)
     _, resource = os.path.split(todo)

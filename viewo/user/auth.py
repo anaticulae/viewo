@@ -8,6 +8,7 @@
 # =============================================================================
 
 import flask
+import flask.globals
 import flask_login
 
 import viewo.api.users.data
@@ -24,6 +25,8 @@ def show_login():
 @flask_login.login_required
 def show_logout():
     flask_login.logout_user()
+    # remove public password
+    public_password_set('')
     flask.flash('Logout erfolgreich.')
     return flask.redirect(flask.url_for('viewo_user.show_login'))
 
@@ -65,3 +68,12 @@ def login_user(user: str):
 
 def open_user(user: str) -> 'viewo.user.FlaskUser':
     return viewo.user.data.FlaskUser(identifier=user)
+
+
+def public_password_set(password: str):
+    # TODO: CHECK FOR SECURITY ISSUES
+    flask.globals.session['password_raw'] = password
+
+
+def public_password():
+    return flask.globals.session.get('password_raw', '')

@@ -14,6 +14,7 @@ import viewo.api
 import viewo.result.data
 import viewo.result.json
 import viewo.result.loader
+import viewo.user.auth
 import viewo.waiting.data
 import viewo.waiting.fastview
 
@@ -23,7 +24,7 @@ waiting_ = flask.Blueprint('waiting', __name__)  # pylint:disable=C0103
 @waiting_.route('/waiting/<string:process>')
 @flask_login.login_required
 def waiting_view(process):
-    password = flask.session.get('password_raw', '')
+    password = viewo.user.auth.public_password()
     return flask.render_template(
         'waiting/index.html',
         process=process,
