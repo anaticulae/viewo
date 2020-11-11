@@ -40,6 +40,11 @@
 {% endif %}
 
 
+{% macro action(img, onclick) -%}
+{% set img = 'images/result/' + img + '.png' %}
+{{ button(img=img, onclick=onclick, alt="share", width="20", height="20", style="padding:0px") }}
+{%- endmacro %}
+
 
 
 <table id="results" class="table table-striped table-bordered">
@@ -64,8 +69,7 @@
             <td class="date failed">{{row['date']}}</td>
             <td class="score failed">failed</td>
             <td class="right">
-                <a href="#delete" onclick="delete_document('{{row['name']}}')"><img
-                        src="/static/images/result/trash.png" alt="delete" width="16" height="16" /></a>
+                {{ action('trash', 'delete_document(\''+row['name']+'\')') }}
             </td>
             <td class="status failed"><a href="waiting/{{row['name']}}">failed</a></td>
 
@@ -77,12 +81,9 @@
                 {{row['result'].closed+row['result'].excluded}}/{{row['result'].open+row['result'].closed+row['result'].excluded}}
             </td>
             <td class="right">
-                <a href="#share" onclick="share_document('{{row['name']}}')">
-                    <img src="/static/images/result/share.png" alt="share" width="16" height="16" /></a>
-                <a href="#lock" onclick="add_password('{{row['name']}}')">
-                    <img src="/static/images/result/lock.png" alt="lock" width="16" height="16" /></a>
-                <a href="#delete" onclick="delete_document('{{row['name']}}')"><img
-                        src="/static/images/result/trash.png" alt="delete" width="16" height="16" /></a>
+                {{ action('share', 'share_document(\''+row['name']+'\')') }}
+                {{ action('lock', 'add_password(\''+row['name']+'\')') }}
+                {{ action('trash', 'delete_document(\''+row['name']+'\')') }}
             </td>
             <td class="status">
                 <a href="result/{{row['name']}}">
