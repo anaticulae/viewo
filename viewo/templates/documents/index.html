@@ -69,7 +69,9 @@
             <td class="date failed">{{row['date']}}</td>
             <td class="score failed">failed</td>
             <td class="right">
+                {% if current_user.get_id() == row.owner %}
                 {{ action('trash', 'delete_document(\''+row['name']+'\')') }}
+                {% endif %}
             </td>
             <td class="status failed"><a href="waiting/{{row['name']}}">failed</a></td>
 
@@ -82,8 +84,10 @@
             </td>
             <td class="right">
                 {{ action('share', 'share_document(\''+row['name']+'\')') }}
+                {% if current_user.get_id() == row.owner %}
                 {{ action('lock', 'add_password(\''+row['name']+'\')') }}
                 {{ action('trash', 'delete_document(\''+row['name']+'\')') }}
+                {% endif %}
             </td>
             <td class="status">
                 <a href="result/{{row['name']}}">
@@ -97,8 +101,9 @@
             <td class="date">{{row['date']}}</td>
             <td class="score">-</td>
             <td class="right">
-                <a href="#delete" onclick="delete_document('{{row['name']}}')"><img
-                        src="/static/images/result/trash.png" alt="delete" width="16" height="16" /></a>
+                {% if current_user.get_id() == row.owner %}
+                {{ action('trash', 'delete_document(\''+row['name']+'\')') }}
+                {% endif %}
             </td>
             <td class="status">
                 <a href="waiting/{{row['name']}}">
