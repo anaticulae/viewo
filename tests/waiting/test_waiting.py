@@ -13,6 +13,7 @@ import configo
 import pytest
 import utila
 
+import tests.api
 import viewo.waiting
 import viewo.waiting.fastview
 from tests import EXAMPLE_TODO
@@ -103,6 +104,7 @@ def test_waiting_validation_invalid_result(
         client,
         monkeypatch,
 ):  # pylint:disable=W0621
+    tests.api.login(client)
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: invalid_validation)
         result = content(client, '/waiting/validation/BAS45DFAC00JJ52K')
@@ -111,6 +113,7 @@ def test_waiting_validation_invalid_result(
 
 
 def test_waiting_validation_result(valid, client, monkeypatch):  # pylint:disable=W0621
+    tests.api.login(client)
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
         result = content(client, '/waiting/validation/BAS45DFAC00JJ52K')

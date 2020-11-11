@@ -11,6 +11,7 @@ import configo
 import utila
 
 import tests
+import tests.api
 import viewo.result.data
 import viewo.result.json
 from tests.waiting import valid  # pylint:disable=W0611,C0412
@@ -65,6 +66,7 @@ def test_waiting_resultview_status(valid, client, monkeypatch):  # pylint:disabl
 
 
 def test_waiting_resultview(valid, client, monkeypatch):  # pylint:disable=W0621
+    tests.api.login(client)
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
         result = tests.content(client, '/waiting/resultview/BAS45DFAC00JJ52K')

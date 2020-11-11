@@ -10,6 +10,7 @@
 import flask
 import flask_login
 
+import viewo.api
 import viewo.result.data
 import viewo.result.json
 import viewo.result.loader
@@ -31,11 +32,13 @@ def waiting_view(process):
 
 
 @waiting_.route('/waiting/fastview/<string:process>')
+@flask_login.login_required
 def waiting_view_fastview(process):
     return flask.render_template('waiting/fastview.html', process=process)
 
 
 @waiting_.route('/waiting/resultview/<string:process>')
+@flask_login.login_required
 def waiting_view_resultview(process):
     rendered = flask.render_template(
         'result/index.html',
@@ -47,6 +50,7 @@ def waiting_view_resultview(process):
 
 @waiting_.route('/waiting/validation', defaults={'process': None})
 @waiting_.route('/waiting/validation/<string:process>')
+@flask_login.login_required
 def waiting_view_validation(process):
     validated = viewo.waiting.data.load_validation_result(process)
     if process is None or validated is None:

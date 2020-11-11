@@ -6,8 +6,10 @@
 # use or distribution is an offensive act against international law and may
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
+
 import configo
 
+import tests.api
 import viewo.waiting
 import viewo.waiting.fastview
 from tests import EXAMPLE_TODO
@@ -36,6 +38,7 @@ def test_waiting_fastview_status_failure(valid, client, monkeypatch):  # pylint:
 
 
 def test_waiting_fastview(valid, client, monkeypatch):  # pylint:disable=W0621
+    tests.api.login(client)
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
         result = content(client, '/waiting/fastview/BAS45DFAC00JJ52K')
