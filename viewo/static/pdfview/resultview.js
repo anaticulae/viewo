@@ -79,10 +79,10 @@ class ResultView {
                 <div class="error_message">${finding.message}</div>
                 <p class="error_options">
                     <button type="button" id="${del}">
-                        <img src="/static/images/result/right.png" alt="done" width="100%" height="100%" />
+                        <img src="/static/images/view/right.png" alt="done" width="100%" height="100%" />
                     </button>
                     <button type="button" id="${done}">
-                        <img src="/static/images/result/trash.png" alt="delete" width="100%" height="100%" />
+                        <img src="/static/images/view/trash.png" alt="delete" width="100%" height="100%" />
                     </button>
                 </p>
             </div>

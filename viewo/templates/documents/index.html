@@ -41,7 +41,7 @@
 
 
 {% macro action(img, onclick) -%}
-{% set img = 'images/result/' + img + '.png' %}
+{% set img = 'images/view/' + img + '.png' %}
 {{ button(img=img, onclick=onclick, alt="share", width="20", height="20", style="padding:0px") }}
 {%- endmacro %}
 
@@ -77,7 +77,7 @@
 
             {% elif row['result'] %}
             {# process succeed #}
-            <td><a href="result/{{row['name']}}">{{row['title']}}</a></td>
+            <td><a href="view/{{row['name']}}">{{row['title']}}</a></td>
             <td class="date">{{row['date']}}</td>
             <td class="score">
                 {{row['result'].closed+row['result'].excluded}}/{{row['result'].open+row['result'].closed+row['result'].excluded}}
@@ -90,8 +90,8 @@
                 {% endif %}
             </td>
             <td class="status">
-                <a href="result/{{row['name']}}">
-                    <img src="/static/images/result/document.png" alt="open" width="16" height="16" />
+                <a href="view/{{row['name']}}">
+                    <img src="/static/images/view/document.png" alt="open" width="16" height="16" />
                 </a>
             </td>
 

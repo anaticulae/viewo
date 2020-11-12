@@ -42,7 +42,7 @@ def waiting_view_fastview(process):
 @flask_login.login_required
 def waiting_view_resultview(process):
     rendered = flask.render_template(
-        'result/index.html',
+        'view/index.html',
         process=process,
         waiting=True,
     )

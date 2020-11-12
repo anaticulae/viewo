@@ -24,13 +24,13 @@ function add_password(document) {
     if (password == undefined) {
         return
     }
-    let url = `/result/${document}/password/${password}`
+    let url = `/view/${document}/password/${password}`
     fetch(url, { method: "POST" }).then(resp => { })
 }
 
 function share_document(document) {
-    let url = `/result/${document}/share`
+    let url = `/view/${document}/share`
     fetch(url, { method: "GET" }).then(resp => {
-        let answer = window.prompt('Link:', `http://www.checkitweg.de/${document}`)
+        let answer = window.prompt('Link:', `http://www.checkitweg.de/view/${document}`)
     })
 }

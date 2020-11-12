@@ -15,21 +15,21 @@ import tests
 
 
 def test_call_result(client):
-    response = client.get('/result', follow_redirects=True)
+    response = client.get('/view', follow_redirects=True)
     content = tests.decode(response)
     assert content
     assert len(content) > 2000, content
 
 
 def test_call_result_document_does_not_exist(client):
-    response = client.get('/result/1020304050', follow_redirects=True)
+    response = client.get('/view/1020304050', follow_redirects=True)
     content = tests.decode(response)
     assert content
     assert 'Fehler' in content
 
 
 def test_call_result_document_and_imagedoes_not_exist(client):
-    response = client.get('/result/1020304050/1.png', follow_redirects=True)
+    response = client.get('/view/1020304050/1.png', follow_redirects=True)
     content = tests.decode(response)
     assert content
     assert 'Fehler' in content
@@ -39,7 +39,7 @@ def test_call_result_e508af0df454gi30(client, monkeypatch):
     with monkeypatch.context() as context:
         # Remove all environment vars
         context.setattr(os, 'environ', {'SHARED_READY': tests.EXAMPLE_READY})
-        response = client.get(f'/result/{tests.TEST_DOCUMENT}')
+        response = client.get(f'/view/{tests.TEST_DOCUMENT}')
     content = tests.decode(response)
     assert content
 
@@ -52,7 +52,7 @@ def test_call_result_e508af0df454gi30_image_access(test_client):
         recursive=True,
     )
     response = test_client.get(
-        f'/result/{tests.TEST_DOCUMENT}/1aeca77e39768cc3ec0ddb765d4ded1a.png',
+        f'/view/{tests.TEST_DOCUMENT}/1aeca77e39768cc3ec0ddb765d4ded1a.png',
         follow_redirects=True,
     )
 

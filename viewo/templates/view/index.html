@@ -37,29 +37,29 @@ onload('{{process}}')
     </div>
 
     <main id="pdfview_content" class="hidden_invisible">
-        {% include 'result/_pdf.html' %}
+        {% include 'view/_pdf.html' %}
     </main>
 
     <main id="pdfview_overview" class="hidden_invisible"></main>
 
     <main id="pdfview_docstyle" class="hidden_invisible">
-        {% include 'result/_style.html' %}
+        {% include 'view/_style.html' %}
     </main>
 
     <main id="pdfview_footnotes" class="hidden_invisible">
-        {% include 'result/_footnotes.html' %}
+        {% include 'view/_footnotes.html' %}
     </main>
 
     <main id="pdfview_properties" class="hidden_invisible">
-        {% include 'result/_properties.html' %}
+        {% include 'view/_properties.html' %}
     </main>
 
     <main id="pdfview_captions" class="hidden_invisible">
-        {% include 'result/_captions.html' %}
+        {% include 'view/_captions.html' %}
     </main>
 </div>
 <div id="todolistview" class="hidden_invisible">
-    {% include 'result/todolist.html' %}
+    {% include 'view/todolist.html' %}
 </div>
 {% if waiting %}
 <footer>

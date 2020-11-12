@@ -54,7 +54,7 @@ var result_waiting_view = {
     },
 
     enable_resultview: function (processid) {
-        $("#resultview")[0].href = `/result/${processid}`
+        $("#resultview")[0].href = `/view/${processid}`
     },
 
     loop: function (process) {
