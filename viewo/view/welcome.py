@@ -7,6 +7,8 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import functools
+
 import flask
 import jinja2
 import link
@@ -26,6 +28,7 @@ def show_page(page):
 
 
 @welcome.route('/')
+@functools.lru_cache(maxsize=2)
 def show_welcome():
     public = viewo.view.documents.load_documents(owner=link.PUBLIC_OWNER)
     rendered = flask.render_template('public/home.html', documents=public)
