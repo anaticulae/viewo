@@ -9,6 +9,9 @@
 
 import flask
 import jinja2
+import link
+
+import viewo.view.documents
 
 welcome = flask.Blueprint('welcome', __name__)  # pylint:disable=invalid-name
 
@@ -24,5 +27,6 @@ def show_page(page):
 
 @welcome.route('/')
 def show_welcome():
-    rendered = flask.render_template('public/home.html')
+    public = viewo.view.documents.load_documents(owner=link.PUBLIC_OWNER)
+    rendered = flask.render_template('public/home.html', documents=public)
     return rendered

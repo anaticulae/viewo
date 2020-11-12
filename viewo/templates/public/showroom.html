@@ -6,29 +6,13 @@
 </style>
 
 <aside id="showroom" class="top-pad" style="max-height:600px">
+    {% for document in documents %}
     <div class="well">
-        <h3>Beispiel 1</h3>
+        <h3><a href="{{ url_for('result.view_result', documentid=document['name']) }}">{{document['title']}}</a>
+        </h3>
+        {% set pages = document['result']['closed'] + document['result']['excluded'] + document['result']['open'] %}
         Seiten: 72<br />
-        Fehler: 1000<br />
+        Fehler: {{pages}}<br />
     </div>
-    <div class="well">
-        <h3>Beispiel 2</h3>
-        Seiten: 72<br />
-        Fehler: 1000<br />
-    </div>
-    <!-- <div class="well">
-        <h3>Beispiel 3</h3>
-        Seiten: 72<br />
-        Fehler: 1000<br />
-    </div>
-    <div class="well">
-        <h3>Beispiel 3</h3>
-        Seiten: 72<br />
-        Fehler: 1000<br />
-    </div>
-    <div class="well">
-        <h3>Beispiel 4</h3>
-        Seiten: 72<br />
-        Fehler: 1000<br />
-    </div> -->
+    {% endfor %}
 </aside>
