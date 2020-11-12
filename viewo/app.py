@@ -39,57 +39,57 @@ def create_application(config=None) -> flask.Flask:
     4. Register blueprint for routing the user requests
     """
     # Flask determines template- and static-folder automatically.
-    app_ = flask.Flask(__name__)
+    appi = flask.Flask(__name__)
 
-    app_.config['MAX_CONTENT_LENGTH'] = viewo.config.MAX_FILE_SIZE
-    app_.secret_key = viewo.config.SECRET_KEY
+    appi.config['MAX_CONTENT_LENGTH'] = viewo.config.MAX_FILE_SIZE
+    appi.secret_key = viewo.config.SECRET_KEY
 
-    configure(app_, config)
-    init_error_handler(app_)
+    configure(appi, config)
+    init_error_handler(appi)
 
     # view
-    app_.register_blueprint(viewo_user)
-    app_.register_blueprint(documents_)
-    app_.register_blueprint(legal_)
-    app_.register_blueprint(result_)
-    app_.register_blueprint(waiting_)
-    app_.register_blueprint(welcome)
-    app_.register_blueprint(writing_)
+    appi.register_blueprint(viewo_user)
+    appi.register_blueprint(documents_)
+    appi.register_blueprint(legal_)
+    appi.register_blueprint(result_)
+    appi.register_blueprint(waiting_)
+    appi.register_blueprint(welcome)
+    appi.register_blueprint(writing_)
 
     # data API
-    app_.register_blueprint(api_documents, url_prefix=viewo.config.API_PREFIX)
-    app_.register_blueprint(api_findings, url_prefix=viewo.config.API_PREFIX)
-    app_.register_blueprint(api_pageviews, url_prefix=viewo.config.API_PREFIX)
-    app_.register_blueprint(api_users, url_prefix=viewo.config.API_PREFIX)
-    app_.register_blueprint(api_visitors, url_prefix=viewo.config.API_PREFIX)
+    appi.register_blueprint(api_documents, url_prefix=viewo.config.API_PREFIX)
+    appi.register_blueprint(api_findings, url_prefix=viewo.config.API_PREFIX)
+    appi.register_blueprint(api_pageviews, url_prefix=viewo.config.API_PREFIX)
+    appi.register_blueprint(api_users, url_prefix=viewo.config.API_PREFIX)
+    appi.register_blueprint(api_visitors, url_prefix=viewo.config.API_PREFIX)
 
-    viewo.user.loginmanager.create_loginmanager(app_)
+    viewo.user.loginmanager.create_loginmanager(appi)
 
     # track every user request
-    app_.before_request(viewo.tracking.before_each_request)
+    appi.before_request(viewo.tracking.before_each_request)
 
-    return app_
+    return appi
 
 
-def configure(app_, config):
+def configure(appi, config):
     """Set environment for application. Decide between test environment and
     production environment
 
     Args:
-        app_(Flask): application to configure, which holds config
+        appi(Flask): application to configure, which holds config
         config(dict): vars to export as global environment
     """
     if config is None:
         # Production environment
         # load the instance config, if it exists
         common_, todo_, ready_ = configo.environment()
-        app_.config['COMMON'] = common_
-        app_.config['TODO'] = todo_
-        app_.config['READY'] = ready_
+        appi.config['COMMON'] = common_
+        appi.config['TODO'] = todo_
+        appi.config['READY'] = ready_
     else:
         # Test environment
         # load the test config if passed in
-        app_.config.update(config)
+        appi.config.update(config)
 
 
 def init_error_handler(app: flask.Flask):  # pylint:disable=W0621
