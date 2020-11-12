@@ -22,9 +22,9 @@ def test_account_show(user_client):
 
 
 def test_account_change_password(user_client):
-    tests.api.password_change(user_client, 'helmistoll', 'helmistoll')
+    tests.api.password_change(user_client, 'helmisto', 'helmisto')
     tests.api.logout(user_client)
-    tests.api.login(user_client, tests.TEST_USER, password='helmistoll')
+    tests.api.login(user_client, tests.TEST_USER, password='helmisto')  # nosec
 
 
 @pytest.mark.parametrize(
@@ -65,7 +65,7 @@ def test_account_change_password_error(
 
 
 def test_account_change_password_invalid_password(user_client):
-    tests.api.password_change(
+    tests.api.password_change(  # nosec
         user_client,
         'validpassword',
         'validpassword',

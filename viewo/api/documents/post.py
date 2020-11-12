@@ -60,7 +60,7 @@ def document_create() -> str:  # pylint:disable=too-many-return-statements
         # TODO: REFACTOR
         viewo.user.auth.login_user(userid)
     else:
-        password = ''
+        password = ''  # nosec
     viewo.user.auth.public_password_set(password)
 
     todo = link.create_todo(
