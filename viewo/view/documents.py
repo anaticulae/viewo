@@ -21,29 +21,8 @@ documents_ = flask.Blueprint('documents', __name__)  # pylint:disable=C0103
 def view_documents():
     public = utila.str2bool(flask.request.args.get('public', False))
     owner = userid(public=public)
-    common = viewo.path.common()
-    # TODO: USE SKIP_REMOVED
-    todo, ready = link.collect_jobs(common, skip_removed=True, owner=owner)
-
-    docs = list(ready)
-    done = {item.name for item in ready}
-    for item in todo:
-        if item.name in done:
-            continue
-        docs.append(item)
-    for item in docs:
-        # TODO: REMOVE THIS HACK LATER
-        if item not in ready:
-            # set to none to have waiting clock in view which symbol the
-            # use that document is in progress.
-            item.result = None
-    # sort by date
-    docs = sorted(
-        docs,
-        key=lambda item: link.sortable_date(item.date),
-        reverse=True,
-    )
-    return flask.render_template('documents/index.html', documents=docs)
+    documents = load_documents(owner)
+    return flask.render_template('documents/index.html', documents=documents)
 
 
 @documents_.route('/compare_document', methods=['GET'])
@@ -62,3 +41,33 @@ def userid(public: bool = True):
         # add public documents to user
         user = {link.PUBLIC_OWNER, user}
     return user
+
+
+def load_documents(owner):
+    common = viewo.path.common()
+    todo, ready = link.collect_jobs(common, skip_removed=True, owner=owner)
+    documents = merge_jobs(todo, ready)
+    return documents
+
+
+def merge_jobs(todo, ready) -> list:
+    result = []
+    result.extend(ready)
+    done = {item.name for item in ready}
+
+    for item in todo:
+        if item.name in done:
+            continue
+        # TODO: REMOVE THIS HACK LATER
+        # set to none to have waiting clock in view which symbol the use
+        # that document is in progress.
+        item.result = None
+        result.append(item)
+
+    # sort by date
+    result = sorted(
+        result,
+        key=lambda item: link.sortable_date(item.date),
+        reverse=True,
+    )
+    return result
