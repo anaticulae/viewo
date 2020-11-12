@@ -13,13 +13,13 @@ import utila
 
 import viewo.api.users.data
 import viewo.api.users.utils.password
-import viewo.config
+import viewo.path
 
 USER_LENGTH = 16  # TODO: HOLY VALUE
 
 
 def users():
-    common_user = viewo.api.users.data.load_users(viewo.config.USERS)
+    common_user = viewo.api.users.data.load_users(viewo.path.users())
     raw = [viewo.api.users.data.user_raw(item) for item in common_user]
     return raw
 
@@ -57,7 +57,7 @@ def userpublic_fromid(userid: str) -> dict:
 
 
 def user_path(userid: str) -> str:
-    return os.path.join(viewo.config.USERS, f'{userid}.yaml')
+    return os.path.join(viewo.path.users(), f'{userid}.yaml')
 
 
 def user_update(user: 'viewo.api.users.data.User') -> bool:

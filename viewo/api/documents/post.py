@@ -21,6 +21,7 @@ import viewo.api.documents
 import viewo.api.users.post
 import viewo.api.users.utils.password
 import viewo.api.users.utils.user
+import viewo.path
 import viewo.upload
 import viewo.user.auth  # TODO: REFACTOR
 
@@ -62,7 +63,12 @@ def document_create() -> str:  # pylint:disable=too-many-return-statements
         password = ''
     viewo.user.auth.public_password_set(password)
 
-    todo = link.create_todo(pdf, filename, owner=userid)
+    todo = link.create_todo(
+        pdf,
+        filename,
+        todopath=viewo.path.todo(),
+        owner=userid,
+    )
     _, resource = os.path.split(todo)
 
     viewo.api.users.utils.user.user_document_append(userid, resource)

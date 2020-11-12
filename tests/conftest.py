@@ -82,7 +82,9 @@ def app(testdir):
     viewo.config.VISITORS_TRACKING = False
     application = viewo.app.create_application(config=test_config)
 
-    yield application
+    # ensure to create app context: TODO: THINK ABOUT IT
+    with application.app_context():
+        yield application
 
 
 @pytest.fixture
@@ -108,7 +110,7 @@ def user_client(test_client):  # pylint:disable=W0621
         '/login',
         dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
     )
-    assert 'Login erfolgreich' in result
+    assert 'Login erfolgreich' in result, result
     # add users email
     tests.api.email_change(test_client)
     return test_client

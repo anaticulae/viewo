@@ -64,7 +64,8 @@ def test_waiting_resultview_status(valid, client, monkeypatch):
     validate_status(result)
 
 
-def test_waiting_resultview(valid, client, monkeypatch):
+def test_waiting_resultview(valid, test_client, monkeypatch):
+    client = test_client
     tests.api.login(client)
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)

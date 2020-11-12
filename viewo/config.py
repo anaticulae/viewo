@@ -9,7 +9,6 @@
 
 import os
 
-import configo
 import utila
 import writers
 import writers.generator
@@ -27,17 +26,12 @@ MAX_FILE_SIZE = 20 * 1024 * 1024  # 20 MB
 
 API_PREFIX = '/api/v0'
 
-USERS = os.path.join(configo.share(), 'users')
-VISITORS = os.path.join(configo.share(), 'visitors')
 VISITORS_MAX_FILE_SIZE = 1024  # kb
 VISITORS_TRACKING = True
 VISITORS_TRACK_STATIC_REQUESTS = False
 
 PASSWORD_MIN_LENGTH = 8
 PASSWORD_MAX_LENGTH = 64
-
-os.makedirs(USERS, exist_ok=True)
-os.makedirs(VISITORS, exist_ok=True)
 
 
 def writing() -> str:

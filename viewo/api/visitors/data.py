@@ -12,7 +12,7 @@ import os
 
 import utila
 
-import viewo.config
+import viewo.path
 
 
 @dataclasses.dataclass(unsafe_hash=True)
@@ -24,7 +24,7 @@ class Visit:
 
 def append(visit: Visit):
     assert visit, str(visit)
-    outpath = os.path.join(viewo.config.VISITORS, str(visit.unique))
+    outpath = os.path.join(viewo.path.visitors(), str(visit.unique))
     raw = raw_visit(visit) + utila.NEWLINE
     utila.file_append(outpath, raw, create=True)
 

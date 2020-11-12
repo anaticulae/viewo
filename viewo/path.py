@@ -1,0 +1,44 @@
+# =============================================================================
+# C O P Y R I G H T
+# -----------------------------------------------------------------------------
+# Copyright (c) 2020 by Helmut Konrad Fahrendholz. All rights reserved.
+# This file is property of Helmut Konrad Fahrendholz. Any unauthorized copy,
+# use or distribution is an offensive act against international law and may
+# be prosecuted under federal law. Its content is company confidential.
+# =============================================================================
+"""Wrapper to bypass configo enviromental variables to enable
+multiprocessed tests."""
+
+import os
+
+import configo
+import flask
+
+
+def common():
+    return flask.current_app.config['COMMON']
+
+
+def todo():
+    return flask.current_app.config['TODO']
+
+
+def ready():
+    return flask.current_app.config['READY']
+
+
+def users():
+    result = os.path.join(common(), 'users')
+    os.makedirs(result, exist_ok=True)
+    return result
+
+
+def visitors():
+    result = os.path.join(common(), 'visitors')
+    os.makedirs(result, exist_ok=True)
+    return result
+
+
+configo.todo = todo
+configo.ready = ready
+configo.share = common

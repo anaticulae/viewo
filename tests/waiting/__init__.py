@@ -10,12 +10,13 @@
 import configo
 
 import tests
+import viewo.path
 import viewo.waiting.data
 
 
 def run_status(client, todo: str, monkeypatch):
     with monkeypatch.context() as context:
-        context.setattr(configo, 'todo', lambda: todo)
+        context.setattr(viewo.path, 'todo', lambda: todo)
         result = tests.content(client, '/waiting/status/BAS45DFAC00JJ52K')
 
     assert result, str(result)

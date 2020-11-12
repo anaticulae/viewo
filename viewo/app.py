@@ -13,6 +13,7 @@ import flask
 import viewo
 import viewo.__patch__
 import viewo.config
+import viewo.path
 import viewo.tracking
 import viewo.user.loginmanager
 from viewo.api.documents import *  # pylint:disable=wildcard-import
@@ -81,18 +82,14 @@ def configure(app_, config):
     if config is None:
         # Production environment
         # load the instance config, if it exists
-        common, todo, ready = configo.environment()
-        app_.config['COMMON'] = common
-        app_.config['TODO'] = todo
-        app_.config['READY'] = ready
+        common_, todo_, ready_ = configo.environment()
+        app_.config['COMMON'] = common_
+        app_.config['TODO'] = todo_
+        app_.config['READY'] = ready_
     else:
         # Test environment
         # load the test config if passed in
         app_.config.update(config)
-        try:
-            configo.export(config['COMMON'], config['TODO'], config['READY'])
-        except KeyError:
-            configo.export('', '', '')
 
 
 def init_error_handler(app: flask.Flask):  # pylint:disable=W0621

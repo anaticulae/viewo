@@ -25,9 +25,9 @@ def test_api_user_get(user_client):
     assert result['uri']
 
 
-def test_api_user_not_logged_in(client):
+def test_api_user_not_logged_in(test_client):
     result = tests.apicall(
-        client,
+        test_client,
         f'/users/{tests.TEST_USER}',
         expected=http.HTTPStatus.NOT_FOUND,
     )

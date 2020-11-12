@@ -7,11 +7,12 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import configo
 import flask
 import flask_login
 import link
 import utila
+
+import viewo.path
 
 documents_ = flask.Blueprint('documents', __name__)  # pylint:disable=C0103
 
@@ -20,7 +21,7 @@ documents_ = flask.Blueprint('documents', __name__)  # pylint:disable=C0103
 def view_documents():
     public = utila.str2bool(flask.request.args.get('public', False))
     owner = userid(public=public)
-    common = configo.share()
+    common = viewo.path.common()
     # TODO: USE SKIP_REMOVED
     todo, ready = link.collect_jobs(common, skip_removed=True, owner=owner)
 

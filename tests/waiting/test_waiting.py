@@ -9,13 +9,13 @@
 
 import os
 
-import configo
 import pytest
 import utila
 
 import tests
 import tests.api
 import tests.waiting
+import viewo.path
 import viewo.waiting
 import viewo.waiting.fastview
 
@@ -100,22 +100,28 @@ def test_waiting_status_verify_failed(invalid_validation, client, monkeypatch): 
 
 def test_waiting_validation_invalid_result(
         invalid_validation,
-        client,
+        test_client,
         monkeypatch,
 ):  # pylint:disable=W0621
-    tests.api.login(client)
+    tests.api.login(test_client)
     with monkeypatch.context() as context:
-        context.setattr(configo, 'todo', lambda: invalid_validation)
-        result = tests.content(client, '/waiting/validation/BAS45DFAC00JJ52K')
+        context.setattr(viewo.path, 'todo', lambda: invalid_validation)
+        result = tests.content(
+            test_client,
+            '/waiting/validation/BAS45DFAC00JJ52K',
+        )
     assert ('Die hochgeladene Datei konnte <strong>'
             'nicht erfolgreich</strong>') in result, str(result)
 
 
-def test_waiting_validation_result(valid, client, monkeypatch):  # pylint:disable=W0621
-    tests.api.login(client)
+def test_waiting_validation_result(valid, test_client, monkeypatch):  # pylint:disable=W0621
+    tests.api.login(test_client)
     with monkeypatch.context() as context:
-        context.setattr(configo, 'todo', lambda: valid)
-        result = tests.content(client, '/waiting/validation/BAS45DFAC00JJ52K')
+        context.setattr(viewo.path, 'todo', lambda: valid)
+        result = tests.content(
+            test_client,
+            '/waiting/validation/BAS45DFAC00JJ52K',
+        )
 
     assert ('Die PDF Datei konnte erfolgreich eingelesen'
             ' werden und wird nun analysiert.') in result, str(result)

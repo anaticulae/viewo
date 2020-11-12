@@ -11,9 +11,9 @@ import contextlib
 import json
 import os
 
-import configo
 import utila
 
+import viewo.path
 from viewo.waiting import FASTVIEW
 from viewo.waiting import VERIFY
 from viewo.waiting import State
@@ -51,7 +51,7 @@ def loads(content: str) -> Status:
 
 def status(process: str) -> Status:  # pylint:disable=too-complex
     # TODO: REPLACE WITH BETTER PYTHON STATE MACHINE LIBRARY
-    todo = configo.todo()
+    todo = viewo.path.todo()
     working = os.path.join(todo, process)
     if not os.path.exists(working):
         # TODO: CHECK ACCESS RIGHTS
@@ -160,9 +160,9 @@ def load_validation_result(process: str) -> dict:
         - None if process does not exists
     """
     process = str(process)
-    ready = configo.ready()
+    ready = viewo.path.ready()
     ready = os.path.join(ready, process)
-    todo = configo.todo()
+    todo = viewo.path.todo()
     todo = os.path.join(todo, process)
     path = None
     if os.path.exists(todo):
@@ -180,7 +180,7 @@ def load_validation_result(process: str) -> dict:
 
 
 def result_result(process: str) -> str:
-    todo = configo.todo()
+    todo = viewo.path.todo()
     todo = os.path.join(todo, process)
     fastview = os.path.join(todo, 'result')
     if os.path.exists(fastview):
@@ -189,7 +189,7 @@ def result_result(process: str) -> str:
 
 
 def copy_done(process: str) -> bool:
-    ready = configo.ready()
+    ready = viewo.path.ready()
     ready = os.path.join(ready, process)
     if os.path.exists(ready):
         return True
@@ -197,7 +197,7 @@ def copy_done(process: str) -> bool:
 
 
 def fastview_result(process: str) -> str:
-    todo = configo.todo()
+    todo = viewo.path.todo()
     todo = os.path.join(todo, process)
     fastview = os.path.join(todo, FASTVIEW)
     if os.path.exists(fastview):

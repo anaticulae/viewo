@@ -39,6 +39,11 @@ def test_api_document_get_no_resource(client):
 
 def test_api_document_get_byid(client):
     result = tests.apiupload(client, '/documents', 'file', tests.MINIMAL)
+    tests.api.login(
+        client,
+        userid=result['userid'],
+        password=result['password'],
+    )
     result = tests.apicall(
         client,
         result['document'],

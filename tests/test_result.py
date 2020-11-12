@@ -9,6 +9,8 @@
 
 import os
 
+import utila
+
 import tests
 
 
@@ -37,18 +39,23 @@ def test_call_result_e508af0df454gi30(client, monkeypatch):
     with monkeypatch.context() as context:
         # Remove all environment vars
         context.setattr(os, 'environ', {'SHARED_READY': tests.EXAMPLE_READY})
-        response = client.get('/result/{tests.TEST_DOCUMENT}')
+        response = client.get(f'/result/{tests.TEST_DOCUMENT}')
     content = tests.decode(response)
     assert content
 
 
-def test_call_result_e508af0df454gi30_image_access(client, monkeypatch):
-    with monkeypatch.context() as context:
-        # Remove all environment vars
-        context.setattr(os, 'environ', {'SHARED_READY': tests.EXAMPLE_READY})
-        response = client.get(
-            f'/result/{tests.TEST_DOCUMENT}/1aeca77e39768cc3ec0ddb765d4ded1a.png'
-        )
+def test_call_result_e508af0df454gi30_image_access(test_client):
+    # TODO: REPLACE WITH FILE COPY
+    utila.copy_content(
+        source=tests.EXAMPLE_RESULT,
+        destination='ready/ework_homework25/result',
+        recursive=True,
+    )
+    response = test_client.get(
+        f'/result/{tests.TEST_DOCUMENT}/1aeca77e39768cc3ec0ddb765d4ded1a.png',
+        follow_redirects=True,
+    )
+
     assert response.status_code == 200, response
     # ensure that PNG is donwloaded
     assert b'PNG' in response.data, response

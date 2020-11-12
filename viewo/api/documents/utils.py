@@ -10,13 +10,13 @@
 import json
 import os
 
-import configo
 import flask
 import iamraw.caption
 import link
 import link.job
 import utila
 
+import viewo.path
 import viewo.result.json
 import viewo.result.loader
 import viewo.waiting
@@ -24,7 +24,7 @@ import viewo.waiting
 
 def all_documents(userid: str = None):
     todos, dones = link.collect_jobs(
-        configo.share(),
+        viewo.path.common(),
         skip_removed=True,
         owner=userid,
     )
