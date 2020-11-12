@@ -80,8 +80,21 @@ base.new_image_button = function (parent, src, id = null, textid = null, link = 
     // }
 }
 
-function rpc(url, callback) {
-    $.getJSON(`${API}${url}`, {}, callback)
+function rpc(url, callback, error = undefined) {
+    let call = `${API}${url}`
+    $.ajax(call, {
+        dataType: 'json',
+        success: function (response) {
+            callback(response)
+        },
+        error: function (response) {
+            if (error != undefined) {
+                error()
+            } else {
+                console.log(`error: ${call}`);
+            }
+        }
+    });
 }
 
 function user_error(message) {
