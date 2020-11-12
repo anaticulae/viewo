@@ -2,6 +2,30 @@
 
 Every noteable change is logged here.
 
+## v2.6.0
+
+### Feature
+
+* inform user about document access problem (9d9a4e59fc61)
+* add error hook to rpc call (daf9acf2253c)
+* load showroom only once (f22b823e674a)
+* fill showroom with public documents (2d3b608fa636)
+* require logged in user for waiting API (92880efa2f0f)
+* remove public password after logging out (5a68a390b195)
+* limit documents operation to document owner (f9c7869727e5)
+* hide options to compare documents for public user (f9a8fbadf930)
+* extend privacy check for private API (87a80938b06a)
+* display first automated generated password (7c3938cfc1b3)
+* add toggle to decide between own and public documents (b1854fe8da3c)
+
+### Fix
+
+* do not show private documents to public user (8e3fcc8d4aef)
+
+### Documentation
+
+* add definition of two user types (d127087549f1)
+
 ## v2.5.0
 
 ### Feature
