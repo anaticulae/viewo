@@ -66,6 +66,7 @@ def waiting_view_validation(process):
 
 
 @waiting_.route('/waiting/status/<string:process>')
+@viewo.api.login_required_api
 def waiting_status(process: str):
     loaded = viewo.waiting.data.status(process)
     if not loaded:
@@ -75,6 +76,7 @@ def waiting_status(process: str):
 
 
 @waiting_.route('/waiting/fastview/status/<string:process>')
+@viewo.api.login_required_api
 def waiting_fastview_status(process: str):
     loaded = viewo.waiting.fastview.load_fastview_result(process)
     if loaded is None:
@@ -84,6 +86,7 @@ def waiting_fastview_status(process: str):
 
 
 @waiting_.route('/waiting/resultview/status/<string:process>')
+@viewo.api.login_required_api
 def waiting_resultview_status(process: str):
     loaded = viewo.result.data.load_resultview_result(process)
     if loaded is None:

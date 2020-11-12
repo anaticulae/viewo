@@ -15,11 +15,11 @@ import viewo.waiting
 import viewo.waiting.fastview
 
 
-def test_waiting_fastview_status(valid, client, monkeypatch):
+def test_waiting_fastview_status(valid, user_client, monkeypatch):
     with monkeypatch.context() as context:
         context.setattr(viewo.path, 'todo', lambda: valid)
         result = tests.content(
-            client,
+            user_client,
             '/waiting/fastview/status/BAS45DFAC00JJ52K',
         )
     result = str(result)
@@ -31,19 +31,20 @@ def test_waiting_fastview_status(valid, client, monkeypatch):
     assert 'warning' in result, str(result)
 
 
-def test_waiting_fastview_status_failure(valid, client, monkeypatch):
+def test_waiting_fastview_status_failure(valid, user_client, monkeypatch):
     with monkeypatch.context() as context:
         context.setattr(viewo.path, 'todo', lambda: valid)
-        result = tests.content(client, '/waiting/fastview/status/abcdc')
+        result = tests.content(user_client, '/waiting/fastview/status/abcdc')
     assert result == {}, str(result)
 
 
-def test_waiting_fastview(valid, test_client, monkeypatch):
-    client = test_client
-    tests.api.login(client)
+def test_waiting_fastview(valid, user_client, monkeypatch):
     with monkeypatch.context() as context:
         context.setattr(viewo.path, 'todo', lambda: valid)
-        result = tests.content(client, '/waiting/fastview/BAS45DFAC00JJ52K')
+        result = tests.content(
+            user_client,
+            '/waiting/fastview/BAS45DFAC00JJ52K',
+        )
 
     assert 'Schnelldurchsicht' in result, str(result)
 

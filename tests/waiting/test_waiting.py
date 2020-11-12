@@ -46,20 +46,19 @@ def test_waiting_status_invalid(client):
     assert 'Fehler' in result
 
 
-def test_waiting_status_invalid_resource(client):
-    result = tests.content(client, '/waiting/status/1337')
+def test_waiting_status_invalid_resource(user_client):
+    result = tests.content(user_client, '/waiting/status/1337')
     assert not result
 
 
-def test_waiting_status(no_validation, client, monkeypatch):  # pylint:disable=W0621
-    loaded = tests.waiting.run_status(client, no_validation, monkeypatch)
-
+def test_waiting_status(no_validation, user_client, monkeypatch):
+    loaded = tests.waiting.run_status(user_client, no_validation, monkeypatch)
     assert loaded.status == viewo.waiting.State.running
     assert loaded[0] == viewo.waiting.State.done
     assert loaded[1] == viewo.waiting.State.running
 
 
-def test_waiting_status_verified(client, testdir, monkeypatch):
+def test_waiting_status_verified(user_client, testdir, monkeypatch):
     """Test a state where pdf is uploaded and validated.
 
     This requires the following resources:
@@ -79,16 +78,24 @@ def test_waiting_status_verified(client, testdir, monkeypatch):
         ),
         os.path.join(todo, viewo.waiting.VERIFY),
     )
-    loaded = tests.waiting.run_status(client, root, monkeypatch)
+
+    loaded = tests.waiting.run_status(user_client, root, monkeypatch)
     assert loaded.status == viewo.waiting.State.running
     assert loaded[0] == viewo.waiting.State.done
     assert loaded[1] == viewo.waiting.State.done
     assert loaded[2] == viewo.waiting.State.running
 
 
-def test_waiting_status_verify_failed(invalid_validation, client, monkeypatch):  # pylint:disable=W0621
-    loaded = tests.waiting.run_status(client, invalid_validation, monkeypatch)
-
+def test_waiting_status_verify_failed(
+        invalid_validation,
+        user_client,
+        monkeypatch,
+):
+    loaded = tests.waiting.run_status(
+        user_client,
+        invalid_validation,
+        monkeypatch,
+    )
     assert loaded.status == viewo.waiting.State.failed
     assert loaded[0] == viewo.waiting.State.done
     assert loaded[1] == viewo.waiting.State.failed
@@ -100,26 +107,24 @@ def test_waiting_status_verify_failed(invalid_validation, client, monkeypatch): 
 
 def test_waiting_validation_invalid_result(
         invalid_validation,
-        test_client,
+        user_client,
         monkeypatch,
-):  # pylint:disable=W0621
-    tests.api.login(test_client)
+):
     with monkeypatch.context() as context:
         context.setattr(viewo.path, 'todo', lambda: invalid_validation)
         result = tests.content(
-            test_client,
+            user_client,
             '/waiting/validation/BAS45DFAC00JJ52K',
         )
     assert ('Die hochgeladene Datei konnte <strong>'
             'nicht erfolgreich</strong>') in result, str(result)
 
 
-def test_waiting_validation_result(valid, test_client, monkeypatch):  # pylint:disable=W0621
-    tests.api.login(test_client)
+def test_waiting_validation_result(valid, user_client, monkeypatch):
     with monkeypatch.context() as context:
         context.setattr(viewo.path, 'todo', lambda: valid)
         result = tests.content(
-            test_client,
+            user_client,
             '/waiting/validation/BAS45DFAC00JJ52K',
         )
 

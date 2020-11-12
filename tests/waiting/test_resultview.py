@@ -47,28 +47,32 @@ def test_waiting_resultview_tojson():
     assert len(dumped) > 450, str(dumped)
 
 
-def test_waiting_resultview_status_failure(valid, client, monkeypatch):
-    with monkeypatch.context() as context:
-        context.setattr(configo, 'todo', lambda: valid)
-        result = tests.content(client, '/waiting/resultview/status/abcdc')
-    assert not result
-
-
-def test_waiting_resultview_status(valid, client, monkeypatch):
+def test_waiting_resultview_status_failure(valid, user_client, monkeypatch):
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
         result = tests.content(
-            client,
+            user_client,
+            '/waiting/resultview/status/abcdc',
+        )
+    assert not result
+
+
+def test_waiting_resultview_status(valid, user_client, monkeypatch):
+    with monkeypatch.context() as context:
+        context.setattr(configo, 'todo', lambda: valid)
+        result = tests.content(
+            user_client,
             '/waiting/resultview/status/BAS45DFAC00JJ52K',
         )
     validate_status(result)
 
 
-def test_waiting_resultview(valid, test_client, monkeypatch):
-    client = test_client
-    tests.api.login(client)
+def test_waiting_resultview(valid, user_client, monkeypatch):
     with monkeypatch.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
-        result = tests.content(client, '/waiting/resultview/BAS45DFAC00JJ52K')
+        result = tests.content(
+            user_client,
+            '/waiting/resultview/BAS45DFAC00JJ52K',
+        )
     assert 'Gesamtdurchsicht' in result
     assert len(result) > 2000, str(result)
