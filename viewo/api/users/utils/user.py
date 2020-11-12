@@ -6,6 +6,12 @@
 # use or distribution is an offensive act against international law and may
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
+"""Users
+=====
+
+* public user: open browser and view page
+* private user: account which is logged in via login form
+"""
 
 import os
 
