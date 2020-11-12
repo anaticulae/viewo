@@ -38,6 +38,8 @@ class DocumentService {
             navigator.update_page_navigator()
             resultview.show_page(0)
             base.show_done()
+        }, function () {
+            base.show_error()
         })
     }
 
