@@ -45,7 +45,7 @@
                     <ul class="nav navbar-nav">
                         <li>{{ href('Home', 'welcome.show_welcome', class='js-nav-link') }}</li>
                         <li>{{ href('Dokumente', 'documents.view_documents', class='js-nav-link') }}</li>
-                        <li>{{ href('Schreibhilfe', 'welcome.show_welcome', page='writing', class='js-nav-link') }}
+                        <li>{{ href('Schreibhilfe', 'welcome.show_page', page='writing', class='js-nav-link') }}
                             <!-- TODO: REPLACE WITH ICON -->
                             {% if current_user.is_authenticated %}
                         <li>{{ href(img('images/account.png', width=24), 'viewo_user.show_account', class='js-nav-link') }}
