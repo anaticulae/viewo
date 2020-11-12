@@ -52,7 +52,10 @@ def compare_document():
 
 
 def userid(public: bool = True):
+    """Select filter policy by loggend in user. Decide to show private,
+    public or both data."""
     user = flask_login.current_user.get_id()
+    user = {link.PUBLIC_OWNER} if user is None else user
     if not public:
         return user
     if user:
