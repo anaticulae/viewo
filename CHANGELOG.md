@@ -2,6 +2,12 @@
 
 Every noteable change is logged here.
 
+## v2.6.1
+
+### Fix
+
+* fix menu link to writing (96a91f226b5b)
+
 ## v2.6.0
 
 ### Feature
