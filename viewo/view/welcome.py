@@ -14,11 +14,16 @@ from jinja2 import TemplateNotFound
 welcome = Blueprint('welcome', __name__)  # pylint:disable=invalid-name
 
 
-@welcome.route('/', defaults={'page': 'home'})
 @welcome.route('/<page>')
-def show_welcome(page):
+def show_page(page):
     """Route public pages which are visible without any permissions."""
     try:
         return render_template('public/%s.html' % page)
     except TemplateNotFound:
         return render_template('public/error.html', errorpage=page)
+
+
+@welcome.route('/')
+def show_welcome():
+    rendered = render_template('public/home.html')
+    return rendered
