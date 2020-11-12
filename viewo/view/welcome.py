@@ -7,23 +7,22 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-from flask import Blueprint
-from flask import render_template
-from jinja2 import TemplateNotFound
+import flask
+import jinja2
 
-welcome = Blueprint('welcome', __name__)  # pylint:disable=invalid-name
+welcome = flask.Blueprint('welcome', __name__)  # pylint:disable=invalid-name
 
 
 @welcome.route('/<page>')
 def show_page(page):
     """Route public pages which are visible without any permissions."""
     try:
-        return render_template('public/%s.html' % page)
-    except TemplateNotFound:
-        return render_template('public/error.html', errorpage=page)
+        return flask.render_template('public/%s.html' % page)
+    except jinja2.TemplateNotFound:
+        return flask.render_template('public/error.html', errorpage=page)
 
 
 @welcome.route('/')
 def show_welcome():
-    rendered = render_template('public/home.html')
+    rendered = flask.render_template('public/home.html')
     return rendered
