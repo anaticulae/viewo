@@ -25,6 +25,11 @@ def load_html(documentid: str, pages: tuple = None) -> dict:
         # ensure valid page numbers
         selected = [page for page in pages if 0 <= page < len(loaded)]
         selected = [loaded[page] for page in selected]
+    # fix path to displayed images
+    selected = [
+        viewo.result.data.patch_images(content, documentid)
+        for content in selected
+    ]
 
     simple = viewo.api.utils.simple_recursive(selected)
     return simple
