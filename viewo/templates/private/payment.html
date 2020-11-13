@@ -1,0 +1,10 @@
+{% if current_user.is_authenticated %}
+<button id="start_payment" class="btn btn-success">Vollzugriff erhalten</button>
+
+<script type="text/javascript">
+    $("#start_payment").mouseenter(function () {
+        window.location.replace('/payment')
+    });
+</script>
+
+{% endif %}

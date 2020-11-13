@@ -46,6 +46,7 @@
                         <li>{{ href('Home', 'welcome.show_welcome', class='js-nav-link') }}</li>
                         <li>{{ href('Dokumente', 'documents.view_documents', class='js-nav-link') }}</li>
                         <li>{{ href('Schreibhilfe', 'welcome.show_page', page='writing', class='js-nav-link') }}
+                        <li>{{ href('Preise', 'welcome.show_page', page='payment', class='js-nav-link') }}
                             <!-- TODO: REPLACE WITH ICON -->
                             {% if current_user.is_authenticated %}
                         <li>{{ href(img('images/account.png', width=24), 'viewo_user.show_account', class='js-nav-link') }}
@@ -61,6 +62,7 @@
         </div>
     </div>
     <div class="content" style="padding-top:50px; padding-bottom:50px;height:auto;">
+        {% include "private/payment.html" %}
         {% block content_container %}
         <div class="container" id="nogoodnews">
             {% for message in get_flashed_messages() %}

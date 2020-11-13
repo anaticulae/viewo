@@ -27,6 +27,7 @@ from viewo.api.writing import writing_
 from viewo.user import *  # pylint:disable=wildcard-import
 from viewo.view.documents import documents_
 from viewo.view.legal import legal_
+from viewo.view.payment import payment
 from viewo.view.welcome import welcome
 
 
@@ -55,6 +56,7 @@ def create_application(config=None) -> flask.Flask:
     appi.register_blueprint(waiting_)
     appi.register_blueprint(welcome)
     appi.register_blueprint(writing_)
+    appi.register_blueprint(payment)
 
     # data API
     appi.register_blueprint(api_documents, url_prefix=viewo.config.API_PREFIX)
