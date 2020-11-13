@@ -2,6 +2,18 @@
 
 Every noteable change is logged here.
 
+## v2.6.2
+
+### Feature
+
+* add range function (a91f79f94ad3)
+
+### Fix
+
+* adjust highlighting finding after moving to new concept (1e19331251cf)
+* adjust generated image path (b9361741f2df)
+* remove cached main page (b2fb73822d00)
+
 ## v2.6.1
 
 ### Fix
