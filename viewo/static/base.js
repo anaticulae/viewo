@@ -116,3 +116,13 @@ function user_info(message) {
 function connection_error() {
     user_error('Service nicht erreichbar!')
 }
+
+function* range(start, end = null) {
+    if (end == null) {
+        end = start - 1
+        start = 0
+    }
+    for (; start <= end; start++) {
+        yield start;
+    }
+}
