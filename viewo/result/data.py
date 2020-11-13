@@ -56,7 +56,7 @@ def load_resultview(path: str, process: str) -> 'viewo.waiting.ResultPageViews':
 def render_resultpage_view(html, pagefindings, process):
     result = []
     # load all pages not only the erroneous
-    for page in pages(html, pagefindings):
+    for page in sync_pages(html, pagefindings):
         # for page, rendered in enumerate(html):
         finding = utila.select_page(pagefindings, page, default=[])
         try:
@@ -103,7 +103,7 @@ def patch_images(html: str, process: int) -> str:
     return html
 
 
-def pages(html, pagefindings) -> list:
+def sync_pages(html, pagefindings) -> list:
     collected = []
     # TODO: IMPROVE THIS TO SUPPORT SELECTIVE PAGES
     collected.extend(list(range(len(html))))
