@@ -46,7 +46,7 @@ function count_by_finding_status(findings) {
 // TODO SIMPLIFY WITH VISIT PATTERN AND GENERATOR
 
 function show_finding(finding) {
-    if (finding.status != SELECTED) {
+    if (finding.solution.status != SELECTED) {
         return
     }
     if (finding.location['words']) {
@@ -57,10 +57,10 @@ function show_finding(finding) {
                 word[0].classList.add('highlighted_text')
             }
         }
-    } else if (finding.location['lines']) {
+    } else if (finding.location['line'] != null) {
         let page = finding.location['page']
-        for (let item of finding.location['lines']) {
-            $(`span#line${page}_${item}`).each(function () {
+        for (let line of range(finding.location['line'], finding.location['line_end'])) {
+            $(`span#line${page}_${line}`).each(function () {
                 $(this)[0].classList.add('highlighted_text')
             });
         }
@@ -79,10 +79,10 @@ function hide_finding(finding) {
                 word[0].classList.remove('highlighted_text')
             }
         }
-    } else if (finding.location['lines']) {
+    } else if (finding.location['line'] != null) {
         let page = finding.location['page']
-        for (let item of finding.location['lines']) {
-            $(`span#line${page}_${item}`).each(function () {
+        for (let line of range(finding.location['line'], finding.location['line_end'])) {
+            $(`span#line${page}_${line}`).each(function () {
                 $(this)[0].classList.remove('highlighted_text')
             });
         }
@@ -102,11 +102,10 @@ function highlight_finding(finding) {
             let word = $(`#word${page}_${item}`)
             word.fadeOut('fast').fadeIn()
         }
-    } else if (finding.location['lines']) {
+    } else if (finding.location['line'] != null) {
         let page = finding.location['page']
-
-        for (let item of finding.location['lines']) {
-            $(`span#line${page}_${item}`).each(function () {
+        for (let line of range(finding.location['line'], finding.location['line_end'])) {
+            $(`span#line${page}_${line}`).each(function () {
                 $(this).fadeOut('fast').fadeIn()
             });
         }

@@ -193,7 +193,7 @@ class FindingBox {
     }
 
     toggle_selected_finding() {
-        if (this.result.selected_finding.status == 1) {
+        if (this.result.selected_finding.solution.status == 1) {
             this.result.update_current_finding_status(0)
             hide_finding(this.result.selected_finding)
         } else {
