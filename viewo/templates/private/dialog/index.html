@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block pagecontent %}
+
+<h1>Account Nachrichten</h1>
+<div class="content" id="dialogs_list"></div>
+
+<table class="table table-striped table-bordered hidden" id="dialog_list">
+    <thead>
+        <tr>
+            <td class="large">Nachricht</td>
+            <td class="small">Datum</td>
+            <td class="small"></td>
+        </tr>
+    </thead>
+    <tbody id="dialog_list_content"></tbody>
+</table>
+
+<h2>Neue Nachricht</h2>
+
+<form method="POST" role="form" id="dialog_new" class="form-horizontal">
+    <div class="form-group">
+        <labbel for="title" class="col-sm-2 control-label">Titel:</labbel>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" name="title" required="True">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <labbel for="category" class="col-sm-2 control-label">Art:</labbel>
+        <div class="col-sm-8">
+            <select name="category" id="feedback_type" class="form-control">
+                <option value="10">Bezahlung</option>
+                <option value="10">Datenschutz</option>
+                <option value="10">Feedback</option>
+                <option value="10">Sonstiges</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <labbel for="text" class="col-sm-2 control-label">Text:</labbel>
+        <div class="col-sm-8">
+            <textarea type="text" class="form-control" style="height:150px" name="text" required="True"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <labbel class="col-sm-2 control-label"></labbel>
+        <div class="col-sm-3">
+            <button type="submit" class="btn btn-default">Senden</button>
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+    $("#dialog_new").submit(function (event) {
+        event.preventDefault();
+        let title = $("input[name='title']")[0].value
+        let category = $("select[name='category']")[0].value
+        let text = $("textarea[name='text']")[0].value
+        send_message(title, text, category)
+    });
+
+    function send_message(title, text, category) {
+        let url = `${API}/dialog/add`
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: {
+                'title': title,
+                'text': text,
+                'category': category,
+            },
+            timeout: TIMEOUT,
+            error: function (response) {
+            },
+            success: function (response) {
+            }
+        });
+    }
+</script>
+{% endblock %}

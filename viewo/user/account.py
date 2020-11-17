@@ -48,6 +48,13 @@ def account_change():
     return rendered
 
 
+@viewo.user.viewo_user.route('/account/dialogs')
+@flask_login.login_required
+def dialogs_overview():
+    rendered = flask.render_template('private/dialog/index.html')
+    return rendered
+
+
 def user():
     userid = flask_login.current_user.get_id()
     current = viewo.api.users.utils.user.user_fromid(userid)
