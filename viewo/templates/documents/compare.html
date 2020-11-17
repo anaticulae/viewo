@@ -1,14 +1,11 @@
 {% extends 'base.html' %}
 
-{% block content %}
-
-{% block head %}
+{% block scripts %}
 {{ super() }}
-
 {{ js('documents_compare.js') }}
-
 {% endblock %}
 
+{% block pagecontent %}
 <h2>Dokument Vergleich</h2>
 
 <div id="documents_compare">
@@ -43,5 +40,4 @@
 <div id="documents_compare_error" class="well">
     Could not reach server.
 </div>
-
 {% endblock %}

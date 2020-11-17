@@ -1,15 +1,17 @@
 {% extends 'base.html' %}
 
-{% block head %}
+{% block styles %}
 {{ super() }}
-
 {{ css('home.css') }}
-
-{{ js('home.js') }}
-
 {% endblock %}
 
-{% block content %}
+{% block scripts %}
+{{ super() }}
+{{ js('home.js') }}
+{% endblock %}
+
+
+{% block pagecontent %}
 <h2>checkitweg.de</h2>
 
 <div id="welcome">

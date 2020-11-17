@@ -1,90 +1,95 @@
-<!DOCTYPE html>
-<html lang="de">
+{% extends "bootstrap/base.html" %}
 
 {% from 'helper.mac' import js, js_ready, onload, css, href, button, img %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Willkommen - Marhaban</title>
 
-    {{ css('lib/bootstrap.min.css') }}
-    {{ css('lib/bootstrap-theme.min.css') }}
-    {{ css('base.css') }}
-    {{ css('app.css') }}
+{% block styles %}
+{{ super() }}
+{{ css('lib/bootstrap-theme.min.css') }}
+{{ css('base.css') }}
+{{ css('app.css') }}
+{% endblock %}
 
-    {{ js('base.js') }}
-    {{ js('lib/jquery.js') }}
-    {{ js('lib/bootstrap.min.js') }}
-    {{ js('lib/bootstrap-toggle.min.js') }}
-    {{ js('lib/URI.js') }}
-
-    {% block head %}{% endblock %}
-</head>
-
-<body>
-    <div class="main-header navbar-fixed-top">
-        <div class="navbar navbar-inverse navbar-static-top" roles="navigation">
-            <div class="navbar-brand"><a href="https://www.checkitweg.de/" style="color:darkgray">checkitweg.de</a>
+{% block navbar %}
+<div class="main-header navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-static-top" roles="navigation">
+        <div class="navbar-brand"><a href="https://www.checkitweg.de/" style="color:darkgray">checkitweg.de</a>
+        </div>
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
             </div>
-            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                <span class="sr-only">Toggle navigation</span>
-            </a>
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li>{{ href('Home', 'welcome.show_welcome', class='js-nav-link') }}</li>
-                        <li>{{ href('Dokumente', 'documents.view_documents', class='js-nav-link') }}</li>
-                        <li>{{ href('Schreibhilfe', 'welcome.show_page', page='writing', class='js-nav-link') }}
-                        <li>{{ href('Preise', 'welcome.show_page', page='payment', class='js-nav-link') }}
-                            <!-- TODO: REPLACE WITH ICON -->
-                            {% if current_user.is_authenticated %}
-                        <li>{{ href(img('images/account.png', width=24), 'viewo_user.show_account', class='js-nav-link') }}
-                        </li>
-                        <li>{{ href('Logout', 'viewo_user.show_logout', class='js-nav-link') }}</li>
-                        {% else %}
-                        <li>{{ href('Login', 'viewo_user.show_login', class='js-nav-link') }}</li>
-                        {% endif %}
-                    </ul>
-                    <form class="navbar-form navbar-right" id="pause-form"></form>
-                </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li>{{ href('Home', 'welcome.show_welcome', class='js-nav-link') }}</li>
+                    <li>{{ href('Dokumente', 'documents.view_documents', class='js-nav-link') }}</li>
+                    <li>{{ href('Schreibhilfe', 'welcome.show_page', page='writing', class='js-nav-link') }}
+                    <li>{{ href('Preise', 'welcome.show_page', page='payment', class='js-nav-link') }}
+                        <!-- TODO: REPLACE WITH ICON -->
+                        {% if current_user.is_authenticated %}
+                    <li>{{ href(img('images/account.png', width=24), 'viewo_user.show_account', class='js-nav-link') }}
+                    </li>
+                    <li>{{ href('Logout', 'viewo_user.show_logout', class='js-nav-link') }}</li>
+                    {% else %}
+                    <li>{{ href('Login', 'viewo_user.show_login', class='js-nav-link') }}</li>
+                    {% endif %}
+                </ul>
+                <form class="navbar-form navbar-right" id="pause-form"></form>
             </div>
         </div>
     </div>
-    <div class="content" style="padding-top:50px; padding-bottom:50px;height:auto;">
-        {% include "private/payment.html" %}
-        {% block content_container %}
-        <div class="container" id="nogoodnews">
-            {% for message in get_flashed_messages() %}
-            <div class="alert alert-warning">
-                {{ button(caption='&times;', class='close', data_dismiss='alert') }}
-                {{ message }}
-            </div>
-            {% endfor %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="content" style="padding-left:10px;padding-right:10px;padding-top:50px;padding-bottom:50px;height:auto;">
+    {% if current_user.is_authenticated %}
+    <button id="start_payment" class="btn btn-success">Vollzugriff erhalten</button>
+    {% endif %}
+    <div class="container" id="nogoodnews">
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            {{ button(caption='&times;', class='close', data_dismiss='alert') }}
+            {{ message }}
         </div>
-        <div id="display">{% block content %}{% endblock %}</div>
-        <div id="message"></div>
+        {% endfor %}
+    </div>
+    <div id="display">
+        {% block pagecontent %}
         {% endblock %}
     </div>
+    <div id="message"></div>
+</div>
+<footer class="panel-footer navbar-fixed-bottom">
+    <!-- <div class="panel-footer navbar-fixed-bottom"> -->
+    {{ href('Impressum', 'legal.impressum') }} |
+    {{ href('Allgemeine Geschäftsbedingungen', 'legal.agb') }} |
+    {{ href('Datenschutzerklärung', 'legal.privacy') }} |
+    &copy; 2019-2020 by checkitweg.de
+</footer>
+{% endblock %}
 
-    <footer class="panel-footer navbar-fixed-bottom">
-        <!-- <div class="panel-footer navbar-fixed-bottom"> -->
-        {{ href('Impressum', 'legal.impressum') }} |
-        {{ href('Allgemeine Geschäftsbedingungen', 'legal.agb') }} |
-        {{ href('Datenschutzerklärung', 'legal.privacy') }} |
-        &copy; 2019-2020 by checkitweg.de
-    </footer>
-    <!-- </div> -->
-</body>
+{% block scripts %}
+{{ super() }}
+{{ js('base.js') }}
+{{ js('lib/bootstrap-toggle.min.js') }}
+{{ js('lib/URI.js') }}
 
-</html>
+{% if current_user.is_authenticated %}
+{% call js_ready() %}
+$("#start_payment").click(function () {
+window.location.replace('/payment')
+});
+{% endcall %}
+{% endif %}
+
+{% endblock %}

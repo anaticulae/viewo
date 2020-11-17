@@ -34,5 +34,17 @@ def view_result(selected: str = None):
     result = viewo.writing.content.replace(result, source)
     result = viewo.writing.reflinks.replace(result)
 
-    rendered = flask.render_template('public/writing.html', content=result)
+    rendered = flask.render_template('public/writing.html', writing=result)
+    rendered = fix_search(rendered)
     return rendered
+
+
+HACK = """<script type="text/javascript">$('#fallback').hide();</script>"""
+
+
+def fix_search(content: str) -> str:
+    if HACK not in content:
+        return content
+    content = content.replace(HACK, '')
+    content = content + HACK
+    return content

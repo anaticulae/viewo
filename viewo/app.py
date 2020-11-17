@@ -9,6 +9,7 @@
 
 import configo
 import flask
+import flask_bootstrap
 
 import viewo
 import viewo.__patch__
@@ -44,6 +45,9 @@ def create_application(config=None) -> flask.Flask:
 
     appi.config['MAX_CONTENT_LENGTH'] = viewo.config.MAX_FILE_SIZE
     appi.secret_key = viewo.config.SECRET_KEY
+
+    appi.config.setdefault('BOOTSTRAP_SERVE_LOCAL', True)
+    flask_bootstrap.Bootstrap(app=appi)
 
     configure(appi, config)
     init_error_handler(appi)

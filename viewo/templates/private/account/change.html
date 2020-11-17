@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block pagecontent %}
 
 <h1>Account ändern</h1>
 
@@ -49,6 +49,10 @@
     </form>
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
 <script type="text/javascript">
     $("#change_user_data").submit(function (event) {
         event.preventDefault();
@@ -80,7 +84,5 @@
             }
         });
     }
-
 </script>
-
 {% endblock %}

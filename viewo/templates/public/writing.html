@@ -1,13 +1,7 @@
 {% extends 'base.html' %}
 
-
-{% block head %}
-
-
+{% block scripts %}
 {{ super() }}
-
-<link href="/build/_static/wclub.css" rel="stylesheet" type="text/css">
-
 <script type="text/javascript" id="documentation_options" data-url_root="/build/"
     src="/build/_static/documentation_options.js"></script>
 
@@ -22,6 +16,11 @@
 </script>
 
 <script type="text/javascript" id="searchindexloader"></script>
+{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link href="/build/_static/wclub.css" rel="stylesheet" type="text/css">
 
 <style>
     /* overwrite table style */
@@ -63,11 +62,11 @@
     }
 
 </style>
-
 {% endblock %}
 
-{% block content_container %}
+{% block pagecontent %}
+{{ super() }}
 
-{{ content |safe}}
+{{ writing |safe}}
 
 {% endblock %}

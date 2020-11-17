@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
-{% block head %}
-
+{% block styles %}
 {{ super() }}
-
 {{ css('pdfview.css') }}
+{% endblock %}
 
+{% block scripts %}
+{{ super() }}
 {{ js('finding.js') }}
 {{ js('pdfview/service.js') }}
 {{ js('pdfview/findingbox.js') }}
@@ -18,10 +19,10 @@
 init()
 onload('{{process}}')
 {% endcall %}
-
 {% endblock %}
 
-{% block content %}
+
+{% block pagecontent %}
 <div id="pdfview">
     <h2>Gesamtdurchsicht<span id="finding_status_counter"></span></h2>
 
