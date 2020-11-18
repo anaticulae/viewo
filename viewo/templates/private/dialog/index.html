@@ -8,9 +8,9 @@
 <table class="table table-striped table-bordered hidden_invisible" id="dialog_list">
     <thead>
         <tr>
-            <td class="large">Nachricht</td>
-            <td class="small">Datum</td>
-            <td class="small"></td>
+            <td class="medium expand">Nachricht</td>
+            <td class="medium">Datum</td>
+            <td class="tiny"></td>
         </tr>
     </thead>
     <tbody id="dialog_list_content"></tbody>
@@ -94,12 +94,13 @@
         content = $('#dialog_list_content')
         content.html = ''
         for (let item of items) {
-            row = `<tr><td>title</td>
-                <td>${item['date']}</td>
-                <td><a href="#">Öffnen</a></td></tr>`
+            // convert seconds to miliseconds
+            let date = moment(item['date'] * 1000).format('DD.MM.YYYY hh:mm')
+            row = `<tr><td class="medium">${item['title']}</td>
+                <td class="medium center">${date}</td>
+                <td class="tiny"><a href="#">Öffnen</a></td></tr>`
             content.append(row)
         }
-
     }
 
 
@@ -119,6 +120,7 @@
             success: function (response) {
                 clear()
                 user_info('Nachricht übermittelt.')
+                call_update_dialogs()
             }
         });
     }
