@@ -80,7 +80,10 @@
 
 {% block scripts %}
 {{ super() }}
-{{ moment.include_moment() }}
+
+{{ moment.include_moment(local_js=url_for('static', filename='lib/moment.min.js')) }}
+{{ moment.locale('de') }}
+
 {{ js('base.js') }}
 {{ js('lib/bootstrap-toggle.min.js') }}
 {{ js('lib/URI.js') }}
