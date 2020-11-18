@@ -5,7 +5,7 @@
 <h1>Account Nachrichten</h1>
 <div class="content" id="dialogs_list"></div>
 
-<table class="table table-striped table-bordered hidden" id="dialog_list">
+<table class="table table-striped table-bordered hidden_invisible" id="dialog_list">
     <thead>
         <tr>
             <td class="large">Nachricht</td>
@@ -67,6 +67,42 @@
         send_message(title, text, category)
     });
 
+    function clear() {
+        $("input[name='title']")[0].value = ''
+        $("textarea[name='text']")[0].value = ''
+    }
+
+    function call_update_dialogs() {
+        let userid = `{{current_user.get_id()}}`
+        $.ajax(`${API}/dialogs/${userid}`, {
+            dataType: 'json',
+            success: function (response) {
+                update_dialogs(response.dialogs)
+            },
+            error: function () {
+                user_error('Could not reach server.')
+            }
+        });
+    }
+
+    function update_dialogs(items) {
+        if (items.length == 0) {
+            base.hide('#dialog_list')
+        } else {
+            base.show('#dialog_list')
+        }
+        content = $('#dialog_list_content')
+        content.html = ''
+        for (let item of items) {
+            row = `<tr><td>title</td>
+                <td>${item['date']}</td>
+                <td><a href="#">Öffnen</a></td></tr>`
+            content.append(row)
+        }
+
+    }
+
+
     function send_message(title, text, category) {
         let url = `${API}/dialog/add`
         $.ajax({
@@ -81,8 +117,13 @@
             error: function (response) {
             },
             success: function (response) {
+                clear()
+                user_info('Nachricht übermittelt.')
             }
         });
     }
 </script>
+{% call js_ready() %}
+call_update_dialogs()
+{% endcall %}
 {% endblock %}
