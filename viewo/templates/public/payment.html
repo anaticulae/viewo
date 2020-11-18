@@ -10,13 +10,13 @@ Bezahlt!
 {% set button_type='radio' if current_user.is_authenticated else 'hidden' %}
 <form id="payment_selection" method="POST">
     <div class="btn-group" id="selected" data-toggle="offcanvas">
-        <table class="small_table table table-striped table-bordered">
+        <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>Option</th>
                     <th>Beschreibung</th>
-                    <th class="small">Typ</th>
-                    <th class="tiny">Preis</th>
+                    <th>Typ</th>
+                    <th>Preis</th>
                 </tr>
             </thead>
             <tbody>

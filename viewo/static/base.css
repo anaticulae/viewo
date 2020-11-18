@@ -237,6 +237,23 @@ button{
     min-width:100px;
 }
 
+.medium {
+    width: 200px;
+}
+
+.small_table {
+    width: 300px;
+}
+
+.medium_table {
+    width: 450px;
+}
+
+.large_table {
+    width: 700px;
+}
+
+
 .expand{
     width:100%;
 }
