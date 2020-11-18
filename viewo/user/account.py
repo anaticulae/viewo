@@ -55,6 +55,16 @@ def dialogs_overview():
     return rendered
 
 
+@viewo.user.viewo_user.route('/account/dialogs/<string(length=10):dialogid>')
+@flask_login.login_required
+def dialog_show(dialogid):
+    rendered = flask.render_template(
+        'private/dialog/show.html',
+        dialogid=dialogid,
+    )
+    return rendered
+
+
 def user():
     userid = flask_login.current_user.get_id()
     current = viewo.api.users.utils.user.user_fromid(userid)

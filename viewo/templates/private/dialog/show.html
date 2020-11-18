@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block pagecontent %}
+
+<h1>Nachricht</h1>
+
+<div class="content" id="messages"></div>
+
+<h2>Antworten</h2>
+
+<form method="POST" role="form" id="message_add" class="form-horizontal">
+
+    <div class="form-group">
+        <div class="col-sm-8">
+            <textarea type="text" class="form-control" style="height:150px" name="text" required="True"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-3">
+            <button type="submit" class="btn btn-default">Senden</button>
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ js('account/message.js') }}
+{% call js_ready() %}
+messages.init(`{{current_user.get_id()}}`, {{dialogid}})
+{% endcall %}
+{% endblock %}
