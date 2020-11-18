@@ -10,6 +10,9 @@
 import flask
 import flask.globals
 import flask_login
+import flask_wtf
+import wtforms
+import wtforms.validators
 
 import viewo.api.users.data
 import viewo.user
@@ -18,7 +21,7 @@ import viewo.user.data
 
 @viewo.user.viewo_user.route('/login')
 def show_login():
-    return flask.render_template('private/login.html')
+    return flask.render_template('private/login.html', form=LoginForm())
 
 
 @viewo.user.viewo_user.route('/logout')
@@ -46,8 +49,7 @@ def check_login():
         # ask user again
         return flask.render_template(
             'private/login.html',
-            user=user,
-            password=password,
+            form=LoginForm(user=user, password=password),
         )
 
     # login
@@ -77,3 +79,26 @@ def public_password_set(password: str):
 
 def public_password():
     return flask.globals.session.get('password_raw', '')
+
+
+class LoginForm(flask_wtf.FlaskForm):
+    user = wtforms.StringField(
+        'Benutzer:',
+        validators=[
+            wtforms.validators.DataRequired(),
+            wtforms.validators.Length(min=8, max=64),
+        ],
+    )
+    password = wtforms.PasswordField(
+        'Passwort:',
+        validators=[
+            wtforms.validators.DataRequired(),
+            wtforms.validators.Length(min=8, max=64),
+        ],
+    )
+    submit = wtforms.SubmitField('Anmelden')
+
+    def __init__(self, user='', password='', **kwargs):
+        super().__init__(**kwargs)
+        self.user.default = user
+        self.password.default = password
