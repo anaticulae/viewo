@@ -7,9 +7,14 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import os
+
+import admin_helpdesk
+import admin_helpdesk.api
 import configo
 import flask
 import flask_bootstrap
+from admin_helpdesk.api import *  # pylint:disable=wildcard-import
 
 import viewo
 import viewo.__patch__
@@ -69,6 +74,12 @@ def create_application(config=None) -> flask.Flask:
     appi.register_blueprint(api_users, url_prefix=viewo.config.API_PREFIX)
     appi.register_blueprint(api_visitors, url_prefix=viewo.config.API_PREFIX)
 
+    # messages
+    appi.register_blueprint(
+        admin_helpdesk.api.api_message,
+        url_prefix=viewo.config.API_PREFIX,
+    )
+
     viewo.user.loginmanager.create_loginmanager(appi)
 
     # track every user request
@@ -92,6 +103,8 @@ def configure(appi, config):
         appi.config['COMMON'] = common_
         appi.config['TODO'] = todo_
         appi.config['READY'] = ready_
+        path = str(os.path.join(appi.config['COMMON'], 'messages'))
+        appi.config[admin_helpdesk.ADMIN_HELPDESK] = path
     else:
         # Test environment
         # load the test config if passed in

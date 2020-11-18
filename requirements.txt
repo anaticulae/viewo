@@ -28,4 +28,4 @@ hey==5.5.0
 # agb, impressum etc.
 legal==0.2.0
 
-admin-helpdesk==0.1.1
+admin-helpdesk==0.1.2

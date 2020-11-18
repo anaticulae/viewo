@@ -18,3 +18,7 @@ class FlaskUser(flask_login.UserMixin):
 
     def get_id(self):
         return self.identifier
+
+    @property
+    def is_admin(self):
+        return False
