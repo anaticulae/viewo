@@ -58,74 +58,8 @@
 
 {% block scripts %}
 {{ super() }}
-<script type="text/javascript">
-    $("#dialog_new").submit(function (event) {
-        event.preventDefault();
-        let title = $("input[name='title']")[0].value
-        let category = $("select[name='category']")[0].value
-        let text = $("textarea[name='text']")[0].value
-        send_message(title, text, category)
-    });
-
-    function clear() {
-        $("input[name='title']")[0].value = ''
-        $("textarea[name='text']")[0].value = ''
-    }
-
-    function call_update_dialogs() {
-        let userid = `{{current_user.get_id()}}`
-        $.ajax(`${API}/dialogs/${userid}`, {
-            dataType: 'json',
-            success: function (response) {
-                update_dialogs(response.dialogs)
-            },
-            error: function () {
-                user_error('Could not reach server.')
-            }
-        });
-    }
-
-    function update_dialogs(items) {
-        if (items.length == 0) {
-            base.hide('#dialog_list')
-        } else {
-            base.show('#dialog_list')
-        }
-        content = $('#dialog_list_content')
-        content.html = ''
-        for (let item of items) {
-            // convert seconds to miliseconds
-            let date = moment(item['date'] * 1000).format('DD.MM.YYYY hh:mm')
-            row = `<tr><td class="medium">${item['title']}</td>
-                <td class="medium center">${date}</td>
-                <td class="tiny"><a href="#">Öffnen</a></td></tr>`
-            content.append(row)
-        }
-    }
-
-
-    function send_message(title, text, category) {
-        let url = `${API}/dialog/add`
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: {
-                'title': title,
-                'text': text,
-                'category': category,
-            },
-            timeout: TIMEOUT,
-            error: function (response) {
-            },
-            success: function (response) {
-                clear()
-                user_info('Nachricht übermittelt.')
-                call_update_dialogs()
-            }
-        });
-    }
-</script>
+{{ js('account/dialog.js') }}
 {% call js_ready() %}
-call_update_dialogs()
+dialog.init(`{{current_user.get_id()}}`)
 {% endcall %}
 {% endblock %}
