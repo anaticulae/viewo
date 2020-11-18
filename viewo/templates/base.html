@@ -80,6 +80,7 @@
 
 {% block scripts %}
 {{ super() }}
+{{ moment.include_moment() }}
 {{ js('base.js') }}
 {{ js('lib/bootstrap-toggle.min.js') }}
 {{ js('lib/URI.js') }}

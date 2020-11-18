@@ -14,6 +14,7 @@ import admin_helpdesk.api
 import configo
 import flask
 import flask_bootstrap
+import flask_moment
 from admin_helpdesk.api import *  # pylint:disable=wildcard-import
 
 import viewo
@@ -53,6 +54,8 @@ def create_application(config=None) -> flask.Flask:
 
     appi.config.setdefault('BOOTSTRAP_SERVE_LOCAL', True)
     flask_bootstrap.Bootstrap(app=appi)
+
+    flask_moment.Moment(app=appi)
 
     configure(appi, config)
     init_error_handler(appi)
