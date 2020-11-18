@@ -8,6 +8,7 @@
 {{ css('lib/bootstrap-theme.min.css') }}
 {{ css('base.css') }}
 {{ css('app.css') }}
+{{ css('lib/dataTables/css/jquery.dataTables.min.css') }}
 {% endblock %}
 
 {% block navbar %}
@@ -87,6 +88,7 @@
 {{ js('base.js') }}
 {{ js('lib/bootstrap-toggle.min.js') }}
 {{ js('lib/URI.js') }}
+{{ js('lib/datatables/js/jquery.dataTables.min.js') }}
 
 {% if current_user.is_authenticated %}
 {% call js_ready() %}
