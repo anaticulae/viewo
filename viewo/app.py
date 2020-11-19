@@ -15,7 +15,7 @@ import configo
 import flask
 import flask_bootstrap
 import flask_moment
-from admin_helpdesk.api import *  # pylint:disable=wildcard-import
+from admin_helpdesk.api import *  # pylint:disable=wildcard-import,W0614,C0412
 
 import viewo
 import viewo.__patch__
