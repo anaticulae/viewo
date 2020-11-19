@@ -41,7 +41,9 @@ var messages = {
             } else {
                 row += `Antwort: ${date}<br />`
             }
-            row += `<p>${item.text.replace('\n', '<br/>')}</p><br />`
+            // display newlines correctly
+            let text = item.text.replace(/\n/g, '<br>')
+            row += `<p>${text}</p><br/>`
             content.append(row)
         }
     },
