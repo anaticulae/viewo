@@ -8,6 +8,11 @@ var dialog = {
             let text = $("textarea[name='text']")[0].value
             dialog.send_message(title, text, category)
         });
+        // add empty table
+        dialog.table = $('#dialog_list').DataTable({
+            'data': []
+        })
+        // update content
         dialog.call_server()
     },
 
@@ -34,18 +39,21 @@ var dialog = {
         } else {
             base.show('#dialog_list')
         }
-        content = $('#dialog_list_content')
-        content.html = ''
+        // TODO: IMPROVE UPDATE BEHAVIOR
+        dialog.table.clear()
+        let data = []
         for (let item of items) {
             // convert seconds to miliseconds
             let date = moment(item['date'] * 1000).format('DD.MM.YYYY hh:mm')
-            row = `<tr>
-                <td class="medium">${item['title']}</td>
-                <td class="medium center">${date}</td>
-                <td class="tiny"><a href="/account/dialogs/${item['date']}">Öffnen</a></td>
-            </tr>`
-            content.append(row)
+            row = [
+                item['title'],
+                date,
+                `<a href="/account/dialogs/${item['date']}">Öffnen</a>`,
+            ]
+            data.push(row)
         }
+        dialog.table.rows.add(data);
+        dialog.table.draw()
     },
 
     send_message: function (title, text, category) {

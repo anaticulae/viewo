@@ -5,15 +5,22 @@
 <h1>Account Nachrichten</h1>
 <div class="content" id="dialogs_list"></div>
 
-<table class="table table-striped table-bordered hidden_invisible" id="dialog_list">
+<table class="table table-striped dataTable no-footer" id="dialog_list" role="grid">
     <thead>
-        <tr>
-            <td class="medium expand">Nachricht</td>
-            <td class="medium">Datum</td>
-            <td class="tiny"></td>
+        <tr role="row">
+            <th tabindex="0" class="sorting" aria-controls="dialog_list" rowspan="1" colspan="1">Nachricht</th>
+            <th tabindex="0" class="sorting" aria-controls="dialog_list" rowspan="1" colspan="1" style="width:200px">
+                Datum</th>
+            <th tabindex="0" class="sorting_disabled" aria-controls="dialog_list" rowspan="1" colspan="1"
+                style="width:100px">
+                Aktion</th>
         </tr>
     </thead>
-    <tbody id="dialog_list_content"></tbody>
+    <tbody>
+        <tr class="odd">
+            <td class="dataTables_empty" valign="top" colspan="3">Keine Daten verfügbar.</td>
+        </tr>
+    </tbody>
 </table>
 
 <h2>Neue Nachricht</h2>
