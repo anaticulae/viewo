@@ -29,10 +29,10 @@ onload('{{process}}')
     <div id="pdfview_navigation" class="hidden_invisible">
         <span id="pdfview_navigation_toggle_box">
             <!-- previous page -->
-            {{ button(id='pdfview_previous_page', caption='&lt;', style='margin-top: 2px; margin-bottom: 2px;') }}<br />
+            {{ button(id='pdfview_previous_page', class='btn btn-default', caption='&lt;', style='margin-top: 2px; margin-bottom: 2px;') }}<br />
             <!-- next page -->
-            {{ button(id='pdfview_next_page', caption='&gt;') }}<br />
-            {{ button(id='pdfview_navigation_toggle', caption='hide') }}
+            {{ button(id='pdfview_next_page', class='btn btn-default', caption='&gt;') }}<br />
+            {{ button(id='pdfview_navigation_toggle', class='btn btn-default', caption='hide') }}
         </span>
         <ul id="pdfview_navigation_list"></ul>
     </div>

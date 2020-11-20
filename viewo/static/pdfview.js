@@ -94,7 +94,7 @@ class Navigator {
         // TODO: CHECK FOR BETTER REMOVEMENT
         error_page_list.html('')
         for (let page of service.pages) {
-            let btn = `<button type="button" id="openpage_${page.page}">${page.title}</button>`
+            let btn = `<button type="button" class="btn btn-default" id="openpage_${page.page}">${page.title}</button>`
             error_page_list.append(btn)
             $(`#openpage_${page.page}`).click(function () {
                 resultview.show_page(page.page)
