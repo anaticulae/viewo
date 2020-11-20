@@ -36,6 +36,8 @@ def all_documents(userid: str = None):
             continue
         result.append(todo)
     for done in dones:
+        # set done flag
+        done.done = True
         result.append(done)
 
     result = sorted(

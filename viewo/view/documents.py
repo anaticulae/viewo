@@ -53,6 +53,9 @@ def load_documents(owner):
 def merge_jobs(todo, ready) -> list:
     result = []
     result.extend(ready)
+    for item in result:
+        # set done flag
+        item.done = True
     done = {item.name for item in ready}
 
     for item in todo:
