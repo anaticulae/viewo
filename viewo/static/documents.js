@@ -37,17 +37,24 @@ function share_document(document) {
 
 var documents = {
     init: function (userid) {
-        documents.userid = userid
         // add empty table
         documents.table = $('#documents').DataTable({
             'data': []
         })
-        // update content
+        documents.update_user(userid)
+    },
+
+    update_user: function (userid) {
+        documents.userid = userid
         documents.call_server()
     },
 
     call_server: function () {
-        $.ajax(`${API}/documents`, {
+        let url = `${API}/documents`
+        if (documents.userid == '00000000') {
+            url += '?public=True'
+        }
+        $.ajax(url, {
             dataType: 'json',
             success: function (response) {
                 documents.update_documents(response.documents)

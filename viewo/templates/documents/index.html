@@ -24,15 +24,15 @@
 {% if current_user.is_authenticated %}
 <div class="container-fluid">
     <div class="form-group col-md-6 col-sm-6">
-        <p><a href="{{ url_for('documents.compare_document') }}">Vergleichen</a></p>
+        <p><a class="btn btn-default" href="{{ url_for('documents.compare_document') }}">Vergleichen</a></p>
     </div>
     <div class="form-group col-md-6 col-sm-6">
         <div class="btn-group" id="toggle_private" data-toggle="buttons">
             <label class="btn btn-default">
-                <input name="vis-type" type="radio" value="public">Öffentlich
+                <input name="vis-type" type="radio" value="public" id="public_document">Öffentlich
             </label>
             <label class="btn btn-default active">
-                <input name="vis-type" type="radio" value="private">Eigen
+                <input name="vis-type" type="radio" value="private" id="private_document">Eigen
             </label>
         </div>
     </div>
@@ -77,5 +77,13 @@ documents.init(`{{current_user.get_id()}}`)
 {# public owner #}
 documents.init(`00000000`)
 {% endif %}
+$('#toggle_private').on('change', function(e) {
+let private = $("#private_document")[0].checked
+if(private){
+documents.update_user(`{{current_user.get_id()}}`)
+}else{
+documents.update_user(`00000000`)
+}
+});
 {% endcall %}
 {% endblock %}

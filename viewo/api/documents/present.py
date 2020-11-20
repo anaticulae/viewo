@@ -9,7 +9,10 @@
 
 import json
 
+import flask
 import flask_login
+import link
+import utila
 
 import viewo.api
 import viewo.api.documents
@@ -18,12 +21,27 @@ import viewo.api.documents.utils
 
 @viewo.api.documents.api_documents.route('/documents', methods=['GET'])
 def documents():
-    userid = flask_login.current_user.get_id()
-    collected = viewo.api.documents.utils.all_documents(userid=userid)
+    public = utila.str2bool(flask.request.args.get('public', False))
+    owner = userid(public=public)
+    collected = viewo.api.documents.utils.all_documents(userid=owner)
     dumped = json.dumps({
         'documents': collected,
     })
     return dumped
+
+
+def userid(public: bool = True):
+    """Select filter policy by loggend in user. Decide to show private,
+    public or both data."""
+    # TODO: REMOVE DUPLICATION LATER
+    user = flask_login.current_user.get_id()
+    user = {link.PUBLIC_OWNER} if user is None else user
+    if not public:
+        return user
+    if user:
+        # add public documents to user
+        user = {link.PUBLIC_OWNER, user}
+    return user
 
 
 @viewo.api.documents.api_documents.route(
