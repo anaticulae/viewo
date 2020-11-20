@@ -138,9 +138,9 @@ class FindingStatusCounter {
 
     build() {
         let parent = $('#finding_status_counter')
-        base.new_image_button(parent, 'result/wrong.png', 'show_open', 'open')
-        base.new_image_button(parent, 'result/right.png', 'show_done', 'done')
-        base.new_image_button(parent, 'result/trash.png', 'show_removed', 'rejected')
+        base.new_image_button(parent, 'view/wrong.png', 'show_open', 'open')
+        base.new_image_button(parent, 'view/right.png', 'show_done', 'done')
+        base.new_image_button(parent, 'view/trash.png', 'show_removed', 'rejected')
     }
 
     init_listener() {
@@ -221,16 +221,16 @@ class TodoListView {
             var done = `finding_done_${finding.number}`
             action =
                 `<button type="button" id="${del}">
-                    <img src="/static/images/result/trash.png" alt="delete" width="100%" height="100%" />
+                    <img src="/static/images/view/trash.png" alt="delete" width="100%" height="100%" />
                  </button>
                  <button type="button" id="${done}">
-                    <img src="/static/images/result/right.png" alt="done" width="100%" height="100%" />
+                    <img src="/static/images/view/right.png" alt="done" width="100%" height="100%" />
                  </button>`
         } else {
             var restore = `finding_restore_${finding.number}`
             action =
                 `<button type="button" id="${restore}">
-                    <img src="/static/images/result/refresh.png" alt="done" width="100%" height="100%" />
+                    <img src="/static/images/view/refresh.png" alt="done" width="100%" height="100%" />
                 </button>`
         }
         let page = finding.location.page
