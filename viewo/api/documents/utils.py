@@ -54,6 +54,7 @@ def job_toraw(info: link.JobInfo) -> dict:
         'result': link.job.findingstatus_toraw(info.result),
         'name': info.name,
         'done': info.done,
+        'owner': info.owner,
     }
     if info.password:
         result['password'] = 'XXXXXXXXXX'  # info.password
