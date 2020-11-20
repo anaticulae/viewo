@@ -34,13 +34,12 @@ def userid(public: bool = True):
     """Select filter policy by loggend in user. Decide to show private,
     public or both data."""
     # TODO: REMOVE DUPLICATION LATER
+    # TODO: ADD UNIT TEST
     user = flask_login.current_user.get_id()
-    user = {link.PUBLIC_OWNER} if user is None else user
-    if not public:
-        return user
-    if user:
-        # add public documents to user
-        user = {link.PUBLIC_OWNER, user}
+    user = {link.PUBLIC_OWNER} if user is None else {user}
+    if public:
+        # user = user | {link.PUBLIC_OWNER}
+        user = {link.PUBLIC_OWNER}
     return user
 
 
