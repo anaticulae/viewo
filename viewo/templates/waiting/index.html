@@ -1,14 +1,8 @@
 {% extends 'base.html' %}
 
-{% block head %}
+{% block styles %}
 {{ super() }}
-
 {{ css('waiting.css') }}
-
-{{ js('waiting.js') }}
-
-{{ onload(process, module='result_waiting_view') }}
-
 {% endblock %}
 
 {% block pagecontent %}
@@ -79,4 +73,10 @@
         <span id="status_5" class="status todo">...</span>
     </li>
 </ol>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ js('waiting.js') }}
+{{ onload(process, module='result_waiting_view') }}
 {% endblock %}
