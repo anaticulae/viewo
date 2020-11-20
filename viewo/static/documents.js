@@ -34,3 +34,73 @@ function share_document(document) {
         let answer = window.prompt('Link:', `http://www.checkitweg.de/view/${document}`)
     })
 }
+
+var documents = {
+    init: function (userid) {
+        documents.userid = userid
+        // add empty table
+        documents.table = $('#documents').DataTable({
+            'data': []
+        })
+        // update content
+        documents.call_server()
+    },
+
+    call_server: function () {
+        $.ajax(`${API}/documents`, {
+            dataType: 'json',
+            success: function (response) {
+                documents.update_documents(response.documents)
+            },
+            error: function () {
+                user_error('Could not reach server.')
+            }
+        });
+    },
+
+    update_documents: function (items) {
+        // TODO: IMPROVE UPDATE BEHAVIOR
+        documents.table.clear()
+        let data = []
+        for (let item of items) {
+            let title = item.title
+            let todo = ``
+            let action = ``
+            let mydocument = documents.userid == item.owner
+            let public = documents.userid == '00000000'
+            if (item.done) {
+                title = `<a href="view/${item.name}">${title}</a>`
+                let closed = item.result.closed + item.result.excluded
+                let findingcount = closed + item.result.open
+                todo = `${closed}/${findingcount}`
+
+                if (mydocument && public == false) {
+                    // TODO: IMPROVE CODE STYLE
+                    action += base.new_image_button('', 'view/lock.png', null, null, null, null, `add_password('${item.name}')`)
+                    action += base.new_image_button('', 'view/share.png', null, null, null, null, `share_document('${item.name}')`)
+                    action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
+                } else {
+                    action += base.new_image_button('', 'view/share.png', null, null, null, null, `share_document('${item.name}')`)
+                }
+            } else {
+                todo = '<center>-</center>'
+                if (mydocument == false) {
+                    action += base.new_image_button('', 'view/share.png', null, null, null, null, `share_document('${item.name}')`)
+                } else {
+                    action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
+                }
+                action += `<a href="waiting/${item.name}"><img src="/static/images/animation/loader.gif"
+                alt="in progress" width="16" height="16" /></a>`
+            }
+            row = [
+                title,
+                item.date,
+                todo,
+                action,
+            ]
+            data.push(row)
+        }
+        documents.table.rows.add(data);
+        documents.table.draw()
+    },
+}

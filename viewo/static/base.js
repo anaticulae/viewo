@@ -61,18 +61,26 @@ base.scroll_to = function (item) {
 }
 
 
-base.new_image_button = function (parent, src, id = null, textid = null, link = null, alt = null) {
-    let raw = `<button type="button" id="${id}" class="image_button" style="width:50px;">`
+base.new_image_button = function (parent = '', src = '', id = null, textid = null, link = null, alt = null, onclick = null) {
+    let raw = `<button type="button" id="${id}" class="btn btn-default"`
+    if (onclick != null) {
+        raw += ` onclick="${onclick}" `
+    }
+    raw += '>'
     if (textid != null) {
         raw += `<span class="${textid}">0</span>`
     }
-    raw += `<img src="/static/images/${src}" width="14" height="14" style="padding-left:5px" `
+    raw += `<img src="/static/images/${src}" width="20" height="20" `
     if (alt != null) {
         raw += `alt="${alt}"`
     }
     raw += '/>'
     raw += '</button>'
-    parent.append(raw)
+    if (parent != '') {
+        parent.append(raw)
+    } else {
+        return raw
+    }
     // if (link != null) {
     //     $(`#${id}`).click(function () {
     //         link(this.)

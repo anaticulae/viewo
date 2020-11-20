@@ -45,76 +45,37 @@
 {{ button(img=img, onclick=onclick, alt="share", width="20", height="20", style="padding:0px") }}
 {%- endmacro %}
 
-
-
-<table id="results" class="table table-striped table-bordered">
+<table class="table table-striped dataTable no-footer" id="documents" role="grid">
     <thead>
-        <tr>
-            <th class="document_title expand"></th>
-            <th class="date">Datum</th>
-            <th class="score">Todo</th>
-            <th class="small"></th>
-            <th class="status_header"></th>
+        <tr role="row">
+            <th tabindex="0" class="sorting expand" aria-controls="documents" rowspan="1" colspan="1"></th>
+            <th tabindex="0" class="sorting" aria-controls="documents" rowspan="1" colspan="1" style="min-width:150px">
+                Datum</th>
+            <th tabindex="0" class="sorting" aria-controls="documents" rowspan="1" colspan="1" style="width:100px">
+                Todo</th>
+            <th tabindex="0" class="sorting_disabled" aria-controls="documents" rowspan="1" colspan="1"
+                style="min-width:150px">Aktion</th>
         </tr>
     </thead>
     <tbody>
-        {% for row in documents %}
-        <tr id="result_table_{{row['name']}}">
-            {% if row['result'] == 'failed' %}
-            {#
-                process failed, only fast view is visible
-                change background to red
-             #}
-            <td class="failed">{{row['title']}}</td>
-            <td class="date failed">{{row['date']}}</td>
-            <td class="score failed">failed</td>
-            <td class="right">
-                {% if current_user.get_id() == row.owner %}
-                {{ action('trash', 'delete_document(\''+row['name']+'\')') }}
-                {% endif %}
-            </td>
-            <td class="status failed"><a href="waiting/{{row['name']}}">failed</a></td>
-
-            {% elif row['result'] %}
-            {# process succeed #}
-            <td><a href="view/{{row['name']}}">{{row['title']}}</a></td>
-            <td class="date">{{row['date']}}</td>
-            <td class="score">
-                {{row['result'].closed+row['result'].excluded}}/{{row['result'].open+row['result'].closed+row['result'].excluded}}
-            </td>
-            <td class="right">
-                {{ action('share', 'share_document(\''+row['name']+'\')') }}
-                {% if current_user.get_id() == row.owner %}
-                {{ action('lock', 'add_password(\''+row['name']+'\')') }}
-                {{ action('trash', 'delete_document(\''+row['name']+'\')') }}
-                {% endif %}
-            </td>
-            <td class="status">
-                <a href="view/{{row['name']}}">
-                    <img src="/static/images/view/document.png" alt="open" width="16" height="16" />
-                </a>
-            </td>
-
-            {% else %}
-            {# analysis is running #}
-            <td>{{row['title']}}</td>
-            <td class="date">{{row['date']}}</td>
-            <td class="score">-</td>
-            <td class="right">
-                {% if current_user.get_id() == row.owner %}
-                {{ action('trash', 'delete_document(\''+row['name']+'\')') }}
-                {% endif %}
-            </td>
-            <td class="status">
-                <a href="waiting/{{row['name']}}">
-                    <img src="/static/images/animation/loader.gif" alt="in progress" width="16" height="16" />
-                </a>
-            </td>
-            {% endif %}
+        <tr class="odd">
+            <td class="dataTables_empty" valign="top" colspan="3">Keine Dokumente verfügbar.</td>
         </tr>
-        {% endfor %}
     </tbody>
 </table>
 {% endif %}
 
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% call js_ready() %}
+{% if current_user.is_authenticated %}
+documents.init(`{{current_user.get_id()}}`)
+{% else %}
+{# public owner #}
+documents.init(`00000000`)
+{% endif %}
+{% endcall %}
 {% endblock %}
