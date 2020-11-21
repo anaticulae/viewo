@@ -7,6 +7,8 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import os
+
 import link
 import utila
 
@@ -37,5 +39,5 @@ def load_html(documentid: str, pages: tuple = None) -> dict:
 
 def pagecount(documentid: str) -> int:
     root = link.resultview(documentid, done=True)
-    result = len(utila.file_list(root, include='html'))
+    result = len(utila.file_list(os.path.join(root, 'view'), include='html'))
     return result
