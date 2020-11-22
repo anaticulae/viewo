@@ -24,7 +24,7 @@
 {% if current_user.is_authenticated %}
 <div class="container-fluid">
     <div class="form-group col-md-6 col-sm-6">
-        <p><a class="btn btn-default" href="{{ url_for('documents.compare_document') }}">Vergleichen</a></p>
+        <p><a class="btn btn-default" href="{{ url_for('documents.document_compare') }}">Vergleichen</a></p>
     </div>
     <div class="form-group col-md-6 col-sm-6">
         <div class="btn-group" id="toggle_private" data-toggle="buttons">

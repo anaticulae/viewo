@@ -29,6 +29,6 @@ def test_documents_view(findingclient, monkeypatch, testdir):
 
 
 def test_documents_compare(client):
-    result = tests.content(client, '/compare_document')
+    result = tests.content(client, '/document_compare')
     assert len(result) > 300, str(result)
     assert 'Dokument Vergleich' in result
