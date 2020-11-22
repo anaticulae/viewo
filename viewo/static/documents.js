@@ -91,13 +91,12 @@ var documents = {
                 }
             } else {
                 todo = '<center>-</center>'
+                action += base.new_image_button('', 'animation/loader.gif', null, null, null, null, `window.location.assign('waiting/${item.name}')`)
                 if (mydocument == false) {
                     action += base.new_image_button('', 'view/share.png', null, null, null, null, `share_document('${item.name}')`)
                 } else {
                     action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
                 }
-                action += `<a href="waiting/${item.name}"><img src="/static/images/animation/loader.gif"
-                alt="in progress" width="16" height="16" /></a>`
             }
             row = [
                 title,
