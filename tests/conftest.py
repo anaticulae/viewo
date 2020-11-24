@@ -17,6 +17,7 @@ import utilatest
 
 import tests
 import viewo
+import viewo.api.documents
 import viewo.app
 import viewo.config
 
@@ -47,7 +48,10 @@ def extract(files):
 def run_queuemo(source, generated, dest):
     """Run queuemo to analyze document. Keep attentation to valid
     document/todo-name."""
-    todoname = dest[-16:]  # 16 accepted document id length TODO: USE GLOBAL
+    # 16 accepted document id length
+    todoname = dest[-viewo.api.documents.DOCUMENTID_LENGTH:]
+    # fill too short names
+    todoname = zfill(todoname, viewo.api.documents.DOCUMENTID_LENGTH, char='_')
     workpath = os.path.join(generated, todoname)
     if os.path.exists(workpath):
         return
@@ -57,6 +61,12 @@ def run_queuemo(source, generated, dest):
     # run single queuemo instance in workspace, write output to same workspace
     cmd = f'queuemo_single -i {workspace} -V'
     utila.run(cmd)
+
+
+def zfill(text, width, char='0') -> str:
+    fillme = max(width - len(text), 0)
+    fillme = fillme * char
+    return fillme + text
 
 
 @pytest.fixture
