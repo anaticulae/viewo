@@ -24,19 +24,8 @@
     </ul>
 
 </div>
-
-<script type="text/javascript">
-    function show_password() {
-        $("#password_show").text("{{password_raw}}")
-    }
-    function hide_password() {
-        $("#password_show").text('anzeigen')
-    }
-    $("#password_show").mouseover(show_password);
-    $("#password_show").mouseout(hide_password);
-</script>
-
 {% endif %}
+
 
 <h2>Wartebereich</h2>
 
@@ -79,4 +68,18 @@
 {{ super() }}
 {{ js('waiting.js') }}
 {{ onload(process, module='result_waiting_view') }}
+
+{% if password_raw %}
+<script type="text/javascript">
+    function show_password() {
+        $("#password_show").text("{{password_raw}}")
+    }
+    function hide_password() {
+        $("#password_show").text('anzeigen')
+    }
+    $("#password_show").mouseover(show_password);
+    $("#password_show").mouseout(hide_password);
+</script>
+{% endif %}
+
 {% endblock %}
