@@ -108,6 +108,17 @@ def properties(documentid):
     return simple
 
 
+def links(documentid):
+    loaded = viewo.result.loader.load_links_fromprocess(documentid)
+    raw = viewo.api.utils.simple_recursive(loaded)
+    simple = {'resource': raw}
+    simple['uri'] = flask.url_for(
+        'api_documents.links_get',
+        documentid=documentid,
+    )
+    return simple
+
+
 def document_info(documentid) -> dict:
     docpath = link.document(documentid)
     source = os.path.join(docpath, link.JOB_FILE_NAME)

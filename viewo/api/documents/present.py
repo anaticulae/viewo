@@ -110,3 +110,16 @@ def properties_get(documentid: str):
         'properties': simple,
     })
     return dumped
+
+
+@viewo.api.documents.api_documents.route(
+    '/documents/<string(length=16):documentid>/links',
+    methods=['GET'],
+)
+@viewo.api.valid_document
+def links_get(documentid: str):
+    simple = viewo.api.documents.utils.links(documentid)
+    dumped = json.dumps({
+        'links': simple,
+    })
+    return dumped

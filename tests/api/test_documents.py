@@ -162,3 +162,9 @@ def test_api_upload_with_wrong_field(client):
     files_after = link.count_todo()
     # check that no file was uploaded
     assert files_after == files_before
+
+
+def test_api_documents_links(findingclient):
+    result = tests.apicall(findingclient, '/documents/master_master075/links')
+    assert result['links']
+    assert len(result['links']['resource']) >= 10
