@@ -2,6 +2,35 @@
 
 Every noteable change is logged here.
 
+## v2.7.0
+
+### Feature
+
+* improve pdf view (77a3534dde4d)
+* add option to decide between private and public documents (a4cc84b052b9)
+* use dynamic table (a2e7094967e7)
+* add jquery data table (d5bd9cfb19eb)
+* add view to add messages to open dialog (c4e9fc4f01ae)
+* display title and date (48ee7c7c8a71)
+* use flask moment to display date (3226b59d5736)
+* display user messages (39faacc6bf40)
+* add admin help desk to enable message creation (7008c77e10f4)
+* add message create dialog (d9ee4d43dbbb)
+* add first concept of paying (7bdaaf447bca)
+
+### Fix
+
+* add missing page title (cda2746736c2)
+* replace loader link with button (e68b10946959)
+* fix accessing page count (4e638b9d30f9)
+* display public documents in logged in mode correctly (01fa15452faf)
+* fix templates after introducing bootstrap (ffe47f180b42)
+* fix path after renaming (cef69ffdeb38)
+* add missing done flag (7059fe20848f)
+* export missing owner flag (b060f5a63a5a)
+* display newlines correctly (ecb07ba84183)
+* adjust requirements (300d4e59152b)
+
 ## v2.6.2
 
 ### Feature
