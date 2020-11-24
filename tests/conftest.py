@@ -27,6 +27,7 @@ PACKAGE = viewo.PACKAGE
 RESOURCES = [
     power.HOME018_PDF,
     power.HOME025_PDF,
+    power.MASTER075_PDF,
 ]
 
 
