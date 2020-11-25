@@ -98,7 +98,7 @@ var documents = {
                     action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
                 }
             }
-            row = [
+            let row = [
                 title,
                 item.date,
                 todo,

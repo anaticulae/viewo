@@ -45,7 +45,7 @@ var dialog = {
         for (let item of items) {
             // convert seconds to miliseconds
             let date = moment(item['date'] * 1000).format('DD.MM.YYYY hh:mm')
-            row = [
+            let row = [
                 item['title'],
                 date,
                 `<a href="/account/dialogs/${item['date']}">Öffnen</a>`,
