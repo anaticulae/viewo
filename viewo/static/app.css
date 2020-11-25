@@ -37,15 +37,6 @@
         margin:0px;
         padding:0px;
     }
-    footer{
-        border:0px;
-        border-top:solid black 1px;
-        padding:0px;
-        margin:0px;
-        background:steelblue;
-        height:3%;
-        min-width:50px;
-    }
     nav{
         display:inline-block;
         width:100%;
