@@ -1,4 +1,4 @@
-var file_upload_view = {
+const file_upload_view = {
 
     init: function () {
         $("#file_upload").submit(function (event) {

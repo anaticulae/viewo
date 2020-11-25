@@ -2,7 +2,7 @@
     Document overview table
 */
 
-function delete_document(document) {
+const delete_document = function (document) {
     let action = window.confirm('Möchten Sie das Dokument wirklich löschen?')
     if (action == false) {
         return
@@ -17,7 +17,7 @@ function delete_document(document) {
     });
 }
 
-function add_password(document) {
+const add_password = function (document) {
     do {
         var password = window.prompt('Bitte geben Sie das gewünschte Passwort ein. (mindestens 8 Stellen)')
     } while (password != undefined && password.length < 8)
@@ -28,14 +28,14 @@ function add_password(document) {
     fetch(url, { method: "POST" }).then(resp => { })
 }
 
-function share_document(document) {
+const share_document = function (document) {
     let url = `/view/${document}/share`
     fetch(url, { method: "GET" }).then(resp => {
         let answer = window.prompt('Link:', `http://www.checkitweg.de/view/${document}`)
     })
 }
 
-var documents = {
+const documents = {
     init: function (userid) {
         // add empty table
         documents.table = $('#documents').DataTable({

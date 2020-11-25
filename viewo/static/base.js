@@ -88,7 +88,7 @@ base.new_image_button = function (parent = '', src = '', id = null, textid = nul
     // }
 }
 
-function rpc(url, callback, error = undefined) {
+const rpc = function (url, callback, error = undefined) {
     let call = `${API}${url}`
     $.ajax(call, {
         dataType: 'json',
@@ -105,7 +105,7 @@ function rpc(url, callback, error = undefined) {
     });
 }
 
-function user_error(message) {
+const user_error = function (message) {
     let entry = `<div class="alert alert-warning">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 ${message}
@@ -113,7 +113,7 @@ function user_error(message) {
     $('#nogoodnews').append(entry)
 }
 
-function user_info(message) {
+const user_info = function (message) {
     let entry = `<div class="alert alert-warning">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 ${message}
@@ -121,11 +121,11 @@ function user_info(message) {
     $('#nogoodnews').append(entry)
 }
 
-function connection_error() {
+const connection_error = function () {
     user_error('Service nicht erreichbar!')
 }
 
-function* range(start, end = null) {
+const range = function* (start, end = null) {
     if (end == null) {
         end = start - 1
         start = 0

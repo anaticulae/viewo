@@ -1,4 +1,4 @@
-function openclose(selector) {
+const openclose = function (selector) {
     let selected = document.getElementById(selector)
     let before = selected.classList.length
     selected.classList.remove('hidden_invisible')
@@ -10,7 +10,7 @@ function openclose(selector) {
     }
 }
 
-function openclose_item(selected) {
+const openclose_item = function (selected) {
     let before = selected.classList.length
     selected.classList.remove('hidden_invisible')
     if (selected.classList.length == before) {
@@ -21,7 +21,7 @@ function openclose_item(selected) {
     }
 }
 
-function add_openclose_children(selected) {
+const add_openclose_children = function (selected) {
     selected.onclick = (() => {
         for (let cur of selected.childNodes) {
             openclose_item(cur)
@@ -29,9 +29,12 @@ function add_openclose_children(selected) {
     })
 }
 
-HEADLINES = {}
+const HEADLINES = {}
 
-function update_view(data) {
+const update_view = function (data) {
+    if (data == null) {
+        return
+    }
     for (let item of data) {
         // Create headline only once. If exists update current state.
         if (HEADLINES[item.title] == undefined) {
@@ -45,7 +48,7 @@ function update_view(data) {
     }
 }
 
-function add_title_line(item) {
+const add_title_line = function (item) {
     let view = document.getElementById("linter_table")
     let title = item.title
     let error = item.content.error.length
@@ -77,7 +80,7 @@ function add_title_line(item) {
     return headline_row
 }
 
-function add_content(item) {
+const add_content = function (item) {
     let view = document.getElementById("linter_table")
 
     let tr = document.createElement('tr')
@@ -142,11 +145,11 @@ function add_content(item) {
     return content
 }
 
-function update_title_line(headline, update) {
+const update_title_line = function (headline, update) {
     // TODO: NOT IMPLEMENTED
 }
 
-function add_newline() {
+const add_newline = function () {
     let view = document.getElementById("linter_table")
     let newline = document.createElement('tr')
     let td = document.createElement('td')
@@ -156,7 +159,7 @@ function add_newline() {
     view.appendChild(newline)
 }
 
-function add_li(parent, text, style) {
+const add_li = function (parent, text, style) {
     let node = document.createElement('li')
     node.innerHTML = text
     if (style) {
@@ -166,7 +169,7 @@ function add_li(parent, text, style) {
     return node
 }
 
-function add_ul(parent, style) {
+const add_ul = function (parent, style) {
     let node = document.createElement('ul')
     if (style) {
         node.classList.add(style)
@@ -175,7 +178,7 @@ function add_ul(parent, style) {
     return node
 }
 
-function add_ol(parent, style) {
+const add_ol = function (parent, style) {
     let node = document.createElement('ol')
     if (style) {
         node.classList.add(style)

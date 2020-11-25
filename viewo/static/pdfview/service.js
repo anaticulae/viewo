@@ -207,7 +207,7 @@ class DocumentService {
     }
 }
 
-function empty_findings(pagerange) {
+const empty_findings = function (pagerange) {
     let splitted = pagerange.split(':')
     let start = parseInt(splitted[0])
     let end = parseInt(splitted[1])
@@ -217,31 +217,31 @@ function empty_findings(pagerange) {
     }
 }
 
-function update_content(index, content) {
+const update_content = function (index, content) {
     index = service.content.findIndex(s => (s.page == index))
     service.content[index].content = content
 }
 
-function update_findings(index, findings) {
+const update_findings = function (index, findings) {
     let current = page(index)
     current.findings = findings
 }
 
-function page_content(pagenumber) {
+const page_content = function (pagenumber) {
     let selected = service.content.find(s => (s.page == pagenumber))
     return selected.content
 }
 
-function page(pagenumber) {
+const page = function (pagenumber) {
     let selected = service.content.find(s => (s.page == pagenumber))
     return selected
 }
 
-function empty(content) {
+const empty = function (content) {
     return content == SPECIALCONTENT || content == SPECIALCONTENT_EMPTY
 }
 
-function visible_findings(pagenumber) {
+const visible_findings = function (pagenumber) {
     let selected = page(pagenumber)
     if (selected == undefined || selected.findings == undefined) {
         return []
@@ -250,7 +250,7 @@ function visible_findings(pagenumber) {
     return findings
 }
 
-function next_page(pagenumber) {
+const next_page = function (pagenumber) {
     let index = service.content.findIndex(s => (s.page == pagenumber))
     index += 1
     if (index == service.content.length) {
@@ -259,7 +259,7 @@ function next_page(pagenumber) {
     return service.content[index].page
 }
 
-function next_page_visible(pagenumber) {
+const next_page_visible = function (pagenumber) {
     let current = pagenumber
     do {
         current = next_page(current)
@@ -267,7 +267,7 @@ function next_page_visible(pagenumber) {
     return current
 }
 
-function previous_page(pagenumber) {
+const previous_page = function (pagenumber) {
     let index = service.content.findIndex(s => (s.page == pagenumber))
     if (index == 0) {
         return service.content[service.content.length - 1].page
@@ -275,7 +275,7 @@ function previous_page(pagenumber) {
     return service.content[index - 1].page
 }
 
-function previous_page_visible(pagenumber) {
+const previous_page_visible = function (pagenumber) {
     let current = pagenumber
     do {
         current = previous_page(current)
@@ -283,7 +283,7 @@ function previous_page_visible(pagenumber) {
     return current
 }
 
-function defaultpages(pagenumbers) {
+const defaultpages = function (pagenumbers) {
     let result = []
     result.push({
         'content': SPECIALCONTENT_EMPTY,

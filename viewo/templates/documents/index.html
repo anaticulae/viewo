@@ -16,10 +16,6 @@
 
 {% if documents %}
 
-{% block head %}
-{{ super() }}
-<script type="text/javascript" src="{{ url_for('static', filename='documents.js') }}"></script>
-{% endblock %}
 
 {% if current_user.is_authenticated %}
 <div class="container-fluid">
@@ -70,6 +66,7 @@
 
 {% block scripts %}
 {{ super() }}
+<script type="text/javascript" src="{{ url_for('static', filename='documents.js') }}"></script>
 {% call js_ready() %}
 {% if current_user.is_authenticated %}
 documents.init(`{{current_user.get_id()}}`)
