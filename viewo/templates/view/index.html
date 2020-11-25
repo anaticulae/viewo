@@ -11,6 +11,7 @@
 {{ js('pdfview/service.js') }}
 {{ js('pdfview/findingbox.js') }}
 {{ js('pdfview/properties.js') }}
+{{ js('pdfview/hyperlinks.js') }}
 {{ js('pdfview/docstyle.js') }}
 {{ js('pdfview/resultview.js') }}
 {{ js('pdfview.js') }}
@@ -49,6 +50,10 @@ onload('{{process}}')
 
     <main id="pdfview_footnotes" class="hidden_invisible">
         {% include 'view/_footnotes.html' %}
+    </main>
+
+    <main id="pdfview_hyperlinks" class="hidden_invisible">
+        {% include 'view/_hyperlinks.html' %}
     </main>
 
     <main id="pdfview_properties" class="hidden_invisible">

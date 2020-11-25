@@ -5,6 +5,7 @@ const FOOTNOTES = 1025
 const CAPTIONS = 1026
 const DOCSTYLE = 1027
 const PROPERTIES = 1028
+const HYPERLINKS = 1029
 
 const SPECIALCONTENT = 'NONE'
 const SPECIALCONTENT_EMPTY = 'NONE_EMPTY'
@@ -26,6 +27,7 @@ class DocumentService {
             service.update_captions()
             service.update_properties()
             service.update_docstyle()
+            service.update_hyperlinks()
         })
     }
 
@@ -45,8 +47,9 @@ class DocumentService {
 
     update_footnotes() {
         rpc(`/documents/${this.documentid}/footnotes`, function (response) {
+            let footnotes = response.footnotes.resource
             if (response.footnotes.resource.length) {
-                update_content(FOOTNOTES, response.footnotes.resource)
+                update_content(FOOTNOTES, footnotes)
             } else {
                 update_content(FOOTNOTES, SPECIALCONTENT_EMPTY)
             }
@@ -63,6 +66,20 @@ class DocumentService {
                 update_content(CAPTIONS, SPECIALCONTENT_EMPTY)
             }
             navigator.update_page_navigator()
+        })
+    }
+
+    update_hyperlinks() {
+        rpc(`/documents/${this.documentid}/links`, function (response) {
+            let links = response.links.resource
+            if (links.length) {
+                update_content(HYPERLINKS, links)
+            } else {
+                update_content(HYPERLINKS, SPECIALCONTENT_EMPTY)
+            }
+            navigator.update_page_navigator()
+            // TODO: ADD TABLE CHANGE LISTENER
+            hyperlinksview.update_content(links)
         })
     }
 
@@ -292,6 +309,11 @@ function defaultpages(pagenumbers) {
         'content': SPECIALCONTENT_EMPTY,
         'page': CAPTIONS,
         'title': 'Unterschriften',
+    })
+    result.push({
+        'content': SPECIALCONTENT_EMPTY,
+        'page': HYPERLINKS,
+        'title': 'Hyperlinks',
     })
     result.push({
         'content': SPECIALCONTENT_EMPTY,

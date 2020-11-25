@@ -45,6 +45,8 @@ class ResultView {
             this.show_footnotes()
         } else if (selected.page == CAPTIONS) {
             this.show_captions()
+        } else if (selected.page == HYPERLINKS) {
+            this.show_hyperlinks()
         } else if (selected.page == DOCSTYLE) {
             this.show_docstyle()
         } else if (selected.page == PROPERTIES) {
@@ -55,12 +57,13 @@ class ResultView {
     }
 
     hide_all() {
+        $('#pdfview_captions').hide()
         $('#pdfview_content').hide()
-        $('#pdfview_overview').hide()
         $('#pdfview_docstyle').hide()
         $('#pdfview_footnotes').hide()
+        $('#pdfview_hyperlinks').hide()
+        $('#pdfview_overview').hide()
         $('#pdfview_properties').hide()
-        $('#pdfview_captions').hide()
     }
 
     show_overview() {
@@ -179,6 +182,10 @@ class ResultView {
             }
             index += 1
         }
+    }
+
+    show_hyperlinks() {
+        $('#pdfview_hyperlinks').show()
     }
 
     show_pdf_properties() {
