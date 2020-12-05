@@ -2,6 +2,18 @@
 
 Every noteable change is logged here.
 
+## v2.8.0
+
+### Feature
+
+* add hyperlinks view (fd7c9f922ec4)
+* add document links end point (f2464de0eccb)
+
+### Fix
+
+* do not color footer in blue (40c61ed263ff)
+* fix order of javascript invocation (6f77e66d9e89)
+
 ## v2.7.0
 
 ### Feature
