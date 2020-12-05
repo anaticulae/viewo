@@ -15,7 +15,6 @@ import iamraw.path
 import link
 import serializeraw
 import utila
-import words.__iamraw__
 
 
 def load_sentences(path: str) -> dict:
@@ -131,4 +130,4 @@ def load_links_fromprocess(process: str) -> iamraw.PageContentCaptions:
     if not os.path.exists(path):
         utila.error(f'could not load: {path}')
         return None
-    return words.__iamraw__.load_hyperlinks(path)
+    return serializeraw.load_hyperlinks(path)
