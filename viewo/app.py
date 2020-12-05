@@ -23,7 +23,7 @@ import viewo.config
 import viewo.path
 import viewo.tracking
 import viewo.user.loginmanager
-from viewo.api.documents import *  # pylint:disable=wildcard-import
+from viewo.api.documents import *  # pylint:disable=wildcard-import,W0614
 from viewo.api.findings import *  # pylint:disable=wildcard-import
 from viewo.api.pageviews import *  # pylint:disable=wildcard-import
 from viewo.api.result import result_
