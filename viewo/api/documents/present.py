@@ -100,6 +100,19 @@ def captions_get(documentid: str):
 
 
 @viewo.api.documents.api_documents.route(
+    '/documents/<string(length=16):documentid>/bibliography',
+    methods=['GET'],
+)
+@viewo.api.valid_document
+def bibliography_get(documentid: str):
+    simple = viewo.api.documents.utils.bibliography(documentid)
+    dumped = json.dumps({
+        'bibliography': simple,
+    })
+    return dumped
+
+
+@viewo.api.documents.api_documents.route(
     '/documents/<string(length=16):documentid>/properties',
     methods=['GET'],
 )

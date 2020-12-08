@@ -131,3 +131,14 @@ def load_links_fromprocess(process: str) -> iamraw.PageContentCaptions:
         utila.error(f'could not load: {path}')
         return None
     return serializeraw.load_hyperlinks(path)
+
+
+def load_bibliography_fromprocess(process: str) -> iamraw.BibliographyReferences:  # yapf:disable
+    result = link.resultview(process, done=True)
+    if not os.path.exists(result):
+        return None
+    path = utila.pathconnector(result, 'detector', 'bibliography_detected')
+    if not os.path.exists(path):
+        utila.error(f'could not load: {path}')
+        return None
+    return serializeraw.load_bibliography_reference(path)

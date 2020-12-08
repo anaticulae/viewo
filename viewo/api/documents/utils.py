@@ -98,6 +98,18 @@ def captions(documentid):
     return simple
 
 
+def bibliography(documentid):
+    loaded = viewo.result.loader.load_bibliography_fromprocess(documentid)
+    # raw = iamraw.caption.pagecaptions_toraw(loaded) if loaded else []
+    raw = utila.flatten(loaded) if loaded else []
+    simple = {'resource': viewo.api.utils.simple_recursive(raw)}
+    simple['uri'] = flask.url_for(
+        'api_documents.bibliography_get',
+        documentid=documentid,
+    )
+    return simple
+
+
 def properties(documentid):
     raw = viewo.result.json.properties_tojson({})
     simple = {'resource': raw}
