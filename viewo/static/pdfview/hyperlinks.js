@@ -25,7 +25,6 @@ class PDFViewHyperlinks {
         }
         hyperlinksview.table.rows.add(data);
         hyperlinksview.table.draw()
-
     }
 }
 

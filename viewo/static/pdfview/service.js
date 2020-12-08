@@ -6,6 +6,7 @@ const CAPTIONS = 1026
 const DOCSTYLE = 1027
 const PROPERTIES = 1028
 const HYPERLINKS = 1029
+const BIBLIOGRAPHY = 1030
 
 const SPECIALCONTENT = 'NONE'
 const SPECIALCONTENT_EMPTY = 'NONE_EMPTY'
@@ -28,6 +29,7 @@ class DocumentService {
             service.update_properties()
             service.update_docstyle()
             service.update_hyperlinks()
+            service.update_bibliography()
         })
     }
 
@@ -96,6 +98,19 @@ class DocumentService {
             let style = response.style.resource
             update_content(DOCSTYLE, style)
             navigator.update_page_navigator()
+        })
+    }
+
+    update_bibliography() {
+        rpc(`/documents/${this.documentid}/bibliography`, function (response) {
+            let bibs = response.bibliography.resource
+            if (bibs.length) {
+                update_content(BIBLIOGRAPHY, bibs)
+            } else {
+                update_content(BIBLIOGRAPHY, SPECIALCONTENT_EMPTY)
+            }
+            navigator.update_page_navigator()
+            bibliographyview.update_content(bibs)
         })
     }
 
@@ -324,6 +339,11 @@ const defaultpages = function (pagenumbers) {
         'content': SPECIALCONTENT_EMPTY,
         'page': PROPERTIES,
         'title': 'Eigenschaften',
+    })
+    result.push({
+        'content': SPECIALCONTENT_EMPTY,
+        'page': BIBLIOGRAPHY,
+        'title': 'Bibliographie',
     })
     return result
 }
