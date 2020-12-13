@@ -91,11 +91,17 @@ const documents = {
                 }
             } else {
                 todo = '<center>-</center>'
-                action += base.new_image_button('', 'animation/loader.gif', null, null, null, null, `window.location.assign('waiting/${item.name}')`)
+                if (public == false) {
+                    action += base.new_image_button('', 'animation/loader.gif', null, null, null, null, `window.location.assign('waiting/${item.name}')`)
+                } else {
+                    action += base.new_image_button('', 'animation/loader.gif', null, null, null, null, null)
+                }
                 if (mydocument == false) {
                     action += base.new_image_button('', 'view/share.png', null, null, null, null, `share_document('${item.name}')`)
                 } else {
-                    action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
+                    if (public == false) {
+                        action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
+                    }
                 }
             }
             let row = [
