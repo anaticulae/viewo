@@ -15,6 +15,7 @@
 
 import os
 
+import link
 import utila
 
 import viewo.api.users.data
@@ -91,6 +92,9 @@ def create_user(password: str, userid: str = None):
 
 
 def user_document_append(userid: str, documentid: str):
+    if userid == link.PUBLIC_OWNER:
+        # do not add public document to public user
+        return
     user = user_fromid(userid)
     user.append_document(documentid)
     user_update(user)

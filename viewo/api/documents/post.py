@@ -15,6 +15,7 @@ import flask.globals
 import flask_login
 import link
 import link.job
+import utila
 import werkzeug.utils
 
 import viewo.api
@@ -36,7 +37,9 @@ def document_create() -> str:
         # could not load resource, provide error message
         return resource
 
-    userid, password = user_account()
+    # if public flag is provided, document is accessable by all user
+    public = utila.str2bool(flask.request.args.get('public', False))
+    userid, password = user_account(public)
     resource = store_resource(resource.pdf, resource.filename, userid)
 
     result = viewo.api.success(
@@ -82,7 +85,10 @@ def recive_resource() -> Loaded:  # pylint:disable=R0911
     return Loaded(pdf, filename)
 
 
-def user_account():
+def user_account(public: bool = False):
+    if public:
+        nopassword = ''
+        return link.PUBLIC_OWNER, nopassword
     userid = flask_login.current_user.get_id()
     if not userid:
         # generate new random user
