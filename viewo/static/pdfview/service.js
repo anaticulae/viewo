@@ -1,12 +1,12 @@
 "use strict";
 
 const OVERVIEW = -1
-const FOOTNOTES = 1025
-const CAPTIONS = 1026
-const DOCSTYLE = 1027
-const PROPERTIES = 1028
-const HYPERLINKS = 1029
-const BIBLIOGRAPHY = 1030
+const BIBLIOGRAPHY = 1025
+const FOOTNOTES = 1026
+const HYPERLINKS = 1027
+const CAPTIONS = 1028
+const PROPERTIES = 1029
+const DOCSTYLE = 1030
 
 const SPECIALCONTENT = 'NONE'
 const SPECIALCONTENT_EMPTY = 'NONE_EMPTY'
@@ -317,18 +317,23 @@ const defaultpages = function (pagenumbers) {
 
     result.push({
         'content': SPECIALCONTENT_EMPTY,
+        'page': BIBLIOGRAPHY,
+        'title': 'Bibliographie',
+    })
+    result.push({
+        'content': SPECIALCONTENT_EMPTY,
         'page': FOOTNOTES,
         'title': 'Fußnoten',
     })
     result.push({
         'content': SPECIALCONTENT_EMPTY,
-        'page': CAPTIONS,
-        'title': 'Unterschriften',
+        'page': HYPERLINKS,
+        'title': 'Hyperlinks',
     })
     result.push({
         'content': SPECIALCONTENT_EMPTY,
-        'page': HYPERLINKS,
-        'title': 'Hyperlinks',
+        'page': CAPTIONS,
+        'title': 'Unterschriften',
     })
     result.push({
         'content': SPECIALCONTENT_EMPTY,
@@ -339,11 +344,6 @@ const defaultpages = function (pagenumbers) {
         'content': SPECIALCONTENT_EMPTY,
         'page': PROPERTIES,
         'title': 'Eigenschaften',
-    })
-    result.push({
-        'content': SPECIALCONTENT_EMPTY,
-        'page': BIBLIOGRAPHY,
-        'title': 'Bibliographie',
     })
     return result
 }
