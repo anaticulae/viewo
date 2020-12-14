@@ -53,6 +53,8 @@ class ResultView {
             this.show_bibliography()
         } else if (selected.page == PROPERTIES) {
             this.show_pdf_properties()
+        } else if (selected.page == FINDINGS) {
+            this.show_findings()
         } else {
             $('#pdfview_content').show()
         }
@@ -63,6 +65,7 @@ class ResultView {
         $('#pdfview_captions').hide()
         $('#pdfview_content').hide()
         $('#pdfview_docstyle').hide()
+        $('#pdfview_findings').hide()
         $('#pdfview_footnotes').hide()
         $('#pdfview_hyperlinks').hide()
         $('#pdfview_overview').hide()
@@ -193,6 +196,10 @@ class ResultView {
 
     show_bibliography() {
         $('#pdfview_bibliography').show()
+    }
+
+    show_findings() {
+        $('#pdfview_findings').show()
     }
 
     show_pdf_properties() {

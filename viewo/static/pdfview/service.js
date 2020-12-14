@@ -7,6 +7,7 @@ const HYPERLINKS = 1027
 const CAPTIONS = 1028
 const PROPERTIES = 1029
 const DOCSTYLE = 1030
+const FINDINGS = 1031
 
 const SPECIALCONTENT = 'NONE'
 const SPECIALCONTENT_EMPTY = 'NONE_EMPTY'
@@ -30,6 +31,7 @@ class DocumentService {
             service.update_docstyle()
             service.update_hyperlinks()
             service.update_bibliography()
+            service.update_findings()
         })
     }
 
@@ -111,6 +113,19 @@ class DocumentService {
             }
             navigator.update_page_navigator()
             bibliographyview.update_content(bibs)
+        })
+    }
+
+    update_findings() {
+        rpc(`/documents/${this.documentid}/findings`, function (response) {
+            let findings = response.findings.pagefindings
+            if (findings.length) {
+                update_content(FINDINGS, findings)
+            } else {
+                update_content(FINDINGS, SPECIALCONTENT_EMPTY)
+            }
+            navigator.update_page_navigator()
+            findingview.update_content(findings)
         })
     }
 
@@ -344,6 +359,11 @@ const defaultpages = function (pagenumbers) {
         'content': SPECIALCONTENT_EMPTY,
         'page': PROPERTIES,
         'title': 'Eigenschaften',
+    })
+    result.push({
+        'content': SPECIALCONTENT_EMPTY,
+        'page': FINDINGS,
+        'title': 'Fehlerübersicht',
     })
     return result
 }

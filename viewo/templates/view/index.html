@@ -13,6 +13,7 @@
 {{ js('pdfview/findingbox.js') }}
 {{ js('pdfview/properties.js') }}
 {{ js('pdfview/hyperlinks.js') }}
+{{ js('pdfview/findings.js') }}
 {{ js('pdfview/docstyle.js') }}
 {{ js('pdfview/resultview.js') }}
 {{ js('pdfview.js') }}
@@ -67,6 +68,10 @@ onload('{{process}}')
 
     <main id="pdfview_bibliography" class="hidden_invisible">
         {% include 'view/_bibliography.html' %}
+    </main>
+
+    <main id="pdfview_findings" class="hidden_invisible">
+        {% include 'view/_findings.html' %}
     </main>
 </div>
 <div id="todolistview" class="hidden_invisible">
