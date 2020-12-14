@@ -2,6 +2,20 @@
 
 Every noteable change is logged here.
 
+## v2.9.0
+
+### Feature
+
+* improve page order (7e7b0579702a)
+* add public flag to publish public documents (2b12e85ac3be)
+* provide extracted bib of document (c466e5b35eac)
+* add bibliography list view (36d8aa0aa827)
+
+### Fix
+
+* disable deleting public in progress documents (958b802d5ee3)
+* skip documents which are in progress (02afdba414f4)
+
 ## v2.8.0
 
 ### Feature
