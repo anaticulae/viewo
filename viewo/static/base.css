@@ -253,7 +253,10 @@ button{
     width: 700px;
 }
 
-
 .expand{
     width:100%;
+}
+
+.right{
+    float: right;
 }
