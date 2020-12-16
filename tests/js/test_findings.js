@@ -17,12 +17,9 @@ let STATUS = {
     }],
 }
 
-test("test_count_by_finding_status", function () {
+QUnit.module('findings')
+
+QUnit.test("test_count_by_finding_status", assert => {
     let result = count_by_finding_status(STATUS.content[0].findings)
-    let check = [
-        result.open == 1,
-        result.done == 0,
-        result.rejected == 0
-    ]
-    return check
+    assert.equal((result.open, result.done, result.rejected), (1, 0, 0), 'counted')
 });
