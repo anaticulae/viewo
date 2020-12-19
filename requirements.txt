@@ -16,12 +16,12 @@ Flask-WTF==0.14.3
 Flask-Moment==0.10.0
 
 configo==0.8.6
-link==2.0.3
+link==2.0.4
 utila==2.16.1
 
 # load validation results
-protocol==3.1.6
-writers==1.1.4
+protocol==3.2.1
+writers==1.2.0
 
 # hey: load generated data, remove later
 hey==5.5.4
