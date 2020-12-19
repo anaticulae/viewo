@@ -2,6 +2,13 @@
 
 Every noteable change is logged here.
 
+## v2.10.0
+
+### Feature
+
+* add option to filter findings by category and state (769b6581ef6b)
+* add finding overview to display all findings as table (9826aea5831a)
+
 ## v2.9.0
 
 ### Feature
