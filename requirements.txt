@@ -26,8 +26,6 @@ writers>=1.2.0<2.0.0
 # hey: load generated data, remove later
 hey>=5.5.4<6.0.0
 
-words==0.24.1 # TODO: REMOVE AFTER UPGRADING IAMRAW
-
 # agb, impressum etc.
 legal==0.2.0
 
