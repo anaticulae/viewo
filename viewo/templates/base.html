@@ -15,8 +15,7 @@
 {% block navbar %}
 <div class="main-header navbar-fixed-top">
     <div class="navbar navbar-inverse navbar-static-top" roles="navigation">
-        <div class="navbar-brand"><a href="https://www.checkitweg.de/" style="color:darkgray">checkitweg.de</a>
-        </div>
+        <div class="navbar-brand">{{ href('checkitweg.de', 'welcome.show_welcome') }}</div>
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
         </a>
