@@ -26,7 +26,8 @@
         margin:0px;
     }
     #display{
-        padding:5px;
+        padding:0px;
+        margin:0px;
     }
     #pagecontent{
         border:0px;
@@ -67,5 +68,29 @@
     #pdfview_navigation_toggle_box{
         /* TODO: ENABLE BUTTONS IN APP VIEW */
         display: none;
+    }
+    div.content{
+        padding: 0px;
+        padding-left: 4px;
+        padding-right: 4px;
+        margin: 0px;
+        padding-top: 20px;
+    }
+    div.content div.wrapper {
+        display: block;
+    }
+    section.mastertoc h3{
+        display: none;
+    }
+    nav {
+        width:100%;
+        display: block;
+        border-bottom: 1px solid black;
+        margin-bottom: 20px;
+    }
+    .mastertoc a {
+        font-size: 16px;
+        margin: 0px;
+        padding: 0px;
     }
 }
