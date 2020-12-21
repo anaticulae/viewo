@@ -5,10 +5,16 @@
 }
 #showroom{
     overflow-y: auto;
+    overflow-x: hidden;
     padding-left:20px;
     /* padding: 10px; */
     width: 30%;
 }
+
+#showroom .example{
+    overflow: hidden;
+}
+
 #example{
     width:95%;
     height: 150px;
@@ -42,6 +48,14 @@
         width: 100%;
         display: block;
         overflow-y: visible;
+        overflow-x: visible;
+        float: left;
+        border-top: 1px solid gainsboro;
+        padding-top: 20px;
+        margin-top: 50px;
+    }
+    #showroom .example{
+        width: 45%;
         float: left;
     }
     #example{

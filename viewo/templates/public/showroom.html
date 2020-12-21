@@ -8,7 +8,7 @@
 <aside id="showroom" class="top-pad" style="max-height:600px">
     {% for document in documents %}
     {% if document['result'] %}
-    <div class="well">
+    <div class="well example">
         <h3><a href="{{ url_for('result.view_result', documentid=document['name']) }}">{{document['title']}}</a>
         </h3>
         {% set pages = document['result']['closed'] + document['result']['excluded'] + document['result']['open'] %}
