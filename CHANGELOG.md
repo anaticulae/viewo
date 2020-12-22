@@ -2,6 +2,20 @@
 
 Every noteable change is logged here.
 
+## v2.10.3
+
+### Feature
+
+* use badge to display error count (8a84c2eaaa0f)
+
+### Fix
+
+* improve app view (64f0727e1de0)
+* avoid line break in footer view (3444dc28516f)
+* overwrite writing with base style (5799d23d4e28)
+* brand: root to welcome page (cffb69f17d13)
+* adjust showroom in base and app view (41f923de13bf)
+
 ## v2.10.2
 
 ## v2.10.1
