@@ -11,6 +11,8 @@ import dataclasses
 
 import flask_login
 
+import viewo.api.users.data
+
 
 @dataclasses.dataclass
 class FlaskUser(flask_login.UserMixin):
@@ -18,6 +20,13 @@ class FlaskUser(flask_login.UserMixin):
 
     def get_id(self):
         return self.identifier
+
+    @property
+    def payed(self):
+        user = viewo.api.users.data.user_fromid(self.identifier)
+        if not user:
+            return 0
+        return user.payed
 
     @property
     def is_admin(self):
