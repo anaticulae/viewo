@@ -64,7 +64,7 @@ def userpublic_fromid(userid: str) -> dict:
 
 
 def user_path(userid: str) -> str:
-    return os.path.join(viewo.path.users(), f'{userid}.yaml')
+    return os.path.join(viewo.path.users(), userid)
 
 
 def user_update(user: 'viewo.api.users.data.User') -> bool:

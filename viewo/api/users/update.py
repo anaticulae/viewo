@@ -76,8 +76,8 @@ def user_put(userid):
 
 def user_pay(userid: str, choice: int):
     assert choice in (0, 1, 2, 3, 4), f'invalid choice: {choice}'
-    userpath = os.path.join(viewo.path.users(), userid)
-    assert os.path.exists(userpath, f'invalid user path: {userpath}')
+    userpath = viewo.api.users.data.userpath(userid)
+    assert os.path.exists(userpath), f'invalid user path: {userpath}'
     user = viewo.api.users.data.load_user(userpath)
     user.payed = choice
     viewo.api.users.data.update_user(user)

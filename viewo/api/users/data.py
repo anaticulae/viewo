@@ -62,7 +62,7 @@ def dump_users(users: Users, path: str):
 
     for user in users:
         dumped = dump_user(user)
-        outpath = os.path.join(path, f'{user.userid}.yaml')
+        outpath = os.path.join(path, user.userid)
         utila.file_replace(outpath, dumped)
 
 
@@ -79,10 +79,25 @@ def dump_user(user: User) -> str:
 
 
 def update_user(user: User):
-    userpath = os.path.join(viewo.path.users(), user.userid)
+    path = userpath(user.userid)
     dumped = viewo.api.users.data.dump_user(user)
     # TODO: NOT THREAD SAFE
-    utila.file_replace(userpath, dumped)
+    utila.file_replace(path, dumped)
+
+
+def user_fromid(userid: int) -> User:
+    path = userpath(userid)
+    if not path:
+        return None
+    loaded = load_user(path)
+    return loaded
+
+
+def userpath(userid: int) -> str:
+    result = os.path.join(viewo.path.users(), userid)
+    if not os.path.exists(result):
+        return None
+    return result
 
 
 def verify_password(userid: str, password: str) -> bool:
