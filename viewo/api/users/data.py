@@ -78,6 +78,13 @@ def dump_user(user: User) -> str:
     return dumped
 
 
+def update_user(user: User):
+    userpath = os.path.join(viewo.path.users(), user.userid)
+    dumped = viewo.api.users.data.dump_user(user)
+    # TODO: NOT THREAD SAFE
+    utila.file_replace(userpath, dumped)
+
+
 def verify_password(userid: str, password: str) -> bool:
     user = viewo.api.users.utils.user.user_fromid(userid)
     if not user:

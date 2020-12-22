@@ -7,9 +7,12 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import os
+
 import flask
 
 import viewo.api.users
+import viewo.api.users.data
 import viewo.api.users.utils.password
 import viewo.api.users.utils.user
 
@@ -69,3 +72,12 @@ def user_put(userid):
     if not viewo.api.users.utils.user.user_update(user):
         return viewo.api.bad('could not update user')
     return viewo.api.success(PASSWORD_UPDATED)
+
+
+def user_pay(userid: str, choice: int):
+    assert choice in (0, 1, 2, 3, 4), f'invalid choice: {choice}'
+    userpath = os.path.join(viewo.path.users(), userid)
+    assert os.path.exists(userpath, f'invalid user path: {userpath}')
+    user = viewo.api.users.data.load_user(userpath)
+    user.payed = choice
+    viewo.api.users.data.update_user(user)
