@@ -78,7 +78,7 @@ def dump_user(user: User) -> str:
     return dumped
 
 
-def verify_password(userid: str, password: str):
+def verify_password(userid: str, password: str) -> bool:
     user = viewo.api.users.utils.user.user_fromid(userid)
     if not user:
         return False
