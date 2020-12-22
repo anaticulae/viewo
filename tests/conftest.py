@@ -128,6 +128,11 @@ def user_client(test_client):  # pylint:disable=W0621
 
 
 @pytest.fixture
+def payed_client(test_client):  # pylint:disable=W0621
+    tests.post(test_client, '/payment', data=dict(choice=2))
+
+
+@pytest.fixture
 def docclient(client):  # pylint:disable=W0621
     result = tests.apiupload(client, '/documents', 'file', tests.MINIMAL)
     doc = result['document']
