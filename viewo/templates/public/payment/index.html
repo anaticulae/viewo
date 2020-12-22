@@ -3,10 +3,6 @@
 {% block pagecontent %}
 <h1>Vollzugriff erhalten</h1>
 
-{% if payed %}
-Bezahlt!
-{% else %}
-
 {% set button_type='radio' if current_user.is_authenticated else 'hidden' %}
 <form id="payment_selection" method="POST">
     <div class="btn-group" id="selected" data-toggle="offcanvas">
@@ -23,7 +19,7 @@ Bezahlt!
                 <tr>
                     <td>
                         <label class="btn btn-default small">
-                            <input name="service" type="{{button_type}}" value="single" required="required"> Single
+                            <input name="choice" type="{{button_type}}" value="1" required="required"> Single
                         </label>
                     </td>
                     <td>Eine Abschlussarbeit kann so oft wie möglich analysiert werden.</td>
@@ -33,7 +29,7 @@ Bezahlt!
                 <tr>
                     <td>
                         <label class="btn btn-default small">
-                            <input name="service" type="{{button_type}}" value="multi" required="required"> Multi
+                            <input name="choice" type="{{button_type}}" value="2" required="required"> Multi
                         </label>
                     </td>
                     <td>Beliebige Abschlussarbeiten können so oft wie nötig analysiert werden.</td>
@@ -43,7 +39,7 @@ Bezahlt!
                 <tr>
                     <td>
                         <label class="btn btn-default small">
-                            <input name="service" type="{{button_type}}" value="extended" required="required"> Extended
+                            <input name="choice" type="{{button_type}}" value="3" required="required"> Extended
                         </label>
                     </td>
                     <td><u>Eine</u> Dissertation kann so oft wie nötig analysiert werden.</td>
@@ -53,7 +49,7 @@ Bezahlt!
                 <tr>
                     <td>
                         <label class="btn btn-default small">
-                            <input name="service" type="{{button_type}}" value="lifetime" required="required"> Lifetime
+                            <input name="choice" type="{{button_type}}" value="4" required="required"> Lifetime
                         </label>
                     </td>
                     <td>Beliebige Dokumente können so oft wie nötig analysiert werden.</td>
@@ -67,5 +63,4 @@ Bezahlt!
     <br /> <button type="submit" class="btn btn-default">Bezahlen</button>
     {% endif %}
 </form>
-{% endif %}
 {% endblock %}

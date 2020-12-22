@@ -9,7 +9,7 @@
 
 import tests
 
-BADGETEXT = 'Vollzugriff erhalten'
+BADGETEXT = '>Vollzugriff erhalten</button>'
 
 
 def test_payment_bade(user_client):
@@ -22,9 +22,9 @@ def test_payment_nobade_after_payment(user_client):
     """Login and Pay. Badge disappear after paying."""
     home = tests.content(user_client, '/')
     assert BADGETEXT in home
-
     # pay
-    tests.post(user_client, '/payment', data=dict(choice=2))
-
+    payed = tests.post(user_client, '/payment', data=dict(choice=2))
+    assert BADGETEXT not in payed
+    # home without badge
     home = tests.content(user_client, '/')
     assert BADGETEXT not in home
