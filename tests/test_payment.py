@@ -8,6 +8,7 @@
 # =============================================================================
 
 import tests
+import viewo.view.payment
 
 BADGETEXT = '>Vollzugriff erhalten</button>'
 
@@ -28,3 +29,9 @@ def test_payment_nobade_after_payment(user_client):
     # home without badge
     home = tests.content(user_client, '/')
     assert BADGETEXT not in home
+
+
+def test_payment_invalid_choice(user_client):
+    failure = tests.post(user_client, '/payment', data=dict(choice='ABC'))
+    # flashed error message
+    assert viewo.view.payment.INVALID_MESSAGE in failure

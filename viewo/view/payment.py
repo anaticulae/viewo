@@ -16,15 +16,22 @@ import viewo.api.users.update
 
 payment = flask.Blueprint('payment', __name__)  # pylint:disable=invalid-name
 
+VALID_CHOICE = {1, 2, 3, 4}
+INVALID_MESSAGE = 'Invalid Choice'
+
 
 @payment.route('/payment', methods=['POST'])
 def payment_ready():
     # TODO: ADD ERROR HANDLING FOR INVALID CHOICE ETC.
     userid = flask_login.current_user.get_id()
     if userid:
-        choice = flask.request.form['choice']
-        # TODO: ADD ERROR HANDLER
-        choice = utila.str2int(choice)
+        try:
+            choice = flask.request.form['choice']
+            choice = utila.str2int(choice)
+            assert choice in VALID_CHOICE
+        except (ValueError, AssertionError):
+            flask.flash(INVALID_MESSAGE)
+            return flask.render_template('public/payment/index.html')
         viewo.api.users.update.user_pay(userid, choice)
     return flask.render_template('public/payment/done.html')
 
