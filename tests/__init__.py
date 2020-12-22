@@ -147,7 +147,7 @@ def post(
         expected=http.HTTPStatus.OK,
 ):
     response = client.post(page, data=data, follow_redirects=True)
-    assert response.status_code == expected, page
+    assert response.status_code == expected, f'path: {page}, error: {response.status_code}'
     return decode(response, expected=expected)
 
 
