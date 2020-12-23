@@ -17,6 +17,7 @@ import viewo.api.findings.utils
 import viewo.api.pageviews.utils
 import viewo.api.utils
 import viewo.api_.findings.compare
+import viewo.api_.findings.loader
 
 
 @viewo.api.findings.api_findings.route(
@@ -27,7 +28,7 @@ import viewo.api_.findings.compare
 @viewo.api.valid_pages
 def findings(documentid):
     pages_selected = pages(documentid)
-    collected = viewo.api.findings.utils.all_findings(
+    collected = viewo.api_.findings.loader.all_findings(
         documentid,
         pages=pages_selected,
     )
@@ -35,7 +36,7 @@ def findings(documentid):
         return viewo.api.notfound(f'could not find: {documentid}')
     user = flask_login.current_user
     payed = not user.is_authenticated or user.payed
-    simple = viewo.api.findings.utils.all_findings_raw(
+    simple = viewo.api_.findings.loader.all_findings_raw(
         collected,
         documentid,
         pages=pages_selected,
@@ -54,8 +55,8 @@ def findings(documentid):
 @viewo.api.valid_document
 @viewo.api.valid_finding
 def finding_get(documentid, findingid):
-    finding = viewo.api.findings.utils.load_finding(documentid, findingid)
-    simple = viewo.api.findings.utils.finding_raw(finding, documentid)
+    finding = viewo.api_.findings.loader.load_finding(documentid, findingid)
+    simple = viewo.api_.findings.loader.finding_raw(finding, documentid)
     dumped = flask.jsonify({
         'finding': simple,
     })

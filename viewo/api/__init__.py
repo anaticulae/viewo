@@ -103,7 +103,7 @@ def valid_finding(function):
         # TODO: ADD USER RIGHTS CHECK
         documentid = kwargs['documentid']
         findingid = kwargs['findingid']
-        finding = viewo.api.findings.utils.load_finding(documentid, findingid)
+        finding = viewo.api_.findings.loader.load_finding(documentid, findingid)
         if not finding:
             return notfound(f'could not locate: {findingid}')
         return function(*args, **kwargs)
