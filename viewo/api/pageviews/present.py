@@ -8,6 +8,7 @@
 # =============================================================================
 
 import flask
+import flask_login
 import utila
 
 import viewo.api
@@ -23,7 +24,13 @@ import viewo.api.pageviews.utils
 @viewo.api.valid_pages
 def pageviews(documentid):
     pagerange, pages = paged()
-    html = viewo.api.pageviews.utils.load_html(documentid, pagerange)
+    user = flask_login.current_user
+    payed = not user.is_authenticated or user.payed
+    html = viewo.api.pageviews.utils.load_html(
+        documentid,
+        pagerange,
+        payed=payed,
+    )
     simple = {
         'html': html,
         'pages': pages,
