@@ -308,7 +308,7 @@ function init() {
         // TODO: REFACTOR
         const key = event.key
         let active = document.activeElement.type
-        if (active == 'text' || active == 'textarea' || active == 'password') {
+        if (active == 'text' || active == 'textarea' || active == 'password' || active == 'search') {
             return
         }
         if (key == 'l' || key == 'ArrowRight') {
