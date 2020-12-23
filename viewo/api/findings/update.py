@@ -11,7 +11,7 @@ import flask
 
 import viewo.api
 import viewo.api.findings
-import viewo.api.findings.utils
+import viewo.api_.findings.update
 
 
 @viewo.api.findings.api_findings.route(
@@ -33,7 +33,7 @@ def finding_put(documentid, findingid):
         return viewo.api.bad(f'invalid findingid: {findingid}')
     if status not in (0, 1, 2, 3, 4):
         return viewo.api.bad(f'invalid status: {status}')
-    if not viewo.api.findings.utils.update_finding_status(
+    if not viewo.api_.findings.update.update_finding_status(
             documentid,
             findingid,
             status,

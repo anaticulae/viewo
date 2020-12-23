@@ -13,11 +13,11 @@ import utila
 
 import viewo.api
 import viewo.api.findings
-import viewo.api.findings.utils
 import viewo.api.pageviews.utils
 import viewo.api.utils
 import viewo.api_.findings.compare
 import viewo.api_.findings.loader
+import viewo.api_.findings.update
 
 
 @viewo.api.findings.api_findings.route(
@@ -70,11 +70,10 @@ def finding_get(documentid, findingid):
 @viewo.api.valid_partner
 @viewo.api.valid_document
 def compare(documentid, partnerid):
-    operation_raw = flask.request.args.get('operation', 'all').lower()
-    try:
-        operation = viewo.api_.findings.compare.Comperator[operation_raw.upper()] # yapf:disable
-    except KeyError:
-        return viewo.api.bad(f'invalid operation: {operation_raw}')
+    raw = flask.request.args.get('operation', 'all').lower()
+    operation = viewo.api_.findings.compare.comperator_fromraw(raw)
+    if not operation:
+        return viewo.api.bad(f'invalid operation: {raw}')
     # comparation
     compared = viewo.api_.findings.compare.compare(
         documentid,
@@ -94,7 +93,7 @@ def compare(documentid, partnerid):
         'api_findings.compare',
         documentid=documentid,
         partnerid=partnerid,
-        operation=operation_raw,
+        operation=raw,
     )
     dumped = flask.jsonify(result)
     return dumped

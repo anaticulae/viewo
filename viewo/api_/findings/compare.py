@@ -8,6 +8,7 @@
 # =============================================================================
 
 import collections
+import contextlib
 import enum
 import typing
 
@@ -72,3 +73,10 @@ def compare_raw(pages: ComparedListFinding):
         }
         result.append(raw)
     return result
+
+
+def comperator_fromraw(raw: str) -> Comperator:
+    raw = raw.upper()
+    with contextlib.suppress(KeyError):
+        return viewo.api_.findings.compare.Comperator[raw]
+    return None

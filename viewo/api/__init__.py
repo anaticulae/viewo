@@ -15,8 +15,8 @@ import flask_login
 import link
 import utila
 
-import viewo.api.findings.utils
 import viewo.api.users.utils.user
+import viewo.api_.findings.update
 
 
 def success(message: str = 'completed', **args):
