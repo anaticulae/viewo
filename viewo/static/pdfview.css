@@ -7,7 +7,7 @@ article{
     padding:20px;
     width:60%;
     overflow:auto;
-    float: left;
+    float:left;
 }
 
 #error{
@@ -65,9 +65,9 @@ article{
 }
 
 #error_operation{
-    background: white;
-    border: 1px solid black;
-    margin-bottom: 10px;
+    background:white;
+    border:1px solid black;
+    margin-bottom:10px;
 }
 
 #error_content{
@@ -92,7 +92,7 @@ article{
     border:1px solid black;
     width:100%;
     margin-bottom:20px;
-    border-radius: 4px;
+    border-radius:4px;
 }
 
 #pdfview_navigation p{
@@ -164,11 +164,11 @@ article{
 }
 
 #error_page_content{
-    display: inline-block;
-    border-radius: 4px;
-    background: white;
-    border: 1px solid black;
-    overflow: auto;
+    display:inline-block;
+    border-radius:4px;
+    background:white;
+    border:1px solid black;
+    overflow:auto;
 }
 
 
@@ -205,8 +205,8 @@ article{
         vertical-align:top;
     }
     #pdfview_navigation_list button{
-        min-width: 32px;
-        min-height: 32px;
+        min-width:32px;
+        min-height:32px;
     }
     #error_navigator,
     #pdfview_previous_page,
@@ -217,20 +217,20 @@ article{
         display:block;
     }
     article{
-        padding: 0px;
+        padding:0px;
         border:0px;
-        background-color: transparent;
+        background-color:transparent;
     }
     #pdfview_navigation{
-        padding: 0px;
-        margin: 0px;
+        padding:0px;
+        margin:0px;
     }
     #error_page_content{
         margin-top:10px;
         width:auto;
-        padding: 0px;
-        margin: 0px;
-        border: 0px;
+        padding:0px;
+        margin:0px;
+        border:0px;
     }
 }
 

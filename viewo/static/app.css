@@ -52,7 +52,7 @@
         display:none;
     }
     #wrapper{
-        max-width: 1280px;
+        max-width:1280px;
         /* overflow:hidden; */
     }
     .wrapper{
@@ -60,37 +60,37 @@
         padding:0px;
     }
     footer{
-        min-height: 35px;
+        min-height:35px;
     }
     .hidden_inbounds{
         display:none;
     }
     #pdfview_navigation_toggle_box{
-        /* TODO: ENABLE BUTTONS IN APP VIEW */
-        display: none;
+        /* TODO:ENABLE BUTTONS IN APP VIEW */
+        display:none;
     }
     div.content{
-        padding: 0px;
-        padding-left: 4px;
-        padding-right: 4px;
-        margin: 0px;
-        padding-top: 20px;
+        padding:0px;
+        padding-left:4px;
+        padding-right:4px;
+        margin:0px;
+        padding-top:20px;
     }
-    div.content div.wrapper {
-        display: block;
+    div.content div.wrapper{
+        display:block;
     }
     section.mastertoc h3{
-        display: none;
+        display:none;
     }
-    nav {
+    nav{
         width:100%;
-        display: block;
-        border-bottom: 1px solid black;
-        margin-bottom: 20px;
+        display:block;
+        border-bottom:1px solid black;
+        margin-bottom:20px;
     }
-    .mastertoc a {
-        font-size: 16px;
-        margin: 0px;
-        padding: 0px;
+    .mastertoc a{
+        font-size:16px;
+        margin:0px;
+        padding:0px;
     }
 }

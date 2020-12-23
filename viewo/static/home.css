@@ -1,42 +1,42 @@
 #welcome{
     width:70%;
     float:left;
-    margin-bottom: 10px;
+    margin-bottom:10px;
 }
 #showroom{
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow-y:auto;
+    overflow-x:hidden;
     padding-left:20px;
-    /* padding: 10px; */
-    width: 30%;
+    /* padding:10px; */
+    width:30%;
 }
 
 #showroom .example{
-    overflow: hidden;
+    overflow:hidden;
 }
 
 #example{
     width:95%;
-    height: 150px;
-    border: 1px solid black;
+    height:150px;
+    border:1px solid black;
     margin:5px;
 }
 
 #file_toggle_view{
-    border: 1px solid black;
-    background: ghostwhite;
-    display: inline-block;
-    margin-bottom: 10px;
+    border:1px solid black;
+    background:ghostwhite;
+    display:inline-block;
+    margin-bottom:10px;
 }
 
 #file_toggle_view label{
-    display: inline-block;
-    padding: 5px;
-    cursor: pointer;
+    display:inline-block;
+    padding:5px;
+    cursor:pointer;
 }
 
 .toggle input{
-    display: none;
+    display:none;
 }
 
 @media only screen and (max-width:750px){
@@ -44,23 +44,23 @@
         width:100%;
     }
     #showroom{
-        height: 120px;
-        width: 100%;
-        display: block;
-        overflow-y: visible;
-        overflow-x: visible;
-        float: left;
-        border-top: 1px solid gainsboro;
-        padding-top: 20px;
-        margin-top: 50px;
+        height:120px;
+        width:100%;
+        display:block;
+        overflow-y:visible;
+        overflow-x:visible;
+        float:left;
+        border-top:1px solid gainsboro;
+        padding-top:20px;
+        margin-top:50px;
     }
     #showroom .example{
-        width: 45%;
-        float: left;
+        width:45%;
+        float:left;
     }
     #example{
         height:90%;
-        width: 150px;
+        width:150px;
         float:left;
     }
 }
