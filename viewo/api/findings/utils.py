@@ -18,6 +18,7 @@ import link
 import protocol.finding
 import utila
 
+import viewo.api.pageviews.utils
 import viewo.api.utils
 import viewo.result.json
 import viewo.result.update
@@ -65,7 +66,12 @@ def load_finding(documentid, findingid):
     return None
 
 
-def all_findings_raw(content, documentid: str, pages: tuple = None):
+def all_findings_raw(
+        content,
+        documentid: str,
+        pages: tuple = None,
+        payed: bool = True,
+):
     simple = viewo.api.utils.simple_recursive(content)
     for page in simple:
         for finding in page['content']:
@@ -74,6 +80,8 @@ def all_findings_raw(content, documentid: str, pages: tuple = None):
                 documentid=documentid,
                 findingid=finding['number'],
             )
+    if not payed:
+        simple = remove_unpayed(simple)
     pagerange = ':'
     uri = flask.url_for('api_findings.findings', documentid=documentid)
     if pages is not None:
@@ -90,6 +98,18 @@ def all_findings_raw(content, documentid: str, pages: tuple = None):
         'uri': uri,
     }
     return raw
+
+
+def remove_unpayed(simple):
+    # remove unpayed items
+    for page in simple:
+        allowed = viewo.api.pageviews.utils.free_view(page['page'])
+        if allowed:
+            continue
+        for finding in page['content']:
+            finding['solution']['title'] = 'Vollzugriff erforderlich'
+            finding['solution']['description'] = 'Vollzugriff erforderlich'
+    return simple
 
 
 def finding_raw(finding: iamraw.Finding, documentid: str) -> dict:

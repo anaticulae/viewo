@@ -8,6 +8,7 @@
 # =============================================================================
 
 import flask
+import flask_login
 import utila
 
 import viewo.api
@@ -31,10 +32,13 @@ def findings(documentid):
     )
     if collected is None:
         return viewo.api.notfound(f'could not find: {documentid}')
+    user = flask_login.current_user
+    payed = not user.is_authenticated or user.payed
     simple = viewo.api.findings.utils.all_findings_raw(
         collected,
         documentid,
         pages=pages_selected,
+        payed=payed,
     )
     dumped = flask.jsonify({
         'findings': simple,
