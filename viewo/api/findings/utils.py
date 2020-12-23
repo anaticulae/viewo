@@ -73,25 +73,9 @@ def all_findings_raw(
         payed: bool = True,
 ):
     simple = viewo.api.utils.simple_recursive(content)
-    for page in simple:
-        for finding in page['content']:
-            finding['uri'] = flask.url_for(
-                'api_findings.finding_get',
-                documentid=documentid,
-                findingid=finding['number'],
-            )
-    if not payed:
-        simple = remove_unpayed(simple)
-    pagerange = ':'
-    uri = flask.url_for('api_findings.findings', documentid=documentid)
-    if pages is not None:
-        pages = utila.simplify_pages(pages)
-        uri = flask.url_for(
-            'api_findings.findings',
-            documentid=documentid,
-            pages=pages,
-        )
-        pagerange = pages
+    simple = add_finding_uri(simple, documentid)
+    simple = remove_unpayed(simple) if not payed else simple
+    pagerange, uri = paged(documentid, pages)
     raw = {
         'pagefindings': simple,
         'pages': pagerange,
@@ -101,7 +85,6 @@ def all_findings_raw(
 
 
 def remove_unpayed(simple):
-    # remove unpayed items
     for page in simple:
         allowed = viewo.api.pageviews.utils.free_view(page['page'])
         if allowed:
@@ -110,6 +93,31 @@ def remove_unpayed(simple):
             finding['solution']['title'] = 'Vollzugriff erforderlich'
             finding['solution']['description'] = 'Vollzugriff erforderlich'
     return simple
+
+
+def add_finding_uri(simple, documentid):
+    for page in simple:
+        for finding in page['content']:
+            finding['uri'] = flask.url_for(
+                'api_findings.finding_get',
+                documentid=documentid,
+                findingid=finding['number'],
+            )
+    return simple
+
+
+def paged(documentid, pages):
+    uri = flask.url_for('api_findings.findings', documentid=documentid)
+    pagerange = ':'
+    if pages is not None:
+        pages = utila.simplify_pages(pages)
+        uri = flask.url_for(
+            'api_findings.findings',
+            documentid=documentid,
+            pages=pages,
+        )
+        pagerange = pages
+    return pagerange, uri
 
 
 def finding_raw(finding: iamraw.Finding, documentid: str) -> dict:
