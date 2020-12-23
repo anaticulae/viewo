@@ -2,6 +2,28 @@
 
 Every noteable change is logged here.
 
+## v2.11.0
+
+### Feature
+
+* improve desktop app switch (e4a51b1bd319)
+* remove not payed findings (bae6d0fe6701)
+* do not show all pages for unpayed user (2ed502ed48d5)
+* add error handler for invalid choice (621b63904ebf)
+* introduce payed view with link to documents (cc054659d21c)
+* do not display payment-bade after paying the rent (9b64fbf90eac)
+* add method to update user pay status (f572efa425f2)
+
+### Fix
+
+* enable payment view for anonym user (e6dfbb14d97b)
+* do not navigate in search view (fbe0d6a87dde)
+* remove user file extension (05d3c76c4762)
+
+### Documentation
+
+* extend interface documentation (cb78dcbb78c8)
+
 ## v2.10.3
 
 ### Feature
