@@ -22,26 +22,23 @@ import viewo.api.pageviews.utils
 @viewo.api.valid_document
 @viewo.api.valid_pages
 def pageviews(documentid):
-    pages_raw = flask.request.args.get('pages', None)
-    if pages_raw:
-        pagerange = utila.parse_pages(pages_raw)
-    else:
-        pagerange, pages_raw = None, ':'
-
+    pagerange, pages = paged()
     html = viewo.api.pageviews.utils.load_html(documentid, pagerange)
-    uri = flask.url_for('api_pageviews.pageviews', documentid=documentid)
-    if pagerange is not None:
-        uri = flask.url_for(
-            'api_pageviews.pageviews',
-            documentid=documentid,
-            pages=pages_raw,
-        )
     simple = {
         'html': html,
-        'pages': pages_raw,
-        'uri': uri,
+        'pages': pages,
+        'uri': flask.request.url,
     }
     dumped = flask.jsonify({
         'pageviews': simple,
     })
     return dumped
+
+
+def paged():
+    pages = flask.request.args.get('pages', None)
+    if pages:
+        pagerange = utila.parse_pages(pages)
+    else:
+        pagerange, pages = None, ':'
+    return pagerange, pages
