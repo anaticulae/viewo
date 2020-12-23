@@ -37,7 +37,6 @@ def payment_ready():
 
 
 @payment.route('/payment', methods=['GET'])
-@flask_login.login_required
 def payment_overview():
     userid = flask_login.current_user.get_id()
     if userid is None:
