@@ -16,6 +16,7 @@ import viewo.api.findings
 import viewo.api.findings.utils
 import viewo.api.pageviews.utils
 import viewo.api.utils
+import viewo.api_.findings.compare
 
 
 @viewo.api.findings.api_findings.route(
@@ -70,17 +71,17 @@ def finding_get(documentid, findingid):
 def compare(documentid, partnerid):
     operation_raw = flask.request.args.get('operation', 'all').lower()
     try:
-        operation = viewo.api.findings.utils.Comperator[operation_raw.upper()]
+        operation = viewo.api_.findings.compare.Comperator[operation_raw.upper()] # yapf:disable
     except KeyError:
         return viewo.api.bad(f'invalid operation: {operation_raw}')
     # comparation
-    compared = viewo.api.findings.utils.compare(
+    compared = viewo.api_.findings.compare.compare(
         documentid,
         partnerid,
         operation=operation,
     )
     # convert answer
-    simple = viewo.api.findings.utils.compare_raw(compared)
+    simple = viewo.api_.findings.compare.compare_raw(compared)
     result = {
         'compared': {
             'compared': simple,

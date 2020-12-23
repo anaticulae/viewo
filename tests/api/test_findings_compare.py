@@ -13,12 +13,12 @@ import pytest
 
 import tests
 import tests.api
-import viewo.api.findings.utils
+import viewo.api_.findings.compare
 
 
 @pytest.mark.usefixtures('findingclient')
 def test_api_findings_compare_two_documents_equal():
-    compared = viewo.api.findings.utils.compare(
+    compared = viewo.api_.findings.compare.compare(
         tests.TEST_DOCUMENT,
         tests.TEST_DOCUMENT,
     )
@@ -27,10 +27,10 @@ def test_api_findings_compare_two_documents_equal():
 
 @pytest.mark.usefixtures('findingclient')
 def test_api_findings_compare_two_documents_diff():
-    compared = viewo.api.findings.utils.compare(
+    compared = viewo.api_.findings.compare.compare(
         tests.TEST_DOCUMENT,
         tests.TEST_DOCUMENT,
-        operation=viewo.api.findings.utils.Comperator.DIFF,
+        operation=viewo.api_.findings.compare.Comperator.DIFF,
     )
     # TODO: AUTOMATE TEST DATA GENERATOR AND ADD DIFF EXAMPLE
     assert compared == []
