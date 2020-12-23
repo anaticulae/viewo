@@ -1,22 +1,21 @@
 main{
-    display:flex;
     margin-bottom:20px;
     min-height:500px;
 }
 
 article{
-    background-color:white;
-    border:1px solid black;
     padding:20px;
-    width:100%;
+    width:60%;
     overflow:auto;
+    float: left;
 }
 
-aside{
+#error{
+    display:block;
+    float:left;
     padding:0px;
-    width:300px;
-    display:inline-table;
     padding-left:20px;
+    width:40%;
 }
 
 #error_navigator{
@@ -165,8 +164,13 @@ aside{
 }
 
 #error_page_content{
+    display: inline-block;
     border-radius: 4px;
+    background: white;
+    border: 1px solid black;
+    overflow: auto;
 }
+
 
 @media only screen and (max-width:750px){
     .flex_content{
@@ -180,12 +184,10 @@ aside{
         border:1px solid black;
         margin:5px;
     }
-    #error_page_content{
-        margin-top:10px;
-        width:auto;
-    }
     #error{
         width:100%;
+        padding:0px;
+        margin:0px;
     }
     #pagecontent{
         text-align:left;
@@ -218,6 +220,17 @@ aside{
         padding: 0px;
         border:0px;
         background-color: transparent;
+    }
+    #pdfview_navigation{
+        padding: 0px;
+        margin: 0px;
+    }
+    #error_page_content{
+        margin-top:10px;
+        width:auto;
+        padding: 0px;
+        margin: 0px;
+        border: 0px;
     }
 }
 
