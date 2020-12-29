@@ -35,9 +35,9 @@ var dialog = {
 
     update_dialogs: function (items) {
         if (items.length == 0) {
-            base.hide('#dialog_list')
+            base.hide('#message_list')
         } else {
-            base.show('#dialog_list')
+            base.show('#message_list')
         }
         // TODO: IMPROVE UPDATE BEHAVIOR
         dialog.table.clear()
