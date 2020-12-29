@@ -69,6 +69,7 @@ class State(enum.Enum):
 class Status:
     status: State = State.waiting
     state: typing.List[State] = dataclasses.field(default_factory=list)
+    progress: int = 0
 
     def append(self, item):
         self.state.append(item)  # pylint:disable=E1101

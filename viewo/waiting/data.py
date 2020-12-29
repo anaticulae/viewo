@@ -11,6 +11,7 @@ import contextlib
 import json
 import os
 
+import link
 import utila
 
 import viewo.path
@@ -32,6 +33,7 @@ def jsonify(item: Status) -> str:
     raw = {
         'status': item.status.value,
         'states': states,
+        'progress': item.progress,
     }
     for state in item.state:
         states.append(state.value)
@@ -58,6 +60,7 @@ def status(process: str) -> Status:  # pylint:disable=too-complex
         # process does not exists
         return None
 
+    progress = link.progress(process)
     pdf = os.path.join(working, process)
 
     def uploaded():
@@ -137,6 +140,7 @@ def status(process: str) -> Status:  # pylint:disable=too-complex
             globalviewed(),
             presented()
         ],
+        progress=progress,
     )
 
     if all([item == State.done for item in result]):
