@@ -41,6 +41,7 @@ base.hide = function (item) {
 }
 
 base.show = function (item) {
+    $(item)[0].classList.remove('hidden')
     $(item)[0].classList.remove('hidden_invisible')
 }
 
