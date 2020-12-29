@@ -61,6 +61,11 @@ var result_waiting_view = {
         $.ajax(`/waiting/status/${process}`, {
             dataType: 'json',
             success: function (response) {
+                let progress = response.progress
+                if (progress >= 0) {
+                    // update document progress
+                    $("#waiting_progress")[0].innerHTML = progress
+                }
                 result_waiting_view.update(process, response.states)
                 if (response.status == 1) {
                     // process is currently running
