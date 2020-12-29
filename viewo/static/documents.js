@@ -60,7 +60,7 @@ const documents = {
                 documents.update_documents(response.documents)
             },
             error: function () {
-                user_error('Could not reach server.')
+                user_error('Service nicht erreichbar.')
             }
         });
     },

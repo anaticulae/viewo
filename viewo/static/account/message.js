@@ -21,7 +21,7 @@ var messages = {
                 messages.update_messages(response.messages)
             },
             error: function () {
-                user_error('Could not reach server.')
+                user_error('Service nicht erreichbar.')
             }
         });
     },
@@ -60,7 +60,7 @@ var messages = {
             },
             timeout: TIMEOUT,
             error: function () {
-                user_error('Could not reach server.')
+                user_error('Service nicht erreichbar.')
             },
             success: function () {
                 messages.clear()

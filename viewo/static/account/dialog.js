@@ -28,7 +28,7 @@ var dialog = {
                 dialog.update_dialogs(response.dialogs)
             },
             error: function () {
-                user_error('Could not reach server.')
+                user_error('Service nicht erreichbar.')
             }
         });
     },
@@ -68,7 +68,7 @@ var dialog = {
             },
             timeout: TIMEOUT,
             error: function () {
-                user_error('Could not reach server.')
+                user_error('Service nicht erreichbar.')
             },
             success: function () {
                 dialog.clear()

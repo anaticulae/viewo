@@ -29,7 +29,7 @@ var documents_compare = {
                 documents_compare.update_selected()
             },
             error: function () {
-                documents_compare.show_error('Could not reach server.')
+                documents_compare.show_error('Service nicht erreichbar.')
             }
         });
     },
@@ -88,7 +88,7 @@ var documents_compare = {
                 }
             },
             error: function () {
-                documents_compare.show_error('Could not reach server.')
+                documents_compare.show_error('Service nicht erreichbar.')
             }
         })
     },
