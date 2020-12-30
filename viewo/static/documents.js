@@ -90,8 +90,8 @@ const documents = {
                 } else {
                     action += base.new_image_button('', 'view/share.png', null, null, null, null, `share_document('${item.name}')`)
                 }
-            } else if (item.state == 1) {
-                // running
+            } else if (item.state == 1 || item.state == -1) {
+                // running or waiting
                 todo = '<center>-</center>'
                 if (public == false) {
                     action += base.new_image_button('', 'animation/loader.gif', null, null, null, null, `window.location.assign('waiting/${item.name}')`)
@@ -111,6 +111,10 @@ const documents = {
                     action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
                 }
                 title = `<span style="color:red;">${title} (fehlgeschlagen)</span>`
+            }
+            if (item.state == -1) {
+                // waiting
+                title = `${title} (Warteschlange)`
             }
             let row = [
                 title,
