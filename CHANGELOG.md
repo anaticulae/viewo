@@ -2,6 +2,25 @@
 
 Every noteable change is logged here.
 
+## v2.12.0
+
+### Feature
+
+* add documents queue state (66f954cd3f27)
+* add missing table header (2f11de9a0d28)
+* add failed document item (5fec83a6a1e7)
+* add new document state field (3d8b4b90e415)
+* display failure in waiting progress (b480f4fd8d70)
+* set dialog list hidden as default (1fd566b7bd62)
+* make more items visible (754a3bb34572)
+* display current document progress (ae1f52be9cc6)
+* extend Status with progress data (2bf003cb88c9)
+
+### Fix
+
+* improve user error message (185cd3d72e08)
+* adjust app scroll view (8096c468ee85)
+
 ## v2.11.0
 
 ### Feature
