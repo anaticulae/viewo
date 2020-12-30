@@ -131,8 +131,8 @@ def status(process: str) -> Status:  # pylint:disable=too-complex
         return State.waiting
 
     result = Status(
-        State.running,
-        [
+        status=State.running,
+        state=[
             uploaded(),
             verified(),
             analyzestarted(),
@@ -147,8 +147,13 @@ def status(process: str) -> Status:  # pylint:disable=too-complex
         result.status = State.done
     if any([item == State.running for item in result]):
         result.status = State.running  # pylint:disable=redefined-variable-type
-    if any([item == State.failed for item in result]):
+    failed = link.failed(process)
+    if failed or any([item == State.failed for item in result]):
         result.status = State.failed
+        result.progress = 100
+        result.state = [
+            item.failed if item != State.done else item for item in result.state
+        ]
     return result
 
 
