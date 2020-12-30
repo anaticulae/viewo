@@ -44,31 +44,16 @@ import enum
 import typing
 
 import iamraw
+import link
 
 VERIFY = 'pdfinfo.json'
 FASTVIEW = 'fastview'
 
 
-class State(enum.Enum):
-    WAITING = -1
-    DONE = 0
-    RUNNING = 1
-    FAILED = 2
-
-    @staticmethod
-    def fromstr(item: str):
-        with contextlib.suppress(ValueError):
-            item = int(item)
-        for state in State:
-            if state.value == item:
-                return state
-        raise ValueError(f'could not create State from `{item}`')
-
-
 @dataclasses.dataclass
 class Status:
-    status: State = State.WAITING
-    state: typing.List[State] = dataclasses.field(default_factory=list)
+    status: link.State = link.State.WAITING
+    state: typing.List[link.State] = dataclasses.field(default_factory=list)
     progress: int = 0
 
     def append(self, item):
@@ -90,7 +75,7 @@ class FastViewGroupStatus:
 @dataclasses.dataclass
 class FastViewStatus:
 
-    status: State = State.RUNNING
+    status: link.State = link.State.RUNNING
     content: typing.List[FastViewGroupStatus] = \
                                         dataclasses.field(default_factory=list)
 

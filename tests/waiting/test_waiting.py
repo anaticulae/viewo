@@ -9,7 +9,7 @@
 
 import os
 
-import pytest
+import link
 import utila
 
 import tests
@@ -22,23 +22,18 @@ import viewo.waiting.fastview
 
 def test_waiting_status_jsonify():
     status = viewo.waiting.Status(
-        status=viewo.waiting.State.RUNNING,
+        status=link.State.RUNNING,
         state=[
-            viewo.waiting.State.DONE,
-            viewo.waiting.State.DONE,
-            viewo.waiting.State.RUNNING,
-            viewo.waiting.State.FAILED,
-            viewo.waiting.State.WAITING,
+            link.State.DONE,
+            link.State.DONE,
+            link.State.RUNNING,
+            link.State.FAILED,
+            link.State.WAITING,
         ],
     )
     json = viewo.waiting.data.jsonify(status)
     assert 'states' in json
     assert 'status' in json
-
-
-def test_waiting_status_fromstr():
-    with pytest.raises(ValueError):
-        viewo.waiting.State.fromstr('')
 
 
 def test_waiting_status_invalid(client):
@@ -53,9 +48,9 @@ def test_waiting_status_invalid_resource(user_client):
 
 def test_waiting_status(no_validation, user_client, monkeypatch):
     loaded = tests.waiting.run_status(user_client, no_validation, monkeypatch)
-    assert loaded.status == viewo.waiting.State.RUNNING
-    assert loaded[0] == viewo.waiting.State.DONE
-    assert loaded[1] == viewo.waiting.State.RUNNING
+    assert loaded.status == link.State.RUNNING
+    assert loaded[0] == link.State.DONE
+    assert loaded[1] == link.State.RUNNING
 
 
 def test_waiting_status_verified(user_client, testdir, monkeypatch):
@@ -80,10 +75,10 @@ def test_waiting_status_verified(user_client, testdir, monkeypatch):
     )
 
     loaded = tests.waiting.run_status(user_client, root, monkeypatch)
-    assert loaded.status == viewo.waiting.State.RUNNING
-    assert loaded[0] == viewo.waiting.State.DONE
-    assert loaded[1] == viewo.waiting.State.DONE
-    assert loaded[2] == viewo.waiting.State.RUNNING
+    assert loaded.status == link.State.RUNNING
+    assert loaded[0] == link.State.DONE
+    assert loaded[1] == link.State.DONE
+    assert loaded[2] == link.State.RUNNING
 
 
 def test_waiting_status_verify_failed(
@@ -96,13 +91,13 @@ def test_waiting_status_verify_failed(
         invalid_validation,
         monkeypatch,
     )
-    assert loaded.status == viewo.waiting.State.FAILED
-    assert loaded[0] == viewo.waiting.State.DONE
-    assert loaded[1] == viewo.waiting.State.FAILED
-    assert loaded[2] == viewo.waiting.State.FAILED
-    assert loaded[3] == viewo.waiting.State.FAILED
-    assert loaded[4] == viewo.waiting.State.FAILED
-    assert loaded[5] == viewo.waiting.State.FAILED
+    assert loaded.status == link.State.FAILED
+    assert loaded[0] == link.State.DONE
+    assert loaded[1] == link.State.FAILED
+    assert loaded[2] == link.State.FAILED
+    assert loaded[3] == link.State.FAILED
+    assert loaded[4] == link.State.FAILED
+    assert loaded[5] == link.State.FAILED
 
 
 def test_waiting_validation_invalid_result(
