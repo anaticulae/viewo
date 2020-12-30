@@ -34,10 +34,12 @@ def all_documents(userid: str = None):
     for todo in todos:
         if todo.name in ready_indexes:
             continue
+        todo.state = state(todo.name)
         result.append(todo)
     for done in dones:
         # set done flag
         done.done = True
+        done.state = state(done.name)
         result.append(done)
 
     result = sorted(
@@ -56,6 +58,7 @@ def job_toraw(info: link.JobInfo) -> dict:
         'result': link.job.findingstatus_toraw(info.result),
         'name': info.name,
         'done': info.done,
+        'state': info.state,
         'owner': info.owner,
     }
     if info.password:
@@ -63,6 +66,14 @@ def job_toraw(info: link.JobInfo) -> dict:
     if info.hashlink:
         result['hashlink'] = info.hashlink
     return result
+
+
+def state(documentid: str) -> int:
+    current = link.current(documentid)
+    if current is None:
+        return -2
+    converted = link.State.fromstate(current)
+    return int(converted)
 
 
 def footnotes(documentid):
