@@ -64,74 +64,74 @@ def status(process: str) -> Status:  # pylint:disable=too-complex
     pdf = os.path.join(working, process)
 
     def uploaded():
-        return State.done if os.path.exists(pdf) else State.running
+        return State.DONE if os.path.exists(pdf) else State.RUNNING
 
     def verified():
         verifypath = os.path.join(working, VERIFY)
-        verify = State.running if uploaded() == State.done else State.waiting
+        verify = State.RUNNING if uploaded() == State.DONE else State.WAITING
         if os.path.exists(verifypath):
             content = utila.file_read(verifypath).strip()
             if content == '{}':
-                verify = State.failed
+                verify = State.FAILED
             else:
-                verify = State.done
+                verify = State.DONE
         return verify
 
     def analyzestarted():
         before = verified()
-        if before == State.failed:
-            return State.failed
-        if before == State.waiting:
-            return State.waiting
+        if before == State.FAILED:
+            return State.FAILED
+        if before == State.WAITING:
+            return State.WAITING
         if fastview_result(process):
-            return State.done
-        if before == State.done:
-            return State.running
-        return State.waiting
+            return State.DONE
+        if before == State.DONE:
+            return State.RUNNING
+        return State.WAITING
 
     def fastviewed():
         before = analyzestarted()
-        if before == State.failed:
-            return State.failed
+        if before == State.FAILED:
+            return State.FAILED
         path = fastview_result(process)
         if path is None:
-            return State.waiting
+            return State.WAITING
         if os.path.exists(os.path.join(path, 'done')):
-            return State.done
+            return State.DONE
         if os.path.exists(os.path.join(path, 'failed')):
-            return State.failed
-        if before == State.done:
-            return State.running
-        return State.waiting
+            return State.FAILED
+        if before == State.DONE:
+            return State.RUNNING
+        return State.WAITING
 
     def globalviewed():
         before = analyzestarted()
         before_fast = fastviewed()
-        if before == State.failed or before_fast == State.failed:
-            return State.failed
+        if before == State.FAILED or before_fast == State.FAILED:
+            return State.FAILED
         path = result_result(process)
         if path is None:
-            return State.waiting
+            return State.WAITING
         if os.path.exists(os.path.join(path, 'done')):
-            return State.done
+            return State.DONE
         if os.path.exists(os.path.join(path, 'failed')):
-            return State.failed
-        if before == State.done:
-            return State.running
-        return State.waiting
+            return State.FAILED
+        if before == State.DONE:
+            return State.RUNNING
+        return State.WAITING
 
     def presented():
         before = globalviewed()
-        if before == State.failed:
-            return State.failed
-        if before == State.done:
+        if before == State.FAILED:
+            return State.FAILED
+        if before == State.DONE:
             if copy_done(process):
-                return State.done
-            return State.running
-        return State.waiting
+                return State.DONE
+            return State.RUNNING
+        return State.WAITING
 
     result = Status(
-        status=State.running,
+        status=State.RUNNING,
         state=[
             uploaded(),
             verified(),
@@ -143,16 +143,16 @@ def status(process: str) -> Status:  # pylint:disable=too-complex
         progress=progress,
     )
 
-    if all([item == State.done for item in result]):
-        result.status = State.done
-    if any([item == State.running for item in result]):
-        result.status = State.running  # pylint:disable=redefined-variable-type
+    if all([item == State.DONE for item in result]):
+        result.status = State.DONE
+    if any([item == State.RUNNING for item in result]):
+        result.status = State.RUNNING  # pylint:disable=redefined-variable-type
     failed = link.failed(process)
-    if failed or any([item == State.failed for item in result]):
-        result.status = State.failed
+    if failed or any([item == State.FAILED for item in result]):
+        result.status = State.FAILED
         result.progress = 100
         result.state = [
-            item.failed if item != State.done else item for item in result.state
+            item.FAILED if item != State.DONE else item for item in result.state
         ]
     return result
 

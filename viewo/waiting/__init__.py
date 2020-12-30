@@ -50,10 +50,10 @@ FASTVIEW = 'fastview'
 
 
 class State(enum.Enum):
-    waiting = -1
-    done = 0
-    running = 1
-    failed = 2
+    WAITING = -1
+    DONE = 0
+    RUNNING = 1
+    FAILED = 2
 
     @staticmethod
     def fromstr(item: str):
@@ -67,7 +67,7 @@ class State(enum.Enum):
 
 @dataclasses.dataclass
 class Status:
-    status: State = State.waiting
+    status: State = State.WAITING
     state: typing.List[State] = dataclasses.field(default_factory=list)
     progress: int = 0
 
@@ -90,7 +90,7 @@ class FastViewGroupStatus:
 @dataclasses.dataclass
 class FastViewStatus:
 
-    status: State = State.running
+    status: State = State.RUNNING
     content: typing.List[FastViewGroupStatus] = \
                                         dataclasses.field(default_factory=list)
 
