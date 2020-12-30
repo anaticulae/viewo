@@ -75,7 +75,8 @@ const documents = {
             let action = ``
             let mydocument = documents.userid == item.owner
             let public = documents.userid == '00000000'
-            if (item.done) {
+            if (item.state == 0) {
+                // done
                 title = `<a href="view/${item.name}">${title}</a>`
                 let closed = item.result.closed + item.result.excluded
                 let findingcount = closed + item.result.open
@@ -89,7 +90,8 @@ const documents = {
                 } else {
                     action += base.new_image_button('', 'view/share.png', null, null, null, null, `share_document('${item.name}')`)
                 }
-            } else {
+            } else if (item.state == 1) {
+                // running
                 todo = '<center>-</center>'
                 if (public == false) {
                     action += base.new_image_button('', 'animation/loader.gif', null, null, null, null, `window.location.assign('waiting/${item.name}')`)
@@ -103,6 +105,12 @@ const documents = {
                         action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
                     }
                 }
+            } else if (item.state == 2) {
+                // failed
+                if (public == false) {
+                    action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
+                }
+                title = `<span style="color:red;">${title} (fehlgeschlagen)</span>`
             }
             let row = [
                 title,
