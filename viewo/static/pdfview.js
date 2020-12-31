@@ -94,6 +94,13 @@ class Navigator {
         // TODO: CHECK FOR BETTER REMOVEMENT
         error_page_list.html('')
         for (let page of service.pages) {
+            // 1024 do not skip special pages
+            if (this.error_pages_only && page.page < 1024) {
+                if (!open_findings(page.page)) {
+                    // no open findings, hide this page
+                    continue
+                }
+            }
             let btn = `<button type="button" class="btn btn-default" id="openpage_${page.page}">${page.title}</button>`
             error_page_list.append(btn)
             $(`#openpage_${page.page}`).click(function () {

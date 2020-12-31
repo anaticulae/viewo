@@ -18,14 +18,17 @@ class DocumentService {
         this.content = null
         this.pagenumbers = null
         this.waiting = false
+        this.fastfindings = []
     }
 
     update(documentid) {
         this.documentid = documentid
         this.content = []
+        this.fastfindings = []
         this.update_pagenumbers()
         this.update_pagecontent(null, function ready() {
             service.update_footnotes()
+            service.update_fastfindings()
             service.update_captions()
             service.update_properties()
             service.update_docstyle()
@@ -38,14 +41,18 @@ class DocumentService {
     update_pagenumbers() {
         rpc(`/documents/${this.documentid}`, function (response) {
             service.pagenumbers = response.document.pages
-
             service.content = defaultpages(service.pagenumbers)
-
             navigator.update_page_navigator()
             resultview.show_page(0)
             base.show_done()
         }, function () {
             base.show_error()
+        })
+    }
+
+    update_fastfindings() {
+        rpc(`/documents/${this.documentid}/fastfindings`, function (response) {
+            service.fastfindings = response
         })
     }
 
@@ -278,6 +285,11 @@ const visible_findings = function (pagenumber) {
     }
     let findings = selected.findings.filter(s => visible(s))
     return findings
+}
+
+const open_findings = function (pagenumber) {
+    let selected = service.fastfindings.filter(s => s.page == pagenumber && s.content.length > 0)
+    return selected.length > 0
 }
 
 const next_page = function (pagenumber) {
