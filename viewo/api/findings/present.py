@@ -99,6 +99,25 @@ def compare(documentid, partnerid):
     return dumped
 
 
+@viewo.api.findings.api_findings.route(
+    '/documents/<string(length=16):documentid>/fastfindings',
+    methods=['GET'],
+)
+@viewo.api.valid_document
+@viewo.api.valid_pages
+def fastfindings(documentid):
+    pages_selected = pages(documentid)
+    collected = viewo.api_.findings.loader.fastfindings(
+        documentid,
+        pages=pages_selected,
+    )
+    if collected is None:
+        return viewo.api.notfound(f'could not find: {documentid}')
+    simple = viewo.api.utils.simple_recursive(collected)
+    dumped = flask.jsonify(simple)
+    return dumped
+
+
 def pages(documentid: str) -> tuple:
     raw = flask.request.args.get('pages', None)
     if raw is None:

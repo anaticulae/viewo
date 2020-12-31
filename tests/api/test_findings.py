@@ -22,6 +22,15 @@ def test_api_findings_overview_bydocumentid(findingclient):
     assert result['findings']['uri']
 
 
+def test_api_fastfindings_bydocumentid(findingclient):
+    client = findingclient
+    result = tests.apicall(
+        client,
+        f'/documents/{tests.TEST_DOCUMENT}/fastfindings',
+    )
+    assert len(result) == 18
+
+
 def test_api_findings_overview_by_invalid_documentid(client):
     tests.apicall(
         client,

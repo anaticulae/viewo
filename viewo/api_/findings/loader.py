@@ -39,6 +39,27 @@ def all_findings(documentid: str, pages: tuple = None):
     return findings
 
 
+def fastfindings(
+        documentid: str,
+        pages: tuple = None,
+        status=iamraw.ProblemStatus.OPEN,
+) -> iamraw.PageFindings:
+    documentpath = link.document(documentid)
+    if documentpath is None:
+        return None
+    optimizedpath = link.optimized(documentid, done=True)
+    findings = protocol.load_grouped(optimizedpath, pages=pages)
+    for page in findings:
+        page.content = [
+            finding.number
+            for finding in page.content
+            if finding.solution.status == status
+        ]
+    findings = [item for item in findings if item.content]
+    findings = sorted(findings, key=lambda x: x.page)
+    return findings
+
+
 def load_finding(documentid, findingid):
     # TODO: EXPERIMENTAL
     findingid = str(findingid)
