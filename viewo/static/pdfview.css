@@ -30,11 +30,6 @@ article{
     cursor:pointer;
 }
 
-#pdfview_navigation_toggle_box{
-    padding:4px;
-    min-width:60px;
-}
-
 #error_list{
     background:white;
     border:1px solid black;
@@ -171,6 +166,10 @@ article{
     overflow:auto;
 }
 
+#pdfview_navigation_list{
+    display:inline-table;
+}
+
 
 @media only screen and (max-width:750px){
     .flex_content{
@@ -207,11 +206,6 @@ article{
     #pdfview_navigation_list button{
         min-width:32px;
         min-height:32px;
-    }
-    #error_navigator,
-    #pdfview_previous_page,
-    #pdfview_next_page{
-        display:none;
     }
     main{
         display:block;

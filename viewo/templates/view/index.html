@@ -30,14 +30,16 @@ onload('{{process}}')
     <h2>Gesamtdurchsicht<span id="finding_status_counter"></span></h2>
 
     <div id="pdfview_navigation" class="hidden_invisible">
-        <span id="pdfview_navigation_toggle_box">
-            <!-- previous page -->
-            {{ button(id='pdfview_previous_page', class='btn btn-default', caption='&lt;', style='margin-top: 2px; margin-bottom: 2px;') }}<br />
-            <!-- next page -->
-            {{ button(id='pdfview_next_page', class='btn btn-default', caption='&gt;') }}<br />
-            {{ button(id='pdfview_navigation_toggle', class='btn btn-default', caption='hide') }}
-        </span>
-        <ul id="pdfview_navigation_list"></ul>
+        <ul>
+            <li id="pdfview_navigation_toggle_box">
+                <!-- previous page -->
+                {{ button(id='pdfview_previous_page', class='btn btn-default', caption='&lt;', style='margin-top: 2px; margin-bottom: 2px;') }}
+                <!-- next page -->
+                {{ button(id='pdfview_next_page', class='btn btn-default', caption='&gt;') }}
+                {{ button(id='pdfview_navigation_toggle', class='btn btn-default', caption='hide') }}
+            </li>
+            <li id="pdfview_navigation_list"> </li>
+        </ul>
     </div>
 
     <main id="pdfview_content" class="hidden_invisible">
