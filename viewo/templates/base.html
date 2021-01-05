@@ -52,7 +52,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="content">
+<div class="content container">
     {% if current_user.is_authenticated and not current_user.payed %}
     <button id="start_payment" class="btn btn-success">Vollzugriff erhalten</button>
     {% endif %}
