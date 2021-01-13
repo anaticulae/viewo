@@ -2,6 +2,23 @@
 
 Every noteable change is logged here.
 
+## v2.13.0
+
+### Feature
+
+* increase copyright year (cc4d1c8b76f7)
+* use open findings to skip empty finding pages (d55bc990aae6)
+* add method to provide fast finding view (50ba3f66f819)
+
+### Fix
+
+* fix distance top content bottom (f8d1cd291255)
+* display navigation and content in the same rectangle (222b288e7f30)
+
+### Documentation
+
+* Happy New Year! (54f73f5b707c)
+
 ## v2.12.0
 
 ### Feature
