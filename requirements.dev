@@ -9,6 +9,6 @@
 
 utilatest==0.2.2
 
-power==1.1.0
+power==1.1.2
 
-queuemo==1.5.0
+queuemo==1.7.0
