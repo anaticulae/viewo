@@ -164,6 +164,8 @@ article{
     background:white;
     border:1px solid black;
     overflow:auto;
+    /* adjust line height of pdf view don't know why 0.5, but works */
+    line-height: 0.5;
 }
 
 #pdfview_navigation_list{
