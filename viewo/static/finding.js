@@ -59,7 +59,9 @@ function show_finding(finding) {
         }
     } else if (finding.location['line'] != null) {
         let page = finding.location['page']
-        for (let line of range(finding.location['line'], finding.location['line_end'])) {
+        let linestart = finding.location['line']
+        let lineend = finding.location['line_end'] || linestart
+        for (let line of range(linestart, lineend)) {
             $(`span#line${page}_${line}`).each(function () {
                 $(this)[0].classList.add('highlighted_text')
             });
@@ -81,7 +83,9 @@ function hide_finding(finding) {
         }
     } else if (finding.location['line'] != null) {
         let page = finding.location['page']
-        for (let line of range(finding.location['line'], finding.location['line_end'])) {
+        let linestart = finding.location['line']
+        let lineend = finding.location['line_end'] || linestart
+        for (let line of range(linestart, lineend)) {
             $(`span#line${page}_${line}`).each(function () {
                 $(this)[0].classList.remove('highlighted_text')
             });
@@ -104,7 +108,9 @@ function highlight_finding(finding) {
         }
     } else if (finding.location['line'] != null) {
         let page = finding.location['page']
-        for (let line of range(finding.location['line'], finding.location['line_end'])) {
+        let linestart = finding.location['line']
+        let lineend = finding.location['line_end'] || linestart
+        for (let line of range(linestart, lineend)) {
             $(`span#line${page}_${line}`).each(function () {
                 $(this).fadeOut('fast').fadeIn()
             });
