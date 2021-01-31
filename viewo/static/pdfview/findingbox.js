@@ -24,6 +24,9 @@ class FindingBox {
         $("#finding_select_delete").click(function () {
             findingbox.current_finding_delete()
         });
+        $("#finding_toggle_fullscreen").click(function () {
+            fullscreen_toggle('#error_content')
+        });
     }
 
     open_finding(id) {

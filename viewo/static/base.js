@@ -126,6 +126,15 @@ const connection_error = function () {
     user_error('Service nicht erreichbar!')
 }
 
+const fullscreen_toggle = function (component) {
+    let selected = $(component)[0]
+    let before = selected.classList.length
+    selected.classList.remove('fullscreen')
+    if (selected.classList.length == before) {
+        selected.classList.add('fullscreen')
+    }
+}
+
 const range = function* (start, end = null) {
     if (end == null) {
         end = start - 1
