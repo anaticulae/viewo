@@ -21,7 +21,7 @@ import viewo.api.documents
 import viewo.app
 import viewo.config
 
-pytest_plugins = ['pytester', 'xdist']  # pylint: disable=invalid-name
+pytest_plugins = ['pytester', 'xdist', 'localserver']  # pylint: disable=invalid-name
 
 PACKAGE = viewo.PACKAGE
 

@@ -8,12 +8,10 @@
 # =============================================================================
 
 import http
-import os
 
 import link
 import power
 import pytest
-import utila
 
 import tests
 
@@ -91,8 +89,9 @@ def test_api_upload_document_wrong_datatype(client):
     )
 
 
-def test_api_upload_from_url(client):
-    source = f'file:///{utila.forward_slash(power.MASTER072_PDF)}'
+def test_api_upload_from_url(client, httpserver):
+    httpserver.serve_content(open(power.MASTER072_PDF, mode='br').read())
+    source = httpserver.url
     result = tests.apipost(client, '/documents', data={'url': source})
     assert result['document']
 
@@ -111,11 +110,10 @@ def test_api_upload_from_url_with_error(source, client, expected_error):
     assert expected_error in result['message']
 
 
-def test_api_upload_from_url_too_large_file(client, testdir):
+def test_api_upload_from_url_too_large_file(client, testdir, httpserver):
     content = b'%PDF-1.5' + b'0' * 1024 * 1024 * 100  # 100 MB
-    pdf = str(os.path.join(testdir.tmpdir, 'upload.pdf'))
-    utila.file_create_binary(pdf, content)
-    source = f'file:///{pdf}'
+    httpserver.serve_content(content)
+    source = httpserver.url
     tests.apipost(
         client,
         page='/documents',
