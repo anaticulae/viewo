@@ -273,6 +273,18 @@ button{
     float:right;
 }
 
+.blackborder{
+    border:1px solid black;
+}
+
+.whitebg{
+    background:white;
+}
+
+.padding{
+    padding: 10px;
+}
+
 .fullscreen{
     position:fixed;
     left:5%;
