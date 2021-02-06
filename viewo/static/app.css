@@ -94,4 +94,7 @@
         margin:0px;
         padding:0px;
     }
+    .app_hidden{
+        display:none;
+    }
 }

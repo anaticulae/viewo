@@ -294,3 +294,7 @@ button{
     overflow:auto;
     z-index:1000;
 }
+
+.copyright{
+    display:inline-block;
+}
