@@ -14,18 +14,15 @@ import re
 import setuptools
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
-UTF8 = 'utf8'
 
-with open(os.path.join(ROOT, 'README.md'), mode='rt', encoding=UTF8) as fp:
+with open(os.path.join(ROOT, 'README.md'), encoding='utf8') as fp:
     README = fp.read()
 
-with open(os.path.join(ROOT, 'viewo/__init__.py'), mode='rt', encoding=UTF8) as fp: # yapf:disable
+with open(os.path.join(ROOT, 'viewo/__init__.py'), encoding='utf8') as fp:
     VERSION = re.search(r'__version__ = \'(.*?)\'', fp.read()).group(1)
 
-with open(os.path.join(ROOT, "requirements.txt"), mode='rt', encoding=UTF8) as fp: # yapf:disable
-    INSTALL_REQUIRES = [
-        line for line in fp.readlines() if line and '#' not in line
-    ]
+with open(os.path.join(ROOT, "requirements.txt"), encoding='utf8') as fp:
+    REQUIRES = [line for line in fp.readlines() if line and '#' not in line]
 
 if __name__ == "__main__":
     setuptools.setup(
@@ -33,11 +30,11 @@ if __name__ == "__main__":
         author_email='info@checkitweg.de',
         description='Let\'s make some flask',
         include_package_data=True,
-        install_requires=INSTALL_REQUIRES,
+        install_requires=REQUIRES,
         long_description=README,
         name='viewo',
         platforms='any',
-        url='https://dev.package.checkitweg.de/viewo',
+        url='https://viewo.package.dev.checkitweg.de',
         version=VERSION,
         zip_safe=False,  # create 'zip'-file if True. Don't do it!
         classifiers=[
