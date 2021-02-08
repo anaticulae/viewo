@@ -103,8 +103,8 @@ def user_account(public: bool = False):
 
 def store_resource(pdf, filename, userid):
     todo = link.create_todo(
-        pdf,
-        filename,
+        file=pdf,
+        filename=filename,
         todopath=viewo.path.todo(),
         owner=userid,
     )
