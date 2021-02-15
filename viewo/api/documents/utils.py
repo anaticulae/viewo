@@ -79,7 +79,7 @@ def state(documentid: str) -> int:
 def footnotes(documentid):
     loaded = viewo.result.loader.load_footnotes_fromprocess(documentid)
     raw = viewo.result.json.footnotes_tojson(loaded)
-    simple = {'resource': viewo.api.utils.simple_recursive(raw)}
+    simple = {'resource': viewo.api.utils.simple_recursive(raw, not_none=False)}
     simple['uri'] = flask.url_for(
         'api_documents.footnotes_get',
         documentid=documentid,
@@ -90,7 +90,7 @@ def footnotes(documentid):
 def style(documentid):
     loaded = viewo.result.loader.load_doctextstyle_fromprocess(documentid)
     raw = viewo.result.json.doctextstyle_tojson(loaded)
-    simple = {'resource': viewo.api.utils.simple_recursive(raw)}
+    simple = {'resource': viewo.api.utils.simple_recursive(raw, not_none=False)}
     simple['uri'] = flask.url_for(
         'api_documents.docstyle_get',
         documentid=documentid,
@@ -101,7 +101,7 @@ def style(documentid):
 def captions(documentid):
     loaded = viewo.result.loader.load_captions_fromprocess(documentid)
     raw = iamraw.caption.pagecaptions_toraw(loaded) if loaded else []
-    simple = {'resource': viewo.api.utils.simple_recursive(raw)}
+    simple = {'resource': viewo.api.utils.simple_recursive(raw, not_none=False)}
     simple['uri'] = flask.url_for(
         'api_documents.captions_get',
         documentid=documentid,
@@ -113,7 +113,7 @@ def bibliography(documentid):
     loaded = viewo.result.loader.load_bibliography_fromprocess(documentid)
     # raw = iamraw.caption.pagecaptions_toraw(loaded) if loaded else []
     raw = utila.flatten(loaded) if loaded else []
-    simple = {'resource': viewo.api.utils.simple_recursive(raw)}
+    simple = {'resource': viewo.api.utils.simple_recursive(raw, not_none=False)}
     simple['uri'] = flask.url_for(
         'api_documents.bibliography_get',
         documentid=documentid,
@@ -133,7 +133,7 @@ def properties(documentid):
 
 def links(documentid):
     loaded = viewo.result.loader.load_links_fromprocess(documentid)
-    raw = viewo.api.utils.simple_recursive(loaded)
+    raw = viewo.api.utils.simple_recursive(loaded, not_none=False)
     simple = {'resource': raw}
     simple['uri'] = flask.url_for(
         'api_documents.links_get',
