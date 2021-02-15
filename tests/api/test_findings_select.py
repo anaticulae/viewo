@@ -21,3 +21,15 @@ def test_api_findings_bypagenumber(findingclient):
     )
     expected = f'documents/{tests.TEST_DOCUMENT}/findings?pages=0%3A5'
     assert expected in result['findings']['uri']
+
+
+def test_api_findings_negative_pagenumber(findingclient):
+    """Collect findings of page -3 till page 5."""
+    client = findingclient
+    result = tests.apicall(
+        client,
+        f'/documents/{tests.TEST_DOCUMENT}/findings?pages=_3:5',
+        expected=http.HTTPStatus.OK,
+    )
+    expected = f'documents/{tests.TEST_DOCUMENT}/findings?pages=_3%3A5'
+    assert expected in result['findings']['uri']
