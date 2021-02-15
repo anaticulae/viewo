@@ -141,7 +141,8 @@ class DocumentService {
             current = 0
         }
         let end = current + 5
-        rpc(`/documents/${this.documentid}/pageviews?pages=${current}:${end}`, function (response) {
+        let callrange = special_pattern(current, end)
+        rpc(`/documents/${this.documentid}/pageviews?pages=${callrange}`, function (response) {
             for (let html of response.pageviews.html) {
                 update_content(current, html)
                 current += 1
@@ -165,8 +166,8 @@ class DocumentService {
         if (current == null) {
             current = 0
         }
-        let end = current + 5
-        rpc(`/documents/${this.documentid}/findings?pages=${current}:${end}`, function (response) {
+        let callrange = special_pattern(current, current + 5)
+        rpc(`/documents/${this.documentid}/findings?pages=${callrange}`, function (response) {
             let pagerange = response.findings.pages
             empty_findings(pagerange)
             let findings = response.findings.pagefindings
@@ -231,7 +232,7 @@ class DocumentService {
         this.waiting = true
         start = Math.min(...range)
         end = Math.max(...range)
-        let callrange = start == end ? start : `${start}:${end}`
+        let callrange = special_pattern(start, end)
         rpc(`/documents/${this.documentid}/findings?pages=${callrange}`, function (response) {
             let pagerange = response.findings.pages
             empty_findings(pagerange)
@@ -242,6 +243,15 @@ class DocumentService {
             service.waiting = false
         })
     }
+}
+
+const special_pattern = function (start, end) {
+    start = String(start).replace('-', '_')
+    end = String(end).replace('-', '_')
+    if (start == end) {
+        return start
+    }
+    return `${start}:${end}`
 }
 
 const empty_findings = function (pagerange) {
