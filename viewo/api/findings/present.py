@@ -99,6 +99,12 @@ def compare(documentid, partnerid):
     return dumped
 
 
+SKIP = {
+    'active',
+    'confidence',
+}
+
+
 @viewo.api.findings.api_findings.route(
     '/documents/<string(length=16):documentid>/fastfindings',
     methods=['GET'],
@@ -113,7 +119,7 @@ def fastfindings(documentid):
     )
     if collected is None:
         return viewo.api.notfound(f'could not find: {documentid}')
-    simple = viewo.api.utils.simple_recursive(collected)
+    simple = viewo.api.utils.simple_recursive(collected, removes=SKIP)
     dumped = flask.jsonify(simple)
     return dumped
 

@@ -71,13 +71,19 @@ def load_finding(documentid, findingid):
     return None
 
 
+SKIP = {
+    'active',
+    'confidence',
+}
+
+
 def all_findings_raw(
         content,
         documentid: str,
         pages: tuple = None,
         payed: bool = True,
 ):
-    simple = viewo.api.utils.simple_recursive(content)
+    simple = viewo.api.utils.simple_recursive(content, removes=SKIP)
     simple = add_finding_uri(simple, documentid)
     simple = remove_unpayed(simple) if not payed else simple
     pagerange, uri = paged(documentid, pages)
@@ -90,7 +96,7 @@ def all_findings_raw(
 
 
 def finding_raw(finding: iamraw.Finding, documentid: str) -> dict:
-    simple = viewo.api.utils.simple_recursive(finding)
+    simple = viewo.api.utils.simple_recursive(finding, removes=SKIP)
     simple['uri'] = flask.url_for(
         'api_findings.finding_get',
         documentid=documentid,
