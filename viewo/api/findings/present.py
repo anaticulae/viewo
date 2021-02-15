@@ -111,9 +111,9 @@ SKIP = {
 )
 @viewo.api.valid_document
 @viewo.api.valid_pages
-def fastfindings(documentid):
+def fast_findings(documentid):
     pages_selected = pages(documentid)
-    collected = viewo.api_.findings.loader.fastfindings(
+    collected = viewo.api_.findings.loader.fast_findings(
         documentid,
         pages=pages_selected,
     )

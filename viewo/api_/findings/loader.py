@@ -39,7 +39,7 @@ def all_findings(documentid: str, pages: tuple = None):
     return findings
 
 
-def fastfindings(
+def fast_findings(
         documentid: str,
         pages: tuple = None,
         status=iamraw.ProblemStatus.OPEN,
