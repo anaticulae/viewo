@@ -119,7 +119,7 @@ def fast_findings(documentid):
     )
     if collected is None:
         return viewo.api.notfound(f'could not find: {documentid}')
-    simple = viewo.api.utils.simple_recursive(collected, removes=SKIP)
+    simple = utila.simplify(collected, removes=SKIP)
     dumped = flask.jsonify(simple)
     return dumped
 

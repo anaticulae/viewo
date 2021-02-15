@@ -42,7 +42,7 @@ def load_html(documentid: str, pages: tuple = None, payed: bool = True) -> dict:
         for content in selected
     ]
 
-    simple = viewo.api.utils.simple_recursive(selected)
+    simple = utila.simplify(selected)
     return simple
 
 

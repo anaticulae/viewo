@@ -68,8 +68,8 @@ def compare_raw(pages: ComparedListFinding):
     for page in pages:
         raw = {
             'page': page.page,
-            'current': viewo.api.utils.simple_recursive(page.current),
-            'other': viewo.api.utils.simple_recursive(page.other),
+            'current': utila.simplify(page.current),
+            'other': utila.simplify(page.other),
         }
         result.append(raw)
     return result
