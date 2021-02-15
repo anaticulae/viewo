@@ -46,7 +46,9 @@ onload('{{process}}')
         {% include 'view/_pdf.html' %}
     </main>
 
-    <main id="pdfview_overview" class="hidden_invisible"></main>
+    <main id="pdfview_overview" class="hidden_invisible">
+        {% include 'view/_overview.html' %}
+    </main>
 
     <main id="pdfview_docstyle" class="hidden_invisible">
         {% include 'view/_style.html' %}

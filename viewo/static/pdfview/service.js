@@ -27,6 +27,7 @@ class DocumentService {
         this.fastfindings = []
         this.update_pagenumbers()
         this.update_pagecontent(null, function ready() {
+            service.update_overview()
             service.update_footnotes()
             service.update_fastfindings()
             service.update_captions()
@@ -133,6 +134,19 @@ class DocumentService {
             }
             navigator.update_page_navigator()
             findingview.update_content(findings)
+        })
+    }
+
+    update_overview() {
+        // TODO: IMPROVE PAGES SYNTAX
+        rpc(`/documents/${this.documentid}/findings?pages=_1:0`, function (response) {
+            let findings = response.findings.pagefindings
+            if (findings.length) {
+                update_content(OVERVIEW, findings)
+            } else {
+                update_content(OVERVIEW, SPECIALCONTENT_EMPTY)
+            }
+            navigator.update_page_navigator()
         })
     }
 
@@ -339,7 +353,7 @@ const defaultpages = function (pagenumbers) {
     let result = []
     result.push({
         'content': SPECIALCONTENT_EMPTY,
-        'page': -1,
+        'page': OVERVIEW,
         'title': 'Übersicht',
     })
 
