@@ -2,6 +2,24 @@
 
 Every noteable change is logged here.
 
+## v2.14.0
+
+### Feature
+
+* hide copyright in app view (f8223c43d4c6)
+* add finding type pie plot (1aed649e5439)
+* add border to findings overview (6ccb4e1ac5e7)
+* add some basic styles (6a5e4c9bbbab)
+* display finding histogram at page bottom (cdfac2446d90)
+* add option to open findings in full screen mode (566d37fbef71)
+* display bibliography overview (a4ecf627c879)
+
+### Fix
+
+* do not hide content due headline navigation (5325b29969be)
+* adjust start and end for empty end (9d6b397fc555)
+* adjust line height of pdfview renderer (56ea8242c61c)
+
 ## v2.13.0
 
 ### Feature
