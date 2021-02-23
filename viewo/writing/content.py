@@ -24,6 +24,7 @@ def replace(content: str, source: str) -> str:
         content = content.replace('action="search.html"', 'action="writing/search.html"') # yapf:disable
         content = content.replace('href="#', 'href="index.html#')
         content = content.replace('href="', 'href="writing/')
+    content += '<style>h1{padding-bottom:0px;</style>'
     return content
 
 
