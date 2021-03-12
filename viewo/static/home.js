@@ -30,7 +30,7 @@ const file_upload_view = {
                 user_error(response.responseJSON['message'])
             },
             success: function (response) {
-                let forward = `Falls Sie nicht weitergeleitet werden klicken Sie
+                let forward = `Falls Sie nicht weitergeleitet werden, klicken Sie
                     <a href="${response['link']}">hier</a>.`
                 user_error(forward)
                 window.location.replace(response['link'])
@@ -55,7 +55,7 @@ const file_upload_view = {
                 user_error(response.responseJSON['message'])
             },
             success: function (response) {
-                let forward = `Falls Sie nicht weitergeleitet werden klicken Sie
+                let forward = `Falls Sie nicht weitergeleitet werden, klicken Sie
                     <a href="${response['link']}">hier</a>.`
                 user_error(forward)
                 window.location.replace(response['link'])
