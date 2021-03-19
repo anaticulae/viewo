@@ -41,7 +41,7 @@ def test_auth_login_invalid_password(test_client):
     )
     assert 'Benutzerdaten fehlerhaft' in result
     # login view visible
-    assert '<h1>Login</h1>' in result
+    assert '<h2>Login</h2>' in result
 
 
 def test_auth_logout_click(user_client):
