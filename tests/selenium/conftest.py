@@ -9,6 +9,7 @@
 
 import contextlib
 import threading
+import time
 
 import pytest
 import utila
@@ -17,7 +18,6 @@ from viewvisitor.fixture import selenium_driver as driver  # pylint:disable=W061
 
 def viewo_start(port):
     cmd = f'viewo --host localhost --port {port}'
-    print(cmd)
     completed = utila.run(cmd, expect=143)
     assert completed.returncode == 143
 
@@ -33,27 +33,31 @@ def viewo_shutdown():
 
 
 LOCK = threading.Lock()
-
-COUNTER = 6000
+COUNTER = 4300
 
 
 @contextlib.contextmanager
 def newport():
     with LOCK:
-        global COUNTER
+        global COUNTER  # pylint:disable=global-statement
         COUNTER += 1
         yield COUNTER
 
 
-@pytest.fixture()
-def webview(client):
+@pytest.fixture(scope='session')
+def webview():
     with newport() as port:
-        viewo_shutdown()
         runner = threading.Thread(target=viewo_start, args=(port,))
         runner.start()
-        try:
-            yield f'http://localhost:{port}'
-            viewo_shutdown()
-        except Exception as error:
-            viewo_shutdown()
-            raise error from None
+    try:
+        # wait for startup
+        time.sleep(1)
+        yield f'http://localhost:{port}/'
+    except Exception as error:
+        raise error from None
+
+
+@pytest.mark.usefixtures('session')
+def pytest_sessionstart():
+    # remove old running instances
+    viewo_shutdown()
