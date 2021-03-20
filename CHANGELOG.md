@@ -2,6 +2,25 @@
 
 Every noteable change is logged here.
 
+## v2.15.0
+
+### Feature
+
+* visit all navigation links (0d40e73f8bd1)
+* add option to run viewo via console (dc83f090a3ff)
+* disable bib plot if not exists (6c212a82753f)
+* introduce first page overview service (d9fe050c013f)
+* support negative page numbers (6b63e7a1328e)
+* reduce amount of data to send (4b2eeb8f3ae0)
+* add option to remove none and items by key (c4c136c63270)
+
+### Fix
+
+* adjust headline level (572886781a59)
+* fix typo (1fd6c9301eda)
+* overwrite headline style (30f2deacda48)
+* do not remove none items (45ff49c4f353)
+
 ## v2.14.0
 
 ### Feature
