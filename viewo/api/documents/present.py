@@ -8,6 +8,7 @@
 # =============================================================================
 
 import json
+import os
 
 import flask
 import flask_login
@@ -58,6 +59,20 @@ def document_get(documentid: str):
         'document': loaded,
     })
     return dumped
+
+
+@viewo.api.documents.api_documents.route(
+    '/documents/<string(length=16):documentid>/pdf',
+    methods=['GET'],
+)
+@viewo.api.valid_document
+def pdf_get(documentid: str) -> bytes:
+    todo = link.todo(documentid)
+    pdf = os.path.join(todo, documentid)
+    if not os.path.exists(pdf):
+        return 'NO DOCUMENT', 404
+    loaded = utila.file_read_binary(pdf)
+    return loaded
 
 
 @viewo.api.documents.api_documents.route(
