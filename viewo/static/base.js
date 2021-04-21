@@ -106,6 +106,22 @@ const rpc = function (url, callback, error = undefined) {
     });
 }
 
+const rpc_raw = function (url, callback, error = undefined) {
+    let call = `${API}${url}`
+    $.ajax(call, {
+        success: function (response) {
+            callback(response)
+        },
+        error: function (response) {
+            if (error != undefined) {
+                error()
+            } else {
+                console.log(`error: ${call}`);
+            }
+        }
+    });
+}
+
 const user_error = function (message) {
     let entry = `<div class="alert alert-warning">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
