@@ -3,7 +3,7 @@ main{
     min-height:500px;
 }
 
-article{
+article, canvas{
     padding:20px;
     width:60%;
     overflow:auto;

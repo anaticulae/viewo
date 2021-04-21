@@ -29,7 +29,9 @@ class ResultView {
             return
         }
 
-        $('#error_page_content').html(selected.content)
+        if (MODERN == false) {
+            $('#error_page_content').html(selected.content)
+        }
 
         navigator.highlight_pagenumber(pagenumber)
         findingbox.update_findings()
@@ -56,8 +58,33 @@ class ResultView {
         } else if (selected.page == FINDINGS) {
             this.show_findings()
         } else {
+            if (MODERN == true) {
+                this.show_pdf(selected.page)
+            }
             $('#pdfview_content').show()
         }
+    }
+
+    show_pdf(pagenumber) {
+        if (service.pdf == null) {
+            return
+        }
+        pagenumber = pagenumber + 1
+        service.pdf.getPage(pagenumber).then(function (page) {
+            let scale = 5.0;
+            let viewport = page.getViewport({ scale: scale, });
+
+            let canvas = $('#error_page_content')[0]
+            let context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            let renderContext = {
+                canvasContext: context,
+                viewport: viewport,
+            };
+            page.render(renderContext);
+        });
     }
 
     hide_all() {

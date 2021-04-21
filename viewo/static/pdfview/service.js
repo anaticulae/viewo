@@ -19,6 +19,7 @@ class DocumentService {
         this.pagenumbers = null
         this.waiting = false
         this.fastfindings = []
+        this.pdf = null
     }
 
     update(documentid) {
@@ -26,6 +27,7 @@ class DocumentService {
         this.content = []
         this.fastfindings = []
         this.update_pagenumbers()
+        this.update_pdf()
         this.update_pagecontent(null, function ready() {
             service.update_overview()
             service.update_footnotes()
@@ -48,6 +50,18 @@ class DocumentService {
             base.show_done()
         }, function () {
             base.show_error()
+        })
+    }
+
+    update_pdf() {
+        if (MODERN == false) {
+            return
+        }
+        let url = `/api/v0/documents/${this.documentid}/pdf`
+        let loadingTask = pdfjsLib.getDocument(url);
+        loadingTask.promise.then(function (pdf) {
+            service.pdf = pdf
+            resultview.show_pdf(0)
         })
     }
 

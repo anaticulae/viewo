@@ -27,6 +27,9 @@ onload('{{process}}')
 
 
 {% block pagecontent %}
+<script>
+    const MODERN = {{ 'false' if 'Edge' in request.environ['HTTP_USER_AGENT'] else 'true' }}
+</script>
 <div id="pdfview">
     <h2>Gesamtdurchsicht<span id="finding_status_counter"></span></h2>
 
