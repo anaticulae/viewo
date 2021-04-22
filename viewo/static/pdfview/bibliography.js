@@ -16,7 +16,7 @@ class PDFViewBibliography {
         for (let bib of bibs) {
             let row = [
                 bib.title,
-                'author',
+                authors_raw(bib.authors),
                 bib.year,
             ]
             data.push(row)
@@ -24,6 +24,19 @@ class PDFViewBibliography {
         bibliographyview.table.rows.add(data);
         bibliographyview.table.draw()
     }
+}
+
+const authors_raw = function (authors) {
+    let result = ''
+    for (let author of authors) {
+        if (result != '') {
+            result = `${result}; ${author.raw}`
+        }
+        else {
+            result = author.raw
+        }
+    }
+    return result
 }
 
 const bibliographyview = new PDFViewBibliography()
