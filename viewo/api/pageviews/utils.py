@@ -29,7 +29,7 @@ def load_html(documentid: str, pages: tuple = None, payed: bool = True) -> dict:
         # select viewable pages
         selected = [loaded[page] for page in selected]
     # select viewable pages
-    if not payed:
+    if not payed and not public(documentid):
         # TODO: THIS DOES NOT SUPPORT PARTIAL PAGES (0,1,2,5,6,8,10)
         start = 0 if pages is None else pages[0]
         selected = [
@@ -69,3 +69,15 @@ def pagecount(documentid: str) -> int:
     root = link.resultview(documentid, done=True)
     result = len(utila.file_list(os.path.join(root, 'view'), include='html'))
     return result
+
+
+def public(documentid: str) -> bool:
+    """Check if document is not bound to user account and login is not
+    required."""
+    # TODO: MOVE TO LINK
+    # TODO: VERIFY WITH UNIT TEST: After logging in, public documents
+    # where not visbile anymore, purchase was required
+    owner = link.owner(documentid)
+    if owner == link.PUBLIC_OWNER:
+        return True
+    return False

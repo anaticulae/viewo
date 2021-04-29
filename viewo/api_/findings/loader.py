@@ -83,9 +83,10 @@ def all_findings_raw(
         pages: tuple = None,
         payed: bool = True,
 ):
+    public = viewo.api.pageviews.utils.public(documentid)
     simple = utila.simplify(content, removes=SKIP)
     simple = add_finding_uri(simple, documentid)
-    simple = remove_unpayed(simple) if not payed else simple
+    simple = remove_unpayed(simple) if not payed and not public else simple
     pagerange, uri = paged(documentid, pages)
     raw = {
         'pagefindings': simple,
