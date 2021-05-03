@@ -8,6 +8,7 @@ const CAPTIONS = 1028
 const PROPERTIES = 1029
 const DOCSTYLE = 1030
 const FINDINGS = 1031
+const CHECKLIST = 1032
 
 const SPECIALCONTENT = 'NONE'
 const SPECIALCONTENT_EMPTY = 'NONE_EMPTY'
@@ -370,7 +371,6 @@ const defaultpages = function (pagenumbers) {
         'page': OVERVIEW,
         'title': 'Übersicht',
     })
-
     for (let page = 0; page < pagenumbers; page++) {
         result.push({
             'content': null,
@@ -379,7 +379,6 @@ const defaultpages = function (pagenumbers) {
             'title': page + 1,
         })
     }
-
     result.push({
         'content': SPECIALCONTENT_EMPTY,
         'page': BIBLIOGRAPHY,
@@ -414,6 +413,11 @@ const defaultpages = function (pagenumbers) {
         'content': SPECIALCONTENT_EMPTY,
         'page': FINDINGS,
         'title': 'Fehlerübersicht',
+    })
+    result.push({
+        'content': 'TODO',
+        'page': CHECKLIST,
+        'title': 'Checkliste',
     })
     return result
 }
