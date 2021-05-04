@@ -166,9 +166,9 @@ class FindingBox {
         pagefindings = pagefindings.filter(s => visible(s))
         if (pagefindings.length == 0) {
             // disable error bar if no error is provided
-            $('#error')[0].classList.add('hidden_inbounds')
+            $('#error').hide()
         } else {
-            $('#error')[0].classList.remove('hidden_inbounds')
+            $('#error').show()
         }
     }
 

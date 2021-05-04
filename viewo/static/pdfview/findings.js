@@ -100,5 +100,4 @@ const findingview = new PDFViewFinding()
 
 $(document).ready(function () {
     findingview.init()
-
 })
