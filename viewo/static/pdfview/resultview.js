@@ -244,7 +244,7 @@ class ResultView {
     }
 
     get current_page() {
-        return this.error_page
+        return resultview.error_page
     }
 
     get current_finding() {
@@ -255,33 +255,32 @@ class ResultView {
     }
 
     get available_pages() {
-        if (this.content == undefined) {
+        if (service.content == undefined) {
             return 0
         }
-        return this.content.length
+        return service.content.length
     }
 
     get findings() {
-        if (this.content == undefined) {
+        if (service.content == undefined) {
             return []
         }
-        if (this.content.length <= this.current_page) {
+        if (service.content.length <= resultview.current_page) {
             return []
         }
         let result = []
-        for (let item of this.content[this.current_page].findings) {
+        for (let item of service.content[resultview.current_page].findings) {
             result.push(item)
         }
         return result
     }
 
     get document_findings() {
-        if (this.content == undefined) {
+        if (resultview.content == undefined) {
             return []
         }
         let result = []
-
-        for (let items of this.content) {
+        for (let items of resultview.content) {
             for (let item of items.findings) {
                 result.push(item)
             }
@@ -290,12 +289,12 @@ class ResultView {
     }
 
     get selected_finding() {
-        let findings = page(this.current_page).findings
+        let findings = page(resultview.current_page).findings
         if (findings == undefined) {
             return null
         }
         if (this.current_finding < findings.length) {
-            return findings[this.current_finding]
+            return findings[resultview.current_finding]
         }
         return null
     }

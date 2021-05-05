@@ -60,7 +60,7 @@ class Navigator {
                     // no page change possible, stay on page
                     return;
                 }
-            } while (this.result.content[current].findings.filter(s => visible(s)).length == 0)
+            } while (service.content[current].findings.filter(s => visible(s)).length == 0)
             this.result.show_page(current)
         }
         else {
@@ -80,7 +80,7 @@ class Navigator {
                     // no page change possible, stay on page
                     return;
                 }
-            } while (this.result.content[current].findings.filter(s => visible(s)).length == 0)
+            } while (service.content[current].findings.filter(s => visible(s)).length == 0)
             this.result.show_page(current)
         } else {
             let next = next_page_visible(this.result.current_page)
