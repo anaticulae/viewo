@@ -2,6 +2,29 @@
 
 Every noteable change is logged here.
 
+## v2.16.0
+
+### Feature
+
+* add finding saver scheduler (a37af8eeb0ca)
+* shrink result by upper page border (52db2e7afa6f)
+* add findings front end (9e8477aa2a8e)
+* add checklist view (95a8314c6575)
+* add modern flag to decide which view should be used (c12a2d98c7db)
+* add pdf.js lib (e0e10087c2ef)
+* add rpc raw call to gather raw files (06cec2b177fc)
+* add pdf delivery service (501ce35e8690)
+
+### Fix
+
+* load FrontEnd only once (aa67f12b16be)
+* clarify error message (0e0d507c5864)
+* handle non existing links list (e7ac1576d396)
+* adjust to missing refactoring's after changing to service (47a8e8240055)
+* ensure that hidden error does not destroy layout (40defaf2ae48)
+* always view public documents after login (61e63eea27a0)
+* show list of parsed authors (d7498de4a429)
+
 ## v2.15.0
 
 ### Feature
