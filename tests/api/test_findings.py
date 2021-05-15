@@ -31,6 +31,17 @@ def test_api_fastfindings_bydocumentid(findingclient):
     assert len(result) == 18
 
 
+def test_api_findings_pages_outranges(findingclient):
+    """Upper page mark outranges valid pages(18). Request is cutted at
+    top page border."""
+    client = findingclient
+    result = tests.apicall(
+        client,
+        f'/documents/{tests.TEST_DOCUMENT}/fastfindings?pages=15:50',
+    )
+    assert len(result) == 5
+
+
 def test_api_findings_overview_by_invalid_documentid(client):
     tests.apicall(
         client,

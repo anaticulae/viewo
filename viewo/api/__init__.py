@@ -140,7 +140,9 @@ def valid_pages(function):
         if selected is None:
             return bad(f'invalid page count: {pages}')
         if len(selected) > pagecount:
-            return bad(f'invalid page count: {len(selected)}>{pagecount}')
+            start = min(selected)
+            if start >= pagecount:
+                return bad(f'invalid page count: {len(selected)}>{pagecount}')
         return function(*args, **kwargs)
 
     return decorated_function

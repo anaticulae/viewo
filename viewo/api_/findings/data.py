@@ -43,6 +43,7 @@ class FindingsFrontEnd:
         data = list(self.loaded)
         if pages is not None:
             data = utila.select_pages(data, pages=pages)
+        data = utila.notnone(data)
         for page in data:
             # remove not selected items
             page.content = [
