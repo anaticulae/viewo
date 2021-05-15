@@ -40,13 +40,9 @@ View
 
 * add hint that pdf is running in compatible mode
 
-* add hint of missing outlines
-
 * add option to optimize pdf file?
 
 * add publication check
-
-* add data manager to resultview.js to simplify data transfers
 
 Fonts
 -----
@@ -65,14 +61,8 @@ General
 
 * Add option to rerun with updated pdf again
 
-* Limit accepted pdf size/length: add premium feature to run more than 256
-  pdf, 10mb
-
 Result
 ------
-
-* Add color rectangle into FindingBox to match marked finding with finding
-  box fast.
 
 Documment
 ---------
