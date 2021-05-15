@@ -27,6 +27,7 @@ class FindingsFrontEnd:
         self.loaded = None
         self.fast = {}
         self.outdated = False
+        utila.debug(f'create FindingFrontEnd: {documentid}', flush=True)
 
     def update_status(self, findingid: int, status: iamraw.ProblemStatus):
         assert isinstance(status, iamraw.ProblemStatus), type(status)
@@ -100,11 +101,12 @@ class FrontEndCollection:
         return loaded
 
 
+FRONTEND = FrontEndCollection()
+
+
 def frontend(documentid: str) -> FindingsFrontEnd:
-    collection = getattr(flask.g, '_findings', None)
-    if collection is None:
-        collection = flask.g._findings = FrontEndCollection()
-    return collection[documentid]
+    global FRONTEND
+    return FRONTEND[documentid]
 
 
 def convert_style_markup(findings: iamraw.PageFinding) -> iamraw.PageFinding:
