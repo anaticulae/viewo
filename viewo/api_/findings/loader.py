@@ -17,6 +17,7 @@ import protocol.finding
 import utila
 
 import viewo.api.pageviews.utils
+import viewo.api_.findings.data
 import viewo.result.json
 
 
@@ -47,17 +48,12 @@ def fast_findings(
     documentpath = link.document(documentid)
     if documentpath is None:
         return None
-    optimizedpath = link.optimized(documentid, done=True)
-    findings = protocol.load_grouped(optimizedpath, pages=pages)
-    for page in findings:
-        page.content = [
-            finding.number
-            for finding in page.content
-            if finding.solution.status == status
-        ]
-    findings = [item for item in findings if item.content]
-    findings = sorted(findings, key=lambda x: x.page)
-    return findings
+    frontend = viewo.api_.findings.data.frontend(documentid)
+    result = frontend.fastfindings(
+        pages=pages,
+        status=status,
+    )
+    return result
 
 
 def load_finding(documentid, findingid):
