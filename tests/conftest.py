@@ -60,7 +60,8 @@ def run_queuemo(source, generated, dest):
 
     # run single queuemo instance in workspace, write output to same workspace
     cmd = f'queuemo_single -i {workspace} -V'
-    utila.run(cmd)
+    completed = utila.run(cmd)
+    utila.debug(utila.format_completed(completed))
 
 
 def zfill(text, width, char='0') -> str:
