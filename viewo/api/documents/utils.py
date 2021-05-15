@@ -133,6 +133,9 @@ def properties(documentid):
 
 def links(documentid):
     loaded = viewo.result.loader.load_links_fromprocess(documentid)
+    if loaded is None:
+        # no extracted links
+        loaded = []
     raw = utila.simplify(loaded, not_none=False)
     simple = {'resource': raw}
     simple['uri'] = flask.url_for(
