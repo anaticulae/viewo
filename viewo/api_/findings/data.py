@@ -9,8 +9,9 @@
 
 import copy
 import os
+import threading
+import time
 
-import flask
 import iamraw
 import link
 import protocol
@@ -27,7 +28,7 @@ class FindingsFrontEnd:
         self.loaded = None
         self.fast = {}
         self.outdated = False
-        utila.debug(f'create FindingFrontEnd: {documentid}', flush=True)
+        utila.debug(f'create FindingFrontEnd: {documentid}')
 
     def update_status(self, findingid: int, status: iamraw.ProblemStatus):
         assert isinstance(status, iamraw.ProblemStatus), type(status)
@@ -72,6 +73,7 @@ class FindingsFrontEnd:
         }
 
     def save(self):
+        utila.log(f'write updated findings to: {self.path}')
         findings = utila.flatten_content(self.loaded)  # TODO: REMOVE LATER
         protocol.write_grouped(findings, self.path)
         self.outdated = False
@@ -88,6 +90,7 @@ class FrontEndCollection:
 
     def __init__(self):
         self.documents = {}
+        self.saver = None
 
     def __getitem__(self, documentid) -> FindingsFrontEnd:
         try:
@@ -100,12 +103,34 @@ class FrontEndCollection:
         self.documents[documentid] = loaded
         return loaded
 
+    def run_saveme(self):
+        utila.log('start saving scheduler')
+        while True:
+            for item in self.documents.values():
+                if not item.outdated:
+                    continue
+                # write current state to hdd
+                try:
+                    item.save()
+                except Exception as error:  # pylint:disable=broad-except
+                    utila.error('could not save findings')
+                    utila.error(error)
+            time.sleep(25)  # TODO: CONVERT TO HOLY VALUE
+            utila.debug('wait for saving')
+
+    def start(self):
+        if self.saver is not None:
+            return
+        self.saver = threading.Thread(target=self.run_saveme)
+        self.saver.start()
+
 
 FRONTEND = FrontEndCollection()
 
+start = FRONTEND.start  # pylint:disable=C0103
+
 
 def frontend(documentid: str) -> FindingsFrontEnd:
-    global FRONTEND
     return FRONTEND[documentid]
 
 

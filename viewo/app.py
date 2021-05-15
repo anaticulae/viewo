@@ -19,6 +19,7 @@ from admin_helpdesk.api import *  # pylint:disable=wildcard-import,W0614,C0412
 
 import viewo
 import viewo.__patch__
+import viewo.api_.findings.data
 import viewo.config
 import viewo.path
 import viewo.tracking
@@ -92,6 +93,8 @@ def create_application(config=None) -> flask.Flask:
 
     # track every user request
     appi.before_request(viewo.tracking.before_each_request)
+
+    viewo.api_.findings.data.start()
 
     return appi
 
