@@ -130,18 +130,17 @@ def valid_pages(function):
     @functools.wraps(function)
     def decorated_function(*args, **kwargs):
         # TODO: ADD USER PAYMENT CHECK
-        documentid = kwargs['documentid']
-        # with contextlib.suppress(KeyError):
         pages = flask.request.args.get('pages', None)
         if pages is None:
-            pages = flask.request.args.get('pages', None)
-        else:
-            pagecount = viewo.api.pageviews.utils.pagecount(documentid)
-            selected = utila.parse_pages(pages, pagecount=pagecount)
-            if selected is None:
-                return bad(f'invalid page count: {pages}')
-            if len(selected) > pagecount:
-                return bad(f'invalid page count: {len(selected)}>{pagecount}')
+            return function(*args, **kwargs)
+        # verify selected pages
+        documentid = kwargs['documentid']
+        pagecount = viewo.api.pageviews.utils.pagecount(documentid)
+        selected = utila.parse_pages(pages, pagecount=pagecount)
+        if selected is None:
+            return bad(f'invalid page count: {pages}')
+        if len(selected) > pagecount:
+            return bad(f'invalid page count: {len(selected)}>{pagecount}')
         return function(*args, **kwargs)
 
     return decorated_function
