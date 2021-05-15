@@ -28,7 +28,7 @@ def test_api_fastfindings_bydocumentid(findingclient):
         client,
         f'/documents/{tests.TEST_DOCUMENT}/fastfindings',
     )
-    assert len(result) == 18
+    assert 18 <= len(result) <= 25
 
 
 def test_api_findings_pages_outranges(findingclient):
@@ -39,7 +39,7 @@ def test_api_findings_pages_outranges(findingclient):
         client,
         f'/documents/{tests.TEST_DOCUMENT}/fastfindings?pages=15:50',
     )
-    assert len(result) == 5
+    assert 5 <= len(result) < 10
 
 
 def test_api_findings_overview_by_invalid_documentid(client):

@@ -10,7 +10,6 @@
 import flask
 import iamraw
 import link
-import protocol.finding
 import utila
 
 import viewo.api.pageviews.utils

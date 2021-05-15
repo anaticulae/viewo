@@ -36,7 +36,7 @@ def finding_put(documentid, findingid):
         return viewo.api.bad(f'invalid findingid: {findingid}')
     if status not in (0, 1, 2, 3, 4):
         return viewo.api.bad(f'invalid status: {status}')
-    status = viewo.result.update.problem_fromint(status)
+    status: iamraw.ProblemStatus = viewo.result.update.problem_fromint(status)
     if not viewo.api_.findings.data.frontend(documentid).update_status(
             findingid,
             status,
