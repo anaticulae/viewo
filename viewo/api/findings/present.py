@@ -28,14 +28,12 @@ import viewo.api_.findings.update
 @viewo.api.valid_pages
 def findings(documentid):
     pages_selected = pages(documentid)
-    collected = viewo.api_.findings.loader.all_findings(
-        documentid,
-        pages=pages_selected,
-    )
-    if collected is None:
-        return viewo.api.notfound(f'could not find: {documentid}')
     user = flask_login.current_user
     payed = not user.is_authenticated or user.payed
+    collected = viewo.api_.findings.data.frontend(documentid).findings(
+        pages=pages_selected,
+        status=None,
+    )
     simple = viewo.api_.findings.loader.all_findings_raw(
         collected,
         documentid,
@@ -55,7 +53,7 @@ def findings(documentid):
 @viewo.api.valid_document
 @viewo.api.valid_finding
 def finding_get(documentid, findingid):
-    finding = viewo.api_.findings.loader.load_finding(documentid, findingid)
+    finding = viewo.api_.findings.data.frontend(documentid)[findingid]
     simple = viewo.api_.findings.loader.finding_raw(finding, documentid)
     dumped = flask.jsonify({
         'finding': simple,

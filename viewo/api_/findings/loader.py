@@ -7,37 +7,14 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import os
-
 import flask
 import iamraw
 import link
-import protocol
 import protocol.finding
 import utila
 
 import viewo.api.pageviews.utils
 import viewo.api_.findings.data
-import viewo.result.json
-
-
-def all_findings(documentid: str, pages: tuple = None):
-    documentpath = link.document(documentid)
-    if documentpath is None:
-        return None
-    optimizedpath = link.optimized(documentid, done=True)
-    if os.path.exists(optimizedpath):
-        findings = protocol.load_grouped(optimizedpath, pages=pages)
-    else:
-        utila.error('using outdated finding collector!')
-        findings = protocol.findings_from_path(documentpath)
-        # skip non selected findings
-        findings = [
-            finding for finding in findings
-            if not utila.should_skip(finding.page, pages)
-        ]
-    findings = [convert_style_markup(page) for page in findings]
-    return findings
 
 
 def fast_findings(
@@ -54,17 +31,6 @@ def fast_findings(
         status=status,
     )
     return result
-
-
-def load_finding(documentid, findingid):
-    # TODO: EXPERIMENTAL
-    findingid = str(findingid)
-    documentpath = link.document(documentid)
-    for _, findings in protocol.finding.iter_findings(documentpath):
-        for finding in findings:
-            if str(finding.number) == findingid:
-                return finding
-    return None
 
 
 SKIP = {
@@ -136,10 +102,3 @@ def paged(documentid, pages):
         )
         pagerange = pages
     return pagerange, uri
-
-
-def convert_style_markup(findings: iamraw.PageFinding) -> iamraw.PageFinding:
-    for finding in findings.content:
-        finding.solution.description = viewo.result.json.message_replace(
-            finding.solution.description)
-    return findings

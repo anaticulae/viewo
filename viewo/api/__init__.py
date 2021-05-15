@@ -16,6 +16,7 @@ import link
 import utila
 
 import viewo.api.users.utils.user
+import viewo.api_.findings.data
 import viewo.api_.findings.update
 
 
@@ -103,8 +104,9 @@ def valid_finding(function):
         # TODO: ADD USER RIGHTS CHECK
         documentid = kwargs['documentid']
         findingid = kwargs['findingid']
-        finding = viewo.api_.findings.loader.load_finding(documentid, findingid)
-        if not finding:
+        try:
+            viewo.api_.findings.data.frontend(documentid)[findingid]
+        except KeyError:
             return notfound(f'could not locate finding: {findingid}')
         return function(*args, **kwargs)
 
