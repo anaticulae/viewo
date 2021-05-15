@@ -105,7 +105,7 @@ def valid_finding(function):
         findingid = kwargs['findingid']
         finding = viewo.api_.findings.loader.load_finding(documentid, findingid)
         if not finding:
-            return notfound(f'could not locate: {findingid}')
+            return notfound(f'could not locate finding: {findingid}')
         return function(*args, **kwargs)
 
     return decorated_function

@@ -38,5 +38,5 @@ def finding_put(documentid, findingid):
             findingid,
             status,
     ):
-        return viewo.api.bad(f'could not update')
+        return viewo.api.bad(f'could not update finding: {findingid} {status}')
     return viewo.api.success('updated')
