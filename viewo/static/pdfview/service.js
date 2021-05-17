@@ -9,6 +9,7 @@ const PROPERTIES = 1029
 const DOCSTYLE = 1030
 const FINDINGS = 1031
 const CHECKLIST = 1032
+const SCORE = 1033
 
 const SPECIALCONTENT = 'NONE'
 const SPECIALCONTENT_EMPTY = 'NONE_EMPTY'
@@ -418,6 +419,11 @@ const defaultpages = function (pagenumbers) {
         'content': 'TODO',
         'page': CHECKLIST,
         'title': 'Checkliste',
+    })
+    result.push({
+        'content': 'Layout, Writing Style, Bibs',
+        'page': SCORE,
+        'title': 'CIW-Score',
     })
     return result
 }
