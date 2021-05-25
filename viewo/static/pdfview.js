@@ -257,12 +257,12 @@ class TodoListView {
         let jump_to_page = `<a href = "#" id = "${openid}">${finding.title}</a>`
         let number = parent[0].rows.length + 1
         let raw =
-            `< tr id = "${finding.number}" >
-            <td class="center">${number}</td>
-            <td>${jump_to_page}</td>
-            <td class="center">${page_user}</td>
-            <td class="center">${action}</td>
-            </tr > `
+            `<tr id = "${finding.number}">
+                <td class="center">${number}</td>
+                <td>${jump_to_page}</td>
+                <td class="center">${page_user}</td>
+                <td class="center">${action}</td>
+            </tr>`
         parent.append(raw)
         $(`#${openid}`).click(function () {
             open_pdfview(page)
