@@ -289,7 +289,8 @@ class ResultView {
     }
 
     get selected_finding() {
-        let findings = page(resultview.current_page).findings
+        let findings = visible_findings(resultview.current_page)
+        // let findings = page(resultview.current_page).findings
         if (findings == undefined) {
             return null
         }
@@ -353,22 +354,12 @@ class ResultView {
     }
 
     update_current_finding() {
-        if (this.selected_finding.solution.status <= SELECTED) {
-            return
-        }
-        let next = this.get_next_finding
-        if (next != null) {
-            this.error_selected = next
-            findingbox.update_findings(this.error_selected)
-            return
-        }
-        let prev = this.get_prev_finding
-        if (prev != null) {
-            this.error_selected = prev
-            findingbox.update_findings(this.error_selected)
-            return
-        }
-        this.error_selected = null
+        // Update finding list and ensure that selected finding is in
+        // visbile finding range.
+        let findings = visible_findings(resultview.current_page)
+        let position_new = Math.min(findings.length-1, resultview.error_selected)
+        position_new = Math.max(0, position_new)
+        findingbox.update_findings(position_new)
     }
 
     update_finding(findingid, status) {

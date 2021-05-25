@@ -232,6 +232,9 @@ class DocumentService {
 
     pagefindings(pagenumber) {
         let current = page(pagenumber)
+        if(current==undefined){
+            return []
+        }
         if (current.findings == null) {
             // signal that findings are already called
             current.findings = []
