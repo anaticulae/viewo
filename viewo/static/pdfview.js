@@ -72,13 +72,7 @@ class Navigator {
         // Highlight page number as open page in upper page selector bar.
         // Remove other potential highlights of other pages.
         // TODO: SPLIT METHOD IN CLEAR AND SET/ADD
-        let error_page_list = $('#pdfview_navigation_list')[0]
-        for (let index in error_page_list.children) {
-            let child = error_page_list.children[index]
-            if (child.classList != undefined) {
-                child.classList.remove('highlighted')
-            }
-        }
+        $("button[id*='openpage']").removeClass('highlighted')
         // let pdfpage = this.result.pagecontent(page).page
         let current = $(`#openpage_${page}`)
         if (current.length == 1) {
