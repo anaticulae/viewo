@@ -145,6 +145,9 @@ class DocumentService {
             let findings = response.findings.pagefindings
             if (findings.length) {
                 update_content(FINDINGS, findings)
+                for (let findingpage of findings) {
+                    page(findingpage.page).findings = findingpage.content
+                }
             } else {
                 update_content(FINDINGS, SPECIALCONTENT_EMPTY)
             }
@@ -178,9 +181,9 @@ class DocumentService {
                 current += 1
             }
             // start download findings
-            service.update_pagefindings(current, function () {
-                findingbox.update_findings(current)
-            })
+            // service.update_pagefindings(current, function () {
+            //     findingbox.update_findings(current)
+            // })
             if (response.pageviews.html.length) {
                 if (callback != null) {
                     callback()
