@@ -32,6 +32,42 @@ class Navigator {
         });
     }
 
+    create_pagenavigator(pages) {
+        let error_page_list = $('#pdfview_navigation_list')
+        // TODO: CHECK FOR BETTER REMOVEMENT
+        error_page_list.html('')
+        for (let page of pages) {
+            let btn = `<button type="button" class="btn btn-default" id="openpage_${page.page}">${page.title}</button>`
+            error_page_list.append(btn)
+            $(`#openpage_${page.page}`).click(function () {
+                resultview.show_page(page.page)
+            });
+            if (page.content == SPECIALCONTENT_EMPTY) {
+                $(`#openpage_${page.page}`).hide()
+            }
+        }
+        this.update_page_navigator()
+    }
+
+    update_page_navigator() {
+        for (let page of service.pages) {
+            // 1024 do not skip special pages
+            if (this.error_pages_only && page.page < 1024) {
+                if (!open_findings(page.page)) {
+                    // no open findings, hide this page
+                    $(`#openpage_${page.page}`).hide()
+                    continue
+                }
+            }
+            if (page.content == SPECIALCONTENT_EMPTY) {
+                $(`#openpage_${page.page}`).hide()
+            }
+            else{
+                $(`#openpage_${page.page}`).show()
+            }
+        }
+    }
+
     highlight_pagenumber(page) {
         // Highlight page number as open page in upper page selector bar.
         // Remove other potential highlights of other pages.
@@ -87,29 +123,6 @@ class Navigator {
             this.result.show_page(next)
         }
         service.smooth(this.result.current_page)
-    }
-
-    update_page_navigator() {
-        let error_page_list = $('#pdfview_navigation_list')
-        // TODO: CHECK FOR BETTER REMOVEMENT
-        error_page_list.html('')
-        for (let page of service.pages) {
-            // 1024 do not skip special pages
-            if (this.error_pages_only && page.page < 1024) {
-                if (!open_findings(page.page)) {
-                    // no open findings, hide this page
-                    continue
-                }
-            }
-            let btn = `<button type="button" class="btn btn-default" id="openpage_${page.page}">${page.title}</button>`
-            error_page_list.append(btn)
-            $(`#openpage_${page.page}`).click(function () {
-                resultview.show_page(page.page)
-            });
-            if (page.content == SPECIALCONTENT_EMPTY) {
-                $(`#openpage_${page.page}`).hide()
-            }
-        }
     }
 
     /**

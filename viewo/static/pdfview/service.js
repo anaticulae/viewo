@@ -47,7 +47,7 @@ class DocumentService {
         rpc(`/documents/${this.documentid}`, function (response) {
             service.pagenumbers = response.document.pages
             service.content = defaultpages(service.pagenumbers)
-            navigator.update_page_navigator()
+            navigator.create_pagenavigator(service.pages)
             resultview.show_page(0)
             base.show_done()
         }, function () {

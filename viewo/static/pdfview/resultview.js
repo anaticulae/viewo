@@ -357,7 +357,7 @@ class ResultView {
         // Update finding list and ensure that selected finding is in
         // visbile finding range.
         let findings = visible_findings(resultview.current_page)
-        let position_new = Math.min(findings.length-1, resultview.error_selected)
+        let position_new = Math.min(findings.length - 1, resultview.error_selected)
         position_new = Math.max(0, position_new)
         findingbox.update_findings(position_new)
     }
