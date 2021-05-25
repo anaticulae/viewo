@@ -73,11 +73,7 @@ class Navigator {
         // Remove other potential highlights of other pages.
         // TODO: SPLIT METHOD IN CLEAR AND SET/ADD
         $("button[id*='openpage']").removeClass('highlighted')
-        // let pdfpage = this.result.pagecontent(page).page
-        let current = $(`#openpage_${page}`)
-        if (current.length == 1) {
-            current[0].classList.add('highlighted')
-        }
+        $(`#openpage_${page}`).addClass('highlighted')
     }
 
     previous_page() {
