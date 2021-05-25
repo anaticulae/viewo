@@ -232,7 +232,7 @@ class DocumentService {
 
     pagefindings(pagenumber) {
         let current = page(pagenumber)
-        if(current==undefined){
+        if (current == undefined) {
             return []
         }
         if (current.findings == null) {
@@ -275,6 +275,25 @@ class DocumentService {
             }
             service.waiting = false
         })
+    }
+
+    fastfindings_solve(findingid, status) {
+        // Removes finding when finding is solved or deleted
+        if (![DONE, REMOVED].includes(status)) {
+            // not remove or done
+            return
+        }
+        for (let page of this.fastfindings) {
+            if (page.content == undefined) {
+                continue
+            }
+            let done = page.content.indexOf(findingid)
+            if (done != -1) {
+                // page.content.remove(done)
+                page.content.splice(findingid)
+                break
+            }
+        }
     }
 }
 

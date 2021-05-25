@@ -370,6 +370,9 @@ class ResultView {
             data: { 'status': status },
             error: function (request, textStatus, error) {
                 // TODO: ADD ERROR HANDLER
+            },
+            success: function (response) {
+                service.fastfindings_solve(findingid, status)
             }
         });
     }
