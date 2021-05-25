@@ -373,6 +373,7 @@ class ResultView {
             },
             success: function (response) {
                 service.fastfindings_solve(findingid, status)
+                navigator.update_page_navigator()
             }
         });
     }

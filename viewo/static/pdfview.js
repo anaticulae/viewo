@@ -66,6 +66,7 @@ class Navigator {
                 $(`#openpage_${page.page}`).show()
             }
         }
+        this.set_on_valid_hidden_page()
     }
 
     highlight_pagenumber(page) {
@@ -132,6 +133,13 @@ class Navigator {
     }
 
     set_on_valid_hidden_page() {
+        if (!this.error_pages_only) {
+            return
+        }
+        let current = this.result.current_page
+        if(visible_findings(current).length){
+            return
+        }
         // ensure to be on valid page after changing from selective pages
         // to all pages.
         this.next_page()
