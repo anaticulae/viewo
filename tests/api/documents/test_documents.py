@@ -9,10 +9,6 @@
 
 import http
 
-import link
-import power
-import pytest
-
 import tests
 
 
@@ -72,94 +68,6 @@ def test_api_delete_document_which_does_not_exists(client):
     )
     assert 'error' in result
 
-
-def test_api_upload_document(client):
-    result = tests.apiupload(client, '/documents', 'file', tests.MINIMAL)
-    assert result['document']
-    assert result['link']
-
-
-def test_api_upload_document_wrong_datatype(client):
-    tests.apiupload(
-        client,
-        '/documents',
-        'file',
-        __file__,
-        expected=http.HTTPStatus.BAD_REQUEST,
-    )
-
-
-def test_api_upload_from_url(client, httpserver):
-    httpserver.serve_content(open(power.MASTER072_PDF, mode='br').read())
-    source = httpserver.url
-    result = tests.apipost(client, '/documents', data={'url': source})
-    assert result['document']
-
-
-@pytest.mark.parametrize('source, expected_error', [
-    pytest.param('http://invalid.dscom', 'invalid url', id='invalid url'),
-    pytest.param(f'file:///{__file__}', 'require pdf', id='no pdf'),
-])
-def test_api_upload_from_url_with_error(source, client, expected_error):
-    result = tests.apipost(
-        client,
-        '/documents',
-        data={'url': source},
-        expected=http.HTTPStatus.BAD_REQUEST,
-    )
-    assert expected_error in result['message']
-
-
-def test_api_upload_from_url_too_large_file(client, testdir, httpserver):
-    content = b'%PDF-1.5' + b'0' * 1024 * 1024 * 100  # 100 MB
-    httpserver.serve_content(content)
-    source = httpserver.url
-    tests.apipost(
-        client,
-        page='/documents',
-        data={'url': source},
-        expected=http.HTTPStatus.BAD_REQUEST,
-    )
-
-
-def test_api_upload_file_url(client):
-    """Upload one file and check if it is saved at common todo folder"""
-    # test that viewing the page renders without template errors
-    assert client.get('/').status_code == http.HTTPStatus.OK
-
-    # count files in todo folder
-    files_before = link.count_todo()
-
-    tests.apiupload(
-        client,
-        page='/documents',
-        field='file',
-        path=tests.MINIMAL,
-    )
-    files_after = link.count_todo()
-    # check if file was uploaded
-    assert files_after == files_before + 1
-
-
-def test_api_upload_with_wrong_field(client):
-    """Upload one file and check if it is saved at common todo folder"""
-    # test that viewing the page renders without template errors
-    assert client.get('/').status_code == http.HTTPStatus.OK
-
-    # count files in todo folder
-    files_before = link.count_todo()
-
-    # Upload with wrong field
-    tests.apiupload(
-        client,
-        page='/documents',
-        field='o_o',
-        path=tests.MINIMAL,
-        expected=http.HTTPStatus.BAD_REQUEST,
-    )
-    files_after = link.count_todo()
-    # check that no file was uploaded
-    assert files_after == files_before
 
 
 def test_api_documents_links(findingclient):
