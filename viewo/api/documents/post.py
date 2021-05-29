@@ -55,6 +55,7 @@ def document_create() -> str:
 
 
 def recive_resource() -> Loaded:  # pylint:disable=R0911
+    # TODO: SECURITY: VERIFY THIS METHOD
     if 'url' in flask.request.form:
         # provide resource via link as url-field
         posturl = flask.request.form['url']
@@ -72,11 +73,12 @@ def recive_resource() -> Loaded:  # pylint:disable=R0911
         if not flask.request.files:
             return viewo.api.bad('missing `file` field')
         pdf = flask.request.files['file']
-        filename = werkzeug.utils.secure_filename(pdf.filename)
         if pdf.filename == '':
             # if user does not select file, browser also submit an empty
             # part without filename
             return viewo.api.bad('empty `file` field')
+        filename = os.path.split(pdf.filename)[1]
+        filename = werkzeug.utils.secure_filename(filename)
         header = pdf.stream.read(viewo.upload.HEADER_READ_SIZE)
         if not viewo.upload.valid_pdf(header):
             return viewo.api.bad('not a pdf file')
