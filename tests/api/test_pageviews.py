@@ -52,11 +52,11 @@ def test_api_pages_overview_invalid_document(findingclient):
     client = findingclient
     tests.apicall(
         client,
-        f'/documents/invalid_document/pageviews',
+        '/documents/invalid_document/pageviews',
         expected=http.HTTPStatus.NOT_FOUND,
     )
     tests.apicall(
         client,
-        f'/documents/invalid_document/pageviews?pages=0:xxx-10:-50',
+        '/documents/invalid_document/pageviews?pages=0:xxx-10:-50',
         expected=http.HTTPStatus.NOT_FOUND,
     )

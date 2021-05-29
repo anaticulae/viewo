@@ -54,7 +54,7 @@ def userpublic_fromid(userid: str) -> dict:
         return None
     result = {
         'user': userid,
-        'documents': [item for item in user.documents],
+        'documents': list(user.documents),
     }
     if user.email:
         result['email'] = user.email

@@ -144,12 +144,12 @@ def status(process: str) -> Status:  # pylint:disable=too-complex
         progress=progress,
     )
 
-    if all([item == link.State.DONE for item in result]):
+    if all(item == link.State.DONE for item in result):
         result.status = link.State.DONE
-    if any([item == link.State.RUNNING for item in result]):
+    if any(item == link.State.RUNNING for item in result):
         result.status = link.State.RUNNING  # pylint:disable=redefined-variable-type
     failed = link.failed(process)
-    if failed or any([item == link.State.FAILED for item in result]):
+    if failed or any(item == link.State.FAILED for item in result):
         result.status = link.State.FAILED
         result.progress = 100
         result.state = [
