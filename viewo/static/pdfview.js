@@ -191,7 +191,7 @@ class FindingStatusCounter {
     }
 
     update() {
-        let counted = count_by_finding_status(resultview.document_findings)
+        let counted = count_by_finding_status(service.content)
         this.update_values(counted.done, counted.rejected, counted.open)
     }
 }

@@ -31,13 +31,20 @@ function count_by_finding_status(findings) {
     let done = 0
     let rejected = 0
     let open = 0
-    for (let finding of findings) {
-        if (OPEN.includes(finding.status)) {
-            open += 1
-        } else if (finding.status == DONE) {
-            done += 1
-        } else if (NOT_WANTED.includes(finding.status)) {
-            rejected += 1
+    for (let page of findings) {
+        if(!page.findings){
+            // no findings on this page
+            continue
+        }
+        for (let finding of page.findings) {
+            let status = finding.solution.status
+            if (OPEN.includes(status)) {
+                open += 1
+            } else if (status == DONE) {
+                done += 1
+            } else if (NOT_WANTED.includes(status)) {
+                rejected += 1
+            }
         }
     }
     return { 'open': open, 'done': done, 'rejected': rejected }

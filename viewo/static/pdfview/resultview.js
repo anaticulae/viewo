@@ -349,7 +349,6 @@ class ResultView {
 
         this.update_finding(findingid, status)
 
-        statuscounter.update()
         this.update_current_finding()
     }
 

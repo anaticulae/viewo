@@ -153,6 +153,7 @@ class DocumentService {
             }
             navigator.update_page_navigator()
             findingview.update_content(findings)
+            statuscounter.update()
         })
     }
 
@@ -297,6 +298,7 @@ class DocumentService {
                 break
             }
         }
+        statuscounter.update()
     }
 }
 
