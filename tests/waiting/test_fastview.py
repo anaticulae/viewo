@@ -50,16 +50,15 @@ def test_waiting_fastview(valid, user_client, monkeypatch):
 
 
 def test_waiting_fastviewgroupstatus_jsonify():
-    fastviewresult = viewo.waiting.FastViewStatus(
-        content=[
-            viewo.waiting.FastViewGroupStatus(
-                title='Helmut in town',
-                pages='1-5',
-                error=['first', 'second', 'third'],
-                good=['Mister good one.', 'good', 'better', 'best'],
-                warning=[],
-            )
-        ],)
+    fastviewresult = viewo.waiting.FastViewStatus(content=[
+        viewo.waiting.FastViewGroupStatus(
+            title='Helmut in town',
+            pages='1-5',
+            error=['first', 'second', 'third'],
+            good=['Mister good one.', 'good', 'better', 'best'],
+            warning=[],
+        )
+    ],)
     json = viewo.waiting.fastview.fastviewstatus_tojson(fastviewresult)
     assert 'pages' in json
     assert 'title' in json

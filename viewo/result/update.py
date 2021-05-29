@@ -15,9 +15,9 @@ import utila
 
 
 def update_bookkeeping(
-        source: str,
-        status: iamraw.ProblemStatus,
-        before: iamraw.ProblemStatus,
+    source: str,
+    status: iamraw.ProblemStatus,
+    before: iamraw.ProblemStatus,
 ):
     jobpath = os.path.join(source, link.JOB_FILE_NAME)
     loaded = link.load_job(jobpath)

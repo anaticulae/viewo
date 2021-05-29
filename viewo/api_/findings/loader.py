@@ -17,9 +17,9 @@ import viewo.api_.findings.data
 
 
 def fast_findings(
-        documentid: str,
-        pages: tuple = None,
-        status=iamraw.ProblemStatus.OPEN,
+    documentid: str,
+    pages: tuple = None,
+    status=iamraw.ProblemStatus.OPEN,
 ) -> iamraw.PageFindings:
     documentpath = link.document(documentid)
     if documentpath is None:
@@ -39,10 +39,10 @@ SKIP = {
 
 
 def all_findings_raw(
-        content,
-        documentid: str,
-        pages: tuple = None,
-        payed: bool = True,
+    content,
+    documentid: str,
+    pages: tuple = None,
+    payed: bool = True,
 ):
     public = viewo.api.pageviews.utils.public(documentid)
     simple = utila.simplify(content, removes=SKIP)

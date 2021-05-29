@@ -32,9 +32,9 @@ class Comperator(enum.Enum):
 
 
 def compare(
-        documentid: str,
-        partnerid: str,
-        operation: Comperator = Comperator.ALL,
+    documentid: str,
+    partnerid: str,
+    operation: Comperator = Comperator.ALL,
 ) -> ComparedListFinding:
     documentpath = link.document(documentid)
     if documentpath is None:

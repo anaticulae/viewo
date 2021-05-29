@@ -47,10 +47,10 @@ def password_change(
 
 
 def email_change(
-        client,
-        email: str = tests.TEST_EMAIL,
-        userid: str = tests.TEST_USER,
-        password: str = tests.TEST_PASSWORD,
+    client,
+    email: str = tests.TEST_EMAIL,
+    userid: str = tests.TEST_USER,
+    password: str = tests.TEST_PASSWORD,
 ):
     tests.apiput(
         client,

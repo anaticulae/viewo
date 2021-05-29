@@ -51,10 +51,10 @@ def test_account_change_password(user_client):
     ],
 )
 def test_account_change_password_error(
-        user_client,
-        password_new,
-        password_new_repeat,
-        expected,
+    user_client,
+    password_new,
+    password_new_repeat,
+    expected,
 ):
     tests.api.password_change(
         user_client,

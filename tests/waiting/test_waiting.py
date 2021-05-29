@@ -82,9 +82,9 @@ def test_waiting_status_verified(user_client, testdir, monkeypatch):
 
 
 def test_waiting_status_verify_failed(
-        invalid_validation,
-        user_client,
-        monkeypatch,
+    invalid_validation,
+    user_client,
+    monkeypatch,
 ):
     loaded = tests.waiting.run_status(
         user_client,
@@ -101,9 +101,9 @@ def test_waiting_status_verify_failed(
 
 
 def test_waiting_validation_invalid_result(
-        invalid_validation,
-        user_client,
-        monkeypatch,
+    invalid_validation,
+    user_client,
+    monkeypatch,
 ):
     with monkeypatch.context() as context:
         context.setattr(viewo.path, 'todo', lambda: invalid_validation)

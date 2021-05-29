@@ -69,7 +69,6 @@ def test_api_delete_document_which_does_not_exists(client):
     assert 'error' in result
 
 
-
 def test_api_documents_links(findingclient):
     result = tests.apicall(findingclient, '/documents/master_master075/links')
     assert result['links']

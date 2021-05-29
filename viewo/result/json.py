@@ -19,12 +19,12 @@ import writers
 
 
 def tojson(
-        items: 'viewo.waiting.ResultPageViews',
-        pagesentences: dict = None,
-        footnotes: list = None,
-        doctextstyle=None,
-        properties: dict = None,
-        captions: list = None,
+    items: 'viewo.waiting.ResultPageViews',
+    pagesentences: dict = None,
+    footnotes: list = None,
+    doctextstyle=None,
+    properties: dict = None,
+    captions: list = None,
 ) -> str:
     pages = pages_tojson(items, pagesentences)
     footnotes = footnotes_tojson(footnotes)

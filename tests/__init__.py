@@ -61,8 +61,8 @@ def test_user(monkeypatch):
 
 
 def decode(
-        response,
-        expected=None,
+    response,
+    expected=None,
 ) -> dict:
     """Read binary data from response and convert them to str"""
     result = response.data.decode('utf8')
@@ -76,10 +76,10 @@ def decode(
 
 
 def content(
-        client,
-        request: str,
-        expected=http.HTTPStatus.OK,
-        raw: bool = False,
+    client,
+    request: str,
+    expected=http.HTTPStatus.OK,
+    raw: bool = False,
 ):
     response = client.get(request, follow_redirects=True)
     assert response.status_code == expected, request + str(response)
@@ -89,10 +89,10 @@ def content(
 
 
 def apicall(
-        client,
-        request: str,
-        prefix=viewo.config.API_PREFIX,
-        expected=http.HTTPStatus.OK,
+    client,
+    request: str,
+    prefix=viewo.config.API_PREFIX,
+    expected=http.HTTPStatus.OK,
 ):
     cmd = prefix + request
     response = client.get(cmd)
@@ -101,10 +101,10 @@ def apicall(
 
 
 def apidelete(
-        client,
-        request: str,
-        prefix=viewo.config.API_PREFIX,
-        expected=http.HTTPStatus.OK,
+    client,
+    request: str,
+    prefix=viewo.config.API_PREFIX,
+    expected=http.HTTPStatus.OK,
 ):
     cmd = prefix + request
     response = client.delete(cmd)
@@ -113,12 +113,12 @@ def apidelete(
 
 
 def apiupload(
-        client,
-        page: str,
-        field: str,
-        path: str,
-        prefix=viewo.config.API_PREFIX,
-        expected=http.HTTPStatus.OK,
+    client,
+    page: str,
+    field: str,
+    path: str,
+    prefix=viewo.config.API_PREFIX,
+    expected=http.HTTPStatus.OK,
 ):
     """Upload file via http post command"""
     assert field, path
@@ -141,10 +141,10 @@ def upload(client, file=MINIMAL):
 
 
 def post(
-        client,
-        page: str,
-        data: dict,
-        expected=http.HTTPStatus.OK,
+    client,
+    page: str,
+    data: dict,
+    expected=http.HTTPStatus.OK,
 ):
     response = client.post(page, data=data, follow_redirects=True)
     assert response.status_code == expected, f'path: {page}, error: {response.status_code}'
@@ -152,22 +152,22 @@ def post(
 
 
 def apipost(
-        client,
-        page: str,
-        data: dict,
-        prefix=viewo.config.API_PREFIX,
-        expected=http.HTTPStatus.OK,
+    client,
+    page: str,
+    data: dict,
+    prefix=viewo.config.API_PREFIX,
+    expected=http.HTTPStatus.OK,
 ):
     request = prefix + page
     return post(client, page=request, data=data, expected=expected)
 
 
 def apiput(
-        client,
-        page: str,
-        data: dict,
-        prefix=viewo.config.API_PREFIX,
-        expected=http.HTTPStatus.OK,
+    client,
+    page: str,
+    data: dict,
+    prefix=viewo.config.API_PREFIX,
+    expected=http.HTTPStatus.OK,
 ):
     request = prefix + page
     response = client.put(request, data=data, follow_redirects=True)
@@ -186,11 +186,11 @@ def finding_status(client, documentid: str, findingid: int) -> int:
 
 
 def finding_status_update(
-        client,
-        documentid: str,
-        findingid: int,
-        status: int,
-        expected=http.HTTPStatus.OK,
+    client,
+    documentid: str,
+    findingid: int,
+    status: int,
+    expected=http.HTTPStatus.OK,
 ):
     apiput(
         client,
