@@ -217,22 +217,29 @@ class TodoListView {
         base.clear(done)
         base.clear(removed)
 
-        let findings = this.result.document_findings
-
-        for (let finding of findings) {
-            let status = finding.status
-            if (status in OPEN) {
-                this.create_finding_line(open, finding)
-            } else if (status == DONE) {
-                this.create_finding_line(done, finding)
-            } else {
-                this.create_finding_line(removed, finding)
+        let pages = service.content
+        if (pages == null) {
+            return
+        }
+        for (let page of pages) {
+            if (!page.findings) {
+                continue
+            }
+            for (let finding of page.findings) {
+                let status = finding.solution.status
+                if (status in OPEN) {
+                    this.create_finding_line(open, finding)
+                } else if (status == DONE) {
+                    this.create_finding_line(done, finding)
+                } else {
+                    this.create_finding_line(removed, finding)
+                }
             }
         }
     }
 
     create_finding_line(parent, finding) {
-        let status = finding.status
+        let status = finding.solution.status
         let action = ''
         if (status in OPEN) {
             var del = `finding_delete_${finding.number}`
@@ -254,7 +261,7 @@ class TodoListView {
         let page = finding.location.page
         let page_user = Number(finding.location.page) + 1
         let openid = `_todolistview_open_finding_${finding.number}`
-        let jump_to_page = `<a href = "#" id = "${openid}">${finding.title}</a>`
+        let jump_to_page = `<a href = "#" id = "${openid}">${finding.solution.title}</a>`
         let number = parent[0].rows.length + 1
         let raw =
             `<tr id = "${finding.number}">
@@ -269,23 +276,24 @@ class TodoListView {
         });
         if (status in OPEN) {
             $(`#${del}`).click(function () {
-                resultview.update_finding(finding.number, REMOVED)
                 $(`#${finding.number}`).hide()
+                resultview.update_finding(finding.number, REMOVED)
             });
             $(`#${done}`).click(function () {
-                resultview.update_finding(finding.number, DONE)
                 $(`#${finding.number}`).hide()
+                resultview.update_finding(finding.number, DONE)
             });
         } else {
             $(`#${restore}`).click(function () {
-                resultview.update_finding(finding.number, SELECTED)
                 $(`#${finding.number}`).hide()
+                resultview.update_finding(finding.number, SELECTED)
             });
         }
     }
 }
 
 function open_todolistview(category = DONE) {
+    todolist.update_tables()
     $('#pdfview').hide()
     $('#todolistview').show()
 
@@ -359,7 +367,6 @@ function init() {
     statuscounter.init_listener()
 
     todolist.init_listener()
-    todolist.update_tables()
     pdfview_properties.init_listener()
     pdfview_docstyle.init_listener()
 

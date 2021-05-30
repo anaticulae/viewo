@@ -281,6 +281,22 @@ class DocumentService {
         })
     }
 
+    finding_update(findingid, status) {
+        // DIRTY, unite with fastfindings_solve
+        for (let page of this.content) {
+            if (page.findings == undefined) {
+                continue
+            }
+            for (let finding of page.findings) {
+                if (finding.number == findingid) {
+                    finding.solution.status = status
+                    break
+                }
+            }
+        }
+        this.fastfindings_solve(findingid, status)
+    }
+
     fastfindings_solve(findingid, status) {
         // Removes finding when finding is solved or deleted
         if (![DONE, REMOVED].includes(status)) {

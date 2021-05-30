@@ -275,19 +275,6 @@ class ResultView {
         return result
     }
 
-    get document_findings() {
-        if (resultview.content == undefined) {
-            return []
-        }
-        let result = []
-        for (let items of resultview.content) {
-            for (let item of items.findings) {
-                result.push(item)
-            }
-        }
-        return result
-    }
-
     get selected_finding() {
         let findings = visible_findings(resultview.current_page)
         // let findings = page(resultview.current_page).findings
@@ -371,7 +358,7 @@ class ResultView {
                 // TODO: ADD ERROR HANDLER
             },
             success: function (response) {
-                service.fastfindings_solve(findingid, status)
+                service.finding_update(findingid, status)
                 navigator.update_page_navigator()
             }
         });
