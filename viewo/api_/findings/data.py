@@ -39,7 +39,7 @@ class FindingsFrontEnd:
         self.outdated = True
         return True
 
-    def findings(self, pages: tuple = None, status=iamraw.ProblemStatus.OPEN):
+    def findings(self, pages: tuple = None, status=None):
         if self.loaded is None:
             self.load()
         data = list(self.loaded)
@@ -50,7 +50,7 @@ class FindingsFrontEnd:
             # remove not selected items
             page.content = [
                 finding for finding in page.content if status is None or
-                finding.solution and finding.solution.status == status
+                (finding.solution and finding.solution.status == status)
             ]
         data = sorted(data, key=lambda x: x.page)
         data = copy.deepcopy(data)
@@ -67,10 +67,10 @@ class FindingsFrontEnd:
     def load(self):
         findings = protocol.load_grouped(self.path)
         findings = [convert_style_markup(page) for page in findings]
-        self.loaded = findings
         self.fast = {
-            item.number: item for item in utila.flatten_content(self.loaded)
+            item.number: item for item in utila.flatten_content(findings)
         }
+        self.loaded = findings
 
     def save(self):
         utila.log(f'write updated findings to: {self.path}')
