@@ -132,11 +132,11 @@ class FindingBox {
         this.open_finding(current)
 
         // expand page-view if no findings are printed
-        if (pagefindings.length == 0) {
-            $('#error_page_content')[0].classList.add('expand')
-        } else {
-            $('#error_page_content')[0].classList.remove('expand')
-        }
+        // if (pagefindings.length == 0) {
+        //     $('#error_page_content')[0].classList.add('expand')
+        // } else {
+        //     $('#error_page_content')[0].classList.remove('expand')
+        // }
     }
 
     update_finding_pageable() {
