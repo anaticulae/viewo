@@ -62,7 +62,7 @@ class Navigator {
             if (page.content == SPECIALCONTENT_EMPTY) {
                 $(`#openpage_${page.page}`).hide()
             }
-            else{
+            else {
                 $(`#openpage_${page.page}`).show()
             }
         }
@@ -137,7 +137,7 @@ class Navigator {
             return
         }
         let current = this.result.current_page
-        if(visible_findings(current).length){
+        if (visible_findings(current).length) {
             return
         }
         // ensure to be on valid page after changing from selective pages
