@@ -139,7 +139,7 @@ def frontend(documentid: str) -> FindingsFrontEnd:
     return FRONTEND[documentid]
 
 
-def convert_style_markup(findings: iamraw.PageFinding) -> iamraw.PageFinding:
+def convert_style_markup(findings: iamraw.PageFindings) -> iamraw.PageFindings:
     for finding in findings.content:
         finding.solution.description = viewo.result.json.message_replace(
             finding.solution.description)

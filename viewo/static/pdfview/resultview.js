@@ -331,7 +331,7 @@ class ResultView {
         if (this.selected_finding == null) {
             return
         }
-        let findingid = Number(this.selected_finding.number)
+        let findingid = this.selected_finding.number
         this.selected_finding.solution.status = status // remove finding
 
         this.update_finding(findingid, status)

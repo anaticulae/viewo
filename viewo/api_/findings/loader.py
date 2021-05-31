@@ -48,6 +48,7 @@ def all_findings_raw(
     simple = utila.simplify(content, removes=SKIP)
     simple = add_finding_uri(simple, documentid)
     simple = remove_unpayed(simple) if not payed and not public else simple
+    simple = findingids_tostr(simple)
     pagerange, uri = paged(documentid, pages)
     raw = {
         'pagefindings': simple,
@@ -59,12 +60,27 @@ def all_findings_raw(
 
 def finding_raw(finding: iamraw.Finding, documentid: str) -> dict:
     simple = utila.simplify(finding, removes=SKIP)
+    simple = findingid_tostr(simple)
     simple['uri'] = flask.url_for(
         'api_findings.finding_get',
         documentid=documentid,
         findingid=finding.number,
     )
     return simple
+
+
+def findingid_tostr(finding) -> dict:
+    # convert finding number to string to handle larger integers in
+    # json(max:2^35)
+    finding['number'] = str(finding['number'])
+    return finding
+
+
+def findingids_tostr(pages):
+    for page in pages:
+        for finding in page['content']:
+            findingid_tostr(finding)
+    return pages
 
 
 def remove_unpayed(simple):
