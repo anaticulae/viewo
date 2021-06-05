@@ -2,6 +2,33 @@
 
 Every noteable change is logged here.
 
+## v2.17.0
+
+### Feature
+
+* signal connection error (bf901dc0714d)
+* limit max height of error message view (5c7469f04085)
+* use encryption (39b46317a4a0)
+* make logging more verbose (6b07c770c5dc)
+* improve pdfview (6c2e7a4bbb70)
+* change to new valid page in toggle mode (f085ae37c15a)
+* solve fastfinding after server signals success (7bf89f252523)
+* initialize page numbers only once (ca6f2b4f148b)
+* add ciw score view (cfdfd7598ccf)
+
+### Fix
+
+* make larger finding number json compatible (a20a5d2c6b0d)
+* adjust to service API (b20c53d523b3)
+* deliver all findings as default (e6b193fc7ab0)
+* adjust file name after upgrading werkzeug (11907c30a5c9)
+* set default port to 5000 (a403f9456d6c)
+* adjust finding counter to new service API (5c8e7495dc37)
+* do not download findings twice (94a286c6a8e4)
+* adjust findings to new service data structure (c719a2a7f93d)
+* ensure that current cursor is in findingbox range (5fceb4a60b13)
+* do not run forever while testing application (8936832ebf20)
+
 ## v2.16.0
 
 ### Feature
