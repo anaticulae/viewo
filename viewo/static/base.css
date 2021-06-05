@@ -68,6 +68,9 @@ nav.main{
 #nogoodnews{
     /* distance between menu-bar and error information list */
     margin-top:25px;
+    max-height:200px;
+    overflow:auto;
+    /* TODO: SCROLL BOTTOM */
 }
 
 footer{
