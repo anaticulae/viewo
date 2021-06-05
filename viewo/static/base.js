@@ -97,6 +97,7 @@ const rpc = function (url, callback, error = undefined) {
             callback(response)
         },
         error: function (response) {
+            connection_error()
             if (error != undefined) {
                 error()
             } else {
@@ -113,6 +114,7 @@ const rpc_raw = function (url, callback, error = undefined) {
             callback(response)
         },
         error: function (response) {
+            connection_error()
             if (error != undefined) {
                 error()
             } else {
