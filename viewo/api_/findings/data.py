@@ -75,7 +75,8 @@ class FindingsFrontEnd:
     def save(self):
         utila.log(f'write updated findings to: {self.path}')
         findings = utila.flatten_content(self.loaded)  # TODO: REMOVE LATER
-        protocol.write_grouped(findings, self.path)
+        private = link.private(self.documentid)
+        protocol.write_grouped(findings, self.path, private=private)
         self.outdated = False
 
     def __getitem__(self, key):
