@@ -52,7 +52,7 @@ def test_call_result_e508af0df454gi30_image_access(test_client):
         recursive=True,
     )
     response = test_client.get(
-        f'/view/{tests.TEST_DOCUMENT}/1aeca77e39768cc3ec0ddb765d4ded1a.png',
+        f'/view/{tests.TEST_DOCUMENT}/f30dd16ae593f036.png',
         follow_redirects=True,
     )
 
