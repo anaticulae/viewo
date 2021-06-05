@@ -23,7 +23,7 @@ TODO = [  # H2
 ]
 
 
-@utilatest.longrun
+@utilatest.nightly
 @utilatest.displayed
 def test_navigation(driver, webview):
     """Ensure that navigation bar works."""

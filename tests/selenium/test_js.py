@@ -13,8 +13,8 @@ import utilatest
 import viewo
 
 
+@utilatest.nightly
 @utilatest.displayed
-@utilatest.longrun
 def test_javascript(driver):
     path = f'file:///{viewo.ROOT}/tests/js/index.html'
     driver.get(path)

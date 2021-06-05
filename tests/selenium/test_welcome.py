@@ -14,7 +14,7 @@ from tests.selenium.utils import text_inclass
 FORM = 'form-group'
 
 
-@utilatest.longrun
+@utilatest.nightly
 @utilatest.displayed
 def test_upload_switch(driver, webview):
     """Ensure that changing user source works. First selenium test ;)."""
