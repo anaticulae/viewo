@@ -96,7 +96,7 @@ user
 userid
 ~~~~~~
 
-0 - public
+'00000000' - public
 
 operation
 ~~~~~~~~~
