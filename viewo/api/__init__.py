@@ -14,42 +14,11 @@ import flask
 import flask_login
 import link
 import utila
+import viewo_api
 
 import viewo.api.users.utils.user
 import viewo.api_.findings.data
 import viewo.api_.findings.update
-
-
-def success(message: str = 'completed', **args):
-    result = flask.jsonify({
-        'message': message,
-        **args,
-    })
-    return result, 200
-
-
-def notfound(message: str):
-    result = flask.jsonify({
-        'error': 'not found',
-        'message': message,
-    })
-    return result, 404
-
-
-def bad(message: str):
-    result = flask.jsonify({
-        'error': 'bad request',
-        'message': message,
-    })
-    return result, 400
-
-
-def internal(message: str):
-    result = flask.jsonify({
-        'error': 'internal',
-        'message': message,
-    })
-    return result, 500
 
 
 def valid_document(function):
@@ -60,9 +29,9 @@ def valid_document(function):
         documentid = kwargs['documentid']
         documentpath = link.document(documentid)
         if documentpath is None:
-            return notfound(f'could not locate `{documentid}`')
+            return viewo_api.notfound(f'could not locate `{documentid}`')
         if not accessable(documentid):
-            return notfound('not accessable')
+            return viewo_api.notfound('not accessable')
         return function(*args, **kwargs)
 
     return decorated_function
@@ -91,7 +60,7 @@ def valid_partner(function):
         documentid = kwargs['partnerid']
         documentpath = link.document(documentid)
         if documentpath is None:
-            return notfound(f'could not locate `{documentid}`')
+            return viewo_api.notfound(f'could not locate `{documentid}`')
         return function(*args, **kwargs)
 
     return decorated_function
@@ -107,7 +76,7 @@ def valid_finding(function):
         try:
             viewo.api_.findings.data.frontend(documentid)[findingid]
         except KeyError:
-            return notfound(f'could not locate finding: {findingid}')
+            return viewo_api.notfound(f'could not locate finding: {findingid}')
         return function(*args, **kwargs)
 
     return decorated_function
@@ -121,7 +90,7 @@ def valid_user(function):
         userid = kwargs['userid']
         user = viewo.api.users.utils.user.user_fromid(userid)
         if not user:
-            return notfound(f'could not locate: {userid}')
+            return viewo_api.notfound(f'could not locate: {userid}')
         return function(*args, **kwargs)
 
     return decorated_function
@@ -140,11 +109,11 @@ def valid_pages(function):
         pagecount = viewo.api.pageviews.utils.pagecount(documentid)
         selected = utila.parse_pages(pages, pagecount=pagecount)
         if selected is None:
-            return bad(f'invalid page count: {pages}')
+            return viewo_api.bad(f'invalid page count: {pages}')
         if len(selected) > pagecount:
             start = min(selected)
             if start >= pagecount:
-                return bad(f'invalid page count: {len(selected)}>{pagecount}')
+                return viewo_api.bad(f'invalid page count: {len(selected)}>{pagecount}')
         return function(*args, **kwargs)
 
     return decorated_function
@@ -155,7 +124,7 @@ def login_required_api(func):
     @functools.wraps(func)
     def decorated_view(*args, **kwargs):
         if not flask_login.current_user.is_authenticated:
-            return notfound('login required')
+            return viewo_api.notfound('login required')
         return func(*args, **kwargs)
 
     return decorated_view

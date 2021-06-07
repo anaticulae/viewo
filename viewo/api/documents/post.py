@@ -16,6 +16,7 @@ import flask_login
 import link
 import link.job
 import utila
+import viewo_api
 import werkzeug.utils
 
 import viewo.api
@@ -42,7 +43,7 @@ def document_create() -> str:
     userid, password = user_account(public)
     resource = store_resource(resource.pdf, resource.filename, userid)
 
-    result = viewo.api.success(
+    result = viewo_api.success(
         userid=userid,
         password=password,
         document=flask.url_for(
@@ -63,25 +64,25 @@ def recive_resource() -> Loaded:  # pylint:disable=R0911
             pdf = viewo.upload.curlpdf(posturl)
             filename = 'cloud.pdf'
         except viewo.upload.FileTooLarge:
-            return viewo.api.bad('file too large')
+            return viewo_api.bad('file too large')
         except viewo.upload.InvalidResource:
-            return viewo.api.bad('require pdf file')
+            return viewo_api.bad('require pdf file')
         except viewo.upload.InvalidUrl:
-            return viewo.api.bad('invalid url')
+            return viewo_api.bad('invalid url')
     else:
         # upload resource via upload-file dialog
         if not flask.request.files:
-            return viewo.api.bad('missing `file` field')
+            return viewo_api.bad('missing `file` field')
         pdf = flask.request.files['file']
         if pdf.filename == '':
             # if user does not select file, browser also submit an empty
             # part without filename
-            return viewo.api.bad('empty `file` field')
+            return viewo_api.bad('empty `file` field')
         filename = os.path.split(pdf.filename)[1]
         filename = werkzeug.utils.secure_filename(filename)
         header = pdf.stream.read(viewo.upload.HEADER_READ_SIZE)
         if not viewo.upload.valid_pdf(header):
-            return viewo.api.bad('not a pdf file')
+            return viewo_api.bad('not a pdf file')
         # reset stream
         pdf.stream.seek(0)
     return Loaded(pdf, filename)

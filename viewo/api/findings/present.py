@@ -10,6 +10,7 @@
 import flask
 import flask_login
 import utila
+import viewo_api
 
 import viewo.api
 import viewo.api.findings
@@ -71,7 +72,7 @@ def compare(documentid, partnerid):
     raw = flask.request.args.get('operation', 'all').lower()
     operation = viewo.api_.findings.compare.comperator_fromraw(raw)
     if not operation:
-        return viewo.api.bad(f'invalid operation: {raw}')
+        return viewo_api.bad(f'invalid operation: {raw}')
     # comparation
     compared = viewo.api_.findings.compare.compare(
         documentid,
@@ -116,7 +117,7 @@ def fast_findings(documentid):
         pages=pages_selected,
     )
     if collected is None:
-        return viewo.api.notfound(f'could not find: {documentid}')
+        return viewo_api.notfound(f'could not find: {documentid}')
     simple = utila.simplify(collected, removes=SKIP)
     dumped = flask.jsonify(simple)
     return dumped

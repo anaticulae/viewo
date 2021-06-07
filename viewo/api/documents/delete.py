@@ -8,6 +8,7 @@
 # =============================================================================
 
 import link
+import viewo_api
 
 import viewo.api
 import viewo.api.documents
@@ -21,8 +22,8 @@ import viewo.api.documents
 def document_delete(documentid) -> str:
     current = link.current(documentid)
     if current == link.ProcessState.UNDEFINED:
-        return viewo.api.internal('unexpected state')
+        return viewo_api.internal('unexpected state')
     if current == link.ProcessState.DELETED:
-        return viewo.api.bad('resource was already deleted')
+        return viewo_api.bad('resource was already deleted')
     link.delete(documentid)
-    return viewo.api.success(f'deleted: {documentid}')
+    return viewo_api.success(f'deleted: {documentid}')

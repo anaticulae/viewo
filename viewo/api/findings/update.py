@@ -9,6 +9,7 @@
 
 import flask
 import iamraw
+import viewo_api
 
 import viewo.api
 import viewo.api.findings
@@ -28,18 +29,18 @@ def finding_put(documentid, findingid):
     try:
         status = int(status)
     except ValueError:
-        return viewo.api.bad(f'invalid status: {status}')
+        return viewo_api.bad(f'invalid status: {status}')
     try:
         # TODO: CHANGE <string:...?
         findingid = int(findingid)
     except ValueError:
-        return viewo.api.bad(f'invalid findingid: {findingid}')
+        return viewo_api.bad(f'invalid findingid: {findingid}')
     if status not in (0, 1, 2, 3, 4):
-        return viewo.api.bad(f'invalid status: {status}')
+        return viewo_api.bad(f'invalid status: {status}')
     status: iamraw.ProblemStatus = viewo.result.update.problem_fromint(status)
     if not viewo.api_.findings.data.frontend(documentid).update_status(
             findingid,
             status,
     ):
-        return viewo.api.bad(f'could not update finding: {findingid} {status}')
-    return viewo.api.success('updated')
+        return viewo_api.bad(f'could not update finding: {findingid} {status}')
+    return viewo_api.success('updated')

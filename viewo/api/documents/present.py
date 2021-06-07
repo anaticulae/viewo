@@ -14,6 +14,7 @@ import flask
 import flask_login
 import link
 import utila
+import viewo_api
 
 import viewo.api
 import viewo.api.documents
@@ -54,7 +55,7 @@ def document_get(documentid: str):
     does not exists, 404 Error will be raised."""
     loaded = viewo.api.documents.utils.document_info(documentid)
     if not loaded:
-        return viewo.api.notfound(f'could not locate `{documentid}')
+        return viewo_api.notfound(f'could not locate `{documentid}')
     dumped = json.dumps({
         'document': loaded,
     })
