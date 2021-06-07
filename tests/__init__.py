@@ -41,7 +41,7 @@ assert os.path.exists(EXAMPLE_TODO), EXAMPLE_TODO
 EXAMPLE_RESULT = os.path.join(EXAMPLE_READY, TEST_DOCUMENT, 'result')
 
 TEST_USER = 'eewuesteewuestee'
-TEST_PASSWORD = 'EEWUESTEEWUESTEE' # nosec
+TEST_PASSWORD = 'EEWUESTEEWUESTEE'  # nosec
 TEST_EMAIL = 'dertestbaer@helm.com'
 
 

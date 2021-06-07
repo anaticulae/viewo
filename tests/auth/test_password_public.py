@@ -9,7 +9,7 @@
 
 import tests.api
 
-USER_PASSWORD_INFO = 'Benutzerdaten vergessen haben, ist <u>kein Zugriff auf' # nosec
+USER_PASSWORD_INFO = 'Benutzerdaten vergessen haben, ist <u>kein Zugriff auf'  # nosec
 
 
 def test_view_public_password_after_ananoym_upload(client):
