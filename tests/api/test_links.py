@@ -7,12 +7,14 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import utilatest
+
 import tests
 
 
 def test_regression_api_links(findingclient):
     """Test that non existing links produces empty list and not None."""
-    result = tests.apicall(
+    result = utilatest.apicall(
         findingclient,
         f'/documents/{tests.TEST_DOCUMENT}/links',
     )

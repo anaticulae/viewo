@@ -10,18 +10,19 @@
 import http
 
 import link
+import utilatest
 
 import tests
 
 
 def test_api_upload_document(client):
-    result = tests.apiupload(client, '/documents', 'file', tests.MINIMAL)
+    result = utilatest.apiupload(client, '/documents', 'file', tests.MINIMAL)
     assert result['document']
     assert result['link']
 
 
 def test_api_upload_document_wrong_datatype(client):
-    tests.apiupload(
+    utilatest.apiupload(
         client,
         '/documents',
         'file',
@@ -39,7 +40,7 @@ def test_api_upload_with_wrong_field(client):
     files_before = link.count_todo()
 
     # Upload with wrong field
-    tests.apiupload(
+    utilatest.apiupload(
         client,
         page='/documents',
         field='o_o',

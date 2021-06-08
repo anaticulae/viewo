@@ -113,7 +113,8 @@ def valid_pages(function):
         if len(selected) > pagecount:
             start = min(selected)
             if start >= pagecount:
-                return viewo_api.bad(f'invalid page count: {len(selected)}>{pagecount}')
+                return viewo_api.bad(
+                    f'invalid page count: {len(selected)}>{pagecount}')
         return function(*args, **kwargs)
 
     return decorated_function

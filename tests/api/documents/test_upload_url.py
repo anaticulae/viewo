@@ -12,6 +12,7 @@ import http
 import link
 import power
 import pytest
+import utilatest
 
 import tests
 
@@ -57,7 +58,7 @@ def test_api_upload_file_url(client):
     # count files in todo folder
     files_before = link.count_todo()
 
-    tests.apiupload(
+    utilatest.apiupload(
         client,
         page='/documents',
         field='file',

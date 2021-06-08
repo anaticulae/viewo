@@ -9,12 +9,14 @@
 
 import http
 
+import utilatest
+
 import tests
 
 
 def test_api_findings_bypagenumber(findingclient):
     client = findingclient
-    result = tests.apicall(
+    result = utilatest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/findings?pages=0:5',
         expected=http.HTTPStatus.OK,
@@ -26,7 +28,7 @@ def test_api_findings_bypagenumber(findingclient):
 def test_api_findings_negative_pagenumber(findingclient):
     """Collect findings of page -3 till page 5."""
     client = findingclient
-    result = tests.apicall(
+    result = utilatest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/findings?pages=_3:5',
         expected=http.HTTPStatus.OK,

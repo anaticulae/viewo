@@ -15,6 +15,7 @@ import os
 
 import power
 import utila
+import utilatest
 import werkzeug.datastructures
 
 import viewo
@@ -88,50 +89,8 @@ def content(
     return decode(response)
 
 
-def apicall(
-    client,
-    request: str,
-    prefix=viewo.config.API_PREFIX,
-    expected=http.HTTPStatus.OK,
-):
-    cmd = prefix + request
-    response = client.get(cmd)
-    assert response.status_code == expected, request + str(response)
-    return decode(response, expected=expected)
-
-
-def apidelete(
-    client,
-    request: str,
-    prefix=viewo.config.API_PREFIX,
-    expected=http.HTTPStatus.OK,
-):
-    cmd = prefix + request
-    response = client.delete(cmd)
-    assert response.status_code == expected, request + str(response)
-    return decode(response, expected=expected)
-
-
-def apiupload(
-    client,
-    page: str,
-    field: str,
-    path: str,
-    prefix=viewo.config.API_PREFIX,
-    expected=http.HTTPStatus.OK,
-):
-    """Upload file via http post command"""
-    assert field, path
-    assert os.path.exists(path), path
-    request = prefix + page
-    fields = werkzeug.datastructures.MultiDict([(field, open(path, 'rb'))])
-    response = client.post(request, data=fields, follow_redirects=True)
-    assert response.status_code == expected, request + str(response)
-    return decode(response, expected=expected)
-
-
 def upload(client, file=MINIMAL):
-    result = apiupload(
+    result = utilatest.apiupload(
         client,
         '/documents',
         'file',
@@ -176,7 +135,7 @@ def apiput(
 
 
 def finding_status(client, documentid: str, findingid: int) -> int:
-    result = apicall(
+    result = utilatest.apicall(
         client,
         f'/documents/{documentid}/findings/{findingid}',
         expected=http.HTTPStatus.OK,

@@ -137,7 +137,7 @@ def payed_client(test_client):  # pylint:disable=W0621
 
 @pytest.fixture
 def docclient(client):  # pylint:disable=W0621
-    result = tests.apiupload(client, '/documents', 'file', tests.MINIMAL)
+    result = utilatest.apiupload(client, '/documents', 'file', tests.MINIMAL)
     doc = result['document']
     return client, doc
 

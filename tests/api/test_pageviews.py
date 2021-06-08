@@ -9,12 +9,14 @@
 
 import http
 
+import utilatest
+
 import tests
 
 
 def test_api_pages_overview(findingclient):
     client = findingclient
-    result = tests.apicall(
+    result = utilatest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/pageviews',
     )
@@ -24,7 +26,7 @@ def test_api_pages_overview(findingclient):
 
 def test_api_pages_overview_range(findingclient):
     client = findingclient
-    result = tests.apicall(
+    result = utilatest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/pageviews?pages=1',
     )
@@ -32,7 +34,7 @@ def test_api_pages_overview_range(findingclient):
     assert result['pageviews']['uri']
     assert len(result['pageviews']['html']) == 1
 
-    result = tests.apicall(
+    result = utilatest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/pageviews?pages=0:3',
     )
@@ -41,7 +43,7 @@ def test_api_pages_overview_range(findingclient):
 
 def test_api_pages_overview_invalid_range(findingclient):
     client = findingclient
-    tests.apicall(
+    utilatest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/pageviews?pages=0:xxx-10:-50',
         expected=http.HTTPStatus.BAD_REQUEST,
@@ -50,12 +52,12 @@ def test_api_pages_overview_invalid_range(findingclient):
 
 def test_api_pages_overview_invalid_document(findingclient):
     client = findingclient
-    tests.apicall(
+    utilatest.apicall(
         client,
         '/documents/invalid_document/pageviews',
         expected=http.HTTPStatus.NOT_FOUND,
     )
-    tests.apicall(
+    utilatest.apicall(
         client,
         '/documents/invalid_document/pageviews?pages=0:xxx-10:-50',
         expected=http.HTTPStatus.NOT_FOUND,

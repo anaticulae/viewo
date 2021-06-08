@@ -9,12 +9,14 @@
 
 import http
 
+import utilatest
+
 import tests
 
 
 def test_api_findings_overview_bydocumentid(findingclient):
     client = findingclient
-    result = tests.apicall(
+    result = utilatest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/findings',
     )
@@ -24,7 +26,7 @@ def test_api_findings_overview_bydocumentid(findingclient):
 
 def test_api_fastfindings_bydocumentid(findingclient):
     client = findingclient
-    result = tests.apicall(
+    result = utilatest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/fastfindings',
     )
@@ -35,7 +37,7 @@ def test_api_findings_pages_outranges(findingclient):
     """Upper page mark outranges valid pages(18). Request is cutted at
     top page border."""
     client = findingclient
-    result = tests.apicall(
+    result = utilatest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/fastfindings?pages=15:50',
     )
@@ -43,7 +45,7 @@ def test_api_findings_pages_outranges(findingclient):
 
 
 def test_api_findings_overview_by_invalid_documentid(client):
-    tests.apicall(
+    utilatest.apicall(
         client,
         '/documents/invalid_document/findings',
         expected=http.HTTPStatus.NOT_FOUND,
@@ -52,17 +54,16 @@ def test_api_findings_overview_by_invalid_documentid(client):
 
 def test_api_findings_byfindingid_notexists(docclient):
     client, doc = docclient
-    tests.apicall(
+    utilatest.get(
         client,
         f'{doc}/findings/notexists',
-        prefix='',
         expected=http.HTTPStatus.NOT_FOUND,
     )
 
 
 def test_api_findings_byfindingid(findingclient):
     client = findingclient
-    result = tests.apicall(
+    result = utilatest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/findings/{tests.TEST_FINDING}',
         expected=http.HTTPStatus.OK,
