@@ -8,11 +8,10 @@
 # =============================================================================
 
 import flask
+import viewo_api.user.data
 
 import viewo.api
 import viewo.api.users
-import viewo.api.users.utils
-import viewo.api.users.utils.user
 import viewo.config
 
 
@@ -23,7 +22,7 @@ import viewo.config
 @viewo.api.valid_user
 @viewo.api.login_required_api
 def user_get(userid: str):
-    user = viewo.api.users.utils.user.userpublic_fromid(userid)
+    user = viewo_api.user.data.userpublic_fromid(userid)
     simple = {
         'user': user,
         'uri': flask.url_for('api_users.user_get', userid=userid)
@@ -34,7 +33,7 @@ def user_get(userid: str):
 
 @viewo.api.users.api_users.route('users', methods=['GET'])
 def users():
-    users_ = viewo.api.users.utils.user.users()
+    users_ = viewo_api.user.data.userlist()
     simple = {
         'users': users_,
         'uri': flask.url_for('api_users.users'),

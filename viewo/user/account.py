@@ -9,8 +9,8 @@
 
 import flask
 import flask_login
+import viewo_api.user.data
 
-import viewo.api.users.utils.user
 import viewo.user
 
 
@@ -67,5 +67,5 @@ def dialog_show(dialogid):
 
 def user():
     userid = flask_login.current_user.get_id()
-    current = viewo.api.users.utils.user.user_fromid(userid)
+    current = viewo_api.user.data.user_fromid(userid)
     return current

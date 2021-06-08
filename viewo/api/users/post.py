@@ -7,8 +7,9 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import viewo.api.users.utils
-import viewo.api.users.utils.user
+import viewo_api
+import viewo_api.user.create
+import viewo_api.user.password
 
 
 def create_user(userid: str = None, password: str = None) -> tuple:
@@ -25,8 +26,8 @@ def create_user(userid: str = None, password: str = None) -> tuple:
     TODO: THINK ABOUT CONVERTING TO HTTP/PUBLIC SERVICE.
     """
     if not password:
-        password = viewo.api.users.utils.password.generate()
-    created = viewo.api.users.utils.user.create_user(
+        password = viewo_api.user.password.password_generate()
+    created = viewo_api.user.create.create_user(
         password=password,
         userid=userid,
     )

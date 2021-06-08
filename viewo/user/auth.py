@@ -11,12 +11,12 @@ import flask
 import flask.globals
 import flask_login
 import flask_wtf
+import viewo_api
+import viewo_api.user.data
 import wtforms
 import wtforms.validators
 
-import viewo.api.users.data
 import viewo.user
-import viewo.user.data
 
 
 @viewo.user.viewo_user.route('/login')
@@ -29,7 +29,7 @@ def show_login():
 def show_logout():
     flask_login.logout_user()
     # remove public password
-    public_password_set('')
+    viewo_api.password_public_set('')
     flask.flash('Logout erfolgreich.')
     return flask.redirect(flask.url_for('viewo_user.show_login'))
 
@@ -44,7 +44,7 @@ def check_login():
     password = flask.request.form['password']
 
     # verify
-    if not viewo.api.users.data.verify_password(user, password):
+    if not viewo_api.password_verify(user, password):
         flask.flash('Benutzerdaten fehlerhaft.')
         # ask user again
         return flask.render_template(
@@ -53,7 +53,7 @@ def check_login():
         )
 
     # login
-    login_user(user)
+    viewo_api.login(user, password, False)
 
     # forward to next page
     forward = flask.request.args.get('next')
@@ -62,19 +62,8 @@ def check_login():
     return flask.redirect(forward)
 
 
-def login_user(user: str):
-    user = open_user(user)
-    flask_login.login_user(user)
-    flask.flash('Login erfolgreich.')
-
-
 def open_user(user: str) -> 'viewo.user.FlaskUser':
-    return viewo.user.data.FlaskUser(identifier=user)
-
-
-def public_password_set(password: str):
-    # TODO: CHECK FOR SECURITY ISSUES
-    flask.globals.session['password_raw'] = password
+    return viewo_api.user.data.FlaskUser(identifier=user)
 
 
 def public_password():

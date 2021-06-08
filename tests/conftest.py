@@ -14,6 +14,7 @@ import power
 import pytest
 import utila
 import utilatest
+import viewo_api.user.create
 
 import tests
 import viewo
@@ -110,7 +111,7 @@ def client(app):  # pylint:disable=W0621
 @pytest.fixture
 def test_client(client):  # pylint:disable=W0621
     """A test client for the app."""
-    viewo.api.users.post.create_user(
+    viewo_api.user.create.create_user(
         userid=tests.TEST_USER,
         password=tests.TEST_PASSWORD,
     )

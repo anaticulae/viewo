@@ -19,7 +19,7 @@ def test_view_public_password_after_ananoym_upload(client):
     2. Check that raw password is show on waiting view
     3. Logout
     4. Login
-    5. Ensure that password is !not! shown after loging.
+    5. Ensure that password is !not! shown after login.
     """
     result = tests.api.upload_minimal(client)
     userid = result['userid']

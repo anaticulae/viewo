@@ -15,8 +15,8 @@ import flask_login
 import link
 import utila
 import viewo_api
+import viewo_api.user.data
 
-import viewo.api.users.utils.user
 import viewo.api_.findings.data
 import viewo.api_.findings.update
 
@@ -88,7 +88,7 @@ def valid_user(function):
     def decorated_function(*args, **kwargs):
         # TODO: ADD USER RIGHTS CHECK
         userid = kwargs['userid']
-        user = viewo.api.users.utils.user.user_fromid(userid)
+        user = viewo_api.user.data.user_fromid(userid)
         if not user:
             return viewo_api.notfound(f'could not locate: {userid}')
         return function(*args, **kwargs)

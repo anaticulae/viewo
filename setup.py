@@ -51,7 +51,6 @@ if __name__ == "__main__":
             'viewo.api.findings',
             'viewo.api.pageviews',
             'viewo.api.users',
-            'viewo.api.users.utils',
             'viewo.api.visitors',
             'viewo.api_.findings',
             'viewo.result',

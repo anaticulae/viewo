@@ -10,8 +10,8 @@
 import flask
 import flask_login
 import utila
+import viewo_api.user.data
 
-import viewo.api.users.data
 import viewo.api.users.update
 
 payment = flask.Blueprint('payment', __name__)  # pylint:disable=invalid-name
@@ -41,7 +41,7 @@ def payment_overview():
     userid = flask_login.current_user.get_id()
     if userid is None:
         return flask.render_template('public/payment/index.html')
-    user = viewo.api.users.data.user_fromid(userid)
+    user = viewo_api.user.data.user_fromid(userid)
     if not user or not user.payed:
         return flask.render_template('public/payment/index.html')
     return flask.render_template('public/payment/done.html')

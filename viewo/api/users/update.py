@@ -11,11 +11,12 @@ import os
 
 import flask
 import viewo_api
+import viewo_api.user.data
+import viewo_api.user.password
+import viewo_api.user.serialize
+import viewo_api.user.update
 
 import viewo.api.users
-import viewo.api.users.data
-import viewo.api.users.utils.password
-import viewo.api.users.utils.user
 
 PASSWORD_WRONG = 'WRONG PASSWORD'  # nosec
 PASSWORD_INVALID = 'INVALID PASSWORD DEFINITION'  # nosec
@@ -34,11 +35,11 @@ PASSWORD_UPDATED = 'updated'  # nosec
 def user_put(userid):
     # TODO: SECURE INPUT
     password = flask.request.form.get('password', None)
-    user = viewo.api.users.utils.user.user_fromid(userid)
+    user = viewo_api.user.data.user_fromid(userid)
     try:
-        if not viewo.api.users.data.verify_password(userid, password):
+        if not viewo_api.password_verify(userid, password):
             return viewo_api.bad(PASSWORD_WRONG)
-    except viewo.api.users.utils.password.PasswordError:
+    except viewo_api.user.password.PasswordError:
         # password does not match requirements
         return viewo_api.bad(PASSWORD_INVALID)
 
@@ -56,10 +57,10 @@ def user_put(userid):
 
     if password_new:
         try:
-            viewo.api.users.utils.password.valid(password_new)
-        except viewo.api.users.utils.password.PasswordTooShort:
+            viewo_api.user.password.password_valid(password_new)
+        except viewo_api.user.password.PasswordTooShort:
             return viewo_api.bad(PASSWORD_NEW_TOO_SHORT)
-        except viewo.api.users.utils.password.PasswordTooLong:
+        except viewo_api.user.password.PasswordTooLong:
             return viewo_api.bad(PASSWORD_NEW_TOO_LONG)
 
     if password_new != password_new_repeat:
@@ -67,18 +68,18 @@ def user_put(userid):
 
     if password_new:
         # hash password and update user
-        hashed = viewo.api.users.utils.password.hashed(password_new)
+        hashed = viewo_api.user.password.hashed(password_new)
         user.password = hashed
 
-    if not viewo.api.users.utils.user.user_update(user):
+    if not viewo_api.user.update.user_update(user, verify=True):
         return viewo_api.bad('could not update user')
     return viewo_api.success(PASSWORD_UPDATED)
 
 
 def user_pay(userid: str, choice: int):
     assert choice in (0, 1, 2, 3, 4), f'invalid choice: {choice}'
-    userpath = viewo.api.users.data.userpath(userid)
+    userpath = viewo_api.user.data.userpath(userid)
     assert os.path.exists(userpath), f'invalid user path: {userpath}'
-    user = viewo.api.users.data.load_user(userpath)
+    user = viewo_api.user.serialize.load_user(userpath)
     user.payed = choice
-    viewo.api.users.data.update_user(user)
+    viewo_api.user.update.user_update(user)

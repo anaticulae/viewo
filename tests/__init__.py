@@ -16,6 +16,7 @@ import os
 import power
 import utila
 import utilatest
+import viewo_api
 import werkzeug.datastructures
 
 import viewo
@@ -50,13 +51,13 @@ TEST_EMAIL = 'dertestbaer@helm.com'
 def test_user(monkeypatch):
     with monkeypatch.context() as context:
 
-        def verify_password(user: str, password: str) -> bool:
+        def password_verify(user: str, password: str) -> bool:
             return user == TEST_USER and password == TEST_PASSWORD
 
         context.setattr(
-            viewo.api.users.data,
-            'verify_password',
-            verify_password,
+            viewo_api,
+            'password_verify',
+            password_verify,
         )
         yield
 
