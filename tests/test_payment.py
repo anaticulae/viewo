@@ -13,13 +13,13 @@ import viewo.view.payment
 BADGETEXT = '>Vollzugriff erhalten</button>'
 
 
-def test_payment_bade(user_client):
+def test_payment_badge(user_client):
     """User is logged in and no payment is done."""
     home = tests.content(user_client, '/')
     assert BADGETEXT in home
 
 
-def test_payment_nobade_after_payment(user_client):
+def test_payment_nobadge_after_payment(user_client):
     """Login and Pay. Badge disappear after paying."""
     home = tests.content(user_client, '/')
     assert BADGETEXT in home
