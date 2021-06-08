@@ -15,7 +15,7 @@ import utilatest
 import tests
 
 
-def test_api_upload_document(client):
+def test_api_upload_document_success(client):
     result = utilatest.apiupload(client, '/documents', 'file', tests.MINIMAL)
     assert result['document']
     assert result['link']

@@ -11,6 +11,6 @@ import flask
 
 api_documents = flask.Blueprint('api_documents', __name__)  # pylint:disable=C0103
 
-__all__ = ['api_documents', 'delete', 'post', 'present']
+__all__ = ['api_documents', 'delete', 'present']
 
 DOCUMENTID_LENGTH = 16

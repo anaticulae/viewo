@@ -17,9 +17,7 @@ import tests
 def test_api_documents_overview(client):
     result = utilatest.apicall(client, '/documents')
     assert not result['documents']
-
     utilatest.apiupload(client, '/documents', 'file', tests.MINIMAL)
-
     result = utilatest.apicall(client, '/documents')
     assert result['documents']
 

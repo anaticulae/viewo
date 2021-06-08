@@ -15,6 +15,8 @@ import configo
 import flask
 import flask_bootstrap
 import flask_moment
+import viewo_waiter
+import viewo_waiter.api.document.post
 from admin_helpdesk.api import *  # pylint:disable=wildcard-import,W0614,C0412
 
 import viewo
@@ -76,7 +78,13 @@ def create_application(config=None) -> flask.Flask:
     appi.register_blueprint(writing_)
     appi.register_blueprint(payment)
 
+    # extenral
+    # Add external route with the same name to internal route
+    # TODO: RENAME LATER, DON'T KNOW TO RESOLVE THIS, YET
+    api_documents.deferred_functions.extend(
+        viewo_waiter.api_documents.deferred_functions)
     # data API
+    # internal
     appi.register_blueprint(api_documents, url_prefix=viewo.config.API_PREFIX)
     appi.register_blueprint(api_findings, url_prefix=viewo.config.API_PREFIX)
     appi.register_blueprint(api_pageviews, url_prefix=viewo.config.API_PREFIX)
