@@ -31,6 +31,8 @@ RESOURCES = [
     power.MASTER075_PDF,
 ]
 
+utilatest.setup(viewo.config.API_PREFIX)
+
 
 @pytest.mark.usefixtures('session')
 def pytest_sessionstart():
