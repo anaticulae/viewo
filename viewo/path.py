@@ -15,16 +15,25 @@ import configo
 import flask
 
 
+def appconfig():
+    try:
+        return flask.current_app.config
+    except RuntimeError:
+        import viewo.__main__  # pylint:disable=import-outside-toplevel
+        with viewo.__main__.app.app_context():
+            return flask.current_app.config
+
+
 def common():
-    return flask.current_app.config['COMMON']
+    return appconfig()['COMMON']
 
 
 def todo():
-    return flask.current_app.config['TODO']
+    return appconfig()['TODO']
 
 
 def ready():
-    return flask.current_app.config['READY']
+    return appconfig()['READY']
 
 
 def users():
