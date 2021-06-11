@@ -16,7 +16,6 @@ import utila
 
 import viewo.path
 from viewo.waiting import FASTVIEW
-from viewo.waiting import VERIFY
 from viewo.waiting import Status
 
 
@@ -66,7 +65,7 @@ def status(process: str) -> Status:  # pylint:disable=too-complex
         return link.State.DONE if os.path.exists(pdf) else link.State.RUNNING
 
     def verified():
-        verifypath = os.path.join(working, VERIFY)
+        verifypath = os.path.join(working, link.PDFINFO_NAME)
         verify = link.State.WAITING
         if uploaded() == link.State.DONE:
             verify = link.State.RUNNING  # pylint:disable=R0204
@@ -184,9 +183,8 @@ def load_validation_result(process: str) -> dict:
     if path is None:
         # invalid process
         return None
-    data = os.path.join(path, VERIFY)
-    data = utila.file_read(data)
-    loaded = json.loads(data)
+    path = os.path.join(path, link.PDFINFO_NAME)
+    loaded = utila.yaml_from_raw_or_path(path)
     return loaded
 
 

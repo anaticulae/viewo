@@ -46,7 +46,6 @@ import typing
 import iamraw
 import link
 
-VERIFY = 'pdfinfo.json'
 FASTVIEW = 'fastview'
 
 

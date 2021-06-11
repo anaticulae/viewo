@@ -7,7 +7,6 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import json
 import os
 
 import flask
@@ -19,7 +18,6 @@ import utila
 import viewo.path
 import viewo.result.json
 import viewo.result.loader
-import viewo.waiting
 
 
 def all_documents(userid: str = None):
@@ -153,9 +151,8 @@ def document_info(documentid) -> dict:
     loaded = viewo.api.documents.utils.job_toraw(link.load_job(source))
 
     # append document length
-    pdfinfo = os.path.join(docpath, viewo.waiting.VERIFY)
+    pdfinfo = os.path.join(docpath, link.PDFINFO_NAME)
     if os.path.exists(pdfinfo):
-        pdfinfo = json.loads(utila.file_read(pdfinfo))
-        # TODO: REPLACE WITH JSON METHOD
+        pdfinfo = utila.yaml_from_raw_or_path(pdfinfo)
         loaded['pages'] = pdfinfo['pages']
     return loaded

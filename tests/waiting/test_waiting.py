@@ -17,6 +17,7 @@ import tests.api
 import tests.waiting
 import viewo.path
 import viewo.waiting
+import viewo.waiting.data
 import viewo.waiting.fastview
 
 
@@ -69,9 +70,9 @@ def test_waiting_status_verified(user_client, testdir, monkeypatch):
         os.path.join(
             tests.EXAMPLE_TODO,
             'BAS45DFAC00JJ52K',
-            viewo.waiting.VERIFY,
+            link.PDFINFO_NAME,
         ),
-        os.path.join(todo, viewo.waiting.VERIFY),
+        os.path.join(todo, link.PDFINFO_NAME),
     )
 
     loaded = tests.waiting.run_status(user_client, root, monkeypatch)

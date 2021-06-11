@@ -9,11 +9,11 @@
 
 import os
 
+import link
 import pytest
 import utila
 
 import tests
-import viewo.waiting
 
 
 @pytest.fixture
@@ -30,7 +30,7 @@ def no_validation(valid):  # pylint:disable=W0621
         os.path.join(
             valid,
             'BAS45DFAC00JJ52K',
-            viewo.waiting.VERIFY,
+            link.PDFINFO_NAME,
         ))
     return valid
 
@@ -41,7 +41,7 @@ def invalid_validation(valid):  # pylint:disable=W0621
         os.path.join(
             valid,
             'BAS45DFAC00JJ52K',
-            viewo.waiting.VERIFY,
+            link.PDFINFO_NAME,
         ),
         '{}',
     )
