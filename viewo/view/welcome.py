@@ -27,6 +27,6 @@ def show_page(page):
 
 @welcome.route('/')
 def show_welcome():
-    public = viewo.view.documents.load_documents(owner=link.PUBLIC_OWNER)
-    rendered = flask.render_template('public/home.html', documents=public)
+    public_docs = viewo.view.documents.load_documents(owner=link.PUBLIC_OWNER)
+    rendered = flask.render_template('public/home.html', documents=public_docs)
     return rendered
