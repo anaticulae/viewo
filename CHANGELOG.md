@@ -2,6 +2,25 @@
 
 Every noteable change is logged here.
 
+## v2.18.0
+
+### Feature
+
+* add pages column (f7ca2763d5b2)
+* use improved document loader (46b8fbf96088)
+* display page number (1199f1ea2a6f)
+* add document page number (364db02df1e2)
+* update bookkeeping (d348807c7056)
+* use viewo_waiter document receiver (72655e1b56b4)
+
+### Fix
+
+* ensure to have valid app instance (a6cb489952f2)
+
+### Documentation
+
+* adjust public API user (7d752fe4c427)
+
 ## v2.17.0
 
 ### Feature
