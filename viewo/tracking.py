@@ -26,7 +26,7 @@ def before_each_request():
     method, path = environment['REQUEST_METHOD'], environment['PATH_INFO']
     data = environment['QUERY_STRING']
 
-    if not viewo.config.VISITORS_TRACK_STATIC_REQUESTS:
+    if not viewo.config.VISITORS_TRACKING_STATIC_REQUESTS:
         if path.startswith('/static/'):
             return
 
