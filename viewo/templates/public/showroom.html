@@ -12,7 +12,7 @@
         <h3><a href="{{ url_for('result.view_result', documentid=document['name']) }}">{{document['title']}}</a>
         </h3>
         {% set pages = document['result']['closed'] + document['result']['excluded'] + document['result']['open'] %}
-        Seiten: <span class="badge badge-secondary badge-pill">72</span><br />
+        Seiten: <span class="badge badge-secondary badge-pill">{{document['pages']}}</span><br />
         Fehler: <span class="badge badge-secondary badge-pill btn-danger">{{pages}}</span><br />
     </div>
     {% endif %}
