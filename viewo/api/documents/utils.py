@@ -141,18 +141,3 @@ def links(documentid):
         documentid=documentid,
     )
     return simple
-
-
-def document_info(documentid) -> dict:
-    docpath = link.document(documentid)
-    source = os.path.join(docpath, link.JOB_FILE_NAME)
-    if not os.path.exists(source):
-        return None
-    loaded = viewo.api.documents.utils.job_toraw(link.load_job(source))
-
-    # append document length
-    pdfinfo = os.path.join(docpath, link.PDFINFO_NAME)
-    if os.path.exists(pdfinfo):
-        pdfinfo = utila.yaml_from_raw_or_path(pdfinfo)
-        loaded['pages'] = pdfinfo['pages']
-    return loaded

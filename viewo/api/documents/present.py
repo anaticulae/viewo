@@ -53,7 +53,7 @@ def userid(public: bool = True):
 def document_get(documentid: str):
     """Receive document information selected by documentid. If document
     does not exists, 404 Error will be raised."""
-    loaded = viewo.api.documents.utils.document_info(documentid)
+    loaded = link.load_jobinfo_raw(documentid, done=None)
     if not loaded:
         return viewo_api.notfound(f'could not locate `{documentid}')
     dumped = json.dumps({
