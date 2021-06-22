@@ -7,71 +7,12 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import os
-
 import flask
 import iamraw.caption
-import link
-import link.job
 import utila
 
-import viewo.path
 import viewo.result.json
 import viewo.result.loader
-
-
-def all_documents(userid: str = None):
-    todos, dones = link.collect_jobs(
-        viewo.path.common(),
-        skip_removed=True,
-        owner=userid,
-    )
-    result = []
-    ready_indexes = {item.name for item in dones}
-
-    for todo in todos:
-        if todo.name in ready_indexes:
-            continue
-        todo.state = state(todo.name)
-        result.append(todo)
-    for done in dones:
-        # set done flag
-        done.done = True
-        done.state = state(done.name)
-        result.append(done)
-
-    result = sorted(
-        result,
-        key=lambda item: link.sortable_date(item.date),
-        reverse=True,
-    )
-    result = [job_toraw(job) for job in result]
-    return result
-
-
-def job_toraw(info: link.JobInfo) -> dict:
-    result = {
-        'title': info.title,
-        'date': info.date,
-        'result': link.job.findingstatus_toraw(info.result),
-        'name': info.name,
-        'done': info.done,
-        'state': info.state,
-        'owner': info.owner,
-    }
-    if info.password:
-        result['password'] = 'XXXXXXXXXX'  # info.password
-    if info.hashlink:
-        result['hashlink'] = info.hashlink
-    return result
-
-
-def state(documentid: str) -> int:
-    current = link.current(documentid)
-    if current is None:
-        return -2
-    converted = link.State.fromstate(current)
-    return int(converted)
 
 
 def footnotes(documentid):

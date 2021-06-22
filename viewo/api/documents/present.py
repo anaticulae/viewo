@@ -25,11 +25,31 @@ import viewo.api.documents.utils
 def documents():
     public = utila.str2bool(flask.request.args.get('public', False))
     owner = userid(public=public)
-    collected = viewo.api.documents.utils.all_documents(userid=owner)
+    collected = load_documents(owner)
     dumped = json.dumps({
         'documents': collected,
     })
     return dumped
+
+
+def load_documents(owner):
+    common = viewo.path.common()
+    todo, ready = link.collect_jobs(common, skip_removed=True, owner=owner)
+    dones = {item.name for item in ready}
+    result = [link.load_jobinfo_raw(item.name, done=None) for item in ready]
+    for item in result:
+        item['done'] = True
+    for item in todo:
+        if item.name in dones:
+            continue
+        current = link.load_jobinfo_raw(item.name, done=None)
+        result.append(current)
+    result = sorted(
+        result,
+        key=lambda item: link.sortable_date(item['date']),
+        reverse=True,
+    )
+    return result
 
 
 def userid(public: bool = True):

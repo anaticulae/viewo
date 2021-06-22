@@ -7,15 +7,12 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import os
-
 import flask
 import flask_login
 import link
-import serializeraw
 import utila
 
-import viewo.path
+import viewo.api.documents.present
 
 documents_ = flask.Blueprint('documents', __name__)  # pylint:disable=C0103
 
@@ -24,7 +21,7 @@ documents_ = flask.Blueprint('documents', __name__)  # pylint:disable=C0103
 def view_documents():
     public = utila.str2bool(flask.request.args.get('public', False))
     owner = userid(public=public)
-    documents = load_documents(owner)
+    documents = viewo.api.documents.present.load_documents(owner)
     return flask.render_template('documents/index.html', documents=documents)
 
 
@@ -44,46 +41,3 @@ def userid(public: bool = True):
         # add public documents to user
         user = {link.PUBLIC_OWNER, user}
     return user
-
-
-def load_documents(owner):
-    common = viewo.path.common()
-    todo, ready = link.collect_jobs(common, skip_removed=True, owner=owner)
-    documents = merge_jobs(todo, ready)
-    rawdocs = [vars(document) for document in documents]
-    for document in rawdocs:
-        path = link.pdfinfo(document['name'])
-        if not utila.exists(path):
-            document['pages'] = 0
-            continue
-        # TODO: INTREGRATE INTO JobInfo LATER?
-        pdfinfo = serializeraw.load_pdfinfo(path)
-        # add pdf page count
-        document['pages'] = pdfinfo.pages
-    return rawdocs
-
-
-def merge_jobs(todo, ready) -> list:
-    result = []
-    result.extend(ready)
-    for item in result:
-        # set done flag
-        item.done = True
-    done = {item.name for item in ready}
-
-    for item in todo:
-        if item.name in done:
-            continue
-        # TODO: REMOVE THIS HACK LATER
-        # set to none to have waiting clock in view which symbol the use
-        # that document is in progress.
-        item.result = None
-        result.append(item)
-
-    # sort by date
-    result = sorted(
-        result,
-        key=lambda item: link.sortable_date(item.date),
-        reverse=True,
-    )
-    return result
