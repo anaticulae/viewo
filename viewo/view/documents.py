@@ -7,9 +7,12 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import os
+
 import flask
 import flask_login
 import link
+import serializeraw
 import utila
 
 import viewo.path
@@ -47,7 +50,17 @@ def load_documents(owner):
     common = viewo.path.common()
     todo, ready = link.collect_jobs(common, skip_removed=True, owner=owner)
     documents = merge_jobs(todo, ready)
-    return documents
+    rawdocs = [vars(document) for document in documents]
+    for document in rawdocs:
+        path = link.pdfinfo(document['name'])
+        if not utila.exists(path):
+            document['pages'] = 0
+            continue
+        # TODO: INTREGRATE INTO JobInfo LATER?
+        pdfinfo = serializeraw.load_pdfinfo(path)
+        # add pdf page count
+        document['pages'] = pdfinfo.pages
+    return rawdocs
 
 
 def merge_jobs(todo, ready) -> list:
