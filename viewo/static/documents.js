@@ -71,6 +71,10 @@ const documents = {
         let data = []
         for (let item of items) {
             let title = item.title
+            let pages = item.pages
+            if (pages == undefined) {
+                pages = ''
+            }
             let todo = ``
             let action = ``
             let mydocument = documents.userid == item.owner
@@ -119,6 +123,7 @@ const documents = {
             let row = [
                 title,
                 item.date,
+                pages,
                 todo,
                 action,
             ]
