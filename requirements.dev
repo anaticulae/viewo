@@ -7,11 +7,11 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-utilatest==0.6.0
+utilatest==0.8.4
 
-power==1.5.0
+power==1.7.0
 
-queuemo==1.11.3
+queuemo==1.13.0
 
 pytest-localserver==0.5.0
 selenium>=3.141.0<4.0.0
