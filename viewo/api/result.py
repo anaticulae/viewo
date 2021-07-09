@@ -7,11 +7,13 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import io
 import os
 
 import flask
 import link
 import utila
+import utila.file.securewrapper
 
 result_ = flask.Blueprint('result', __name__)  # pylint:disable=C0103
 
@@ -47,6 +49,14 @@ def view_images(documentid: str = None, image: str = None):
         utila.error(f'could not load image: {image}')
         return flask.redirect('view/failure')
 
+    if link.private(documentid, done=None):
+        # Decrypt private image data
+        with utila.file.securewrapper.open(image, mode='rb') as fp:
+            image = fp.read()
+        # TODO: IS BYTESIO REALLY REQUIRED
+        image = io.BytesIO(image)
+        response = flask.send_file(image, mimetype='image')
+        return response
     # Hint: contextmanager does not work here
     response = flask.send_file(open(image, mode='rb'), mimetype='image')
     return response

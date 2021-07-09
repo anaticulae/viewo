@@ -40,7 +40,8 @@ EXAMPLE_READY = power.generated()
 EXAMPLE_TODO = os.path.join(TEST_DATA, 'todo')
 assert os.path.exists(EXAMPLE_TODO), EXAMPLE_TODO
 
-EXAMPLE_RESULT = os.path.join(EXAMPLE_READY, TEST_DOCUMENT, 'result')
+EXAMPLE_ROOT = os.path.join(EXAMPLE_READY, TEST_DOCUMENT)
+EXAMPLE_RESULT = os.path.join(EXAMPLE_ROOT, 'result')
 
 TEST_USER = 'eewuesteewuestee'
 TEST_PASSWORD = 'EEWUESTEEWUESTEE'  # nosec
