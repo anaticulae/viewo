@@ -31,7 +31,7 @@ def tojson(
     doctextstyle = doctextstyle_tojson(doctextstyle)
     properties = properties_tojson(properties)
     captions = iamraw.caption.pagecaptions_toraw(captions) if captions else []  # pylint:disable=E1101
-
+    # result
     raw = {
         'status': 0,
         'content': pages,
@@ -147,7 +147,7 @@ def message_replace(content: str) -> str:
     content = writers.replace(content, url)
     # TODO: REMOVE VIEW HACK LATER
     # TODO: REPLACE WITH <<VDIST>>(vertical distance)
-    content = content.replace('<a href', '<br/><a href')
+    # content = content.replace('<a href', '<br/><a href')
     # replace **[CONTENT]**-pattern with html `strong` pattern
     content = re.sub(r'\*\*([^\*]+)\*\*', r'<strong>\1</strong>', content)
     # emphasis lower important than strong content
