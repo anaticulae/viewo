@@ -70,6 +70,9 @@ var result_waiting_view = {
                 if (response.status == 1) {
                     // process is currently running
                     setTimeout(() => result_waiting_view.loop(process), 3000);
+                } else {
+                    // Done
+                    $("#waiting_progress")[0].innerHTML = 100
                 }
             },
             error: function () {
