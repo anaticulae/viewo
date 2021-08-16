@@ -64,10 +64,10 @@ def create_application(config=None) -> flask.Flask:
     flask_bootstrap.Bootstrap(app=appi)
 
     flask_moment.Moment(app=appi)
-
+    # configure app instance
     configure(appi, config)
+    # setup error handler
     init_error_handler(appi)
-
     # view
     appi.register_blueprint(viewo_user)
     appi.register_blueprint(documents_)
@@ -77,7 +77,6 @@ def create_application(config=None) -> flask.Flask:
     appi.register_blueprint(welcome)
     appi.register_blueprint(writing_)
     appi.register_blueprint(payment)
-
     # extenral
     # Add external route with the same name to internal route
     # TODO: RENAME LATER, DON'T KNOW TO RESOLVE THIS, YET
@@ -90,20 +89,20 @@ def create_application(config=None) -> flask.Flask:
     appi.register_blueprint(api_pageviews, url_prefix=viewo.config.API_PREFIX)
     appi.register_blueprint(api_users, url_prefix=viewo.config.API_PREFIX)
     appi.register_blueprint(api_visitors, url_prefix=viewo.config.API_PREFIX)
-
     # messages
     appi.register_blueprint(
         admin_helpdesk.api.api_message,
         url_prefix=viewo.config.API_PREFIX,
     )
-
+    # configure user access manager
     viewo.user.loginmanager.create_loginmanager(appi)
-
+    # ensure that paths are created
+    appi.before_first_request(viewo.path.init)
     # track every user request
     appi.before_request(viewo.tracking.before_each_request)
-
+    # start finding provider
     viewo.api_.findings.data.start()
-
+    # return configured app instance
     return appi
 
 

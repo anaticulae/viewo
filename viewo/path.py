@@ -13,6 +13,7 @@ import os
 
 import configo
 import flask
+import utila
 
 
 def appconfig():
@@ -51,3 +52,16 @@ def visitors():
 configo.todo = todo
 configo.ready = ready
 configo.share = common
+
+
+def init():
+    installs = [
+        common(),
+        todo(),
+        ready(),
+        users(),
+        visitors(),
+    ]
+    for item in installs:
+        utila.debug(item)
+        os.makedirs(item, exist_ok=True)
