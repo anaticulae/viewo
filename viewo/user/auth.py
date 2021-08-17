@@ -87,7 +87,7 @@ class LoginForm(flask_wtf.FlaskForm):
     )
     submit = wtforms.SubmitField('Anmelden')
 
-    def __init__(self, user='', password='', **kwargs):
+    def __init__(self, user='', password='', **kwargs):  # nosec
         super().__init__(**kwargs)
-        self.user.default = user
-        self.password.default = password
+        self.user.default = user  # nosec
+        self.password.default = password  # nosec
