@@ -141,6 +141,8 @@ def message_replace(content: str) -> str:
     'that is <strong>?very 2.0!</strong> important'
     >>> message_replace('that is **?very 2.0!** important. *More than this.*.')
     'that is <strong>?very 2.0!</strong> important. <em>More than this.</em>.'
+    >>> message_replace('Heute: **Gibt es nicht genug Mitarbeiter*innen.**')
+    'Heute: <strong>Gibt es nicht genug Mitarbeiter*innen.</strong>'
     """
     # TODO: INTRODUCE MARKDOWN PACKAGE
     url = configo.docs_url()
@@ -149,7 +151,7 @@ def message_replace(content: str) -> str:
     # TODO: REPLACE WITH <<VDIST>>(vertical distance)
     # content = content.replace('<a href', '<br/><a href')
     # replace **[CONTENT]**-pattern with html `strong` pattern
-    content = re.sub(r'\*\*([^\*]+)\*\*', r'<strong>\1</strong>', content)
+    content = re.sub(r'\*\*(.+)\*\*', r'<strong>\1</strong>', content)
     # emphasis lower important than strong content
     content = re.sub(r'\*([^\*]+)\*', r'<em>\1</em>', content)
     # replace newline
