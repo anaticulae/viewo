@@ -39,7 +39,22 @@ const documents = {
     init: function (userid) {
         // add empty table
         documents.table = $('#documents').DataTable({
-            'data': []
+            'data': [],
+            aLengthMenu: [100, 50, 25, 10],
+            oLanguage: {
+                sLengthMenu: "Zeige _MENU_",
+                sProcessing: "Lade...",
+                sSearch: "Suche:",
+                oPaginate: {
+                    sFirst: "Anfang",
+                    sLast: "Ende",
+                    sNext: "Weiter",
+                    sPrevious: "Zurück"
+                },
+                sInfo: "Zeige _START_ bis _END_ von _TOTAL_ Dokumenten",
+                sEmptyTable: "Kein Dokument verfügbar",
+                sInfoEmpty: "Zeige 0 bis 0 von 0 Einträgen",
+            }
         })
         documents.update_user(userid)
     },
