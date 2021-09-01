@@ -130,6 +130,12 @@ const documents = {
                     action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
                 }
                 title = `<span style="color:red;">${title} (fehlgeschlagen)</span>`
+            } else if (item.state == 4) {
+                // not supported
+                if (public == false) {
+                    action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
+                }
+                title = `<span style="color:darkred;">${title} (Art des Dokuments nicht unterstützt)</span>`
             }
             if (item.state == -1) {
                 // waiting
