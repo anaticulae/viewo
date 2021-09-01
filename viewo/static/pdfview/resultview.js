@@ -160,8 +160,7 @@ class ResultView {
                 list.append('<tr><td style="border-top:solid black 1px;" colspan="4"></td></tr>')
             }
             current = item.page
-
-            let href = `footnote_openpage_${index}`
+            let href = `footnote_openpage${index}`
             let row = `
             <tr>
             <td class="center top">${item.number}</td>
@@ -171,7 +170,7 @@ class ResultView {
             </tr>`
             list.append(row)
             $(`#${href}`).click(function () {
-                $(`#openpage_${item.page}`).click()
+                $(`#openpage${item.page}`).click()
             });
         }
     }
@@ -201,8 +200,7 @@ class ResultView {
                     list.append('<tr><td style="border-top:solid black 1px;" colspan="4"></td></tr>')
                 }
                 current = item.page
-
-                let href = `footnote_openpage_${index}`
+                let href = `footnote_openpage${index}`
                 let row = `
             <tr>
             <td class="center top">${nr}</td>
@@ -212,7 +210,7 @@ class ResultView {
             </tr>`
                 list.append(row)
                 $(`#${href}`).click(function () {
-                    $(`#openpage_${page.page}`).click()
+                    $(`#openpage${page.page}`).click()
                 });
             }
             index += 1

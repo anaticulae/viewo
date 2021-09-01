@@ -37,13 +37,13 @@ class Navigator {
         // TODO: CHECK FOR BETTER REMOVEMENT
         error_page_list.html('')
         for (let page of pages) {
-            let btn = `<button type="button" class="btn btn-default" id="openpage_${page.page}">${page.title}</button>`
+            let btn = `<button type="button" class="btn btn-default" id="openpage${page.page}">${page.title}</button>`
             error_page_list.append(btn)
-            $(`#openpage_${page.page}`).click(function () {
+            $(`#openpage${page.page}`).click(function () {
                 resultview.show_page(page.page)
             });
             if (page.content == SPECIALCONTENT_EMPTY) {
-                $(`#openpage_${page.page}`).hide()
+                $(`#openpage${page.page}`).hide()
             }
         }
         this.update_page_navigator()
@@ -55,15 +55,15 @@ class Navigator {
             if (this.error_pages_only && page.page < 1024) {
                 if (!open_findings(page.page)) {
                     // no open findings, hide this page
-                    $(`#openpage_${page.page}`).hide()
+                    $(`#openpage${page.page}`).hide()
                     continue
                 }
             }
             if (page.content == SPECIALCONTENT_EMPTY) {
-                $(`#openpage_${page.page}`).hide()
+                $(`#openpage${page.page}`).hide()
             }
             else {
-                $(`#openpage_${page.page}`).show()
+                $(`#openpage${page.page}`).show()
             }
         }
         this.set_on_valid_hidden_page()
@@ -74,7 +74,7 @@ class Navigator {
         // Remove other potential highlights of other pages.
         // TODO: SPLIT METHOD IN CLEAR AND SET/ADD
         $("button[id*='openpage']").removeClass('highlighted')
-        $(`#openpage_${page}`).addClass('highlighted')
+        $(`#openpage${page}`).addClass('highlighted')
     }
 
     previous_page() {
