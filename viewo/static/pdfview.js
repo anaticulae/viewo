@@ -17,7 +17,6 @@ class Navigator {
         // If True, only show pages which contains an error. Start in error
         // mode to show the findings first.
         this.error_pages_only = false
-        this.items = 0
     }
 
     init_listener() {
