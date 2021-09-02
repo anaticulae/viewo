@@ -60,7 +60,6 @@ def run_queuemo(source, generated, dest):
         return
     utila.log(f'generate {workpath}')
     workspace = link.create_todo(source, todopath=generated, todoname=todoname)
-
     # run single queuemo instance in workspace, write output to same workspace
     cmd = f'queuemo_single -i {workspace} -V'
     completed = utila.run(cmd)
@@ -76,16 +75,13 @@ def zfill(text, width, char='0') -> str:
 @pytest.fixture
 def app(testdir):
     """Create and configure a new app instance for each test."""
-
     todo = os.path.join(testdir.tmpdir, 'todo')
     ready = os.path.join(testdir.tmpdir, 'ready')
-
+    # create folder
     os.makedirs(todo)
     os.makedirs(ready)
-
     assert os.path.exists(todo), todo
     assert os.path.exists(ready), ready
-
     # create the app with common test config
     test_config = {
         'TESTING': True,
@@ -96,7 +92,6 @@ def app(testdir):
     # disable tracking in test run # TODO: MOVE TO CONFIG
     viewo.config.VISITORS_TRACKING = False
     application = viewo.app.create_application(config=test_config)
-
     # ensure to create app context: TODO: THINK ABOUT IT
     with application.app_context():
         yield application
