@@ -42,7 +42,7 @@ class Navigator {
                 resultview.show_page(page.page)
             });
             if (page.content == SPECIALCONTENT_EMPTY) {
-                $(`#openpage${page.page}`).hide()
+                $(`#openpage${page.page}`).addClass('nospecialcontent')
             }
         }
         this.update_page_navigator()
@@ -51,18 +51,21 @@ class Navigator {
     update_page_navigator() {
         for (let page of service.pages) {
             // 1024 do not skip special pages
-            if (this.error_pages_only && page.page < 1024) {
+            if (page.page < 1024) {
                 if (!open_findings(page.page)) {
                     // no open findings, hide this page
-                    $(`#openpage${page.page}`).hide()
-                    continue
+                    $(`#openpage${page.page}`).addClass('nofindings')
                 }
+                else {
+                    $(`#openpage${page.page}`).removeClass('nofindings')
+                }
+                continue
             }
             if (page.content == SPECIALCONTENT_EMPTY) {
-                $(`#openpage${page.page}`).hide()
+                $(`#openpage${page.page}`).addClass('nospecialcontent')
             }
             else {
-                $(`#openpage${page.page}`).show()
+                $(`#openpage${page.page}`).removeClass('nospecialcontent')
             }
         }
         this.set_on_valid_hidden_page()
@@ -116,15 +119,17 @@ class Navigator {
     }
 
     /**
-     * Switch between all page numbers of the document and the pages ith
+     * Switch between all page numbers of the document and the pages with
      * errors only.
      */
     toggle_pages() {
         let toggle = $('#pdfview_navigation_toggle')[0]
         if (this.error_pages_only) {
             toggle.innerText = 'hide'
+            $(".nofindings").css("display", "inline")
         } else {
             toggle.innerText = 'show'
+            $(".nofindings").css("display", "none")
         }
         this.error_pages_only = !this.error_pages_only //toggle
         this.update_page_navigator()

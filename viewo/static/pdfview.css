@@ -114,6 +114,14 @@ article, canvas{
     padding:5px; */
 }
 
+.nofindings{
+    display:inline;
+}
+
+.nospecialcontent{
+    display:none;
+}
+
 #finding_status_counter{
     margin-left:25px;
     font-size:18px;
