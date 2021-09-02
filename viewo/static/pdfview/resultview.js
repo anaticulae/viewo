@@ -63,6 +63,7 @@ class ResultView {
             }
             $('#pdfview_content').show()
         }
+        navigator.shorten_pagenumers()
     }
 
     show_pdf(pagenumber) {

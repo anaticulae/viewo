@@ -97,6 +97,7 @@ class Navigator {
             this.result.show_page(previous)
         }
         service.smooth(this.result.current_page)
+        this.shorten_pagenumers()
     }
 
     next_page() {
@@ -116,6 +117,7 @@ class Navigator {
             this.result.show_page(next)
         }
         service.smooth(this.result.current_page)
+        this.shorten_pagenumers()
     }
 
     /**
@@ -134,6 +136,7 @@ class Navigator {
         this.error_pages_only = !this.error_pages_only //toggle
         this.update_page_navigator()
         this.set_on_valid_hidden_page()
+        this.shorten_pagenumers()
     }
 
     set_on_valid_hidden_page() {
@@ -148,6 +151,65 @@ class Navigator {
         // to all pages.
         this.next_page()
         this.previous_page()
+    }
+
+    shorten_pagenumers() {
+        let visible = navigator.visible_pagenumbers()
+        $("button[id*='openpage']").each(function (index, value) {
+            let page = parseInt(value.id.replace('openpage', ''))
+            if (visible.has(page)) {
+                $(this).css("display", "inline")
+            } else {
+                $(this).css("display", "none")
+            }
+        })
+    }
+
+    visible_pagenumbers() {
+        let current = this.result.current_page
+        let next = next_page_visible(current)
+        let before = previous_page_visible(current)
+        let pages = []
+        for (let page of service.pages) {
+            // 1024 do not skip special pages
+            if (page.page < 1024 && page.page >= 0) {
+                if (this.error_pages_only && !open_findings(page.page)) {
+                    continue
+                }
+                pages.push(page.page)
+            } else if (page.content != SPECIALCONTENT_EMPTY) {
+                pages.push(page.page)
+            }
+        }
+        if (page.length < 30) {
+            return new Set(pages)
+        }
+        // TODO: HACKY
+        let split = 0
+        if (pages.length > 30) {
+            split = 3
+        }
+        if (pages.length > 70) {
+            split = 5
+        }
+        if (pages.length > 150) {
+            split = 10
+        }
+        pages = pages.filter(function (item) {
+            item = item + 1
+            if (item % split == 0) {
+                return true
+            }
+            item = item - 1
+            if (item == current || item == before || item == next) {
+                return true
+            }
+            if (item > 1024) {
+                return true
+            }
+            return false
+        })
+        return new Set(pages)
     }
 
 }
