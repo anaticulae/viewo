@@ -46,16 +46,16 @@ def test_call_result_e508af0df454gi30(client, monkeypatch):
 
 def test_call_result_e508af0df454gi30_image_access(test_client):
     utila.copy_content(
-        source=os.path.join(tests.EXAMPLE_ROOT, 'jobinfo.yaml'),
-        destination='ready//ework_homework25',
+        src=os.path.join(tests.EXAMPLE_ROOT, 'jobinfo.yaml'),
+        dest=f'ready/{tests.TEST_DOCUMENT}',
     )
     utila.copy_content(
-        source=tests.EXAMPLE_RESULT,
-        destination='ready/ework_homework25/result',
+        src=tests.EXAMPLE_RESULT,
+        dest=f'ready/{tests.TEST_DOCUMENT}/result',
         recursive=True,
     )
     response = test_client.get(
-        f'/view/{tests.TEST_DOCUMENT}/f30dd16ae593f036.png',
+        f'/view/{tests.TEST_DOCUMENT}/7e98e4ad3dd91838.png',
         follow_redirects=True,
     )
     assert response.status_code == 200, response

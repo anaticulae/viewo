@@ -29,10 +29,10 @@ assert os.path.exists(TEST_DATA), TEST_DATA
 
 BASE_TEMPLATE = utila.file_read(os.path.join(viewo.config.TEMPLATES, 'base.html')) # yapf:disable
 
-TEST_DOCUMENT = 'ework_homework25'
-TEST_FINDING = '-5822474130355242045'
+TEST_DOCUMENT = '____home_home025'
+TEST_FINDING = '7061616792481133305'
 
-MINIMAL = power.DOCU07_PDF
+MINIMAL = power.DOCU007_PDF
 assert os.path.exists(MINIMAL), MINIMAL
 
 EXAMPLE_READY = power.generated()
