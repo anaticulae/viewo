@@ -7,4 +7,4 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-# SEE waiter_view.documents.post
+# SEE viewo_waiter.documents.post
