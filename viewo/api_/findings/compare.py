@@ -36,17 +36,17 @@ def compare(
     partnerid: str,
     operation: Comperator = Comperator.ALL,
 ) -> ComparedListFinding:
-    documentpath = link.document(documentid)
+    documentpath = link.optimized(documentid)
     if documentpath is None:
         return None
-    partnerpath = link.document(partnerid)
+    partnerpath = link.optimized(partnerid)
     if partnerpath is None:
         return None
     if documentid == partnerid:
         # equal documents
         return []
-    document = protocol.findings_from_path(documentpath)
-    partner = protocol.findings_from_path(partnerpath)
+    document = protocol.load_grouped(documentpath)
+    partner = protocol.load_grouped(partnerpath)
     compared = []
     for number, content in utila.sync_pages((document, partner)):
         left = content[0] if content[0] else []
