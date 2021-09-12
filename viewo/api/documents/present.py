@@ -19,6 +19,7 @@ import viewo_api
 import viewo.api
 import viewo.api.documents
 import viewo.api.documents.utils
+import viewo.path
 
 
 @viewo.api.documents.api_documents.route('/documents', methods=['GET'])
