@@ -135,7 +135,7 @@ def location_tojson(location, pagesentences: dict = None) -> dict:
 
 
 def message_replace(content: str) -> str:
-    """Replace rst pattern with html syntax
+    r"""Replace rst pattern with html syntax
 
     >>> message_replace('that is **?very 2.0!** important')
     'that is <strong>?very 2.0!</strong> important'
@@ -145,6 +145,12 @@ def message_replace(content: str) -> str:
     'Heute: <strong>Gibt es nicht genug Mitarbeiter*innen.</strong>'
     >>> message_replace('**first**, **second**')
     '<strong>first</strong>, <strong>second</strong>'
+
+    Ensure that newlines or spaces wich are introduces by long links are
+    matched correctly.
+    >>> message_replace('Hyperlink: ** http://www.statistik.at/\nservices/\n/5/'
+    ... 'index.html?includePage=detailedView%C2%A** ist.')
+    'Hyperlink: <strong> http://www.statistik.at/<br/>services/<br/>/5/...</strong> ist.'
     """
     # TODO: INTRODUCE MARKDOWN PACKAGE
     url = configo.docs_url()
@@ -153,7 +159,7 @@ def message_replace(content: str) -> str:
     # TODO: REPLACE WITH <<VDIST>>(vertical distance)
     # content = content.replace('<a href', '<br/><a href')
     # replace **[CONTENT]**-pattern with html `strong` pattern
-    content = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', content)
+    content = re.sub(r'\*\*((.|\s)+?)\*\*', r'<strong>\1</strong>', content)
     # emphasis lower important than strong content
     content = re.sub(r'\*([^\*]+)\*', r'<em>\1</em>', content)
     # replace newline
