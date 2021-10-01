@@ -2,6 +2,30 @@
 
 Every noteable change is logged here.
 
+## v2.19.0
+
+### Feature
+
+* use optimized findings (dd437b62a9eb)
+* shorten page number navigator (355231ae27e7)
+* signal user that document analysis is not supported (a59598aea3ed)
+* rename documents list todo field (3128590253ea)
+* translate documents list (9e560797be30)
+* add emphasis message styling (2fdecbd6d7e0)
+
+### Fix
+
+* convert newlines and spaces correctly (700c6ebfa1f6)
+* make converter non greedy (3b2746cd7686)
+* handle star-pattern correctly (eed8b007df64)
+* ensure that required paths exists (c40b3fbf436f)
+* ensure that progress bar ends with 100 percent (77ca663d9875)
+* separate newline is not required anymore (7c0826a0c64e)
+
+### Documentation
+
+* adjust hint (8f8eb3d99d00)
+
 ## v2.18.0
 
 ### Feature
