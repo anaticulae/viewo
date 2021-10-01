@@ -62,7 +62,9 @@ def free_view(page: int) -> bool:
     >>> free_view(2)
     False
     """
-    return page % 3 == 0
+    if page % 3 == 0:  # pylint:disable=C2001
+        return True
+    return False
 
 
 def pagecount(documentid: str) -> int:
