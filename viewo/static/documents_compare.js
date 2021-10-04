@@ -70,10 +70,11 @@ var documents_compare = {
                     if (page['current'].length == 0 && page['other'].length == 0) {
                         continue
                     }
+                    let onebased = page['page'] + 1
                     publish.append(`
                     <tr>
                         <td>${left}</td>
-                        <td>${page['page']}</td>
+                        <td>${onebased}</td>
                         <td>${right}</td>
                     </tr>
                     `)

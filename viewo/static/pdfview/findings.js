@@ -29,9 +29,11 @@ class PDFViewFinding {
         let data = []
         for (let page of findings) {
             for (let finding of page.content) {
+                // use one based page numbering
+                let pagenr = page.page + 1
                 let row = [
                     finding.solution.title,
-                    page.page,
+                    pagenr,
                     error_label(finding.solution.msgid),
                     status_label(finding.solution.status)
                 ]
