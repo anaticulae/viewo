@@ -24,18 +24,22 @@ import viewo.path
 
 @viewo.api.documents.api_documents.route('/documents', methods=['GET'])
 def documents():
+    done = utila.str2bool(flask.request.args.get('done', False))
     public = utila.str2bool(flask.request.args.get('public', False))
     owner = userid(public=public)
-    collected = load_documents(owner)
+    collected = load_documents(owner, done=done)
     dumped = json.dumps({
         'documents': collected,
     })
     return dumped
 
 
-def load_documents(owner):
+def load_documents(owner, done: bool = False):
     common = viewo.path.common()
     todo, ready = link.collect_jobs(common, skip_removed=True, owner=owner)
+    if done:
+        # do not load jobs which are not done
+        todo.clear()
     dones = {item.name for item in ready}
     result = [link.load_jobinfo_raw(item.name, done=None) for item in ready]
     for item in result:

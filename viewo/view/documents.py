@@ -19,9 +19,13 @@ documents_ = flask.Blueprint('documents', __name__)  # pylint:disable=C0103
 
 @documents_.route('/documents', methods=['GET'])
 def view_documents():
+    done = utila.str2bool(flask.request.args.get('done', False))
     public = utila.str2bool(flask.request.args.get('public', False))
     owner = userid(public=public)
-    documents = viewo.api.documents.present.load_documents(owner)
+    documents = viewo.api.documents.present.load_documents(
+        owner,
+        done=done,
+    )
     return flask.render_template('documents/index.html', documents=documents)
 
 
