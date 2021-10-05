@@ -87,8 +87,15 @@ var documents_compare = {
                     documents_compare.show_message('')
                 }
             },
-            error: function () {
-                documents_compare.show_error('Service nicht erreichbar.')
+            error: function (request) {
+                if (request.responseJSON['error'] == 'not found') {
+                    documents_compare.show_message('Dokumente nicht gefunden')
+                    documents_compare.change_userinput(false)
+                    user_error('Dokumente nicht gefunden')
+                }
+                else {
+                    documents_compare.show_error('Service nicht erreichbar.')
+                }
             }
         })
     },
