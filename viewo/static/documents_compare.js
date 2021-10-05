@@ -37,8 +37,7 @@ var documents_compare = {
     update_selected: function () {
         let current = $('#documents_compare_current_list')
         let partner = $('#documents_compare_partner_list')
-        current.attr("disabled", true)
-        partner.attr("disabled", true)
+        documents_compare.change_userinput(true)
         documents_compare.show_message('Loading...')
 
         let publish = $('#documents_compare_content')
@@ -92,6 +91,13 @@ var documents_compare = {
                 documents_compare.show_error('Service nicht erreichbar.')
             }
         })
+    },
+
+    change_userinput: function (disabled) {
+        let current = $('#documents_compare_current_list')
+        let partner = $('#documents_compare_partner_list')
+        current.attr("disabled", disabled)
+        partner.attr("disabled", disabled)
     },
 
     show_message: function (message) {
