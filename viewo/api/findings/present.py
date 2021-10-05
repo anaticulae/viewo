@@ -79,6 +79,9 @@ def compare(documentid, partnerid):
         partnerid,
         operation=operation,
     )
+    if compared is None:
+        # one or both documents does not exists
+        return viewo_api.notfound(f'invalid docs: {documentid}/{partnerid}')
     # convert answer
     simple = viewo.api_.findings.compare.compare_raw(compared)
     result = {
