@@ -36,11 +36,11 @@ def compare(
     partnerid: str,
     operation: Comperator = Comperator.ALL,
 ) -> ComparedListFinding:
-    documentpath = link.optimized(documentid)
-    if documentpath is None:
+    documentpath = link.optimized(documentid, done=True)
+    if not utila.exists(documentpath):
         return None
-    partnerpath = link.optimized(partnerid)
-    if partnerpath is None:
+    partnerpath = link.optimized(partnerid, done=True)
+    if not utila.exists(partnerpath):
         return None
     if documentid == partnerid:
         # equal documents

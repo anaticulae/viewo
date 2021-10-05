@@ -63,3 +63,13 @@ def test_api_compare_findings_invalid_operation(findingclient):
         f'/documents/{tests.TEST_DOCUMENT}/findings/compare/{tests.TEST_DOCUMENT}?operation=invalid',
         expected=http.HTTPStatus.BAD_REQUEST,
     )
+
+
+@pytest.mark.usefixtures('findingclient')
+def test_api_findings_compare_non_existing():
+    """Invoke comparison with two non existing documentid's."""
+    compared = viewo.api_.findings.compare.compare(
+        tests.INVALID_DOCUMENT,
+        tests.INVALID_SECOND,
+    )
+    assert compared is None  # pylint:disable=C2001

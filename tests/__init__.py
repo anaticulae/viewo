@@ -31,6 +31,8 @@ BASE_TEMPLATE = utila.file_read(os.path.join(viewo.config.TEMPLATES, 'base.html'
 
 TEST_DOCUMENT = '____home_home025'
 TEST_FINDING = '7061616792481133305'
+INVALID_DOCUMENT = 'rrrrrrrrrrrrrrrr'
+INVALID_SECOND = 'SSSSSSSSSSSSSSSS'
 
 MINIMAL = power.DOCU007_PDF
 assert os.path.exists(MINIMAL), MINIMAL
