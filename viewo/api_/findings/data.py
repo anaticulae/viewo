@@ -12,12 +12,15 @@ import os
 import threading
 import time
 
+import configo
 import iamraw
 import link
 import protocol
 import utila
 
 import viewo.result.json
+
+FRONTEND_SAVER_WAIT = configo.HV_INT_PLUS(default=50)
 
 
 class FindingsFrontEnd:
@@ -118,7 +121,7 @@ class FrontEndCollection:
                     utila.error('could not save findings')
                     utila.log_stacktrace()
                     utila.error(error)
-            time.sleep(25)  # TODO: CONVERT TO HOLY VALUE
+            time.sleep(FRONTEND_SAVER_WAIT)
             utila.debug('wait for saving')
 
     def start(self):
