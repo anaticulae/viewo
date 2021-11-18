@@ -16,7 +16,7 @@ import viewo.result.loader
 
 
 def footnotes(documentid):
-    loaded = viewo.result.loader.load_footnotes_fromprocess(documentid)
+    loaded = viewo.result.loader.load_footnotes_fromdocumentid(documentid)
     raw = viewo.result.json.footnotes_tojson(loaded)
     simple = {'resource': utila.simplify(raw, not_none=False)}
     simple['uri'] = flask.url_for(
@@ -27,7 +27,7 @@ def footnotes(documentid):
 
 
 def style(documentid):
-    loaded = viewo.result.loader.load_doctextstyle_fromprocess(documentid)
+    loaded = viewo.result.loader.load_doctextstyle_fromdocumentid(documentid)
     raw = viewo.result.json.doctextstyle_tojson(loaded)
     simple = {'resource': utila.simplify(raw, not_none=False)}
     simple['uri'] = flask.url_for(
@@ -38,7 +38,7 @@ def style(documentid):
 
 
 def captions(documentid):
-    loaded = viewo.result.loader.load_captions_fromprocess(documentid)
+    loaded = viewo.result.loader.load_captions_fromdocumentid(documentid)
     raw = iamraw.caption.pagecaptions_toraw(loaded) if loaded else []
     simple = {'resource': utila.simplify(raw, not_none=False)}
     simple['uri'] = flask.url_for(
@@ -49,7 +49,7 @@ def captions(documentid):
 
 
 def bibliography(documentid):
-    loaded = viewo.result.loader.load_bibliography_fromprocess(documentid)
+    loaded = viewo.result.loader.load_bibliography_fromdocumentid(documentid)
     # raw = iamraw.caption.pagecaptions_toraw(loaded) if loaded else []
     raw = utila.flatten(loaded) if loaded else []
     simple = {'resource': utila.simplify(raw, not_none=False)}
@@ -71,7 +71,7 @@ def properties(documentid):
 
 
 def links(documentid):
-    loaded = viewo.result.loader.load_links_fromprocess(documentid)
+    loaded = viewo.result.loader.load_links_fromdocumentid(documentid)
     if loaded is None:
         # no extracted links
         loaded = []

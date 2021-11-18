@@ -91,12 +91,10 @@ def waiting_resultview_status(process: str):
     loaded = viewo.result.data.load_resultview_result(process)
     if loaded is None:
         return '{}'
-
-    pagesentences = viewo.result.loader.load_sentences_fromprocess(process)
-    footnotes = viewo.result.loader.load_footnotes_fromprocess(process)
-    doctextstyle = viewo.result.loader.load_doctextstyle_fromprocess(process)
-    captions = viewo.result.loader.load_captions_fromprocess(process)
-
+    pagesentences = viewo.result.loader.load_sentences_fromdocumentid(process)
+    footnotes = viewo.result.loader.load_footnotes_fromdocumentid(process)
+    doctextstyle = viewo.result.loader.load_doctextstyle_fromdocumentid(process)
+    captions = viewo.result.loader.load_captions_fromdocumentid(process)
     dumped = viewo.result.json.tojson(
         loaded,
         pagesentences=pagesentences,

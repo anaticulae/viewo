@@ -30,8 +30,8 @@ def load_sentences(path: str) -> dict:
     return pagesentences
 
 
-def load_sentences_fromprocess(process: str) -> str:
-    result = link.resultview(process, done=True)
+def load_sentences_fromdocumentid(documentid: str) -> str:
+    result = link.resultview(documentid, done=True)
     if not os.path.exists(result):
         return None
     path = os.path.join(result, 'words__word_result.yaml')
@@ -56,8 +56,8 @@ def load_footenotes(path: str):
     return result
 
 
-def load_footnotes_fromprocess(process: str):
-    result = link.resultview(process, done=True)
+def load_footnotes_fromdocumentid(documentid: str):
+    result = link.resultview(documentid, done=True)
     if not os.path.exists(result):
         return None
     path = iamraw.path.headerfooters(result)
@@ -67,8 +67,8 @@ def load_footnotes_fromprocess(process: str):
     return load_footenotes(path)
 
 
-def load_doctextstyle_fromprocess(process: str):
-    result = link.resultview(process, done=True)
+def load_doctextstyle_fromdocumentid(documentid: str):
+    result = link.resultview(documentid, done=True)
     if not os.path.exists(result):
         return None
     path = os.path.join(result, 'doctextstyle__textstyle.yaml')
@@ -111,8 +111,8 @@ def friendly_font(font: str) -> str:
     return font
 
 
-def load_captions_fromprocess(process: str) -> iamraw.PageContentCaptions:
-    result = link.resultview(process, done=True)
+def load_captions_fromdocumentid(documentid: str) -> iamraw.PageContentCaptions:
+    result = link.resultview(documentid, done=True)
     if not os.path.exists(result):
         return None
     path = utila.pathconnector(result, 'caption', 'general_general')
@@ -122,8 +122,8 @@ def load_captions_fromprocess(process: str) -> iamraw.PageContentCaptions:
     return serializeraw.load_captions(path)
 
 
-def load_links_fromprocess(process: str) -> iamraw.PageContentCaptions:
-    result = link.resultview(process, done=True)
+def load_links_fromdocumentid(documentid: str) -> iamraw.PageContentCaptions:
+    result = link.resultview(documentid, done=True)
     if not os.path.exists(result):
         return None
     path = utila.pathconnector(result, 'words', 'links_links')
@@ -133,8 +133,8 @@ def load_links_fromprocess(process: str) -> iamraw.PageContentCaptions:
     return serializeraw.load_hyperlinks(path)
 
 
-def load_bibliography_fromprocess(process: str) -> iamraw.BibliographyReferences:  # yapf:disable
-    result = link.resultview(process, done=True)
+def load_bibliography_fromdocumentid(documentid: str) -> iamraw.BibliographyReferences:  # yapf:disable
+    result = link.resultview(documentid, done=True)
     if not os.path.exists(result):
         return None
     path = utila.pathconnector(result, 'detector', 'bibliography_detected')
