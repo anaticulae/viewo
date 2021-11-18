@@ -55,6 +55,7 @@ def compare(
         if operation == Comperator.EQUAL:
             left = [finding for finding in left if finding in right]
         elif operation == Comperator.DIFF:
+            # TODO: IS THIS DIFF BEHAVIOR USEFUL/SENSEFUL?
             left_ = [finding for finding in left if finding not in right]
             right = [finding for finding in right if finding not in left]
             left = left_
