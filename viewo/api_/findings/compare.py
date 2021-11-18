@@ -56,9 +56,10 @@ def compare(
             left = [finding for finding in left if finding in right]
         elif operation == Comperator.DIFF:
             # TODO: IS THIS DIFF BEHAVIOR USEFUL/SENSEFUL?
-            left_ = [finding for finding in left if finding not in right]
-            right = [finding for finding in right if finding not in left]
-            left = left_
+            left, right = (
+                [finding for finding in left if finding not in right],
+                [finding for finding in right if finding not in left],
+            )
         current = ComparedFinding(number, left, right)
         compared.append(current)
     return compared
