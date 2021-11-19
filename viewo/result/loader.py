@@ -71,6 +71,21 @@ def load_pagenumbers_fromdocumentid(documentid: str) -> list:
     return result
 
 
+def fill_pages(pages: dict, pdflength: int) -> dict:
+    """\
+    >>> fill_pages({'0': "I", '1': "II", '3': "IV", '4': "V", '5': "1", '6': "2", '8': "4"}, pdflength=10)
+    {'0': 'I', '1': 'II', '2': '[3]', '3': 'IV', '4': 'V', '5': '1', '6': '2', '7': '[8]', '8': '4', '9': '[10]'}
+    """
+    for page in range(pdflength):
+        key = str(page)
+        if key in pages:
+            continue
+        pages[key] = f'[{page+1}]'
+    # sort dict by page number
+    pages = {key: pages[key] for key in sorted(pages.keys(), key=int)}
+    return pages
+
+
 def load_footnotes_fromdocumentid(documentid: str):
     result = link.resultview(documentid, done=True)
     if not os.path.exists(result):
