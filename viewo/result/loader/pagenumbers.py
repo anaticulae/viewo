@@ -33,9 +33,10 @@ def load_fromdocumentid(documentid: str) -> dict:
 
 def fill_pages(pages: dict, pdflength: int) -> dict:
     """\
-    >>> fill_pages({'0': "I", '1': "II", '3': "IV", '4': "V", '5': "1", '6': "2", '8': "4"}, pdflength=10)
+    >>> fill_pages({0: "I", 1: "II", '3': "IV", 4: "V", '5': "1", '6': "2", '8': "4"}, pdflength=10)
     {'0': 'I', '1': 'II', '2': '[3]', '3': 'IV', '4': 'V', '5': '1', '6': '2', '7': '[8]', '8': '4', '9': '[10]'}
     """
+    pages = {str(key): value for key, value in pages.items()}
     for page in range(pdflength):
         key = str(page)
         if key in pages:
