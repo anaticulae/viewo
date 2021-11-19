@@ -40,32 +40,6 @@ def load_sentences_fromdocumentid(documentid: str) -> str:
     return load_sentences(path)
 
 
-def load_footenotes(path: str):
-    footerheaders = serializeraw.load_headerfooter(path)
-    result = []
-    for page in footerheaders:
-        footer = page.footer
-        if not footer:
-            continue
-        try:
-            notes = footer.notes
-        except AttributeError:
-            continue
-        result.append((page.page, notes))
-    return result
-
-
-def load_footnotes_fromdocumentid(documentid: str):
-    result = link.resultview(documentid, done=True)
-    if not os.path.exists(result):
-        return None
-    path = iamraw.path.headerfooters(result)
-    if not os.path.exists(path):
-        utila.error(f'could not load: {path}')
-        return None
-    return load_footenotes(path)
-
-
 def load_doctextstyle_fromdocumentid(documentid: str):
     result = link.resultview(documentid, done=True)
     if not os.path.exists(result):

@@ -14,6 +14,7 @@ import viewo.api
 import viewo.result.data
 import viewo.result.json
 import viewo.result.loader
+import viewo.result.loader.footnotes
 import viewo.user.auth
 import viewo.waiting.data
 import viewo.waiting.fastview
@@ -92,7 +93,7 @@ def waiting_resultview_status(process: str):
     if loaded is None:
         return '{}'
     pagesentences = viewo.result.loader.load_sentences_fromdocumentid(process)
-    footnotes = viewo.result.loader.load_footnotes_fromdocumentid(process)
+    footnotes = viewo.result.loader.footnotes.load_fromdocumentid(process)
     doctextstyle = viewo.result.loader.load_doctextstyle_fromdocumentid(process)
     captions = viewo.result.loader.load_captions_fromdocumentid(process)
     dumped = viewo.result.json.tojson(

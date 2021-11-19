@@ -13,10 +13,11 @@ import utila
 
 import viewo.result.json
 import viewo.result.loader
+import viewo.result.loader.footnotes
 
 
 def footnotes(documentid):
-    loaded = viewo.result.loader.load_footnotes_fromdocumentid(documentid)
+    loaded = viewo.result.loader.footnotes.load_fromdocumentid(documentid)
     raw = viewo.result.json.footnotes_tojson(loaded)
     simple = {'resource': utila.simplify(raw, not_none=False)}
     simple['uri'] = flask.url_for(
