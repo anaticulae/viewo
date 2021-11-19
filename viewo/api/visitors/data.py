@@ -23,6 +23,7 @@ class Visit:
 
 
 def append(visit: Visit):
+    # TODO: DECUPLE ADDING AND WRITING TO REDUCE RESPONSE TIME
     assert visit, str(visit)
     outpath = os.path.join(viewo.path.visitors(), str(visit.unique))
     raw = raw_visit(visit) + utila.NEWLINE
