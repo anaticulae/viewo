@@ -56,18 +56,19 @@ def load_footenotes(path: str):
     return result
 
 
-def load_pagenumbers_fromdocumentid(documentid: str) -> list:
-    result = link.resultview(documentid, done=True)
-    if not os.path.exists(result):
+def load_pagenumbers_fromdocumentid(documentid: str) -> dict:
+    resultview = link.resultview(documentid, done=True)
+    if not os.path.exists(resultview):
         return None
-    path = iamraw.path.groupme_pagenumbers(result)
+    path = iamraw.path.groupme_pagenumbers(resultview)
     if not os.path.exists(path):
         utila.error(f'could not load: {path}')
         return None
     pagenumbers = serializeraw.load_pagenumbers(path)
-    result = []
-    for page in pagenumbers:
-        result.append((page.pdfpage, page.detected))
+    result = {page.pdfpage: page.detected for page in pagenumbers}
+    pdfinfo = link.pdfinfo(documentid)
+    if pdfinfo:
+        result = fill_pages(result, pdflength=pdfinfo.pages)
     return result
 
 
