@@ -177,3 +177,16 @@ def links_get(documentid: str):
         'links': simple,
     })
     return dumped
+
+
+@viewo.api.documents.api_documents.route(
+    '/documents/<string(length=16):documentid>/pagenumbers',
+    methods=['GET'],
+)
+@viewo.api.valid_document
+def pagenumbers_get(documentid: str):
+    simple = viewo.api.documents.utils.pagenumbers(documentid)
+    dumped = json.dumps({
+        'pagenumbers': simple,
+    })
+    return dumped

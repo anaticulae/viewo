@@ -14,6 +14,7 @@ import utila
 import viewo.result.json
 import viewo.result.loader
 import viewo.result.loader.footnotes
+import viewo.result.loader.pagenumbers
 
 
 def footnotes(documentid):
@@ -80,6 +81,16 @@ def links(documentid):
     simple = {'resource': raw}
     simple['uri'] = flask.url_for(
         'api_documents.links_get',
+        documentid=documentid,
+    )
+    return simple
+
+
+def pagenumbers(documentid):
+    loaded = viewo.result.loader.pagenumbers.load_fromdocumentid(documentid)
+    simple = {'resource': utila.simplify(loaded, not_none=False)}
+    simple['uri'] = flask.url_for(
+        'api_documents.pagenumbers_get',
         documentid=documentid,
     )
     return simple
