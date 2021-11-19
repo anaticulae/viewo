@@ -40,6 +40,7 @@ class DocumentService {
             service.update_hyperlinks()
             service.update_bibliography()
             service.update_findings()
+            service.update_navigator_labels()
         })
     }
 
@@ -55,6 +56,15 @@ class DocumentService {
         })
     }
 
+    update_navigator_labels() {
+        rpc(`/documents/${this.documentid}/pagenumbers`, function (response) {
+            let labels = response.pagenumbers.resource
+            navigator.update_labels(labels)
+        }, function () {
+            base.show_error()
+        })
+
+    }
     update_pdf() {
         if (MODERN == false) {
             return

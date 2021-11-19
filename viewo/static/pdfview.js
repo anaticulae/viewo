@@ -48,6 +48,13 @@ class Navigator {
         this.update_page_navigator()
     }
 
+    update_labels(labels) {
+        for (let label in labels) {
+            let button = $(`#openpage${label}`)[0]
+            button.innerText = labels[label]
+        }
+    }
+
     update_page_navigator() {
         for (let page of service.pages) {
             // 1024 do not skip special pages
