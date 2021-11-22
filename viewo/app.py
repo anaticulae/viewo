@@ -80,8 +80,7 @@ def create_application(config=None) -> flask.Flask:
     # extenral
     # Add external route with the same name to internal route
     # TODO: RENAME LATER, DON'T KNOW TO RESOLVE THIS, YET
-    api_documents.deferred_functions.extend(
-        viewo_waiter.api_documents.deferred_functions)
+    api_documents.deferred_functions.extend(viewo_waiter.api_documents.deferred_functions)  # yapf:disable
     # data API
     # internal
     appi.register_blueprint(api_documents, url_prefix=viewo.config.API_PREFIX)
