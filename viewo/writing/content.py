@@ -10,14 +10,13 @@
 import os
 import re
 
-import viewo.config
+import viewo.api.writing
 
 
 def replace(content: str, source: str) -> str:
     # strip body
     content = body(content)
-
-    docpage = os.path.join(viewo.config.writing(), 'index.html')
+    docpage = os.path.join(viewo.api.writing.DOC_PATH, 'index.html')
     if source == docpage:
         # TODO: REPLACE WITH SPHINX WEBDRIVER
         # HACK: fix main links
