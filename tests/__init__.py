@@ -30,7 +30,8 @@ assert os.path.exists(TEST_DATA), TEST_DATA
 BASE_TEMPLATE = utila.file_read(os.path.join(viewo.config.TEMPLATES, 'base.html')) # yapf:disable
 
 TEST_DOCUMENT = '____home_home025'
-TEST_FINDING = '7061616792481133305'
+# TODO: AUTOMATE THIS, changes if detector or impl. changes
+TEST_FINDING = '-5427470771429581022'
 INVALID_DOCUMENT = 'rrrrrrrrrrrrrrrr'
 INVALID_SECOND = 'SSSSSSSSSSSSSSSS'
 
