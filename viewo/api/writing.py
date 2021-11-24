@@ -23,7 +23,7 @@ writing_ = flask.Blueprint('writing', __name__, static_folder=DOC_PATH)  # pylin
 
 @writing_.route('/writing', defaults={'selected': 'index.html'})
 @writing_.route('/writing/<path:selected>')
-def view_result(selected: str = None):
+def view_writing(selected: str = None):
     source = os.path.join(DOC_PATH, selected)
     if not os.path.exists(source):
         errorpage = f'writing/{selected}'.lower()
