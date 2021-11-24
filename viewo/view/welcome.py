@@ -12,11 +12,13 @@ import jinja2
 import link
 
 import viewo.api.documents.present
+import viewo.cache
 
 welcome = flask.Blueprint('welcome', __name__)  # pylint:disable=invalid-name
 
 
 @welcome.route('/<page>')
+@viewo.cache.memoize()
 def show_page(page):
     """Route public pages which are visible without any permissions."""
     try:
@@ -26,6 +28,7 @@ def show_page(page):
 
 
 @welcome.route('/')
+@viewo.cache.cached()
 def show_welcome():
     public = viewo.api.documents.present.load_documents(owner=link.PUBLIC_OWNER)
     rendered = flask.render_template('public/home.html', documents=public)
