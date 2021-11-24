@@ -22,6 +22,7 @@ from admin_helpdesk.api import *  # pylint:disable=wildcard-import,W0614,C0412
 import viewo
 import viewo.__patch__
 import viewo.api_.findings.data
+import viewo.cache
 import viewo.config
 import viewo.path
 import viewo.tracking
@@ -113,6 +114,7 @@ def configure(appi, config):
         appi(Flask): application to configure, which holds config
         config(dict): vars to export as global environment
     """
+    cache = viewo.cache.TYPE
     if config is None:
         # Production environment
         # load the instance config, if it exists
@@ -126,6 +128,15 @@ def configure(appi, config):
         # Test environment
         # load the test config if passed in
         appi.config.update(config)
+        cache = 'null'
+    # setup cache
+    viewo.cache.CACHE.init_app(
+        appi,
+        config=dict(
+            CACHE_TYPE=cache,
+            CACHE_NO_NULL_WARNING=True,
+        ),
+    )
 
 
 def init_error_handler(app: flask.Flask):  # pylint:disable=W0621
