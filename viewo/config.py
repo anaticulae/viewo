@@ -9,6 +9,7 @@
 
 import os
 
+import configo
 import utila
 import writers
 import writers.generator
@@ -31,6 +32,9 @@ VISITORS_TRACKING_STATIC_REQUESTS = False
 
 PASSWORD_MIN_LENGTH = 8
 PASSWORD_MAX_LENGTH = 64
+
+# null:disable caching
+CACHING = configo.env('CHANIA_CACHING', 'null')
 
 
 def writing() -> str:

@@ -9,8 +9,11 @@
 
 import flask_caching
 
-TYPE = 'simple'
+import viewo.config
+
 CACHE = flask_caching.Cache()
 
 cached = CACHE.cached
 memoize = CACHE.memoize
+
+TYPE = viewo.config.CACHING
