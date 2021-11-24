@@ -13,6 +13,7 @@ import link
 
 import viewo.api.documents.present
 import viewo.cache
+import viewo.optimize
 
 welcome = flask.Blueprint('welcome', __name__)  # pylint:disable=invalid-name
 

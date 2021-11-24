@@ -105,6 +105,8 @@ def create_application(config=None) -> flask.Flask:
     appi.before_first_request(viewo.path.init)
     # track every user request
     appi.before_request(viewo.tracking.before_each_request)
+    # optimize transfer
+    appi.after_request(viewo.optimize.optimize)
     # start finding provider
     viewo.api_.findings.data.start()
     # return configured app instance
