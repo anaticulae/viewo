@@ -7,6 +7,9 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import queue
+import threading
+
 import flask
 import utila
 
@@ -19,24 +22,58 @@ def before_each_request():
         # tracking is disabled
         return
     request = flask.request
-    environment = vars(request)['environ']
-    user_agent = environment['HTTP_USER_AGENT']
-    ip = environment['REMOTE_ADDR']
-    # port = environment['REMOTE_PORT']
-    method, path = environment['REQUEST_METHOD'], environment['PATH_INFO']
-    data = environment['QUERY_STRING']
+    tracker().visit(request)
 
-    if not viewo.config.VISITORS_TRACKING_STATIC:
-        if path.startswith('/static/'):
+
+@utila.cacheme(maxsize=1)
+def tracker():
+    result = Tracker()
+    result.start()
+    return result
+
+
+class Tracker:
+
+    def __init__(self):
+        self.store = queue.Queue()
+        self.running = True
+
+    def visit(self, request):
+        env = vars(request)['environ']
+        self.store.put(env)
+
+    def consume(self):
+        env = self.store.get()
+        if not env:
             return
+        agent = env.get('HTTP_USER_AGENT', 'NO_HTTP_USER_AGENT')
+        ip = env.get('REMOTE_ADDR', 'NO_REMOTE_ADDR')
+        method = env.get('REQUEST_METHOD', 'NO_USER_AGENT')
+        path = env.get('PATH_INFO', 'NO_PATH_INFO')
+        data = env.get('QUERY_STRING', 'NO_QUERY_STRING')
+        # port = env['REMOTE_PORT']
+        if not viewo.config.VISITORS_TRACKING_STATIC:
+            if path.startswith('/static/'):
+                return
+        user = user_hash(ip, agent)
+        date = utila.filetime()
+        data = oneline(data)
+        call = f'{method}:{path}?{data}' if data else f'{method}:{path}'
+        # write to file system
+        visitor = viewo.api.visitors.data.Visit(user, date, call)
+        viewo.api.visitors.data.append(visitor)
 
-    user = user_hash(ip, user_agent)
-    date = utila.filetime()
-    data = oneline(data)
-    call = f'{method}:{path}?{data}' if data else f'{method}:{path}'
+    def run(self):
+        while self.running:
+            self.consume()
 
-    visitor = viewo.api.visitors.data.Visit(user, date, call)
-    viewo.api.visitors.data.append(visitor)
+    def start(self):
+        threading.Thread(target=self.run).start()
+
+    def stop(self):
+        self.running = False
+        # ensure that waiting ends
+        self.store.put(None)
 
 
 def user_hash(ip, environment) -> int:
