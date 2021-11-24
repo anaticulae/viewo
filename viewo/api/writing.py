@@ -12,6 +12,7 @@ import os
 import flask
 import utila
 
+import viewo.cache
 import viewo.config
 import viewo.writing.content
 import viewo.writing.reflinks
@@ -23,6 +24,7 @@ writing_ = flask.Blueprint('writing', __name__, static_folder=DOC_PATH)  # pylin
 
 @writing_.route('/writing', defaults={'selected': 'index.html'})
 @writing_.route('/writing/<path:selected>')
+@viewo.cache.memoize()
 def view_writing(selected: str = None):
     source = os.path.join(DOC_PATH, selected)
     if not os.path.exists(source):
