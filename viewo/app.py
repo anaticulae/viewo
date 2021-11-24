@@ -42,6 +42,18 @@ from viewo.view.payment import payment
 from viewo.view.welcome import welcome
 
 
+class Application(flask.Flask):
+
+    def __init__(self):
+        super().__init__(__name__)
+        self.secret_key = viewo.config.SECRET_KEY
+        self.config.setdefault('MAX_CONTENT_LENGTH', viewo.config.MAX_FILE_SIZE)
+        self.config.setdefault('BOOTSTRAP_SERVE_LOCAL', True)
+        # configure extensions
+        flask_bootstrap.Bootstrap(app=self)
+        flask_moment.Moment(app=self)
+
+
 def create_application(config=None) -> flask.Flask:
     """Setup flask application
 
@@ -51,20 +63,13 @@ def create_application(config=None) -> flask.Flask:
     4. Register blueprint for routing the user requests
     """
     # Flask determines template- and static-folder automatically.
-    appi = flask.Flask(__name__)
+    appi = Application()
 
     @appi.template_test()
     def ready_exists(path):  # pylint:disable=W0612
         path = os.path.join(configo.ready(), path)
         return os.path.exists(path)
 
-    appi.config['MAX_CONTENT_LENGTH'] = viewo.config.MAX_FILE_SIZE
-    appi.secret_key = viewo.config.SECRET_KEY
-
-    appi.config.setdefault('BOOTSTRAP_SERVE_LOCAL', True)
-    flask_bootstrap.Bootstrap(app=appi)
-
-    flask_moment.Moment(app=appi)
     # configure app instance
     configure(appi, config)
     # setup error handler
