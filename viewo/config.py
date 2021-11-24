@@ -15,7 +15,7 @@ import writers.generator
 
 import viewo
 
-SECRET_KEY = b'helmut_max_power_abs29.nsTODOThisIsVerySecreyISwarTODO'
+SECRET_KEY = configo.env('CHANIA_SECRET_KEY', os.urandom(64))
 
 TEMPLATES = os.path.join(viewo.ROOT, 'viewo/templates')
 STATIC = os.path.join(viewo.ROOT, 'viewo/static')
