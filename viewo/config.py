@@ -36,6 +36,8 @@ PASSWORD_MAX_LENGTH = 64
 # null:disable caching
 CACHING = configo.env('CHANIA_CACHING', 'null')
 
+OPTIMIZE_DATA = configo.env('CHANIA_OPTIMIZE_DATA', False)
+
 
 def writing() -> str:
     """Return path to generated `writers club` content. If content is
