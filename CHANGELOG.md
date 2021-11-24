@@ -2,6 +2,37 @@
 
 Every noteable change is logged here.
 
+## v2.20.0
+
+### Feature
+
+* add option to disable transfer optimization (0fb6835eb5bb)
+* reduce html output to reduce transferred data (eda0eb779b57)
+* add asynchronous tracker to reduce response time (e8218e87a03f)
+* make tracking configurable (2af40206154f)
+* add env variable to define caching behavior (b4e4e6cac5fd)
+* make secret key configurable (58f734e64f3e)
+* make max document size configurable (5a14c02eb82b)
+* cache public pages (387f9aad8944)
+* cache writing access (0981ad5c2396)
+* add cache to reduce accessing time (88ca5585e1d4)
+* use page numbers if given (443faf168e6e)
+* add method to present page numbers (4e301c5f42f2)
+* fill missing pages in pages provider (06c016b0c265)
+* add method to fill up missing page numbers (99b31edb711c)
+* add method to load page numbers from documentid (6e5cd32d66c4)
+* use holy value to define waiting time (f870d53b61b9)
+* inform user about missing document (7ee40871c4dc)
+* add option to load completed jobs (373499cc14dc)
+* use one base pagination (ddbe7ee56881)
+
+### Fix
+
+* do not struggle when mixing int and str (655027be5281)
+* inform user about non existing user id (3518669dee6f)
+* do not fail comparison on non existing documents (81e7986e941f)
+* compare only completed jobs (fe17eda5c91e)
+
 ## v2.19.0
 
 ### Feature
