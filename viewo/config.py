@@ -15,14 +15,13 @@ import writers.generator
 
 import viewo
 
-MAX_FILE_SIZE = 16 * 1024 * 1024  # 16 Megabyte
-
 SECRET_KEY = b'helmut_max_power_abs29.nsTODOThisIsVerySecreyISwarTODO'
 
 TEMPLATES = os.path.join(viewo.ROOT, 'viewo/templates')
 STATIC = os.path.join(viewo.ROOT, 'viewo/static')
 
-MAX_FILE_SIZE = 20 * 1024 * 1024  # 20 MB
+# 20 megabyte
+MAX_FILE_SIZE = configo.env('CHANIA_DOCUMENT_SIZE_MAX', 20 * 1024 * 1024)
 
 API_PREFIX = '/api/v0'
 
