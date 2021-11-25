@@ -52,10 +52,18 @@ class Application(flask.Flask):
         # configure extensions
         flask_bootstrap.Bootstrap(app=self)
         flask_moment.Moment(app=self)
-
         if viewo.config.OPTIMIZE_DATA:
             # optimize transfer
             self.after_request(viewo.optimize.optimize)
+        self.create_template_test()
+
+    def create_template_test(self):
+        self.add_template_test(Application.ready_exists, name='ready_exists')
+
+    @staticmethod
+    def ready_exists(path) -> bool:
+        result = os.path.join(configo.ready(), path)
+        return os.path.exists(result)
 
 
 def create_application(config=None) -> flask.Flask:
@@ -68,12 +76,6 @@ def create_application(config=None) -> flask.Flask:
     """
     # Flask determines template- and static-folder automatically.
     appi = Application()
-
-    @appi.template_test()
-    def ready_exists(path):  # pylint:disable=W0612
-        path = os.path.join(configo.ready(), path)
-        return os.path.exists(path)
-
     # configure app instance
     configure(appi, config)
     # setup error handler
