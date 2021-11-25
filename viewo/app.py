@@ -59,11 +59,17 @@ class Application(flask.Flask):
 
     def create_template_test(self):
         self.add_template_test(Application.ready_exists, name='ready_exists')
+        self.context_processor(Application.context_data)
 
     @staticmethod
     def ready_exists(path) -> bool:
         result = os.path.join(configo.ready(), path)
         return os.path.exists(result)
+
+    @staticmethod
+    def context_data() -> dict:
+        result = dict(payment_active=viewo.config.PAYMENT)
+        return result
 
 
 def create_application(config=None) -> flask.Flask:

@@ -6,7 +6,9 @@
 
 <ul>
     <li><a href="{{ url_for('viewo_user.account_change') }}">Account ändern</a></li>
+    {% if payment_active %}
     <li>Zahlungsinformationen</li>
+    {% endif %}
     <li><a href="{{ url_for('viewo_user.dialogs_overview') }}">Kontakt</a></li>
     <li>Daten herunterladen</li>
     <li><a href="{{ url_for('viewo_user.delete_account_ask') }}">Account löschen</a></li>
