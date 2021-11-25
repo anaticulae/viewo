@@ -28,9 +28,18 @@ TODO = [  # H2
 def test_navigation(driver, webview):
     """Ensure that navigation bar works."""
     driver.get(webview)
-    for todo, expected in TODO:
+    for todo, expected in views():
         # open page
         driver.find_element_by_link_text(todo).click()
         # verify headline
         headline = driver.find_element_by_tag_name('h2')
         assert headline.text in expected, headline.text
+
+
+def views() -> list:
+    import viewo.config
+    if viewo.config.PAYMENT:
+        return TODO
+    result = list(TODO)
+    del result[2]
+    return result
