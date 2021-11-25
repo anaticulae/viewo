@@ -7,28 +7,36 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import contextlib
+
+import pytest
+
 import tests
+import viewo.config
 import viewo.view.payment
 
 BADGETEXT = '>Vollzugriff erhalten</button>'
 
 
-def test_payment_badge(user_client):
+@pytest.mark.parametrize('payment', (True, False))
+def test_payment_badge(user_client, payment, monkeypatch):
     """User is logged in and no payment is done."""
-    home = tests.content(user_client, '/')
-    assert BADGETEXT in home
+    with setpayment(payment, monkeypatch):
+        home = tests.content(user_client, '/')
+    assert (BADGETEXT in home) == payment
 
 
-def test_payment_nobadge_after_payment(user_client):
+def test_payment_nobadge_after_payment(user_client, monkeypatch):
     """Login and Pay. Badge disappear after paying."""
-    home = tests.content(user_client, '/')
-    assert BADGETEXT in home
-    # pay
-    payed = tests.post(user_client, '/payment', data=dict(choice=2))
-    assert BADGETEXT not in payed
-    # home without badge
-    home = tests.content(user_client, '/')
-    assert BADGETEXT not in home
+    with setpayment(True, monkeypatch):
+        home = tests.content(user_client, '/')
+        assert BADGETEXT in home
+        # pay
+        payed = tests.post(user_client, '/payment', data=dict(choice=2))
+        assert BADGETEXT not in payed
+        # home without badge
+        home = tests.content(user_client, '/')
+        assert BADGETEXT not in home
 
 
 def test_payment_invalid_choice(user_client):
@@ -40,3 +48,10 @@ def test_payment_invalid_choice(user_client):
 def test_payment_post_nochoice(user_client):
     failure = tests.post(user_client, '/payment', data=dict())
     assert viewo.view.payment.NO_PRODUCT_CHOICE in failure
+
+
+@contextlib.contextmanager
+def setpayment(payment, monkeypatch):
+    with monkeypatch.context() as context:
+        context.setattr(viewo.config, 'PAYMENT', payment)
+        yield
