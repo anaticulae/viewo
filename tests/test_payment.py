@@ -35,3 +35,8 @@ def test_payment_invalid_choice(user_client):
     failure = tests.post(user_client, '/payment', data=dict(choice='ABC'))
     # flashed error message
     assert viewo.view.payment.INVALID_MESSAGE in failure
+
+
+def test_payment_post_nochoice(user_client):
+    failure = tests.post(user_client, '/payment', data=dict())
+    assert viewo.view.payment.NO_PRODUCT_CHOICE in failure

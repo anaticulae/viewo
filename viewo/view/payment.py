@@ -18,6 +18,7 @@ payment = flask.Blueprint('payment', __name__)  # pylint:disable=invalid-name
 
 VALID_CHOICE = {1, 2, 3, 4}
 INVALID_MESSAGE = 'Invalid Choice'
+NO_PRODUCT_CHOICE = 'Kein Produkt ausgewählt'
 
 
 @payment.route('/payment', methods=['POST'])
@@ -25,8 +26,11 @@ def payment_ready():
     # TODO: ADD ERROR HANDLING FOR INVALID CHOICE ETC.
     userid = flask_login.current_user.get_id()
     if userid:
+        choice = flask.request.form.get('choice', None)
+        if choice is None:
+            flask.flash(NO_PRODUCT_CHOICE)
+            return flask.render_template('public/payment/index.html')
         try:
-            choice = flask.request.form['choice']
             choice = utila.str2int(choice)
             assert choice in VALID_CHOICE
         except (ValueError, AssertionError):
