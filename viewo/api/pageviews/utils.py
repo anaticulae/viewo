@@ -14,6 +14,7 @@ import utila
 
 import viewo.api
 import viewo.api.utils
+import viewo.config
 import viewo.result.data
 
 
@@ -33,7 +34,10 @@ def load_html(documentid: str, pages: tuple = None, payed: bool = True) -> dict:
         # TODO: THIS DOES NOT SUPPORT PARTIAL PAGES (0,1,2,5,6,8,10)
         start = 0 if pages is None else pages[0]
         selected = [
-            item if free_view(page) else USER_PAY_REQUEST
+            item if free_view(
+                page,
+                payment=viewo.config.PAYMENT,
+            ) else USER_PAY_REQUEST
             for page, item in enumerate(selected, start=start)
         ]
     # fix path to displayed images
@@ -52,7 +56,7 @@ href="/payment">hier um Vollzugriff</a> zu erhalten</p>
 """
 
 
-def free_view(page: int) -> bool:
+def free_view(page: int, payment: bool = True) -> bool:
     """Every third page is free and viewable without paying.
 
     >>> free_view(0)
@@ -61,7 +65,12 @@ def free_view(page: int) -> bool:
     False
     >>> free_view(2)
     False
+    >>> free_view(2, payment=False)
+    True
     """
+    if not payment:
+        # all pages are free for all
+        return True
     if page % 3 == 0:  # pylint:disable=C2001
         return True
     return False
