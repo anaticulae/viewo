@@ -2,6 +2,19 @@
 
 Every noteable change is logged here.
 
+## v2.21.0
+
+### Feature
+
+* disable payment view on inactive payment (f9e7d03bbace)
+* display all pages if payment is disabled (2ca12cb95009)
+* disable price list if payment is inactive (e7f6d3e1dc16)
+* add variable to disable payment behavior (1559b0a05ce9)
+
+### Fix
+
+* do not fail incomplete choice (032b82dda3e4)
+
 ## v2.20.0
 
 ### Feature
