@@ -13,6 +13,7 @@ import utila
 import viewo_api.user.data
 
 import viewo.api.users.update
+import viewo.config
 
 payment = flask.Blueprint('payment', __name__)  # pylint:disable=invalid-name
 
@@ -23,6 +24,9 @@ NO_PRODUCT_CHOICE = 'Kein Produkt ausgewählt'
 
 @payment.route('/payment', methods=['POST'])
 def payment_ready():
+    if not viewo.config.PAYMENT:
+        # TODO: REFACTOR INTO DECORATOR?
+        return 'payment system inactive.', 400
     # TODO: ADD ERROR HANDLING FOR INVALID CHOICE ETC.
     userid = flask_login.current_user.get_id()
     if userid:
@@ -42,6 +46,10 @@ def payment_ready():
 
 @payment.route('/payment', methods=['GET'])
 def payment_overview():
+    if not viewo.config.PAYMENT:
+        # TODO: REFACTOR INTO DECORATOR?
+        flask.flash('Bezahlsystem ist nicht aktiv.')
+        return flask.redirect(flask.url_for('welcome.show_welcome'))
     userid = flask_login.current_user.get_id()
     if userid is None:
         return flask.render_template('public/payment/index.html')

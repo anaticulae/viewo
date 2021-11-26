@@ -39,14 +39,16 @@ def test_payment_nobadge_after_payment(user_client, monkeypatch):
         assert BADGETEXT not in home
 
 
-def test_payment_invalid_choice(user_client):
-    failure = tests.post(user_client, '/payment', data=dict(choice='ABC'))
+def test_payment_invalid_choice(user_client, monkeypatch):
+    with setpayment(True, monkeypatch):
+        failure = tests.post(user_client, '/payment', data=dict(choice='ABC'))
     # flashed error message
     assert viewo.view.payment.INVALID_MESSAGE in failure
 
 
-def test_payment_post_nochoice(user_client):
-    failure = tests.post(user_client, '/payment', data=dict())
+def test_payment_post_nochoice(user_client, monkeypatch):
+    with setpayment(True, monkeypatch):
+        failure = tests.post(user_client, '/payment', data=dict())
     assert viewo.view.payment.NO_PRODUCT_CHOICE in failure
 
 
