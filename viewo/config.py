@@ -12,7 +12,6 @@ import os
 import configo
 import utila
 import writers
-import writers.generator
 
 import viewo
 
@@ -46,7 +45,7 @@ def writing() -> str:
     not generated, writer generator is executed."""
     result = writers.build()
     if not os.path.exists(result):
-        completed = writers.generator.generate()
+        completed = writers.generate()
         assert completed == utila.SUCCESS
     assert os.path.exists(result), str(result)
     return result
