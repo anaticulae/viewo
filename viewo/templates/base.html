@@ -81,6 +81,11 @@
     {{ href('Datenschutzerklärung', 'legal.privacy') }}
     <span class="app_hidden copyright"> | &copy; 2019-2021 by checkitweg.de</span>
 </footer>
+
+{% if talker_active %}
+{% include "mbox.html" %}
+{% endif %}
+
 {% endblock %}
 
 {% block scripts %}
@@ -93,6 +98,11 @@
 {{ js('lib/bootstrap-toggle.min.js') }}
 {{ js('lib/URI.js') }}
 {{ js('lib/datatables/js/jquery.dataTables.min.js') }}
+<!-- BLUE_PRINT:API_TALK -->
+<!-- TODO: SUPPORT BLUEPRINT IN JS() -->
+{% if talker_active %}
+<script type="text/javascript" src="{{url_for('api_talk.static', filename='mbox.js')}}"></script>
+{% endif %}
 
 {% if payment_active %}
 {% if current_user.is_authenticated %}

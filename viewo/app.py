@@ -68,7 +68,10 @@ class Application(flask.Flask):
 
     @staticmethod
     def context_data() -> dict:
-        result = dict(payment_active=viewo.config.PAYMENT)
+        result = dict(
+            payment_active=viewo.config.PAYMENT,
+            talker_active=viewo.config.TALKER,
+        )
         return result
 
 
@@ -111,6 +114,10 @@ def create_application(config=None) -> flask.Flask:
         admin_helpdesk.api.api_message,
         url_prefix=viewo.config.API_PREFIX,
     )
+    # talker
+    if viewo.config.TALKER:
+        import viewo_talk
+        viewo_talk.register_talkme(appi, prefix=viewo.config.API_PREFIX)
     # configure user access manager
     viewo.user.loginmanager.create_loginmanager(appi)
     # ensure that paths are created

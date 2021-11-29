@@ -27,6 +27,7 @@ def before_each_request():
 
 @utila.cacheme(maxsize=1)
 def tracker():
+    # TODO: REGISTER TACKER SEPARATLY, SEE VIEWO_TALK
     result = Tracker()
     result.start()
     return result
