@@ -33,9 +33,9 @@ def user_get(userid: str):
 
 @viewo.api.users.api_users.route('users', methods=['GET'])
 def users():
-    users_ = viewo_api.user.data.userlist()
+    userx = viewo_api.user.data.userlist_raw()
     simple = {
-        'users': users_,
+        'users': userx,
         'uri': flask.url_for('api_users.users'),
     }
     dumped = flask.jsonify({
