@@ -107,6 +107,18 @@ const rpc = function (url, callback, error = undefined) {
     });
 }
 
+const rpc_post = function (url, data, callback) {
+    let call = `${API}${url}`
+    $.ajax(call, {
+        type: 'POST',
+        data: data,
+        success: function (response) {
+            callback(response)
+        },
+    }
+    );
+}
+
 const rpc_raw = function (url, callback, error = undefined) {
     let call = `${API}${url}`
     $.ajax(call, {
