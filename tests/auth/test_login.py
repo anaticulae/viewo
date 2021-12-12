@@ -12,7 +12,7 @@ import tests
 
 def test_auth_login_open(test_client):
     result = tests.content(test_client, '/login')
-    assert 'Benutzer:' in result
+    assert 'Benutzer/E-Mail:' in result
     assert 'Passwort:' in result
 
 

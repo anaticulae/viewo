@@ -72,7 +72,7 @@ def public_password():
 
 class LoginForm(flask_wtf.FlaskForm):
     user = wtforms.StringField(
-        'Benutzer:',
+        'Benutzer/E-Mail:',
         validators=[
             wtforms.validators.DataRequired(),
             wtforms.validators.Length(min=8, max=64),
