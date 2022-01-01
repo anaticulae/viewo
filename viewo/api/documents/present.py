@@ -51,7 +51,7 @@ def load_documents(owner, done: bool = False):
         result.append(current)
     result = sorted(
         result,
-        key=lambda item: link.sortable_date(item['date']),
+        key=lambda item: item['date'],
         reverse=True,
     )
     return result
