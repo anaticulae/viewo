@@ -8,7 +8,9 @@
 # =============================================================================
 
 import flask
+import flask_wtf
 import legal
+import wtforms
 
 legal_ = flask.Blueprint('legal', __name__)  # pylint:disable=C0103
 
@@ -41,3 +43,52 @@ def download_legal(filename):
         filename,
         as_attachment=True,
     )
+
+
+@legal_.route('/contact', methods=['GET'])
+def contact():
+    form = ContactForm()
+    return flask.render_template(
+        'public/legal/contact.html',
+        form=form,
+    )
+
+
+class ContactForm(flask_wtf.FlaskForm):
+
+    def __init__(self):
+        super().__init__()
+        priv = flask.url_for('legal.privacy')
+        lega = flask.url_for('legal.agb')
+        self.privacy.label.text = (
+            f'Ich habe die <a href="{priv}">Datenschutzerklärung</a> '
+            f'und die <a href="{lega}">allgemeinen Geschäftsbedingungen</a> '
+            'gelesen und akzeptiert.')
+
+    title = wtforms.StringField(
+        'Betreff',
+        validators=[
+            wtforms.validators.DataRequired(),
+            wtforms.validators.Length(min=8, max=256),
+        ],
+    )
+    email = wtforms.StringField(
+        'E-Mail:',
+        validators=[
+            # TODO: ENABLE AFTER INSTALLING email-validator
+            wtforms.validators.DataRequired(),
+            # wtforms.validators.Email(),
+            wtforms.validators.Length(min=8, max=256),
+        ],
+    )
+    message = wtforms.TextAreaField(
+        'Nachricht:',
+        validators=[
+            wtforms.validators.DataRequired(),
+            wtforms.validators.Length(min=64, max=4048),
+        ],
+    )
+    privacy = wtforms.BooleanField(validators=[
+        wtforms.validators.DataRequired(),
+    ])
+    submit = wtforms.SubmitField('Absenden')

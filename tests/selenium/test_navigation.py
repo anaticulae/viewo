@@ -18,6 +18,7 @@ TODO = [  # H2
     ('Login', 'Login'),
     ('Home', 'checkitweg.de'),
     ('Impressum', 'Impressum'),
+    ('Kontakt', 'Kontakt'),
     ('Allgemeine Geschäftsbedingungen', 'Allgemeine Geschäftsbedingungen'),
     ('Datenschutzerklärung', 'Datenschutzerklärung'),
 ]

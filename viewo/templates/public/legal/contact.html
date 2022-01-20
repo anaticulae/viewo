@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block pagecontent %}
+
+<style>
+    textarea {
+        min-height: 150px;
+    }
+
+</style>
+
+<h2>Kontakt</h2>
+
+<p style="max-width: 550px; margin: left">
+    Treten Sie gerne bei Fragen und Anregungen mit uns in Kontakt.<br /><br />
+    Dazu können Sie direkt das unten stehende Kontakt-Formular nutzen oder
+    per E-Mail mit uns in Kontakt treten.
+</p>
+
+<div style="max-width: 550px; margin: left">
+    {{ wtf.quick_form(form) }}
+</div>
+
+<h3>E-Mail</h3>
+
+<ul>
+    <li>Allgemein: service@checkitweg.de</li>
+    <li>Rechtlich: legal@checkitweg.de</li>
+</ul>
+
+{% endblock %}
