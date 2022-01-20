@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% from 'helper.mac' import accept_legal %}
+
 {% block styles %}
 {{ super() }}
 {{ css('home.css') }}
@@ -42,6 +44,7 @@
                         <input type="file" class="form-control form-group" name="file" required="required"
                             style="max-width:600px;" />
                         {{ accept_legal() }}
+                        {{ analysis_start() }}
                     </form>
                 </div>
                 <div class="tab-pane" id="url">
@@ -50,6 +53,7 @@
                         <input class="form-control form-group" type="url" name="url" placeholder="https://"
                             required="required" style="max-width:600px;" />
                         {{ accept_legal() }}
+                        {{ analysis_start() }}
                     </form>
                 </div>
             </div>
@@ -61,12 +65,7 @@
 
 {% endblock %}
 
-{% macro accept_legal() -%}
-<div class="form-group">
-    <input type="checkbox" class="form-group" name="file" required="required" />
-    Ich habe die <a href="{{ url_for('legal.agb') }}">allgemeinen
-        Geschäftsbedingungen</a> gelesen
-</div>
+{% macro analysis_start() -%}
 <div class="form-group">
     Starten Sie Ihre persönliche Analyse jetzt:
 </div>
