@@ -1,6 +1,6 @@
 [project]
 short = viewo
-name = Let's make some flask
+name = make some flask
 
 [release]
 fail_on_finding = True
