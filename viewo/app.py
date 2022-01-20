@@ -36,6 +36,7 @@ from viewo.api.visitors import *  # pylint:disable=wildcard-import
 from viewo.api.waiting import waiting_
 from viewo.api.writing import writing_
 from viewo.user import *  # pylint:disable=wildcard-import
+from viewo.view.contact import contact_
 from viewo.view.documents import documents_
 from viewo.view.legal import legal_
 from viewo.view.payment import payment
@@ -93,6 +94,7 @@ def create_application(config=None) -> flask.Flask:
     appi.register_blueprint(viewo_user)
     appi.register_blueprint(documents_)
     appi.register_blueprint(legal_)
+    appi.register_blueprint(contact_)
     appi.register_blueprint(result_)
     appi.register_blueprint(waiting_)
     appi.register_blueprint(welcome)
