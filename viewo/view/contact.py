@@ -18,13 +18,15 @@ contact_ = flask.Blueprint('contact', __name__)  # pylint:disable=C0103
 def contact():
     form = ContactForm()
     return flask.render_template(
-        'public/contact/contact.html',
+        'public/contact/index.html',
         form=form,
     )
 
 
 MESSAGE_ERROR = ('Nachricht konnte nicht übermittelt werden. '
                  'Verwenden Sie stattdessen den E-Mail-Kontakt.')
+
+MESSAGE_DONE = 'Ihre Nachricht wurde erfolgreich übermittelt!'
 
 
 @contact_.route('/contact', methods=['POST'])
@@ -36,7 +38,8 @@ def message_send():
         flask.flash(MESSAGE_ERROR, category='error')
         return flask.redirect(flask.url_for('contact.contact'))
     # TODO: SEND THIS DATA AS EMAIL TO OWN SERVICE ADDRESS
-    return flask.render_template('public/contact/recieved.html')
+    flask.flash(MESSAGE_DONE)
+    return flask.redirect(flask.url_for('contact.contact'))
 
 
 class ContactForm(flask_wtf.FlaskForm):
