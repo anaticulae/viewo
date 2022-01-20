@@ -23,6 +23,22 @@ def contact():
     )
 
 
+MESSAGE_ERROR = ('Nachricht konnte nicht übermittelt werden. '
+                 'Verwenden Sie stattdessen den E-Mail-Kontakt.')
+
+
+@contact_.route('/contact', methods=['POST'])
+def message_send():
+    title = flask.request.form.get('title', None)
+    email = flask.request.form.get('email', None)
+    message = flask.request.form.get('message', None)
+    if not all((title, email, message)):
+        flask.flash(MESSAGE_ERROR, category='error')
+        return flask.redirect(flask.url_for('contact.contact'))
+    # TODO: SEND THIS DATA AS EMAIL TO OWN SERVICE ADDRESS
+    return flask.render_template('public/contact/recieved.html')
+
+
 class ContactForm(flask_wtf.FlaskForm):
 
     def __init__(self):
