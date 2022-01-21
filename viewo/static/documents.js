@@ -57,6 +57,7 @@ const documents = {
             }
         })
         documents.update_user(userid)
+        documents.notready = []
     },
 
     update_user: function (userid) {
@@ -86,6 +87,9 @@ const documents = {
         let data = []
         for (let item of items) {
             row = create_document_line(item, documents.userid)
+            if (item.state == 1 || item.state == -1) {
+                documents.notready.push(item.name)
+            }
             data.push(row)
         }
         documents.table.rows.add(data);
