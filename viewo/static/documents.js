@@ -85,8 +85,9 @@ const documents = {
         // TODO: IMPROVE UPDATE BEHAVIOR
         documents.table.clear()
         let data = []
+        let user_current = documents.userid
         for (let item of items) {
-            row = create_document_line(item, documents.userid)
+            row = create_document_line(item, user_current)
             if (item.state == 1 || item.state == -1) {
                 documents.notready.push(item.name)
             }
