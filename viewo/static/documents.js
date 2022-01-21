@@ -85,72 +85,77 @@ const documents = {
         documents.table.clear()
         let data = []
         for (let item of items) {
-            let title = item.title
-            let pages = item.pages
-            if (pages == undefined) {
-                pages = ''
-            }
-            let todo = ``
-            let action = ``
-            let mydocument = documents.userid == item.owner
-            let public = documents.userid == '00000000'
-            if (item.state == 0) {
-                // done
-                title = `<a href="view/${item.name}">${title}</a>`
-                let closed = item.result.closed + item.result.excluded
-                let findingcount = closed + item.result.open
-                todo = `${closed}/${findingcount}`
-
-                if (mydocument && public == false) {
-                    // TODO: IMPROVE CODE STYLE
-                    action += base.new_image_button('', 'view/lock.png', null, null, null, null, `add_password('${item.name}')`)
-                    action += base.new_image_button('', 'view/share.png', null, null, null, null, `share_document('${item.name}')`)
-                    action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
-                } else {
-                    action += base.new_image_button('', 'view/share.png', null, null, null, null, `share_document('${item.name}')`)
-                }
-            } else if (item.state == 1 || item.state == -1) {
-                // running or waiting
-                todo = '<center>-</center>'
-                if (public == false) {
-                    action += base.new_image_button('', 'animation/loader.gif', null, null, null, null, `window.location.assign('waiting/${item.name}')`)
-                } else {
-                    action += base.new_image_button('', 'animation/loader.gif', null, null, null, null, null)
-                }
-                if (mydocument == false) {
-                    action += base.new_image_button('', 'view/share.png', null, null, null, null, `share_document('${item.name}')`)
-                } else {
-                    if (public == false) {
-                        action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
-                    }
-                }
-            } else if (item.state == 2) {
-                // failed
-                if (public == false) {
-                    action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
-                }
-                title = `<span style="color:red;">${title} (fehlgeschlagen)</span>`
-            } else if (item.state == 4) {
-                // not supported
-                if (public == false) {
-                    action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
-                }
-                title = `<span style="color:darkred;">${title} (Art des Dokuments nicht unterstützt)</span>`
-            }
-            if (item.state == -1) {
-                // waiting
-                title = `${title} (Warteschlange)`
-            }
-            let row = [
-                title,
-                item.date,
-                pages,
-                todo,
-                action,
-            ]
+            row = create_document_line(item, documents.userid)
             data.push(row)
         }
         documents.table.rows.add(data);
         documents.table.draw()
     },
+}
+
+const create_document_line = function (item, userid) {
+    let title = item.title
+    let pages = item.pages
+    if (pages == undefined) {
+        pages = ''
+    }
+    let todo = ``
+    let action = ``
+    let mydocument = userid == item.owner
+    let public = userid == '00000000'
+    if (item.state == 0) {
+        // done
+        title = `<a href="view/${item.name}">${title}</a>`
+        let closed = item.result.closed + item.result.excluded
+        let findingcount = closed + item.result.open
+        todo = `${closed}/${findingcount}`
+
+        if (mydocument && public == false) {
+            // TODO: IMPROVE CODE STYLE
+            action += base.new_image_button('', 'view/lock.png', null, null, null, null, `add_password('${item.name}')`)
+            action += base.new_image_button('', 'view/share.png', null, null, null, null, `share_document('${item.name}')`)
+            action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
+        } else {
+            action += base.new_image_button('', 'view/share.png', null, null, null, null, `share_document('${item.name}')`)
+        }
+    } else if (item.state == 1 || item.state == -1) {
+        // running or waiting
+        todo = '<center>-</center>'
+        if (public == false) {
+            action += base.new_image_button('', 'animation/loader.gif', null, null, null, null, `window.location.assign('waiting/${item.name}')`)
+        } else {
+            action += base.new_image_button('', 'animation/loader.gif', null, null, null, null, null)
+        }
+        if (mydocument == false) {
+            action += base.new_image_button('', 'view/share.png', null, null, null, null, `share_document('${item.name}')`)
+        } else {
+            if (public == false) {
+                action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
+            }
+        }
+    } else if (item.state == 2) {
+        // failed
+        if (public == false) {
+            action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
+        }
+        title = `<span style="color:red;">${title} (fehlgeschlagen)</span>`
+    } else if (item.state == 4) {
+        // not supported
+        if (public == false) {
+            action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
+        }
+        title = `<span style="color:darkred;">${title} (Art des Dokuments nicht unterstützt)</span>`
+    }
+    if (item.state == -1) {
+        // waiting
+        title = `${title} (Warteschlange)`
+    }
+    let row = [
+        title,
+        item.date,
+        pages,
+        todo,
+        action,
+    ]
+    return row
 }
