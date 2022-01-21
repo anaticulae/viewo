@@ -113,40 +113,39 @@ const create_document_line = function (item, userid) {
         let closed = item.result.closed + item.result.excluded
         let findingcount = closed + item.result.open
         todo = `${closed}/${findingcount}`
-
         if (mydocument && public == false) {
             // TODO: IMPROVE CODE STYLE
-            action += base.new_image_button('', 'view/lock.png', null, null, null, null, `add_password('${item.name}')`)
-            action += base.new_image_button('', 'view/share.png', null, null, null, null, `share_document('${item.name}')`)
-            action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
+            action += base.image_short('view/lock.png', `add_password('${item.name}')`)
+            action += base.image_short('view/share.png', `share_document('${item.name}')`)
+            action += base.image_short('view/trash.png', `delete_document('${item.name}')`)
         } else {
-            action += base.new_image_button('', 'view/share.png', null, null, null, null, `share_document('${item.name}')`)
+            action += base.image_short('view/share.png', `share_document('${item.name}')`)
         }
     } else if (item.state == 1 || item.state == -1) {
         // running or waiting
         todo = '<center>-</center>'
         if (public == false) {
-            action += base.new_image_button('', 'animation/loader.gif', null, null, null, null, `window.location.assign('waiting/${item.name}')`)
+            action += base.image_short('animation/loader.gif', `window.location.assign('waiting/${item.name}')`)
         } else {
-            action += base.new_image_button('', 'animation/loader.gif', null, null, null, null, null)
+            action += base.image_short('animation/loader.gif', null)
         }
         if (mydocument == false) {
-            action += base.new_image_button('', 'view/share.png', null, null, null, null, `share_document('${item.name}')`)
+            action += base.image_short('view/share.png', `share_document('${item.name}')`)
         } else {
             if (public == false) {
-                action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
+                action += base.image_short('view/trash.png', `delete_document('${item.name}')`)
             }
         }
     } else if (item.state == 2) {
         // failed
         if (public == false) {
-            action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
+            action += base.image_short('view/trash.png', `delete_document('${item.name}')`)
         }
         title = `<span style="color:red;">${title} (fehlgeschlagen)</span>`
     } else if (item.state == 4) {
         // not supported
         if (public == false) {
-            action += base.new_image_button('', 'view/trash.png', null, null, null, null, `delete_document('${item.name}')`)
+            action += base.image_short('view/trash.png', `delete_document('${item.name}')`)
         }
         title = `<span style="color:darkred;">${title} (Art des Dokuments nicht unterstützt)</span>`
     }

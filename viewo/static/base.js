@@ -88,6 +88,9 @@ base.new_image_button = function (parent = '', src = '', id = null, textid = nul
     //     });
     // }
 }
+base.image_short = function name(src, onclick) {
+    return this.new_image_button('', src, null, null, null, null, onclick)
+}
 
 const rpc = function (url, callback, error = undefined) {
     let call = `${API}${url}`
