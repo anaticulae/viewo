@@ -37,6 +37,7 @@ const share_document = function (document) {
 
 const documents = {
     init: function (userid) {
+        documents.notready = []
         // add empty table
         documents.table = $('#documents').DataTable({
             'data': [],
@@ -57,7 +58,6 @@ const documents = {
             }
         })
         documents.update_user(userid)
-        documents.notready = []
     },
 
     update_user: function (userid) {
@@ -67,13 +67,14 @@ const documents = {
 
     call_server: function () {
         let url = `${API}/documents`
-        if (documents.userid == '00000000') {
+        if (documents.ispublic()) {
             url += '?public=True'
         }
         $.ajax(url, {
             dataType: 'json',
             success: function (response) {
-                documents.update_documents(response.documents)
+                documents.update_documents(response.documents, true)
+                // documents.call_updates()
             },
             error: function () {
                 user_error('Service nicht erreichbar.')
@@ -81,21 +82,49 @@ const documents = {
         });
     },
 
-    update_documents: function (items) {
+    call_updates: function () {
+        if (documents.notready.length == 0) {
+            return
+        }
+        let url = `${API}/documents`
+        if (documents.ispublic()) {
+            url += '?public=True'
+        }
+        $.ajax(url, {
+            dataType: 'json',
+            success: function (response) {
+                documents.update_documents(response.documents, false)
+                setTimeout(() => documents.call_updates(), 10000);
+            },
+            error: function () {
+                user_error('Service nicht erreichbar.')
+            }
+        });
+    },
+
+    update_documents: function (items, init) {
         // TODO: IMPROVE UPDATE BEHAVIOR
-        documents.table.clear()
+        if (init == true) {
+            documents.table.clear()
+        }
         let data = []
         let user_current = documents.userid
         for (let item of items) {
             row = create_document_line(item, user_current)
             if (item.state == 1 || item.state == -1) {
-                documents.notready.push(item.name)
+                documents.notready.push((item.name, row))
             }
             data.push(row)
         }
-        documents.table.rows.add(data);
-        documents.table.draw()
+        let table = documents.table
+        table.rows.add(data);
+        table.draw()
     },
+
+    ispublic: function () {
+        return documents.userid == '00000000'
+    }
+
 }
 
 const create_document_line = function (item, userid) {
