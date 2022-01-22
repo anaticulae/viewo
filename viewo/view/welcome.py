@@ -33,7 +33,7 @@ def show_page(page):
 def show_welcome():
     public = viewo.api.documents.present.load_documents(
         owner=link.PUBLIC_OWNER,
-        done=True,
+        state=link.State.DONE,
     )
     rendered = flask.render_template('public/home.html', documents=public)
     return rendered
