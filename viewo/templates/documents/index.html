@@ -19,6 +19,7 @@
 
 {% if current_user.is_authenticated %}
 <div class="container-fluid">
+    <!-- TODO: DISABLE BUTTON IF NOT DOCUMENT IS UPLOADED -->
     <div class="form-group col-md-6 col-sm-6">
         <p><a class="btn btn-default" href="{{ url_for('documents.document_compare') }}">Vergleichen</a></p>
     </div>
