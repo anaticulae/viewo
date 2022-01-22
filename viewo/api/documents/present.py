@@ -24,10 +24,9 @@ import viewo.path
 
 @viewo.api.documents.api_documents.route('/documents', methods=['GET'])
 def documents():
-    public = utila.str2bool(flask.request.args.get('public', False))
-    owner = userid(public=public)
     state = docstate()
-    collected = load_documents(owner, state=state)
+    owner = curowner()
+    collected = load_documents(owner=owner, state=state)
     dumped = json.dumps({
         'documents': collected,
     })
@@ -42,6 +41,12 @@ def docstate() -> link.State:
         result = link.State.fromstr(state)
     except ValueError:
         result = link.State.DONE
+    return result
+
+
+def curowner() -> set:
+    public = utila.str2bool(flask.request.args.get('public', False))
+    result = userid(public=public)
     return result
 
 
@@ -75,10 +80,9 @@ def load_documents(owner, state: link.State = None):
     return result
 
 
-def userid(public: bool = True):
+def userid(public: bool = True) -> set:
     """Select filter policy by loggend in user. Decide to show private,
     public or both data."""
-    # TODO: REMOVE DUPLICATION LATER
     # TODO: ADD UNIT TEST
     user = flask_login.current_user.get_id()
     user = {link.PUBLIC_OWNER} if user is None else {user}
