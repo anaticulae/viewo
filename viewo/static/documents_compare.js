@@ -14,7 +14,7 @@ var documents_compare = {
     },
 
     update_documents_list: function () {
-        $.ajax(`${API}/documents`, {
+        $.ajax(`${API}/documents?state=0`, {
             dataType: 'json',
             success: function (response) {
                 let docs = response['documents']
