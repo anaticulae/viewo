@@ -50,31 +50,32 @@ onload('{{process}}')
         {% include 'view/_pdf.html' %}
     </main>
 
-    <main id="pdfview_overview" class="hidden_invisible">
+    <!-- TODO: UNITE IN SINGLE STYLE -->
+    <main id="pdfview_overview" class="hidden_invisible blackborder whitebg padding">
         {% include 'view/_overview.html' %}
     </main>
 
-    <main id="pdfview_docstyle" class="hidden_invisible">
+    <main id="pdfview_docstyle" class="hidden_invisible blackborder whitebg padding">
         {% include 'view/_style.html' %}
     </main>
 
-    <main id="pdfview_footnotes" class="hidden_invisible">
+    <main id="pdfview_footnotes" class="hidden_invisible blackborder whitebg padding">
         {% include 'view/_footnotes.html' %}
     </main>
 
-    <main id="pdfview_hyperlinks" class="hidden_invisible">
+    <main id="pdfview_hyperlinks" class="hidden_invisible blackborder whitebg padding">
         {% include 'view/_hyperlinks.html' %}
     </main>
 
-    <main id="pdfview_properties" class="hidden_invisible">
+    <main id="pdfview_properties" class="hidden_invisible blackborder whitebg padding">
         {% include 'view/_properties.html' %}
     </main>
 
-    <main id="pdfview_captions" class="hidden_invisible">
+    <main id="pdfview_captions" class="hidden_invisible blackborder whitebg padding">
         {% include 'view/_captions.html' %}
     </main>
 
-    <main id="pdfview_bibliography" class="hidden_invisible">
+    <main id="pdfview_bibliography" class="hidden_invisible blackborder whitebg padding">
         {% include 'view/_bibliography.html' %}
     </main>
 
@@ -82,7 +83,7 @@ onload('{{process}}')
         {% include 'view/_findings.html' %}
     </main>
 </div>
-<div id="todolistview" class="hidden_invisible">
+<div id="todolistview" class="hidden_invisible blackborder whitebg padding">
     {% include 'view/todolist.html' %}
 </div>
 {% if waiting %}
