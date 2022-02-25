@@ -2,6 +2,34 @@
 
 Every noteable change is logged here.
 
+## v2.22.0
+
+### Feature
+
+* add link to jump to finding page (669ae184c7f6)
+* make views more consistent (6060307b9656)
+* check documents which are in progress (dc368d96b192)
+* make current document state more complex (92f3e4a99dcd)
+* collect documents which are not ready (3f5f4a80648a)
+* use internal contact forwarder (ab2a106b608f)
+* add view to receive contact message (9b080922df23)
+* add contact view (788918e667a0)
+* increase current year (bc9e196edb6c)
+* add option to login with email address (b3836665c149)
+* add method to run post (4f1344516aa9)
+* connect talker to tracking (e65c74528a29)
+
+### Fix
+
+* only display complete documents (42f25b9057eb)
+* just present finished documents in showroom (7a7fd0df08b5)
+* remove outdated date converter (52739572397f)
+
+### Documentation
+
+* adjust modules path (5374ce7ffc60)
+* Happy New Year! (7d13bf21c68c)
+
 ## v2.21.0
 
 ### Feature
