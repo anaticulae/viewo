@@ -106,7 +106,7 @@ def load_links_fromdocumentid(documentid: str) -> iamraw.PageContentCaptions:
     return serializeraw.load_hyperlinks(path)
 
 
-def load_bibliography_fromdocumentid(documentid: str) -> iamraw.BibliographyReferences:  # yapf:disable
+def load_bibliography_fromdocumentid(documentid: str) -> iamraw.BibliographyTable:  # yapf:disable
     result = link.resultview(documentid, done=True)
     if not os.path.exists(result):
         return None
@@ -114,4 +114,8 @@ def load_bibliography_fromdocumentid(documentid: str) -> iamraw.BibliographyRefe
     if not os.path.exists(path):
         utila.error(f'could not load: {path}')
         return None
-    return serializeraw.load_bibliography_reference(path)
+    references = serializeraw.load_bibliography_reference(path)
+    if isinstance(references, list):
+        # TODO: REMOVE LATER
+        references = iamraw.BibliographyTable(references=references)
+    return references

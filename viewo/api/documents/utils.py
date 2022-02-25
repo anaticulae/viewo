@@ -53,7 +53,7 @@ def captions(documentid):
 def bibliography(documentid):
     loaded = viewo.result.loader.load_bibliography_fromdocumentid(documentid)
     # raw = iamraw.caption.pagecaptions_toraw(loaded) if loaded else []
-    raw = utila.flatten(loaded) if loaded else []
+    raw = utila.flatten(loaded.references) if loaded else []
     simple = {'resource': utila.simplify(raw, not_none=False)}
     simple['uri'] = flask.url_for(
         'api_documents.bibliography_get',
