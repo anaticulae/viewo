@@ -8,9 +8,7 @@
 # =============================================================================
 
 import flask
-import flask_wtf
 import legal
-import wtforms
 
 legal_ = flask.Blueprint('legal', __name__)  # pylint:disable=C0103
 
