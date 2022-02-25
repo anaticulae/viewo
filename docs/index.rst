@@ -43,7 +43,8 @@ Developer
 
 
 Modules
---------------------
+-------
+
 .. toctree::
    :maxdepth: 4
 
