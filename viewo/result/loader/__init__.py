@@ -88,7 +88,7 @@ def load_captions_fromdocumentid(documentid: str) -> iamraw.PageContentCaptions:
     result = link.resultview(documentid, done=True)
     if not os.path.exists(result):
         return None
-    path = utila.pathconnector(result, 'caption', 'general_general')
+    path = iamraw.path.caption_result(result)
     if not os.path.exists(path):
         utila.error(f'could not load: {path}')
         return None
