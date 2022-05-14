@@ -31,8 +31,7 @@ onload('{{process}}')
     const MODERN = {{ 'false' if 'Edge' in request.environ['HTTP_USER_AGENT'] else 'true' }}
 </script>
 <div id="pdfview">
-    <h2>Gesamtdurchsicht<span id="finding_status_counter"></span></h2>
-
+    <h2><span id="finding_status_counter"></span>Gesamtdurchsicht: {{docname}}</h2>
     <div id="pdfview_navigation" class="hidden_invisible">
         <ul>
             <li id="pdfview_navigation_toggle_box">

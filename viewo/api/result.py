@@ -23,14 +23,14 @@ result_ = flask.Blueprint('result', __name__)  # pylint:disable=C0103
 def view_result(documentid: str = None):
     if not documentid:
         return flask.redirect(flask.url_for('documents.view_documents'))
-
     invalid_document = not os.path.exists(link.ready(documentid))
     if invalid_document:
         return flask.redirect('view/failure')
-
+    docname = link.job_title(documentid=documentid)
     rendered = flask.render_template(
         'view/index.html',
         process=documentid,
+        docname=docname,
         waiting=False,
     )
     return rendered
