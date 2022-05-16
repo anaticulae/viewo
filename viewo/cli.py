@@ -16,7 +16,12 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--host', default='localhost')
     parser.add_argument('--port', default=5000)
+    parser.add_argument('--debug', action='store_true')
     argv = parser.parse_args()
-    host, port = argv.host, int(argv.port)
+    host, port, debug = argv.host, int(argv.port), argv.debug
     main_ = viewo.app.create_application()
-    main_.run(host=host, port=port)
+    main_.run(
+        host=host,
+        port=port,
+        debug=debug,
+    )
