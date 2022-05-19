@@ -7,6 +7,7 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import contextlib
 import os
 
 import admin_helpdesk
@@ -61,6 +62,7 @@ class Application(flask.Flask):
     def create_template_test(self):
         self.add_template_test(Application.ready_exists, name='ready_exists')
         self.context_processor(Application.context_data)
+        self.add_template_global(Application.pagenumber, name='pagenumber')
 
     @staticmethod
     def ready_exists(path) -> bool:
@@ -74,6 +76,14 @@ class Application(flask.Flask):
             talker_active=viewo.config.TALKER,
         )
         return result
+
+    @staticmethod
+    def pagenumber(pdfpage, documentid) -> bool:
+        import viewo.result.loader.pagenumbers  # pylint:disable=W0621
+        pages = viewo.result.loader.pagenumbers.load_fromdocumentid(documentid)
+        with contextlib.suppress(KeyError):
+            return pages[pdfpage]
+        return 'NO PAGE'
 
 
 def create_application(config=None) -> flask.Flask:
