@@ -42,6 +42,12 @@ def style(documentid):
 def captions(documentid):
     loaded = viewo.result.loader.load_captions_fromdocumentid(documentid)
     raw = iamraw.caption.pagecaptions_toraw(loaded) if loaded else []
+    if loaded:
+        pages = viewo.result.loader.pagenumbers.load_fromdocumentid(documentid)
+        for item in raw:
+            # convert from pdfpage to real pages
+            item['pdfpage'] = item['page']
+            item['page'] = pages[item['page']]
     simple = {'resource': utila.simplify(raw, not_none=False)}
     simple['uri'] = flask.url_for(
         'api_documents.captions_get',
@@ -52,7 +58,6 @@ def captions(documentid):
 
 def bibliography(documentid):
     loaded = viewo.result.loader.load_bibliography_fromdocumentid(documentid)
-    # raw = iamraw.caption.pagecaptions_toraw(loaded) if loaded else []
     raw = loaded.references if loaded else []
     simple = {'resource': utila.simplify(raw, not_none=False)}
     simple['uri'] = flask.url_for(

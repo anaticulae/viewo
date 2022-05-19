@@ -192,7 +192,6 @@ class ResultView {
         for (let page of captions) {
             for (let item of page.captions) {
                 let nr = index + 1
-                let userpage = Number(page.page) + 1
                 let status = '✔'
                 if (item.error != '') {
                     status = '✖'
@@ -206,12 +205,12 @@ class ResultView {
             <tr>
             <td class="center top">${nr}</td>
             <td class="expand"><span id="${href}" class="click underline">${item.raw}</span></td>
-            <td class="center top">${userpage}</td>
+            <td class="center top">${page.page}</td>
             <td class="center top">${status}</td>
             </tr>`
                 list.append(row)
                 $(`#${href}`).click(function () {
-                    $(`#openpage${page.page}`).click()
+                    $(`#openpage${page.pdfpage}`).click()
                 });
             }
             index += 1
