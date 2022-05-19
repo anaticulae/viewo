@@ -25,7 +25,12 @@ def load_fromdocumentid(documentid: str) -> dict:
     result = {page.pdfpage: page.detected for page in pagenumbers}
     pdfinfo = link.pdfinfo(documentid)
     if pdfinfo:
-        result = fill_pages(result, pdflength=pdfinfo.pages)
+        try:
+            result = fill_pages_magic(result, pdflength=pdfinfo.pages)
+        except ValueError as error:
+            # backup strategy
+            utila.error(f'use page fill backup strategy: {error}')
+            result = fill_pages(result, pdflength=pdfinfo.pages)
     return result
 
 
