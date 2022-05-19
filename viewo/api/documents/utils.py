@@ -20,6 +20,7 @@ import viewo.result.loader.pagenumbers
 def footnotes(documentid):
     loaded = viewo.result.loader.footnotes.load_fromdocumentid(documentid)
     raw = viewo.result.json.footnotes_tojson(loaded)
+    raw = inject_real_pagenumbers(raw, documentid)
     simple = {'resource': utila.simplify(raw, not_none=False)}
     simple['uri'] = flask.url_for(
         'api_documents.footnotes_get',
@@ -42,12 +43,7 @@ def style(documentid):
 def captions(documentid):
     loaded = viewo.result.loader.load_captions_fromdocumentid(documentid)
     raw = iamraw.caption.pagecaptions_toraw(loaded) if loaded else []
-    if loaded:
-        pages = viewo.result.loader.pagenumbers.load_fromdocumentid(documentid)
-        for item in raw:
-            # convert from pdfpage to real pages
-            item['pdfpage'] = item['page']
-            item['page'] = pages[item['page']]
+    raw = inject_real_pagenumbers(raw, documentid)
     simple = {'resource': utila.simplify(raw, not_none=False)}
     simple['uri'] = flask.url_for(
         'api_documents.captions_get',
@@ -100,3 +96,14 @@ def pagenumbers(documentid):
         documentid=documentid,
     )
     return simple
+
+
+def inject_real_pagenumbers(items, documentid):
+    if not items:
+        return items
+    pages = viewo.result.loader.pagenumbers.load_fromdocumentid(documentid)
+    for item in items:
+        # convert from pdfpage to real pages
+        item['pdfpage'] = item['page']
+        item['page'] = pages[item['page']]
+    return items

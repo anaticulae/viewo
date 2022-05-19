@@ -150,28 +150,26 @@ class ResultView {
             return
         }
         let current = null
-        for (let index in footnotes) {
-            let item = footnotes[index]
-            let userpage = parseInt(item.page) + 1
+        for (let footnote of footnotes) {
             let status = '✔'
-            if (item.error != '') {
+            if (footnote.error != '') {
                 status = '✖'
             }
-            if (current != null && current != item.page) {
+            if (current != null && current != footnote.pdfpage) {
                 list.append('<tr><td style="border-top:solid black 1px;" colspan="4"></td></tr>')
             }
-            current = item.page
-            let href = `footnote_openpage${index}`
+            current = footnote.pdfpage
+            let href = `footnote_openpage${footnote.pdfpage}`
             let row = `
             <tr>
-            <td class="center top">${item.number}</td>
-            <td class="expand"><span id="${href}" class="click underline">${item.title}</span></td>
-            <td class="center top">${userpage}</td>
+            <td class="center top">${footnote.number}</td>
+            <td class="expand"><span id="${href}" class="click underline">${footnote.title}</span></td>
+            <td class="center top">${footnote.page}</td>
             <td class="center top">${status}</td>
             </tr>`
             list.append(row)
             $(`#${href}`).click(function () {
-                $(`#openpage${item.page}`).click()
+                $(`#openpage${footnote.pdfpage}`).click()
             });
         }
     }
