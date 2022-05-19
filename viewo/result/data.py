@@ -41,13 +41,10 @@ def load_resultview(path: str, process: str) -> 'viewo.waiting.ResultPageViews':
         Loaded HTML Page View
     """
     assert os.path.exists(path), str(path)
-
     with utila.profile('load findings'):
         pagefindings = load_findings(path)
-
     with utila.profile('load html'):
         html = load_html(path)
-
     with utila.profile('render result view'):
         rendered = render_resultpage_view(html, pagefindings, process)
     return rendered
@@ -147,7 +144,6 @@ def findings_from_path(path: str, worker: int = 10) -> iamraw.PageFindings:
     files = utila.file_list(path, include='yaml', recursive=True)
     files = [item for item in files if utila.file_name(item).endswith('_user')]
     paths = [os.path.join(path, item) for item in files]
-
     # yaml parsing is cpu bound, therefore we need a process pool instead
     # of thread pool.
     executor = utila.select_executor()
