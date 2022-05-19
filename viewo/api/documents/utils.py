@@ -88,7 +88,8 @@ def links(documentid):
 
 def pagenumbers(documentid):
     loaded = viewo.result.loader.pagenumbers.load_fromdocumentid(documentid)
-    simple = {'resource': utila.simplify(loaded, not_none=False)}
+    raw = utila.simplify(loaded, not_none=False)
+    simple = {'resource': raw}
     simple['uri'] = flask.url_for(
         'api_documents.pagenumbers_get',
         documentid=documentid,
