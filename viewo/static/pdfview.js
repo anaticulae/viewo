@@ -301,17 +301,17 @@ class TodoListView {
             for (let finding of page.findings) {
                 let status = finding.solution.status
                 if (status in OPEN) {
-                    this.create_finding_line(open, finding)
+                    this.create_finding_line(open, finding, page.pdfpage, page.page)
                 } else if (status == DONE) {
-                    this.create_finding_line(done, finding)
+                    this.create_finding_line(done, finding, page.pdfpage, page.page)
                 } else {
-                    this.create_finding_line(removed, finding)
+                    this.create_finding_line(removed, finding, page.pdfpage, page.page)
                 }
             }
         }
     }
 
-    create_finding_line(parent, finding) {
+    create_finding_line(parent, finding, pdfpage, page) {
         let status = finding.solution.status
         let action = ''
         if (status in OPEN) {
@@ -331,8 +331,6 @@ class TodoListView {
                     <img src="/static/images/view/refresh.png" alt="done" width="100%" height="100%" />
                 </button>`
         }
-        let page = finding.location.page
-        let page_user = Number(finding.location.page) + 1
         let openid = `_todolistview_open_finding_${finding.number}`
         let jump_to_page = `<a href = "#" id = "${openid}">${finding.solution.title}</a>`
         let number = parent[0].rows.length + 1
@@ -340,12 +338,12 @@ class TodoListView {
             `<tr id = "${finding.number}">
                 <td class="center">${number}</td>
                 <td>${jump_to_page}</td>
-                <td class="center">${page_user}</td>
+                <td class="center">${page}</td>
                 <td class="center">${action}</td>
             </tr>`
         parent.append(raw)
         $(`#${openid}`).click(function () {
-            open_pdfview(page)
+            open_pdfview(pdfpage)
         });
         if (status in OPEN) {
             $(`#${del}`).click(function () {

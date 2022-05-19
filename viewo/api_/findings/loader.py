@@ -7,6 +7,8 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import contextlib
+
 import flask
 import iamraw
 import link
@@ -49,6 +51,7 @@ def all_findings_raw(
     simple = add_finding_uri(simple, documentid)
     simple = remove_unpayed(simple) if not payed and not public else simple
     simple = findingids_tostr(simple)
+    simple = add_pagenumbers(simple, documentid)
     pagerange, uri = paged(documentid, pages)
     raw = {
         'pagefindings': simple,
@@ -102,6 +105,17 @@ def add_finding_uri(simple, documentid):
                 documentid=documentid,
                 findingid=finding['number'],
             )
+    return simple
+
+
+def add_pagenumbers(simple, documentid):
+    import viewo.result.loader.pagenumbers  # pylint:disable=W0621
+    pages = viewo.result.loader.pagenumbers.load_fromdocumentid(documentid)
+    for pagefinding in simple:
+        # for finding in pagefinding['content']:
+        pagefinding['pdfpage'] = pagefinding['page']
+        with contextlib.suppress(KeyError):
+            pagefinding['page'] = pages[pagefinding['page']]
     return simple
 
 

@@ -30,9 +30,9 @@ class PDFViewFinding {
         for (let page of findings) {
             for (let finding of page.content) {
                 // use one based page numbering
-                let pagenr = page.page + 1
+                let pagenr = page.page
                 let row = [
-                    create_href_jumpto_finding(finding),
+                    create_href_jumpto_finding(finding, page.pdfpage),
                     pagenr,
                     error_label(finding.solution.msgid),
                     status_label(finding.solution.status)
@@ -80,9 +80,9 @@ class PDFViewFinding {
     }
 }
 
-const create_href_jumpto_finding = function (finding) {
-    let page = finding.location.page
-    let jump_to_page = `<a href = "#" onclick="open_pdfview(${page})">${finding.solution.title}</a>`
+const create_href_jumpto_finding = function (finding, pdfpage) {
+    // let page = finding.location.pdfpage
+    let jump_to_page = `<a href = "#" onclick="open_pdfview(${pdfpage})">${finding.solution.title}</a>`
     return jump_to_page
 }
 

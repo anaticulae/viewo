@@ -156,7 +156,7 @@ class DocumentService {
             if (findings.length) {
                 update_content(FINDINGS, findings)
                 for (let findingpage of findings) {
-                    page(findingpage.page).findings = findingpage.content
+                    page(findingpage.pdfpage).findings = findingpage.content
                 }
             } else {
                 update_content(FINDINGS, SPECIALCONTENT_EMPTY)
