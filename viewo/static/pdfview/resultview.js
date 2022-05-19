@@ -57,7 +57,10 @@ class ResultView {
             this.show_pdf_properties()
         } else if (selected.page == FINDINGS) {
             this.show_findings()
-        } else {
+        } else if (selected.page == CHECKLIST) {
+            this.show_checklist()
+        }
+        else {
             if (MODERN == true) {
                 this.show_pdf(selected.page)
             }
@@ -98,6 +101,7 @@ class ResultView {
         $('#pdfview_hyperlinks').hide()
         $('#pdfview_overview').hide()
         $('#pdfview_properties').hide()
+        $('#pdfview_checklist').hide()
     }
 
     show_overview() {
@@ -225,6 +229,10 @@ class ResultView {
 
     show_findings() {
         $('#pdfview_findings').show()
+    }
+
+    show_checklist() {
+        $('#pdfview_checklist').show()
     }
 
     show_pdf_properties() {

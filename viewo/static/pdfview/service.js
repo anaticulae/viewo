@@ -469,7 +469,7 @@ const defaultpages = function (pagenumbers) {
         'title': 'Fehlerübersicht',
     })
     result.push({
-        'content': 'TODO',
+        'content': '',
         'page': CHECKLIST,
         'title': 'Checkliste',
     })
