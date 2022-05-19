@@ -2,6 +2,26 @@
 
 Every noteable change is logged here.
 
+## v2.23.0
+
+### Feature
+
+* add referenced page numbers (31ee12ef989b)
+* use referenced page numbers (51595ff6fb4c)
+* add referenced page numbers (983ccb5583f5)
+* add pagenumber converter (53177fdc26a5)
+* use improved page numbers magic (11f30380fa0c)
+* add pagenumber magic fill (0250e69230e5)
+* use ints (aba40014c4d1)
+* add debug parameter (a309314d3299)
+* show document title in document view (ca5df212ed83)
+
+### Fix
+
+* do not fail on empty page numbers (b2acc44826b3)
+* fix caption deliver path (d98a26cc7eec)
+* use new bib table (b1fc4108dc31)
+
 ## v2.22.0
 
 ### Feature
