@@ -102,6 +102,8 @@ def inject_real_pagenumbers(items, documentid):
     if not items:
         return items
     pages = viewo.result.loader.pagenumbers.load_fromdocumentid(documentid)
+    if not pages:
+        return items
     for item in items:
         # convert from pdfpage to real pages
         item['pdfpage'] = item['page']
