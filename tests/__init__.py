@@ -25,8 +25,7 @@ import viewo.config
 
 power.setup(viewo.ROOT)
 
-TEST_DATA = os.path.join(viewo.ROOT, 'tests/data')
-assert os.path.exists(TEST_DATA), TEST_DATA
+TEST_DATA = utila.join(viewo.ROOT, 'tests/data', exist=True)
 
 BASE_TEMPLATE = utila.file_read(utila.join(viewo.config.TEMPLATES, 'base.html'))
 
