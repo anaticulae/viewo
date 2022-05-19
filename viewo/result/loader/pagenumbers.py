@@ -7,8 +7,6 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import os
-
 import iamraw.path
 import link
 import serializeraw
@@ -17,10 +15,10 @@ import utila
 
 def load_fromdocumentid(documentid: str) -> dict:
     resultview = link.resultview(documentid, done=True)
-    if not os.path.exists(resultview):
+    if not utila.exists(resultview):
         return None
     path = iamraw.path.groupme_pagenumbers(resultview)
-    if not os.path.exists(path):
+    if not utila.exists(path):
         utila.error(f'could not load: {path}')
         return None
     pagenumbers = serializeraw.load_pagenumbers(path)
