@@ -14,6 +14,7 @@ import json.decoder
 import os
 
 import power
+import protocol.finding
 import utila
 import utilatest
 import viewo_api
@@ -29,9 +30,18 @@ assert os.path.exists(TEST_DATA), TEST_DATA
 
 BASE_TEMPLATE = utila.file_read(os.path.join(viewo.config.TEMPLATES, 'base.html')) # yapf:disable
 
+
+# TEST_FINDING = '-5427470771429581022'
+def first_finding(document) -> int:
+    source = utila.join(power.generated(), document)
+    for finding in protocol.finding.iter_findings(source):
+        first = finding[1][0].number
+        return first
+    return None
+
+
 TEST_DOCUMENT = '____home_home025'
-# TODO: AUTOMATE THIS, changes if detector or impl. changes
-TEST_FINDING = '-5427470771429581022'
+TEST_FINDING = first_finding(TEST_DOCUMENT)
 INVALID_DOCUMENT = 'rrrrrrrrrrrrrrrr'
 INVALID_SECOND = 'SSSSSSSSSSSSSSSS'
 
