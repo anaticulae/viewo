@@ -7,12 +7,25 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import contextlib
+import functools
+
 import iamraw.path
 import link
 import serializeraw
 import utila
 
 
+def userpage(pdfpage: int, documentid: str) -> str:
+    pages = load_fromdocumentid(documentid=documentid)
+    if pages is None:
+        return None
+    with contextlib.suppress(KeyError):
+        return pages[pdfpage]
+    return None
+
+
+@functools.lru_cache
 def load_fromdocumentid(documentid: str) -> dict:
     resultview = link.resultview(documentid, done=True)
     if not utila.exists(resultview):

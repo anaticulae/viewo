@@ -7,7 +7,6 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import contextlib
 import os
 
 import admin_helpdesk
@@ -78,12 +77,13 @@ class Application(flask.Flask):
         return result
 
     @staticmethod
-    def pagenumber(pdfpage, documentid) -> bool:
+    def pagenumber(pdfpage, documentid) -> str:
         import viewo.result.loader.pagenumbers  # pylint:disable=W0621
-        pages = viewo.result.loader.pagenumbers.load_fromdocumentid(documentid)
-        with contextlib.suppress(KeyError):
-            return pages[pdfpage]
-        return 'NO PAGE'
+        result = viewo.result.loader.pagenumbers.userpage(
+            pdfpage=pdfpage,
+            documentid=documentid,
+        )
+        return result
 
 
 def create_application(config=None) -> flask.Flask:

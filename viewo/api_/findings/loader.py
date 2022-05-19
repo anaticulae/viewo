@@ -7,8 +7,6 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import contextlib
-
 import flask
 import iamraw
 import link
@@ -16,6 +14,7 @@ import utila
 
 import viewo.api.pageviews.utils
 import viewo.api_.findings.data
+import viewo.result.loader.pagenumbers
 
 
 def fast_findings(
@@ -109,13 +108,13 @@ def add_finding_uri(simple, documentid):
 
 
 def add_pagenumbers(simple, documentid):
-    import viewo.result.loader.pagenumbers  # pylint:disable=W0621
-    pages = viewo.result.loader.pagenumbers.load_fromdocumentid(documentid)
     for pagefinding in simple:
-        # for finding in pagefinding['content']:
         pagefinding['pdfpage'] = pagefinding['page']
-        with contextlib.suppress(KeyError):
-            pagefinding['page'] = pages[pagefinding['page']]
+        userpage = viewo.result.loader.pagenumbers.userpage(
+            pdfpage=pagefinding['page'],
+            documentid=documentid,
+        )
+        pagefinding['page'] = userpage
     return simple
 
 
