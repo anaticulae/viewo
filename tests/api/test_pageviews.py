@@ -62,3 +62,13 @@ def test_api_pages_overview_invalid_document(findingclient):
         '/documents/invalid_document/pageviews?pages=0:xxx-10:-50',
         expected=http.HTTPStatus.NOT_FOUND,
     )
+
+
+def test_api_pages_pagenumbers(findingclient):
+    client = findingclient
+    result = utilatest.apicall(
+        client,
+        f'/documents/{tests.TEST_DOCUMENT}/pagenumbers',
+    )
+    pagenumbers = result['pagenumbers']['resource']
+    assert len(pagenumbers) == 25
