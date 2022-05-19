@@ -32,9 +32,9 @@ def test_waiting_resultview_load_resultview():
     )
     assert loaded, str(loaded)
     pages = [item.page for item in loaded]
+    # -1 overview page
     # 25 html pages and x findings page
-    # TODO: REPLACE WITH UTILA CODE
-    assert pages == list(utila.ranged_tuple(0, 25))
+    assert pages == utila.rlist(-1, 25)
 
 
 def test_waiting_resultview_tojson():
