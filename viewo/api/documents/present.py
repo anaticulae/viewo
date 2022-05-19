@@ -50,32 +50,12 @@ def curowner() -> set:
     return result
 
 
-def load_documents(owner, state: link.State = None):
-    # TODO: MOVE TO LINK
+def load_documents(owner, state: link.State = None) -> list:
     common = viewo.path.common()
-    todo, ready = link.collect_jobs(
-        common,
-        skip_removed=True,
+    result = link.load_documents(
+        common=common,
         owner=owner,
-    )
-    dones = {item.name for item in ready}
-    if state in (link.State.RUNNING, link.State.WAITING):
-        ready.clear()
-    result = [link.load_jobinfo_raw(item.name, done=None) for item in ready]
-    for item in result:
-        item['done'] = True
-    if state == link.State.DONE:
-        # do not load jobs which are not done
-        todo.clear()
-    for item in todo:
-        if item.name in dones:
-            continue
-        current = link.load_jobinfo_raw(item.name, done=None)
-        result.append(current)
-    result = sorted(
-        result,
-        key=lambda item: item['date'],
-        reverse=True,
+        state=state,
     )
     return result
 
