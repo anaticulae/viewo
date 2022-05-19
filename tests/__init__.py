@@ -40,6 +40,7 @@ def first_finding(document) -> int:
 
 
 TEST_DOCUMENT = '____home_home025'
+TEST_DOCUMENT_B = '____home_home018'
 TEST_FINDING = first_finding(TEST_DOCUMENT)
 INVALID_DOCUMENT = 'rrrrrrrrrrrrrrrr'
 INVALID_SECOND = 'SSSSSSSSSSSSSSSS'

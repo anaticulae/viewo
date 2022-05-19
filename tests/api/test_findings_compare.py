@@ -30,11 +30,11 @@ def test_api_findings_compare_two_documents_equal():
 def test_api_findings_compare_two_documents_diff():
     compared = viewo.api_.findings.compare.compare(
         tests.TEST_DOCUMENT,
-        tests.TEST_DOCUMENT,
+        tests.TEST_DOCUMENT_B,
         operation=viewo.api_.findings.compare.Comperator.DIFF,
     )
-    # TODO: AUTOMATE TEST DATA GENERATOR AND ADD DIFF EXAMPLE
-    assert compared == []
+    assert compared
+    assert len(compared) >= 20
 
 
 def test_api_compare_findings_all(findingclient):
