@@ -18,10 +18,8 @@ class ResultView {
         if (empty(pagenumber)) {
             return
         }
+        this.reset_finding_selector(pagenumber)
         let selected = page(pagenumber)
-        this.error_page = pagenumber
-        this.error_selected = 0
-        findingbox.paged = 0
         if (selected.content == null) {
             service.update_pagecontent(pagenumber, function () {
                 resultview.show_page(pagenumber)
@@ -33,6 +31,12 @@ class ResultView {
         }
         navigator.highlight_pagenumber(pagenumber)
         findingbox.update_findings()
+        this.open_special(pagenumber)
+        navigator.shorten_pagenumers()
+    }
+
+    open_special(pagenumber) {
+        let selected = page(pagenumber)
         // use base cause jquery introduces trouble with display: block, do
         // not refactor!
         this.hide_all()
@@ -62,7 +66,12 @@ class ResultView {
             }
             $('#pdfview_content').show()
         }
-        navigator.shorten_pagenumers()
+    }
+
+    reset_finding_selector(pagenumber) {
+        this.error_page = pagenumber
+        this.error_selected = 0
+        findingbox.paged = 0
     }
 
     show_pdf(pagenumber) {
