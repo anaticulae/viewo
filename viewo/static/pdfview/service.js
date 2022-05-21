@@ -216,7 +216,7 @@ class DocumentService {
             empty_findings(pagerange)
             let findings = response.findings.pagefindings
             for (let pagefindings of findings) {
-                update_findings(pagefindings.page, pagefindings.content)
+                update_findings(pagefindings.pdfpage, pagefindings.content)
             }
             if (findings.length) {
                 if (callback != null) {
@@ -285,7 +285,7 @@ class DocumentService {
             empty_findings(pagerange)
             let findings = response.findings.pagefindings
             for (let pagefindings of findings) {
-                update_findings(pagefindings.page, pagefindings.content)
+                update_findings(pagefindings.pdfpage, pagefindings.content)
             }
             service.waiting = false
         })
