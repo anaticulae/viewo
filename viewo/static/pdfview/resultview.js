@@ -27,7 +27,10 @@ class ResultView {
             return
         }
         if (MODERN == false) {
-            $('#error_page_content').html(selected.content)
+            let source = pdfpage_source(pagenumber)
+            let style = `width:512px;border:1px solid black;`
+            let html = `<img src="${source}" style="${style}" />`
+            $('#error_page_content').html(`<center>${html}</center>`)
         }
         navigator.highlight_pagenumber(pagenumber)
         findingbox.update_findings()
@@ -372,6 +375,18 @@ class ResultView {
             }
         });
     }
+}
+
+const pdfpage_source = function (pagenumber) {
+    let documentid = service.documentid
+    let png = `${pagenumber}.png`
+    if (png.length == 5) {
+        png = '00' + png
+    } else if (png.length == 6) {
+        png = '0' + png
+    }
+    let source = `${documentid}/${png}`
+    return source
 }
 
 const resultview = new ResultView()
