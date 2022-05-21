@@ -28,7 +28,7 @@ class ResultView {
         }
         if (MODERN == false) {
             let source = pdfpage_source(pagenumber)
-            let style = `width:512px;border:1px solid black;`
+            let style = `width:100%;border:1px solid black;`
             let html = `<img src="${source}" style="${style}" />`
             $('#error_page_content').html(`<center>${html}</center>`)
         }
