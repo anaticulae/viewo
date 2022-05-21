@@ -28,15 +28,11 @@ class ResultView {
             })
             return
         }
-
         if (MODERN == false) {
             $('#error_page_content').html(selected.content)
         }
-
         navigator.highlight_pagenumber(pagenumber)
         findingbox.update_findings()
-
-
         // use base cause jquery introduces trouble with display: block, do
         // not refactor!
         this.hide_all()
