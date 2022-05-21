@@ -60,10 +60,12 @@ class ResultView {
             this.show_pdf_properties()
         } else if (selected.page == FINDINGS) {
             this.show_findings()
+        } else if (selected.page == SCORE) {
+            $('#error_page_content').html(selected.content)
+            $('#pdfview_content').show()
         } else if (selected.page == CHECKLIST) {
             this.show_checklist()
-        }
-        else {
+        } else {
             if (MODERN == true) {
                 this.show_pdf(selected.page)
             }
