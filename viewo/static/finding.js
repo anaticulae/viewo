@@ -32,7 +32,7 @@ function count_by_finding_status(findings) {
     let rejected = 0
     let open = 0
     for (let page of findings) {
-        if(!page.findings){
+        if (!page.findings) {
             // no findings on this page
             continue
         }
