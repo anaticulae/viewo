@@ -28,14 +28,32 @@ class ResultView {
         }
         if (MODERN == false) {
             let source = pdfpage_source(pagenumber)
-            let style = `width:100%;border:1px solid black;`
-            let html = `<img src="${source}" style="${style}" />`
-            $('#error_page_content').html(`<center>${html}</center>`)
+            let html = `
+            <style>
+                #show_page {
+                    background: url("${source}");
+                    background-repeat: round;
+                }
+            </style>
+            <img id="show_page" src="${source}" style="width:100%;">
+            `
+            $('#error_page_content').html(html)
         }
         navigator.highlight_pagenumber(pagenumber)
         findingbox.update_findings()
         this.open_special(pagenumber)
         navigator.shorten_pagenumers()
+    }
+
+    overlay_finding(findingid) {
+        if (findingid == null) {
+            let source = pdfpage_source(this.error_page)
+            $("#show_page").attr("src", source);
+            return
+        }
+        let documentid = service.documentid
+        let image = `${documentid}/${findingid}.png`
+        $("#show_page").attr("src", image);
     }
 
     open_special(pagenumber) {
@@ -347,9 +365,7 @@ class ResultView {
         }
         let findingid = this.selected_finding.number
         this.selected_finding.solution.status = status // remove finding
-
         this.update_finding(findingid, status)
-
         this.update_current_finding()
     }
 

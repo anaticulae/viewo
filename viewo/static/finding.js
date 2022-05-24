@@ -104,6 +104,7 @@ function hide_finding(finding) {
 }
 
 function highlight_finding(finding) {
+    resultview.overlay_finding(null)
     if (finding == null || finding.solution.status != SELECTED) {
         return
     }
@@ -124,6 +125,7 @@ function highlight_finding(finding) {
         }
     }
     else {
+        resultview.overlay_finding(finding.number)
         $(`#finding_${finding.number}`).fadeOut('fast').fadeIn()
     }
 }
