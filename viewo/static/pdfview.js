@@ -300,12 +300,13 @@ class TodoListView {
             }
             for (let finding of page.findings) {
                 let status = finding.solution.status
+                let pdfpage = finding.location.page
                 if (status in OPEN) {
-                    this.create_finding_line(open, finding, page.pdfpage, page.page)
+                    this.create_finding_line(open, finding, pdfpage, page.page)
                 } else if (status == DONE) {
-                    this.create_finding_line(done, finding, page.pdfpage, page.page)
+                    this.create_finding_line(done, finding, pdfpage, page.page)
                 } else {
-                    this.create_finding_line(removed, finding, page.pdfpage, page.page)
+                    this.create_finding_line(removed, finding, pdfpage, page.page)
                 }
             }
         }
