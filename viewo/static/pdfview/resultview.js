@@ -10,31 +10,6 @@ class ResultView {
         this.hide_all()
     }
 
-    show_page(pagenumber) {
-        // Open selected `page` and update findings.
-        if (service.empty) {
-            return
-        }
-        if (empty(pagenumber)) {
-            return
-        }
-        this.reset_finding_selector(pagenumber)
-        let selected = page(pagenumber)
-        if (selected.content == null) {
-            service.update_pagecontent(pagenumber, function () {
-                resultview.show_page(pagenumber)
-            })
-            return
-        }
-        if (MODERN == false) {
-            show_pngpage(pagenumber)
-        }
-        navigator.highlight_pagenumber(pagenumber)
-        findingbox.update_findings()
-        this.open_special(pagenumber)
-        navigator.shorten_pagenumers()
-    }
-
     overlay_finding(findingid) {
         if (findingid == null) {
             let source = pdfpage_source(this.error_page)
@@ -46,68 +21,12 @@ class ResultView {
         $("#show_page").attr("src", image);
     }
 
-    open_special(pagenumber) {
-        let selected = page(pagenumber)
-        // use base cause jquery introduces trouble with display: block, do
-        // not refactor!
-        this.hide_all()
-        // TODO: REMOVE LATER
-        if (selected.page == 1024 || selected.page == OVERVIEW) {
-            this.show_overview()
-        } else if (selected.page == FOOTNOTES) {
-            this.show_footnotes()
-        } else if (selected.page == CAPTIONS) {
-            this.show_captions()
-        } else if (selected.page == HYPERLINKS) {
-            this.show_hyperlinks()
-        } else if (selected.page == DOCSTYLE) {
-            this.show_docstyle()
-        } else if (selected.page == BIBLIOGRAPHY) {
-            this.show_bibliography()
-        } else if (selected.page == PROPERTIES) {
-            this.show_pdf_properties()
-        } else if (selected.page == FINDINGS) {
-            this.show_findings()
-        } else if (selected.page == SCORE) {
-            $('#error_page_content').html(selected.content)
-            $('#pdfview_content').show()
-        } else if (selected.page == CHECKLIST) {
-            this.show_checklist()
-        } else {
-            if (MODERN == true) {
-                this.show_pdf(selected.page)
-            }
-            $('#pdfview_content').show()
-        }
-    }
-
     reset_finding_selector(pagenumber) {
         this.error_page = pagenumber
         this.error_selected = 0
         findingbox.paged = 0
     }
 
-    show_pdf(pagenumber) {
-        if (service.pdf == null) {
-            return
-        }
-        pagenumber = pagenumber + 1
-        service.pdf.getPage(pagenumber).then(function (page) {
-            let scale = 5.0;
-            let viewport = page.getViewport({ scale: scale, });
-
-            let canvas = $('#error_page_content')[0]
-            let context = canvas.getContext('2d');
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-
-            let renderContext = {
-                canvasContext: context,
-                viewport: viewport,
-            };
-            page.render(renderContext);
-        });
-    }
 
     hide_all() {
         $('#pdfview_bibliography').hide()
@@ -385,6 +304,34 @@ class ResultView {
     }
 }
 
+const show_page = function (pagenumber) {
+    // Open selected `page` and update findings.
+    if (service.empty || empty(pagenumber)) {
+        return
+    }
+    resultview.reset_finding_selector(pagenumber)
+    let selected = page(pagenumber)
+    if (selected.content == null) {
+        service.update_pagecontent(pagenumber, function () {
+            show_page(pagenumber)
+        })
+        return
+    }
+    resultview.hide_all()
+    if (pagenumber < 0 || pagenumber > FIRST_SPECIAL) {
+        open_special(pagenumber)
+    } else {
+        if (MODERN) {
+            show_pdfpage(pagenumber)
+        } else {
+            show_pngpage(pagenumber)
+        }
+    }
+    navigator.highlight_pagenumber(pagenumber)
+    findingbox.update_findings()
+    navigator.shorten_pagenumers()
+}
+
 const show_pngpage = function (pagenumber) {
     if (pagenumber < 0) {
         return
@@ -400,6 +347,59 @@ const show_pngpage = function (pagenumber) {
     <img id="show_page" src="${source}" style="width:100%;">
     `
     $('#error_page_content').html(html)
+    $('#pdfview_content').show()
+}
+
+const show_pdfpage = function (pagenumber) {
+    if (service.pdf == null) {
+        return
+    }
+    pagenumber = pagenumber + 1
+    service.pdf.getPage(pagenumber).then(function (page) {
+        let scale = 5.0;
+        let viewport = page.getViewport({ scale: scale, });
+
+        let canvas = $('#error_page_content')[0]
+        let context = canvas.getContext('2d');
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        let renderContext = {
+            canvasContext: context,
+            viewport: viewport,
+        };
+        page.render(renderContext);
+    });
+    $('#pdfview_content').show()
+}
+
+const open_special = function (pagenumber) {
+    let selected = page(pagenumber)
+    let view = resultview
+    view.hide_all()
+    // TODO: REMOVE LATER
+    if (selected.page == 1024 || selected.page == OVERVIEW) {
+        view.show_overview()
+    } else if (selected.page == FOOTNOTES) {
+        view.show_footnotes()
+    } else if (selected.page == CAPTIONS) {
+        view.show_captions()
+    } else if (selected.page == HYPERLINKS) {
+        view.show_hyperlinks()
+    } else if (selected.page == DOCSTYLE) {
+        view.show_docstyle()
+    } else if (selected.page == BIBLIOGRAPHY) {
+        view.show_bibliography()
+    } else if (selected.page == PROPERTIES) {
+        view.show_pdf_properties()
+    } else if (selected.page == FINDINGS) {
+        view.show_findings()
+    } else if (selected.page == SCORE) {
+        $('#error_page_content').html(selected.content)
+        $('#pdfview_content').show()
+    } else if (selected.page == CHECKLIST) {
+        view.show_checklist()
+    }
 }
 
 const pdfpage_source = function (pagenumber) {
@@ -413,5 +413,6 @@ const pdfpage_source = function (pagenumber) {
     let source = `${documentid}/${png}`
     return source
 }
+
 
 const resultview = new ResultView()

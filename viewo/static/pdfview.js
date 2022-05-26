@@ -39,7 +39,7 @@ class Navigator {
             let btn = `<button type="button" class="btn btn-default" id="openpage${page.page}">${page.title}</button>`
             error_page_list.append(btn)
             $(`#openpage${page.page}`).click(function () {
-                resultview.show_page(page.page)
+                show_page(page.page)
             });
             if (page.content == SPECIALCONTENT_EMPTY) {
                 $(`#openpage${page.page}`).addClass('nospecialcontent')
@@ -97,11 +97,11 @@ class Navigator {
                     return;
                 }
             } while (service.pagefindings(current).filter(s => visible(s)).length == 0)
-            this.result.show_page(current)
+            show_page(current)
         }
         else {
             let previous = previous_page_visible(this.result.current_page)
-            this.result.show_page(previous)
+            show_page(previous)
         }
         service.smooth(this.result.current_page)
         this.shorten_pagenumers()
@@ -118,10 +118,10 @@ class Navigator {
                     return;
                 }
             } while (service.pagefindings(current).filter(s => visible(s)).length == 0)
-            this.result.show_page(current)
+            show_page(current)
         } else {
             let next = next_page_visible(this.result.current_page)
-            this.result.show_page(next)
+            show_page(next)
         }
         service.smooth(this.result.current_page)
         this.shorten_pagenumers()
@@ -380,7 +380,7 @@ function open_todolistview(category = DONE) {
 function open_pdfview(page = 0) {
     $('#todolistview').hide()
     $('#pdfview').show()
-    resultview.show_page(page)
+    show_page(page)
 }
 
 const navigator = new Navigator(resultview)

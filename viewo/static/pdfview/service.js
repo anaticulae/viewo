@@ -10,6 +10,7 @@ const DOCSTYLE = 1030
 const FINDINGS = 1031
 const CHECKLIST = 1032
 const SCORE = 1033
+const FIRST_SPECIAL = BIBLIOGRAPHY
 
 const SPECIALCONTENT = 'NONE'
 const SPECIALCONTENT_EMPTY = 'NONE_EMPTY'
@@ -49,7 +50,7 @@ class DocumentService {
             service.pagenumbers = response.document.pages
             service.content = defaultpages(service.pagenumbers)
             navigator.create_pagenavigator(service.pages)
-            resultview.show_page(0)
+            show_page(0)
             base.show_done()
         }, function () {
             base.show_error()
@@ -65,6 +66,7 @@ class DocumentService {
         })
 
     }
+
     update_pdf() {
         if (MODERN == false) {
             return
@@ -73,7 +75,7 @@ class DocumentService {
         let loadingTask = pdfjsLib.getDocument(url);
         loadingTask.promise.then(function (pdf) {
             service.pdf = pdf
-            resultview.show_pdf(0)
+            show_pdfpage(0)
         })
     }
 
