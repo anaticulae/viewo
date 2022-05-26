@@ -56,7 +56,7 @@ class Navigator {
     }
 
     update_page_navigator() {
-        for (let page of service.pages) {
+        for (let page of SERVICE.pages) {
             // 1024 do not skip special pages
             if (page.page < 1024) {
                 if (!open_findings(page.page)) {
@@ -96,14 +96,14 @@ class Navigator {
                     // no page change possible, stay on page
                     return;
                 }
-            } while (service.pagefindings(current).filter(s => visible(s)).length == 0)
+            } while (SERVICE.pagefindings(current).filter(s => visible(s)).length == 0)
             show_page(current)
         }
         else {
             let previous = previous_page_visible(this.result.current_page)
             show_page(previous)
         }
-        service.smooth(this.result.current_page)
+        SERVICE.smooth(this.result.current_page)
         this.shorten_pagenumers()
     }
 
@@ -117,13 +117,13 @@ class Navigator {
                     // no page change possible, stay on page
                     return;
                 }
-            } while (service.pagefindings(current).filter(s => visible(s)).length == 0)
+            } while (SERVICE.pagefindings(current).filter(s => visible(s)).length == 0)
             show_page(current)
         } else {
             let next = next_page_visible(this.result.current_page)
             show_page(next)
         }
-        service.smooth(this.result.current_page)
+        SERVICE.smooth(this.result.current_page)
         this.shorten_pagenumers()
     }
 
@@ -177,7 +177,7 @@ class Navigator {
         let next = next_page_visible(current)
         let before = previous_page_visible(current)
         let pages = []
-        for (let page of service.pages) {
+        for (let page of SERVICE.pages) {
             // 1024 do not skip special pages
             if (page.page < 1024 && page.page >= 0) {
                 if (this.error_pages_only && !open_findings(page.page)) {
@@ -264,7 +264,7 @@ class FindingStatusCounter {
     }
 
     update() {
-        let counted = count_by_finding_status(service.content)
+        let counted = count_by_finding_status(SERVICE.content)
         this.update_values(counted.done, counted.rejected, counted.open)
     }
 }
@@ -277,7 +277,7 @@ class TodoListView {
 
     init_listener() {
         $("#todolistview_show_pdfview").click(function () {
-            open_pdfview(resultview.current_page)
+            open_pdfview(RESULTVIEW.current_page)
         });
     }
 
@@ -290,7 +290,7 @@ class TodoListView {
         base.clear(done)
         base.clear(removed)
 
-        let pages = service.content
+        let pages = SERVICE.content
         if (pages == null) {
             return
         }
@@ -348,16 +348,16 @@ class TodoListView {
         if (status in OPEN) {
             $(`#${del}`).click(function () {
                 $(`#${finding.number}`).hide()
-                resultview.update_finding(finding.number, REMOVED)
+                RESULTVIEW.update_finding(finding.number, REMOVED)
             });
             $(`#${done}`).click(function () {
                 $(`#${finding.number}`).hide()
-                resultview.update_finding(finding.number, DONE)
+                RESULTVIEW.update_finding(finding.number, DONE)
             });
         } else {
             $(`#${restore}`).click(function () {
                 $(`#${finding.number}`).hide()
-                resultview.update_finding(finding.number, SELECTED)
+                RESULTVIEW.update_finding(finding.number, SELECTED)
             });
         }
     }
@@ -383,22 +383,21 @@ function open_pdfview(page = 0) {
     show_page(page)
 }
 
-const navigator = new Navigator(resultview)
+const navigator = new Navigator(RESULTVIEW)
 const statuscounter = new FindingStatusCounter()
-const findingbox = new FindingBox(resultview)
-const todolist = new TodoListView(resultview)
-const pdfview_properties = new PDFViewProperties(resultview)
-const pdfview_docstyle = new PDFViewDocStyle(resultview)
+const findingbox = new FindingBox(RESULTVIEW)
+const todolist = new TodoListView(RESULTVIEW)
+const pdfview_properties = new PDFViewProperties(RESULTVIEW)
+const pdfview_docstyle = new PDFViewDocStyle(RESULTVIEW)
 
 function onload(process) {
-    resultview.hide_all()
-    service.update(process)
+    RESULTVIEW.hide_all()
+    SERVICE.update(process)
 }
 
 function init() {
     navigator.init_listener()
     findingbox.init_listener()
-
     // Navigate thrue error pages
     window.addEventListener('keydown', event => {
         // Hands up for vim :)
@@ -433,13 +432,10 @@ function init() {
             event.preventDefault()
         }
     })
-
     statuscounter.build()
     statuscounter.init_listener()
-
     todolist.init_listener()
     pdfview_properties.init_listener()
     pdfview_docstyle.init_listener()
-
     base.show_connecting('Öffne Dokument...')
 }

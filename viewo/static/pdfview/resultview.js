@@ -16,7 +16,7 @@ class ResultView {
             $("#show_page").attr("src", source);
             return
         }
-        let documentid = service.documentid
+        let documentid = SERVICE.documentid
         let image = `${documentid}/${findingid}.png`
         $("#show_page").attr("src", image);
     }
@@ -69,11 +69,11 @@ class ResultView {
             `
             $('#pdfview_overview_content').append(content)
             $(`#${del}`).click(function () {
-                resultview.update_finding(finding.number, REMOVED)
+                RESULTVIEW.update_finding(finding.number, REMOVED)
                 $(`#flex_content_${finding.number}`).hide()
             });
             $(`#${done}`).click(function () {
-                resultview.update_finding(finding.number, DONE)
+                RESULTVIEW.update_finding(finding.number, DONE)
                 $(`#flex_content_${finding.number}`).hide()
             });
         }
@@ -185,55 +185,55 @@ class ResultView {
     }
 
     get current_page() {
-        return resultview.error_page
+        return RESULTVIEW.error_page
     }
 
     get current_finding() {
-        if (resultview.error_selected == null) {
+        if (RESULTVIEW.error_selected == null) {
             return null
         }
-        return parseInt(resultview.error_selected)
+        return parseInt(RESULTVIEW.error_selected)
     }
 
     get available_pages() {
-        if (service.content == undefined) {
+        if (SERVICE.content == undefined) {
             return 0
         }
-        return service.content.length
+        return SERVICE.content.length
     }
 
     get findings() {
-        if (service.content == undefined) {
+        if (SERVICE.content == undefined) {
             return []
         }
-        if (service.content.length <= resultview.current_page) {
+        if (SERVICE.content.length <= RESULTVIEW.current_page) {
             return []
         }
         let result = []
-        for (let item of service.content[resultview.current_page].findings) {
+        for (let item of SERVICE.content[RESULTVIEW.current_page].findings) {
             result.push(item)
         }
         return result
     }
 
     get selected_finding() {
-        let findings = visible_findings(resultview.current_page)
-        // let findings = page(resultview.current_page).findings
+        let findings = visible_findings(RESULTVIEW.current_page)
+        // let findings = page(RESULTVIEW.current_page).findings
         if (findings == undefined) {
             return null
         }
         if (this.current_finding < findings.length) {
-            return findings[resultview.current_finding]
+            return findings[RESULTVIEW.current_finding]
         }
         return null
     }
 
     get get_next_finding() {
-        let findings = visible_findings(resultview.current_page)
+        let findings = visible_findings(RESULTVIEW.current_page)
         if (findings.length == 0) {
             return null
         }
-        let current_plus = resultview.current_finding + 1
+        let current_plus = RESULTVIEW.current_finding + 1
         if (current_plus == findingbox.finding_max) {
             current_plus = 0
         }
@@ -249,11 +249,11 @@ class ResultView {
     }
 
     get get_prev_finding() {
-        let findings = visible_findings(resultview.current_page)
+        let findings = visible_findings(RESULTVIEW.current_page)
         if (findings.length == 0) {
             return null
         }
-        let current_minus = resultview.current_finding - 1
+        let current_minus = RESULTVIEW.current_finding - 1
         if (current_minus < 0) {
             current_minus = findingbox.finding_max - 1
         }
@@ -281,14 +281,14 @@ class ResultView {
     update_current_finding() {
         // Update finding list and ensure that selected finding is in
         // visbile finding range.
-        let findings = visible_findings(resultview.current_page)
-        let position_new = Math.min(findings.length - 1, resultview.error_selected)
+        let findings = visible_findings(RESULTVIEW.current_page)
+        let position_new = Math.min(findings.length - 1, RESULTVIEW.error_selected)
         position_new = Math.max(0, position_new)
         findingbox.update_findings(position_new)
     }
 
     update_finding(findingid, status) {
-        let url = `${API}/documents/${service.documentid}/findings/${findingid}`
+        let url = `${API}/documents/${SERVICE.documentid}/findings/${findingid}`
         $.ajax({
             type: 'PUT',
             url: url,
@@ -297,7 +297,7 @@ class ResultView {
                 // TODO: ADD ERROR HANDLER
             },
             success: function (response) {
-                service.finding_update(findingid, status)
+                SERVICE.finding_update(findingid, status)
                 navigator.update_page_navigator()
             }
         });
@@ -306,18 +306,18 @@ class ResultView {
 
 const show_page = function (pagenumber) {
     // Open selected `page` and update findings.
-    if (service.empty || empty(pagenumber)) {
+    if (SERVICE.empty || empty(pagenumber)) {
         return
     }
-    resultview.reset_finding_selector(pagenumber)
+    RESULTVIEW.reset_finding_selector(pagenumber)
     let selected = page(pagenumber)
     if (selected.content == null) {
-        service.update_pagecontent(pagenumber, function () {
+        SERVICE.update_pagecontent(pagenumber, function () {
             show_page(pagenumber)
         })
         return
     }
-    resultview.hide_all()
+    RESULTVIEW.hide_all()
     if (pagenumber < 0 || pagenumber > FIRST_SPECIAL) {
         open_special(pagenumber)
     } else {
@@ -351,11 +351,11 @@ const show_pngpage = function (pagenumber) {
 }
 
 const show_pdfpage = function (pagenumber) {
-    if (service.pdf == null) {
+    if (SERVICE.pdf == null) {
         return
     }
     pagenumber = pagenumber + 1
-    service.pdf.getPage(pagenumber).then(function (page) {
+    SERVICE.pdf.getPage(pagenumber).then(function (page) {
         let scale = 5.0;
         let viewport = page.getViewport({ scale: scale, });
 
@@ -375,35 +375,34 @@ const show_pdfpage = function (pagenumber) {
 
 const open_special = function (pagenumber) {
     let selected = page(pagenumber)
-    let view = resultview
-    view.hide_all()
+    RESULTVIEW.hide_all()
     // TODO: REMOVE LATER
     if (selected.page == 1024 || selected.page == OVERVIEW) {
-        view.show_overview()
+        RESULTVIEW.show_overview()
     } else if (selected.page == FOOTNOTES) {
-        view.show_footnotes()
+        RESULTVIEW.show_footnotes()
     } else if (selected.page == CAPTIONS) {
-        view.show_captions()
+        RESULTVIEW.show_captions()
     } else if (selected.page == HYPERLINKS) {
-        view.show_hyperlinks()
+        RESULTVIEW.show_hyperlinks()
     } else if (selected.page == DOCSTYLE) {
-        view.show_docstyle()
+        RESULTVIEW.show_docstyle()
     } else if (selected.page == BIBLIOGRAPHY) {
-        view.show_bibliography()
+        RESULTVIEW.show_bibliography()
     } else if (selected.page == PROPERTIES) {
-        view.show_pdf_properties()
+        RESULTVIEW.show_pdf_properties()
     } else if (selected.page == FINDINGS) {
-        view.show_findings()
+        RESULTVIEW.show_findings()
     } else if (selected.page == SCORE) {
         $('#error_page_content').html(selected.content)
         $('#pdfview_content').show()
     } else if (selected.page == CHECKLIST) {
-        view.show_checklist()
+        RESULTVIEW.show_checklist()
     }
 }
 
 const pdfpage_source = function (pagenumber) {
-    let documentid = service.documentid
+    let documentid = SERVICE.documentid
     let png = `${pagenumber}.png`
     if (png.length == 5) {
         png = '00' + png
@@ -415,4 +414,4 @@ const pdfpage_source = function (pagenumber) {
 }
 
 
-const resultview = new ResultView()
+const RESULTVIEW = new ResultView()

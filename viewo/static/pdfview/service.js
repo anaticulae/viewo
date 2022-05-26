@@ -32,24 +32,24 @@ class DocumentService {
         this.update_pagenumbers()
         this.update_pdf()
         this.update_pagecontent(null, function ready() {
-            service.update_overview()
-            service.update_footnotes()
-            service.update_fastfindings()
-            service.update_captions()
-            service.update_properties()
-            service.update_docstyle()
-            service.update_hyperlinks()
-            service.update_bibliography()
-            service.update_findings()
-            service.update_navigator_labels()
+            SERVICE.update_overview()
+            SERVICE.update_footnotes()
+            SERVICE.update_fastfindings()
+            SERVICE.update_captions()
+            SERVICE.update_properties()
+            SERVICE.update_docstyle()
+            SERVICE.update_hyperlinks()
+            SERVICE.update_bibliography()
+            SERVICE.update_findings()
+            SERVICE.update_navigator_labels()
         })
     }
 
     update_pagenumbers() {
         rpc(`/documents/${this.documentid}`, function (response) {
-            service.pagenumbers = response.document.pages
-            service.content = defaultpages(service.pagenumbers)
-            navigator.create_pagenavigator(service.pages)
+            SERVICE.pagenumbers = response.document.pages
+            SERVICE.content = defaultpages(SERVICE.pagenumbers)
+            navigator.create_pagenavigator(SERVICE.pages)
             show_page(0)
             base.show_done()
         }, function () {
@@ -74,14 +74,14 @@ class DocumentService {
         let url = `/api/v0/documents/${this.documentid}/pdf`
         let loadingTask = pdfjsLib.getDocument(url);
         loadingTask.promise.then(function (pdf) {
-            service.pdf = pdf
+            SERVICE.pdf = pdf
             show_pdfpage(0)
         })
     }
 
     update_fastfindings() {
         rpc(`/documents/${this.documentid}/fastfindings`, function (response) {
-            service.fastfindings = response
+            SERVICE.fastfindings = response
         })
     }
 
@@ -194,7 +194,7 @@ class DocumentService {
                 current += 1
             }
             // start download findings
-            // service.update_pagefindings(current, function () {
+            // SERVICE.update_pagefindings(current, function () {
             //     findingbox.update_findings(current)
             // })
             if (response.pageviews.html.length) {
@@ -255,7 +255,7 @@ class DocumentService {
             // signal that findings are already called
             current.findings = []
             // update findings
-            service.update_pagefindings(pagenumber)
+            SERVICE.update_pagefindings(pagenumber)
         }
         return current.findings
     }
@@ -265,10 +265,10 @@ class DocumentService {
         if (this.waiting) {
             return
         }
-        let index = service.content.findIndex(s => (s.page == pagenumber))
+        let index = SERVICE.content.findIndex(s => (s.page == pagenumber))
         let start = Math.max(0, index - lookaround)
-        let end = Math.min(service.content.length, index + lookaround)
-        let selected = service.content.slice(start, end)
+        let end = Math.min(SERVICE.content.length, index + lookaround)
+        let selected = SERVICE.content.slice(start, end)
         let range = []
         for (let item of selected) {
             if (item.findings == null && item.hasOwnProperty('findings')) {
@@ -289,7 +289,7 @@ class DocumentService {
             for (let pagefindings of findings) {
                 update_findings(pagefindings.pdfpage, pagefindings.content)
             }
-            service.waiting = false
+            SERVICE.waiting = false
         })
     }
 
@@ -343,15 +343,15 @@ const empty_findings = function (pagerange) {
     let splitted = pagerange.split(':')
     let start = parseInt(splitted[0])
     let end = parseInt(splitted[1])
-    end = Math.min(end, service.pagenumbers - 1)
+    end = Math.min(end, SERVICE.pagenumbers - 1)
     for (let index = start; index <= end; index++) {
         update_findings(index, [])
     }
 }
 
 const update_content = function (index, content) {
-    index = service.content.findIndex(s => (s.page == index))
-    service.content[index].content = content
+    index = SERVICE.content.findIndex(s => (s.page == index))
+    SERVICE.content[index].content = content
 }
 
 const update_findings = function (index, findings) {
@@ -360,12 +360,12 @@ const update_findings = function (index, findings) {
 }
 
 const page_content = function (pagenumber) {
-    let selected = service.content.find(s => (s.page == pagenumber))
+    let selected = SERVICE.content.find(s => (s.page == pagenumber))
     return selected.content
 }
 
 const page = function (pagenumber) {
-    let selected = service.content.find(s => (s.page == pagenumber))
+    let selected = SERVICE.content.find(s => (s.page == pagenumber))
     return selected
 }
 
@@ -383,17 +383,17 @@ const visible_findings = function (pagenumber) {
 }
 
 const open_findings = function (pagenumber) {
-    let selected = service.fastfindings.filter(s => s.page == pagenumber && s.content.length > 0)
+    let selected = SERVICE.fastfindings.filter(s => s.page == pagenumber && s.content.length > 0)
     return selected.length > 0
 }
 
 const next_page = function (pagenumber) {
-    let index = service.content.findIndex(s => (s.page == pagenumber))
+    let index = SERVICE.content.findIndex(s => (s.page == pagenumber))
     index += 1
-    if (index == service.content.length) {
-        return service.content[0].page
+    if (index == SERVICE.content.length) {
+        return SERVICE.content[0].page
     }
-    return service.content[index].page
+    return SERVICE.content[index].page
 }
 
 const next_page_visible = function (pagenumber) {
@@ -405,11 +405,11 @@ const next_page_visible = function (pagenumber) {
 }
 
 const previous_page = function (pagenumber) {
-    let index = service.content.findIndex(s => (s.page == pagenumber))
+    let index = SERVICE.content.findIndex(s => (s.page == pagenumber))
     if (index == 0) {
-        return service.content[service.content.length - 1].page
+        return SERVICE.content[SERVICE.content.length - 1].page
     }
-    return service.content[index - 1].page
+    return SERVICE.content[index - 1].page
 }
 
 const previous_page_visible = function (pagenumber) {
@@ -483,4 +483,4 @@ const defaultpages = function (pagenumbers) {
     return result
 }
 
-const service = new DocumentService()
+const SERVICE = new DocumentService()
