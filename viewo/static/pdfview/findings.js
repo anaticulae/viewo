@@ -4,26 +4,26 @@ class PDFViewFinding {
 
     init() {
         // add empty table
-        findingview.table = $('#finding_list').DataTable({
+        FINDINGVIEW.table = $('#finding_list').DataTable({
             'data': []
         })
         // register listener
         $("#select_critical").on('click', function () {
-            findingview.update_filter()
+            FINDINGVIEW.update_filter()
         });
         $("#select_error").on('click', function () {
-            findingview.update_filter()
+            FINDINGVIEW.update_filter()
         });
         $("#select_improvement").on('click', function () {
-            findingview.update_filter()
+            FINDINGVIEW.update_filter()
         });
         $("#select_closed").on('click', function () {
-            findingview.update_filter()
+            FINDINGVIEW.update_filter()
         });
     }
 
     update_content(findings) {
-        let dt = findingview.table
+        let dt = FINDINGVIEW.table
         // TODO: IMPROVE UPDATE BEHAVIOR
         dt.clear()
         let data = []
@@ -41,11 +41,11 @@ class PDFViewFinding {
             }
         }
         dt.rows.add(data);
-        findingview.update_filter()
+        FINDINGVIEW.update_filter()
     }
 
     filter_closed(closed) {
-        let dt = findingview.table
+        let dt = FINDINGVIEW.table
         if (closed) {
             dt.column(3).search('', true).draw()
         } else {
@@ -54,7 +54,7 @@ class PDFViewFinding {
     }
 
     filter_selected(error, warning, improvement) {
-        let dt = findingview.table
+        let dt = FINDINGVIEW.table
         let filter = ['All']
         if (error) {
             filter.push('Fehler')
@@ -75,8 +75,8 @@ class PDFViewFinding {
         let improvement = $("#select_improvement")[0].checked
         let closed = $("#select_closed")[0].checked
 
-        findingview.filter_closed(closed)
-        findingview.filter_selected(error, warning, improvement)
+        FINDINGVIEW.filter_closed(closed)
+        FINDINGVIEW.filter_selected(error, warning, improvement)
     }
 }
 
@@ -104,8 +104,8 @@ const status_label = function (status) {
     return 'offen'
 }
 
-const findingview = new PDFViewFinding()
-
 $(document).ready(function () {
-    findingview.init()
+    FINDINGVIEW.init()
 })
+
+const FINDINGVIEW = new PDFViewFinding()

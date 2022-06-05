@@ -4,14 +4,14 @@ class PDFViewBibliography {
 
     init() {
         // add empty table
-        bibliographyview.table = $('#bibliography_list').DataTable({
+        BIBLIOGRAPHYVIEW.table = $('#bibliography_list').DataTable({
             'data': []
         })
     }
 
     update_content(bibs) {
         // TODO: IMPROVE UPDATE BEHAVIOR
-        bibliographyview.table.clear()
+        BIBLIOGRAPHYVIEW.table.clear()
         let data = []
         for (let bib of bibs) {
             let row = [
@@ -21,8 +21,8 @@ class PDFViewBibliography {
             ]
             data.push(row)
         }
-        bibliographyview.table.rows.add(data);
-        bibliographyview.table.draw()
+        BIBLIOGRAPHYVIEW.table.rows.add(data);
+        BIBLIOGRAPHYVIEW.table.draw()
     }
 }
 
@@ -39,8 +39,8 @@ const authors_raw = function (authors) {
     return result
 }
 
-const bibliographyview = new PDFViewBibliography()
+const BIBLIOGRAPHYVIEW = new PDFViewBibliography()
 
 $(document).ready(function () {
-    bibliographyview.init()
+    BIBLIOGRAPHYVIEW.init()
 })

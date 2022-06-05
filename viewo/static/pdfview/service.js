@@ -148,7 +148,7 @@ class DocumentService {
                 update_content(BIBLIOGRAPHY, SPECIALCONTENT_EMPTY)
             }
             navigator.update_page_navigator()
-            bibliographyview.update_content(bibs)
+            BIBLIOGRAPHYVIEW.update_content(bibs)
         })
     }
 
@@ -164,7 +164,7 @@ class DocumentService {
                 update_content(FINDINGS, SPECIALCONTENT_EMPTY)
             }
             navigator.update_page_navigator()
-            findingview.update_content(findings)
+            FINDINGVIEW.update_content(findings)
             statuscounter.update()
         })
     }
