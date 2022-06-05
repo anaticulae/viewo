@@ -91,6 +91,7 @@ class ResultView {
             return
         }
         let current = null
+        let index = 0
         for (let footnote of footnotes) {
             let status = '✔'
             if (footnote.error != '') {
@@ -100,7 +101,7 @@ class ResultView {
                 list.append('<tr><td style="border-top:solid black 1px;" colspan="4"></td></tr>')
             }
             current = footnote.pdfpage
-            let href = `footnote_openpage${footnote.pdfpage}`
+            let href = `footnote_openpage${index}`
             let row = `
             <tr>
             <td class="center top">${footnote.number}</td>
@@ -112,6 +113,7 @@ class ResultView {
             $(`#${href}`).click(function () {
                 $(`#openpage${footnote.pdfpage}`).click()
             });
+            index += 1
         }
     }
 
@@ -139,7 +141,7 @@ class ResultView {
                     list.append('<tr><td style="border-top:solid black 1px;" colspan="4"></td></tr>')
                 }
                 current = item.page
-                let href = `footnote_openpage${index}`
+                let href = `caption_openpage${index}`
                 let row = `
             <tr>
             <td class="center top">${nr}</td>
@@ -151,8 +153,8 @@ class ResultView {
                 $(`#${href}`).click(function () {
                     $(`#openpage${page.pdfpage}`).click()
                 });
+                index += 1
             }
-            index += 1
         }
     }
 
