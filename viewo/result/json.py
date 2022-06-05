@@ -152,6 +152,8 @@ def message_replace(content: str) -> str:
     >>> message_replace('Hyperlink: ** http://www.statistik.at/\nservices/\n/5/'
     ... 'index.html?includePage=detailedView%C2%A** ist.')
     'Hyperlink: <strong> http://www.statistik.at/<br/>services/<br/>/5/...</strong> ist.'
+    >>> message_replace('{{hn:4:nh}}')
+    '<sup>4</sup>'
     """
     # TODO: INTRODUCE MARKDOWN PACKAGE
     url = configo.docs_url()
@@ -163,6 +165,8 @@ def message_replace(content: str) -> str:
     content = re.sub(r'\*\*((.|\s)+?)\*\*', r'<strong>\1</strong>', content)
     # emphasis lower important than strong content
     content = re.sub(r'\*([^\*]+)\*', r'<em>\1</em>', content)
+    # highnotes
+    content = re.sub(r'\{\{hn\:(\d{1,3})\:nh\}\}', r'<sup>\1</sup>', content)
     # replace newline
     content = content.replace('\n', '<br/>')
     return content
