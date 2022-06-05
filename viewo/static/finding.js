@@ -108,23 +108,8 @@ function highlight_finding(finding) {
     if (finding == null || finding.solution.status != SELECTED) {
         return
     }
-    if (finding.location['words']) {
-        let page = finding.location['page']
-        for (let item of finding.location['words']) {
-            let word = $(`#word${page}_${item}`)
-            word.fadeOut('fast').fadeIn()
-        }
-    } else if (finding.location['line'] != null) {
-        let page = finding.location['page']
-        let linestart = finding.location['line']
-        let lineend = finding.location['line_end'] || linestart
-        for (let line of range(linestart, lineend)) {
-            $(`span#line${page}_${line}`).each(function () {
-                $(this).fadeOut('fast').fadeIn()
-            });
-        }
-    }
-    else {
+    let bounding = finding.location['value']
+    if (bounding != null && bounding.length == 4) {
         RESULTVIEW.overlay_finding(finding.number)
         $(`#finding_${finding.number}`).fadeOut('fast').fadeIn()
     }
