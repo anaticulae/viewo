@@ -318,7 +318,7 @@ const show_page = function (pagenumber) {
         return
     }
     RESULTVIEW.hide_all()
-    if (pagenumber < 0 || pagenumber > FIRST_SPECIAL) {
+    if (pagenumber < 0 || pagenumber >= FIRST_SPECIAL) {
         open_special(pagenumber)
     } else {
         if (MODERN) {
