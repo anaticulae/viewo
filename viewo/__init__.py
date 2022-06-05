@@ -9,7 +9,7 @@
 
 import os
 
-__version__ = '2.23.0'
+__version__ = '2.24.0'
 
 PACKAGE = 'viewo'
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))

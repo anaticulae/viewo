@@ -2,6 +2,20 @@
 
 Every noteable change is logged here.
 
+## v2.24.0
+
+### Feature
+
+* use png as pdf view (b18b3b6321f0)
+* add checklist view (452409ef40ca)
+
+### Fix
+
+* adjust finding location page (9fb86b988d3f)
+* adjust pdf width to possible size (020470a0f438)
+* enable ciw score (4950b0c3c21b)
+* use new pdfpage (198fa456ac39)
+
 ## v2.23.0
 
 ### Feature
