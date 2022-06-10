@@ -65,7 +65,7 @@ nav.main{
     max-width:1280px;
 }
 
-#nogoodnews{
+#badnews{
     /* distance between menu-bar and error information list */
     margin-top:25px;
     max-height:200px;

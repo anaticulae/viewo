@@ -60,7 +60,7 @@
     <button id="start_payment" class="btn btn-success">Vollzugriff erhalten</button>
     {% endif %}
     {% endif %}
-    <div class="container" id="nogoodnews">
+    <div class="container" id="badnews">
         {% for message in get_flashed_messages() %}
         <div class="alert alert-warning">
             {{ button(caption='&times;', class='close', data_dismiss='alert') }}

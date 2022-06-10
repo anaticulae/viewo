@@ -144,7 +144,7 @@ const user_error = function (message) {
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 ${message}
                 </div>`
-    $('#nogoodnews').append(entry)
+    $('#badnews').append(entry)
 }
 
 const user_info = function (message) {
@@ -152,7 +152,7 @@ const user_info = function (message) {
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 ${message}
                 </div>`
-    $('#nogoodnews').append(entry)
+    $('#badnews').append(entry)
 }
 
 const connection_error = function () {
