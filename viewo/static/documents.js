@@ -77,7 +77,7 @@ const documents = {
                 // documents.call_updates()
             },
             error: function () {
-                user_error('Service nicht erreichbar.')
+                connection_error()
             }
         });
     },
@@ -97,7 +97,7 @@ const documents = {
                 setTimeout(() => documents.call_updates(), 10000);
             },
             error: function () {
-                user_error('Service nicht erreichbar.')
+                connection_error()
             }
         });
     },
