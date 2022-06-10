@@ -7,13 +7,15 @@ const delete_document = function (document) {
     if (action == false) {
         return
     }
-    let line = $(`#result_table_${document}`)
-    line.hide()
-
     let url = `${API}/documents/${document}`
-    $.ajax({
+    $.ajax(url, {
         type: 'DELETE',
-        url: url,
+        success: function (response) {
+            documents.delete_document(document)
+        },
+        error: function () {
+            connection_error()
+        }
     });
 }
 
@@ -121,10 +123,20 @@ const documents = {
         table.draw()
     },
 
+    delete_document: function (documentid) {
+        /** Remove deleted document out of displayed table.**/
+        documents.table.rows(function (i, data) {
+            let first = String(data[0])
+            return first.includes(documentid)
+        }).remove()
+        // update table
+        documents.table.draw()
+        user_info('Dokument gelöscht!')
+    },
+
     ispublic: function () {
         return documents.userid == '00000000'
     }
-
 }
 
 // see data.py
