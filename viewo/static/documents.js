@@ -143,6 +143,7 @@ const create_document_line = function (item, userid) {
     let todo = ``
     let action = ``
     let mydocument = userid == item.owner
+    mydocument |= true // TODO: REMOVE BEFORE RELEASE: SECURIY!!!
     let public = userid == '00000000'
     if (item.state == DOCUMENT_DONE) {
         // done
