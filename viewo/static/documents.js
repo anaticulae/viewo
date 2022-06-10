@@ -127,6 +127,13 @@ const documents = {
 
 }
 
+// see data.py
+const DOCUMENT_WAITING = -1
+const DOCUMENT_DONE = 0
+const DOCUMENT_RUNNING = 1
+const DOCUMENT_FAILED = 2
+const DOCUMENT_NOTSUPPORTED = 4
+
 const create_document_line = function (item, userid) {
     let title = item.title
     let pages = item.pages
@@ -137,7 +144,7 @@ const create_document_line = function (item, userid) {
     let action = ``
     let mydocument = userid == item.owner
     let public = userid == '00000000'
-    if (item.state == 0) {
+    if (item.state == DOCUMENT_DONE) {
         // done
         title = `<a href="view/${item.name}">${title}</a>`
         let closed = item.result.closed + item.result.excluded
@@ -150,8 +157,9 @@ const create_document_line = function (item, userid) {
             action += base.image_short('view/trash.png', `delete_document('${item.name}')`)
         } else {
             action += base.image_short('view/share.png', `share_document('${item.name}')`)
+            action += base.image_short('view/trash.png', `delete_document('${item.name}')`)
         }
-    } else if (item.state == 1 || item.state == -1) {
+    } else if (item.state == DOCUMENT_RUNNING || item.state == DOCUMENT_WAITING) {
         // running or waiting
         todo = '<center>-</center>'
         if (public == false) {
@@ -166,20 +174,20 @@ const create_document_line = function (item, userid) {
                 action += base.image_short('view/trash.png', `delete_document('${item.name}')`)
             }
         }
-    } else if (item.state == 2) {
+    } else if (item.state == DOCUMENT_FAILED) {
         // failed
         if (public == false) {
             action += base.image_short('view/trash.png', `delete_document('${item.name}')`)
         }
         title = `<span style="color:red;">${title} (fehlgeschlagen)</span>`
-    } else if (item.state == 4) {
+    } else if (item.state == DOCUMENT_NOTSUPPORTED) {
         // not supported
         if (public == false) {
             action += base.image_short('view/trash.png', `delete_document('${item.name}')`)
         }
         title = `<span style="color:darkred;">${title} (Art des Dokuments nicht unterstützt)</span>`
     }
-    if (item.state == -1) {
+    if (item.state == DOCUMENT_WAITING) {
         // waiting
         title = `${title} (Warteschlange)`
     }
