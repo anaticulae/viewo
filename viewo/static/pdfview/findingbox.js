@@ -32,7 +32,7 @@ class FindingBox {
     open_finding(id) {
         if (id == -1) {
             // select first visible element
-            let selected = SERVICE.pagefindings(RESULTVIEW.error_page)
+            let selected = SERVICE.pagefindings(RESULTVIEW.current_page)
             for (let index in selected) {
                 let item = selected[index]
                 if (visible(item)) {
@@ -85,7 +85,7 @@ class FindingBox {
 
         this.update_finding_pageable()
 
-        let pagefindings = visible_findings(RESULTVIEW.error_page)
+        let pagefindings = visible_findings(RESULTVIEW.current_page)
         for (let index in pagefindings.slice(this.paged * PAGESTEP, (this.paged + 1) * PAGESTEP)) {
             let index_paged = index
             index = this.paged * PAGESTEP + parseInt(index)
@@ -140,7 +140,7 @@ class FindingBox {
     }
 
     update_finding_pageable() {
-        let pagefindings = SERVICE.pagefindings(RESULTVIEW.error_page)
+        let pagefindings = SERVICE.pagefindings(RESULTVIEW.current_page)
         let pagenumbers = Math.floor((pagefindings.length - 1) / PAGESTEP)
         if (pagenumbers <= 0) {
             return
@@ -162,7 +162,7 @@ class FindingBox {
     }
 
     update_inbox_visibility() {
-        let pagefindings = SERVICE.pagefindings(RESULTVIEW.error_page)
+        let pagefindings = SERVICE.pagefindings(RESULTVIEW.current_page)
         pagefindings = pagefindings.filter(s => visible(s))
         if (pagefindings.length == 0) {
             // disable error bar if no error is provided
@@ -173,7 +173,7 @@ class FindingBox {
     }
 
     update_finding_navigation() {
-        let pagefindings = SERVICE.pagefindings(RESULTVIEW.error_page)
+        let pagefindings = SERVICE.pagefindings(RESULTVIEW.current_page)
         pagefindings = pagefindings.filter(s => visible(s))
         if (pagefindings.length == 1) {
             // use base.hide cause jquery introduce display object
@@ -233,7 +233,7 @@ class FindingBox {
     }
 
     get finding_max() {
-        let pagefindings = visible_findings(RESULTVIEW.error_page)
+        let pagefindings = visible_findings(RESULTVIEW.current_page)
         let max = pagefindings.length - this.paged * PAGESTEP
         return Math.min(PAGESTEP, max)
     }

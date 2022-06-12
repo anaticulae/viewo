@@ -5,14 +5,14 @@
 class ResultView {
 
     constructor() {
-        this.error_page = null
+        this.pageopen = null
         this.error_selected = null
         this.hide_all()
     }
 
     overlay_finding(findingid) {
         if (findingid == null) {
-            let source = pdfpage_source(this.error_page)
+            let source = pdfpage_source(this.pageopen)
             $("#show_page").attr("src", source);
             return
         }
@@ -22,7 +22,7 @@ class ResultView {
     }
 
     reset_finding_selector(pagenumber) {
-        this.error_page = pagenumber
+        this.pageopen = pagenumber
         this.error_selected = 0
         findingbox.paged = 0
     }
@@ -187,7 +187,7 @@ class ResultView {
     }
 
     get current_page() {
-        return RESULTVIEW.error_page
+        return RESULTVIEW.pageopen
     }
 
     get current_finding() {
