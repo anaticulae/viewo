@@ -12,16 +12,14 @@ import collections
 
 import utila
 
-import viewo.app
-
 
 def main():
     config = eval_cli()
     # setup logging
     utila.level_setup(level=config.verbose)
+    app = create_app()
     # run app
-    main_ = viewo.app.create_app()
-    main_.run(
+    app.run(
         host=config.host,
         port=config.port,
         debug=config.debug,
@@ -47,4 +45,10 @@ def eval_cli():
         argv.debug,
         argv.verbose,
     )
+    return result
+
+
+def create_app():
+    import viewo.app
+    result = viewo.app.create_app()
     return result
