@@ -25,7 +25,7 @@ def main():
     # setup logging
     utila.level_setup(level=argv.verbose)
     # run app
-    main_ = viewo.app.create_application()
+    main_ = viewo.app.create_app()
     main_.run(
         host=host,
         port=port,

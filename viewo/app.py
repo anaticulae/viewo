@@ -86,7 +86,7 @@ class Application(flask.Flask):
         return result
 
 
-def create_application(config=None) -> flask.Flask:
+def create_app(config=None) -> flask.Flask:
     """Setup flask application
 
     1. Set template and static folder

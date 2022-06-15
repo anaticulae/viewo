@@ -12,5 +12,5 @@ import viewo.app
 
 def test_config():
     """Test create_app without passing test config."""
-    assert not viewo.app.create_application().testing
-    assert viewo.app.create_application({'TESTING': True}).testing
+    assert not viewo.app.create_app().testing
+    assert viewo.app.create_app({'TESTING': True}).testing

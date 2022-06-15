@@ -91,7 +91,7 @@ def app(testdir):
     }
     # disable tracking in test run # TODO: MOVE TO CONFIG
     viewo.config.VISITORS_TRACKING = False
-    application = viewo.app.create_application(config=test_config)
+    application = viewo.app.create_app(config=test_config)
     # ensure to create app context: TODO: THINK ABOUT IT
     with application.app_context():
         yield application
