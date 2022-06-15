@@ -8,6 +8,7 @@
 # =============================================================================
 
 import argparse
+import collections
 
 import utila
 
@@ -15,19 +16,35 @@ import viewo.app
 
 
 def main():
+    config = eval_cli()
+    # setup logging
+    utila.level_setup(level=config.verbose)
+    # run app
+    main_ = viewo.app.create_app()
+    main_.run(
+        host=config.host,
+        port=config.port,
+        debug=config.debug,
+    )
+
+
+Config = collections.namedtuple(
+    'Config',
+    'host, port, debug, verbose',
+)
+
+
+def eval_cli():
     parser = argparse.ArgumentParser()
     parser.add_argument('--host', default='localhost')
     parser.add_argument('--port', default=5000)
     parser.add_argument('--debug', action='store_true')
     parser.add_argument('--verbose', '-V', action='count', default=0)
     argv = parser.parse_args()
-    host, port, debug = argv.host, int(argv.port), argv.debug
-    # setup logging
-    utila.level_setup(level=argv.verbose)
-    # run app
-    main_ = viewo.app.create_app()
-    main_.run(
-        host=host,
-        port=port,
-        debug=debug,
+    result = Config(
+        argv.host,
+        int(argv.port),
+        argv.debug,
+        argv.verbose,
     )
+    return result
