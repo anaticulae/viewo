@@ -128,8 +128,7 @@ class FrontEndCollection:
         if self.saver is not None:
             utila.error('scheduler is already started')
             return
-        testrun = os.environ.get('PYTEST_PLUGINS', False)
-        if testrun:
+        if utila.testing():
             utila.debug('testing requires no scheduler')
             return
         # scheduler is not required in test run TODO: VERIFY THIS
