@@ -9,6 +9,8 @@
 
 import argparse
 
+import utila
+
 import viewo.app
 
 
@@ -17,8 +19,12 @@ def main():
     parser.add_argument('--host', default='localhost')
     parser.add_argument('--port', default=5000)
     parser.add_argument('--debug', action='store_true')
+    parser.add_argument('--verbose', '-V', action='count', default=0)
     argv = parser.parse_args()
     host, port, debug = argv.host, int(argv.port), argv.debug
+    # setup logging
+    utila.level_setup(level=argv.verbose)
+    # run app
     main_ = viewo.app.create_application()
     main_.run(
         host=host,
