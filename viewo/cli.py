@@ -34,10 +34,20 @@ Config = collections.namedtuple(
 
 def eval_cli():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--host', default='localhost')
-    parser.add_argument('--port', default=5000)
-    parser.add_argument('--debug', action='store_true')
-    parser.add_argument('--verbose', '-V', action='count', default=0)
+    parser.add_argument('--host', default='localhost', help='run on url')
+    parser.add_argument('--port', default=5000, help='run on port')
+    parser.add_argument(
+        '--debug',
+        action='store_true',
+        help='run in debug mode',
+    )
+    parser.add_argument(
+        '--verbose',
+        '-V',
+        action='count',
+        default=0,
+        help='define level of logging',
+    )
     argv = parser.parse_args()
     result = Config(
         argv.host,
