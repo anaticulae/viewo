@@ -9,4 +9,5 @@
 
 import viewo.app
 
-app = viewo.app.create_app()  # pylint:disable=C0103
+if __name__ == "__main__":
+    app = viewo.app.create_app()  # pylint:disable=C0103

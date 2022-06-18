@@ -21,7 +21,12 @@ def appconfig():
         return flask.current_app.config
     except RuntimeError:
         import viewo.__main__  # pylint:disable=import-outside-toplevel
-        with viewo.__main__.app.app_context():
+        try:
+            app = viewo.__main__.app
+        except AttributeError:
+            app = viewo.app.create_app()
+            viewo.__main__.app = app
+        with app.app_context():
             return flask.current_app.config
 
 
