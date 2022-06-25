@@ -109,8 +109,12 @@ function highlight_finding(finding) {
         return
     }
     let bounding = finding.location['value']
-    if (bounding != null && bounding.length == 4) {
-        RESULTVIEW.overlay_finding(finding.number)
-        $(`#finding_${finding.number}`).fadeOut('fast').fadeIn()
+    if (bounding != null) {
+        let isboxed = bounding.length == 4
+        let issentence = finding.location['shortcut'] == 's'
+        if (isboxed || issentence) {
+            RESULTVIEW.overlay_finding(finding.number)
+            $(`#finding_${finding.number}`).fadeOut('fast').fadeIn()
+        }
     }
 }
