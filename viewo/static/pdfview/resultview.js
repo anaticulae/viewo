@@ -54,7 +54,7 @@ class ResultView {
             let del = `delete_${finding.number}`
             let done = `done_${finding.number}`
             let content = `
-            <div class="flex_content" id="flex_content_${solution.number}">
+            <div class="flex_content" id="flex_content_${finding.number}">
                 <h4>${solution.title}</h4>
                 <div class="error_message">${solution.description}</div>
                 <p class="error_options">
