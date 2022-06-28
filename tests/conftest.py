@@ -51,6 +51,7 @@ def extract_ready(files):
             path,
             generated=readypath,
         )
+    utila.directory_lock(readypath)
 
 
 # TODO: REPLACE WITH VIEWO_API
@@ -66,6 +67,7 @@ def extract_todo(files):
             generated=todopath,
             owner=PUBLIC,
         )
+    utila.directory_lock(todopath)
 
 
 def run_queuemo(source, generated, owner=None):
