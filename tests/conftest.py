@@ -26,7 +26,7 @@ pytest_plugins = ['pytester', 'xdist', 'localserver']  # pylint: disable=invalid
 
 PACKAGE = viewo.PACKAGE
 
-RESOURCES = [
+RESOURCES_READY = [
     power.HOME018_PDF,
     power.HOME025_PDF,
     power.MASTER075_PDF,
@@ -40,7 +40,7 @@ def pytest_sessionstart():
     power.run()
 
 
-def extract(files):
+def extract_ready(files):
     simplified = utilatest.simplify_testfile_names(files + [power.REPOSITORY])
     for source, dest in zip(files, simplified):
         run_queuemo(source, power.generated(), dest)

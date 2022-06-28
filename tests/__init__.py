@@ -32,15 +32,15 @@ BASE_TEMPLATE = utila.file_read(utila.join(viewo.config.TEMPLATES, 'base.html'))
 
 # TEST_FINDING = '-5427470771429581022'
 def first_finding(document) -> int:
-    source = utila.join(power.generated(), document)
+    source = utila.join(power.generated(folder='ready'), document)
     for finding in protocol.finding.iter_findings(source):
         first = finding[1][0].number
         return first
     return None
 
 
-TEST_DOCUMENT = '____home_home025'
-TEST_DOCUMENT_B = '____home_home018'
+TEST_DOCUMENT = 'home_home025'
+TEST_DOCUMENT_B = 'home_home018'
 TEST_FINDING = first_finding(TEST_DOCUMENT)
 INVALID_DOCUMENT = 'rrrrrrrrrrrrrrrr'
 INVALID_SECOND = 'SSSSSSSSSSSSSSSS'
@@ -48,7 +48,7 @@ INVALID_SECOND = 'SSSSSSSSSSSSSSSS'
 MINIMAL = power.DOCU007_PDF
 assert os.path.exists(MINIMAL), MINIMAL
 
-EXAMPLE_READY = power.generated()
+EXAMPLE_READY = power.generated(folder='ready')
 
 EXAMPLE_TODO = os.path.join(TEST_DATA, 'todo')
 assert os.path.exists(EXAMPLE_TODO), EXAMPLE_TODO
