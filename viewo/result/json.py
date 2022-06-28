@@ -127,6 +127,9 @@ def location_tojson(location, pagesentences: dict = None) -> dict:
                 result['words'] = words
         return result
     if shortcut == 'r':
+        if location.line is None or location.line_end is None:
+            utila.error(f'invalid location: {location}')
+            return result
         # ranged location
         line, linened = location.line, location.line_end
         linened = line if linened is None else linened
