@@ -18,10 +18,12 @@ import tests
 
 @pytest.fixture
 def valid(testdir):
-    root = str(testdir)
-    assert os.path.exists(root), str(root)
-    utila.copy_content(tests.EXAMPLE_TODO, root, recursive=True)
-    return root
+    utila.copy_content(
+        tests.EXAMPLE_TODO,
+        testdir.tmpdir,
+        recursive=True,
+    )
+    return testdir.tmpdir
 
 
 @pytest.fixture
