@@ -31,6 +31,9 @@ RESOURCES_READY = [
     power.HOME025_PDF,
     power.MASTER075_PDF,
 ]
+RESOURCES_TODO = [
+    power.DOCU007_PDF,
+]
 
 utilatest.setup(viewo.config.API_PREFIX)
 
@@ -41,20 +44,33 @@ def pytest_sessionstart():
 
 
 def extract_ready(files):
-    simplified = utilatest.simplify_testfile_names(files + [power.REPOSITORY])
-    for source, dest in zip(files, simplified):
-        run_queuemo(source, power.generated(), dest)
-    assert os.path.exists(tests.EXAMPLE_READY), tests.EXAMPLE_READY
-    assert os.path.exists(tests.EXAMPLE_RESULT), tests.EXAMPLE_RESULT
+    readypath = power.generated(folder='ready')
+    os.makedirs(readypath, exist_ok=True)
+    for path in files:
+        run_queuemo(
+            path,
+            generated=readypath,
+        )
 
 
-def run_queuemo(source, generated, dest):
-    """Run queuemo to analyze document. Keep attentation to valid
-    document/todo-name."""
-    # 16 accepted document id length
-    todoname = dest[-viewo.api.documents.DOCUMENTID_LENGTH:]
-    # fill too short names
-    todoname = zfill(todoname, viewo.api.documents.DOCUMENTID_LENGTH, char='_')
+def extract_todo(files):
+    todopath = power.generated(folder='todo')
+    os.makedirs(todopath, exist_ok=True)
+    for path in files:
+        run_queuemo(
+            path,
+            generated=todopath,
+        )
+
+
+def run_queuemo(source, generated):
+    """Run queuemo to analyze document.
+
+    Keep attentation to valid document/todo-name.
+    """
+    # 16 accepted document id length, disabled for testing
+    todoname = utila.file_name(utila.path_parent(source))
+    todoname += '_' + utila.file_name(source)
     workpath = os.path.join(generated, todoname)
     if os.path.exists(workpath):
         return
