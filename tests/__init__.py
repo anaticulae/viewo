@@ -31,6 +31,9 @@ BASE_TEMPLATE = utila.file_read(utila.join(viewo.config.TEMPLATES, 'base.html'))
 # TEST_FINDING = '-5427470771429581022'
 def first_finding(document) -> int:
     source = utila.join(power.generated(folder='ready'), document)
+    if not utila.exists(source):
+        utila.error('run resource generator!')
+        return None
     for finding in protocol.finding.iter_findings(source):
         first = finding[1][0].number
         return first
