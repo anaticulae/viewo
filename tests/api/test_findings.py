@@ -9,6 +9,7 @@
 
 import http
 
+import pytest
 import utilatest
 
 import tests
@@ -61,6 +62,7 @@ def test_api_findings_byfindingid_notexists(docclient):
     )
 
 
+@pytest.mark.skipif(not tests.TEST_FINDING, reason='generate resources')
 def test_api_findings_byfindingid(findingclient):
     client = findingclient
     result = utilatest.apicall(
@@ -71,6 +73,7 @@ def test_api_findings_byfindingid(findingclient):
     assert result['finding']['uri']
 
 
+@pytest.mark.skipif(not tests.TEST_FINDING, reason='generate resources')
 def test_api_finding_solve(findingclient):
     client = findingclient
 
@@ -127,6 +130,7 @@ def test_api_finding_solve(findingclient):
     assert status == 1
 
 
+@pytest.mark.skipif(not tests.TEST_FINDING, reason='generate resources')
 def test_api_finding_solve_invalid(findingclient):
     client = findingclient
     tests.finding_status_update(
