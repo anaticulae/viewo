@@ -53,6 +53,10 @@ def extract_ready(files):
         )
 
 
+# TODO: REPLACE WITH VIEWO_API
+PUBLIC = '00000000'
+
+
 def extract_todo(files):
     todopath = power.generated(folder='todo')
     os.makedirs(todopath, exist_ok=True)
@@ -60,10 +64,11 @@ def extract_todo(files):
         run_queuemo(
             path,
             generated=todopath,
+            owner=PUBLIC,
         )
 
 
-def run_queuemo(source, generated):
+def run_queuemo(source, generated, owner=None):
     """Run queuemo to analyze document.
 
     Keep attentation to valid document/todo-name.
@@ -75,7 +80,12 @@ def run_queuemo(source, generated):
     if os.path.exists(workpath):
         return
     utila.log(f'generate {workpath}')
-    workspace = link.create_todo(source, todopath=generated, todoname=todoname)
+    workspace = link.create_todo(
+        source,
+        todopath=generated,
+        todoname=todoname,
+        owner=owner,
+    )
     # run single queuemo instance in workspace, write output to same workspace
     cmd = f'queuemo_single -i {workspace} -V'
     completed = utila.run(cmd)
@@ -156,16 +166,12 @@ def docclient(client):  # pylint:disable=W0621
 
 @pytest.fixture
 def findingclient(client):  # pylint:disable=W0621
-    utila.copy_content(
-        tests.EXAMPLE_READY,
-        os.path.join(os.getcwd(), 'ready'),
-        recursive=True,
-    )
-    utila.copy_content(
-        tests.EXAMPLE_TODO,
-        os.path.join(os.getcwd(), 'todo'),
-        recursive=True,
-    )
+    test_config = {
+        'COMMON': power.generated(),
+        'TODO': power.generated(folder='todo'),
+        'READY': power.generated(folder='ready'),
+    }
+    client.application.config.update(test_config)
     return client
 
 

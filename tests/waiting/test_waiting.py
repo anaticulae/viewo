@@ -47,7 +47,7 @@ def test_waiting_status_invalid_resource(user_client):
     assert not result
 
 
-def test_waiting_status(no_validation, user_client, monkeypatch):
+def test_waiting_status_running(no_validation, user_client, monkeypatch):
     loaded = tests.waiting.run_status(user_client, no_validation, monkeypatch)
     assert loaded.status == link.State.RUNNING
     assert loaded[0] == link.State.DONE
@@ -58,24 +58,23 @@ def test_waiting_status_verified(user_client, testdir, monkeypatch):
     """Test a state where pdf is uploaded and validated.
 
     This requires the following resources:
-        - pdf file with name process name in process folder like `BAS45DFAC00JJ52K`
+        - pdf file with name process name in process folder like `docu_docu007`
         - pdfinfo.json with validation result of pdf file
     """
-    root = str(testdir)
-    todo = os.path.join(root, 'BAS45DFAC00JJ52K')
+    todo = os.path.join(testdir.tmpdir, tests.TODO_DOCUMENT)
     os.makedirs(todo)
-    utila.file_create(os.path.join(todo, 'BAS45DFAC00JJ52K'))  # fake pdf file
+    utila.file_create(os.path.join(todo, tests.TODO_DOCUMENT))  # fake pdf file
 
     utila.file_copy(
         os.path.join(
             tests.EXAMPLE_TODO,
-            'BAS45DFAC00JJ52K',
+            tests.TODO_DOCUMENT,
             link.PDFINFO_NAME,
         ),
         os.path.join(todo, link.PDFINFO_NAME),
     )
 
-    loaded = tests.waiting.run_status(user_client, root, monkeypatch)
+    loaded = tests.waiting.run_status(user_client, testdir.tmpdir, monkeypatch)
     assert loaded.status == link.State.RUNNING
     assert loaded[0] == link.State.DONE
     assert loaded[1] == link.State.DONE
@@ -110,7 +109,7 @@ def test_waiting_validation_invalid_result(
         context.setattr(viewo.path, 'todo', lambda: invalid_validation)
         result = tests.content(
             user_client,
-            '/waiting/validation/BAS45DFAC00JJ52K',
+            f'/waiting/validation/{tests.TODO_DOCUMENT}',
         )
     assert ('Die hochgeladene Datei konnte <strong>'
             'nicht erfolgreich</strong>') in result, str(result)
@@ -121,7 +120,7 @@ def test_waiting_validation_result(valid, user_client, monkeypatch):
         context.setattr(viewo.path, 'todo', lambda: valid)
         result = tests.content(
             user_client,
-            '/waiting/validation/BAS45DFAC00JJ52K',
+            f'/waiting/validation/{tests.TODO_DOCUMENT}',
         )
 
     assert ('Die PDF Datei konnte erfolgreich eingelesen'

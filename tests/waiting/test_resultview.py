@@ -62,7 +62,7 @@ def test_waiting_resultview_status(valid, user_client, monkeypatch):
         context.setattr(configo, 'todo', lambda: valid)
         result = tests.content(
             user_client,
-            '/waiting/resultview/status/BAS45DFAC00JJ52K',
+            f'/waiting/resultview/status/{tests.TODO_DOCUMENT}',
         )
     validate_status(result)
 
@@ -72,7 +72,7 @@ def test_waiting_resultview(valid, user_client, monkeypatch):
         context.setattr(configo, 'todo', lambda: valid)
         result = tests.content(
             user_client,
-            '/waiting/resultview/BAS45DFAC00JJ52K',
+            f'/waiting/resultview/{tests.TODO_DOCUMENT}',
         )
     assert 'Gesamtdurchsicht' in result
     assert len(result) > 2000, str(result)

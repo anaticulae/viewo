@@ -25,8 +25,6 @@ import viewo.config
 
 power.setup(viewo.ROOT)
 
-TEST_DATA = utila.join(viewo.ROOT, 'tests/data', exist=True)
-
 BASE_TEMPLATE = utila.file_read(utila.join(viewo.config.TEMPLATES, 'base.html'))
 
 
@@ -41,6 +39,7 @@ def first_finding(document) -> int:
 
 TEST_DOCUMENT = 'home_home025'
 TEST_DOCUMENT_B = 'home_home018'
+TODO_DOCUMENT = 'docu_docu007'
 TEST_FINDING = first_finding(TEST_DOCUMENT)
 INVALID_DOCUMENT = 'rrrrrrrrrrrrrrrr'
 INVALID_SECOND = 'SSSSSSSSSSSSSSSS'
@@ -50,8 +49,7 @@ assert os.path.exists(MINIMAL), MINIMAL
 
 EXAMPLE_READY = power.generated(folder='ready')
 
-EXAMPLE_TODO = os.path.join(TEST_DATA, 'todo')
-assert os.path.exists(EXAMPLE_TODO), EXAMPLE_TODO
+EXAMPLE_TODO = power.generated(folder='todo')
 
 EXAMPLE_ROOT = os.path.join(EXAMPLE_READY, TEST_DOCUMENT)
 EXAMPLE_RESULT = os.path.join(EXAMPLE_ROOT, 'result')

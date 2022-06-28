@@ -15,10 +15,13 @@ import viewo.waiting.data
 
 
 def run_status(client, todo: str, monkeypatch):
+    document = tests.TODO_DOCUMENT
     with monkeypatch.context() as context:
         context.setattr(viewo.path, 'todo', lambda: todo)
-        result = tests.content(client, '/waiting/status/BAS45DFAC00JJ52K')
-
+        result = tests.content(
+            client,
+            f'/waiting/status/{document}',
+        )
     assert result, str(result)
     loaded = viewo.waiting.data.loads(result)
     return loaded

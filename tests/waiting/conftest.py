@@ -31,7 +31,7 @@ def no_validation(valid):  # pylint:disable=W0621
     utila.file_remove(
         os.path.join(
             valid,
-            'BAS45DFAC00JJ52K',
+            tests.TODO_DOCUMENT,
             link.PDFINFO_NAME,
         ))
     return valid
@@ -42,7 +42,7 @@ def invalid_validation(valid):  # pylint:disable=W0621
     utila.file_replace(
         os.path.join(
             valid,
-            'BAS45DFAC00JJ52K',
+            tests.TODO_DOCUMENT,
             link.PDFINFO_NAME,
         ),
         '{}',

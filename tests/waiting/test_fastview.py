@@ -20,7 +20,7 @@ def test_waiting_fastview_status(valid, user_client, monkeypatch):
         context.setattr(viewo.path, 'todo', lambda: valid)
         result = tests.content(
             user_client,
-            '/waiting/fastview/status/BAS45DFAC00JJ52K',
+            f'/waiting/fastview/status/{tests.TODO_DOCUMENT}',
         )
     result = str(result)
     assert 'title' in result, str(result)
@@ -43,7 +43,7 @@ def test_waiting_fastview(valid, user_client, monkeypatch):
         context.setattr(viewo.path, 'todo', lambda: valid)
         result = tests.content(
             user_client,
-            '/waiting/fastview/BAS45DFAC00JJ52K',
+            f'/waiting/fastview/{tests.TODO_DOCUMENT}',
         )
 
     assert 'Schnelldurchsicht' in result, str(result)
@@ -68,7 +68,8 @@ def test_waiting_fastviewgroupstatus_jsonify():
 def test_waiting_load_groupstatus(monkeypatch):
     with monkeypatch.context() as context:
         context.setattr(viewo.path, 'todo', lambda: tests.EXAMPLE_TODO)
-        loaded = viewo.waiting.fastview.load_fastview_result('BAS45DFAC00JJ52K')
+        loaded = viewo.waiting.fastview.load_fastview_result(
+            tests.TODO_DOCUMENT)
     assert loaded
     assert len(loaded[0].error) == 1, str(loaded[0])
-    assert loaded[1].error == [], str(loaded[1])
+    assert loaded[1].error, str(loaded[1])

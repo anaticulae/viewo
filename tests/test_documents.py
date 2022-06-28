@@ -7,8 +7,6 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import configo
-
 import tests
 
 
@@ -19,10 +17,8 @@ def test_documents_view_no_documents(client):
     assert 'Fehler' not in result
 
 
-def test_documents_view_with_documents(findingclient, monkeypatch, testdir):
-    with monkeypatch.context() as context:
-        context.setattr(configo, 'share', lambda: testdir.tmpdir)
-        result = tests.content(findingclient, '/documents')
+def test_documents_view_with_documents(findingclient, testdir):
+    result = tests.content(findingclient, '/documents')
     assert len(result) > 300, str(result)
     assert 'Keine Dokumente verfügbar!' not in result, str(result)
     assert 'Fehler' not in result, str(result)
