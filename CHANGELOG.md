@@ -2,6 +2,30 @@
 
 Every noteable change is logged here.
 
+## v2.25.0
+
+### Feature
+
+* allow shorter documentid for testing (1adc288bb44d)
+* show overlay for marked sentences (8d6248551a49)
+* add scheduler runtime info (98e28601c1ef)
+* add cli help (86c62054d17d)
+* add verbose level (ba4b9c199d4c)
+* increase user feedback on document deletion (9827cc14e3aa)
+* add delete option while developing (94b545cf885e)
+* add highnote converter (5239d655c204)
+
+### Fix
+
+* do not fail on invalid location (f826c0432904)
+* adjust var access (4a4aff769756)
+* create viewo only once (6cdcbd633166)
+* run update always in ready documents (8a47d0d12c6a)
+* use improved testing verifier (41ffc92f255a)
+* shrink highlighting to bounding location (10bbb6efac8f)
+* do not overwrite action for multiple items on a page (f89e49fce9bf)
+* adjust first special page (2f563fb7e1c7)
+
 ## v2.24.0
 
 ### Feature
