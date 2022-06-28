@@ -74,7 +74,7 @@ def test_api_findings_byfindingid(findingclient):
 
 
 @pytest.mark.skipif(not tests.TEST_FINDING, reason='generate resources')
-def test_api_finding_solve(findingclient):
+def test_api_finding_solve_valid(findingclient):
     client = findingclient
 
     tests.finding_status_update(
