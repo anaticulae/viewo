@@ -75,7 +75,7 @@ def userid(public: bool = True) -> set:
 
 
 @viewo.api.documents.api_documents.route(
-    '/documents/<string(length=16):documentid>',
+    f'/documents/{viewo.api.documents.DOCUMENTID}',
     methods=['GET'],
 )
 @viewo.api.valid_document
@@ -92,7 +92,7 @@ def document_get(documentid: str):
 
 
 @viewo.api.documents.api_documents.route(
-    '/documents/<string(length=16):documentid>/pdf',
+    f'/documents/{viewo.api.documents.DOCUMENTID}/pdf',
     methods=['GET'],
 )
 @viewo.api.valid_document
@@ -106,7 +106,7 @@ def pdf_get(documentid: str) -> bytes:
 
 
 @viewo.api.documents.api_documents.route(
-    '/documents/<string(length=16):documentid>/footnotes',
+    f'/documents/{viewo.api.documents.DOCUMENTID}/footnotes',
     methods=['GET'],
 )
 @viewo.api.valid_document
@@ -119,7 +119,7 @@ def footnotes_get(documentid: str):
 
 
 @viewo.api.documents.api_documents.route(
-    '/documents/<string(length=16):documentid>/style',
+    f'/documents/{viewo.api.documents.DOCUMENTID}/style',
     methods=['GET'],
 )
 @viewo.api.valid_document
@@ -132,7 +132,7 @@ def docstyle_get(documentid: str):
 
 
 @viewo.api.documents.api_documents.route(
-    '/documents/<string(length=16):documentid>/captions',
+    f'/documents/{viewo.api.documents.DOCUMENTID}/captions',
     methods=['GET'],
 )
 @viewo.api.valid_document
@@ -145,7 +145,7 @@ def captions_get(documentid: str):
 
 
 @viewo.api.documents.api_documents.route(
-    '/documents/<string(length=16):documentid>/bibliography',
+    f'/documents/{viewo.api.documents.DOCUMENTID}/bibliography',
     methods=['GET'],
 )
 @viewo.api.valid_document
@@ -158,7 +158,7 @@ def bibliography_get(documentid: str):
 
 
 @viewo.api.documents.api_documents.route(
-    '/documents/<string(length=16):documentid>/properties',
+    f'/documents/{viewo.api.documents.DOCUMENTID}/properties',
     methods=['GET'],
 )
 @viewo.api.valid_document
@@ -171,7 +171,7 @@ def properties_get(documentid: str):
 
 
 @viewo.api.documents.api_documents.route(
-    '/documents/<string(length=16):documentid>/links',
+    f'/documents/{viewo.api.documents.DOCUMENTID}/links',
     methods=['GET'],
 )
 @viewo.api.valid_document
@@ -184,7 +184,7 @@ def links_get(documentid: str):
 
 
 @viewo.api.documents.api_documents.route(
-    '/documents/<string(length=16):documentid>/pagenumbers',
+    f'/documents/{viewo.api.documents.DOCUMENTID}/pagenumbers',
     methods=['GET'],
 )
 @viewo.api.valid_document

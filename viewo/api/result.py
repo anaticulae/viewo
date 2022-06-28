@@ -15,11 +15,13 @@ import link
 import utila
 import utila.file.securewrapper
 
+import viewo.api.documents
+
 result_ = flask.Blueprint('result', __name__)  # pylint:disable=C0103
 
 
 @result_.route('/view', defaults={'documentid': None})
-@result_.route('/view/<string(length=16):documentid>')
+@result_.route(f'/view/{viewo.api.documents.DOCUMENTID}')
 def view_result(documentid: str = None):
     if not documentid:
         return flask.redirect(flask.url_for('documents.view_documents'))
@@ -36,7 +38,7 @@ def view_result(documentid: str = None):
     return rendered
 
 
-@result_.route('/view/<string(length=16):documentid>/<string:image>')
+@result_.route(f'/view/{viewo.api.documents.DOCUMENTID}/<string:image>')
 def view_images(documentid: str = None, image: str = None):
     source = link.ready(documentid)
     invalid_document = not os.path.exists(source)

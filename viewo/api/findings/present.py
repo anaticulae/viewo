@@ -13,6 +13,7 @@ import utila
 import viewo_api
 
 import viewo.api
+import viewo.api.documents
 import viewo.api.findings
 import viewo.api.pageviews.utils
 import viewo.api.utils
@@ -22,7 +23,7 @@ import viewo.api_.findings.update
 
 
 @viewo.api.findings.api_findings.route(
-    '/documents/<string(length=16):documentid>/findings',
+    f'/documents/{viewo.api.documents.DOCUMENTID}/findings',
     methods=['GET'],
 )
 @viewo.api.valid_document
@@ -48,7 +49,7 @@ def findings(documentid):
 
 
 @viewo.api.findings.api_findings.route(
-    '/documents/<string(length=16):documentid>/findings/<string:findingid>',
+    f'/documents/{viewo.api.documents.DOCUMENTID}/findings/<string:findingid>',
     methods=['GET'],
 )
 @viewo.api.valid_document
@@ -63,7 +64,7 @@ def finding_get(documentid, findingid):
 
 
 @viewo.api.findings.api_findings.route(
-    '/documents/<string(length=16):documentid>/findings/compare/<string(length=16):partnerid>',
+    f'/documents/{viewo.api.documents.DOCUMENTID}/findings/compare/{viewo.api.documents.DOCUMENTID_B}',
     methods=['GET'],
 )
 @viewo.api.valid_partner
@@ -108,7 +109,7 @@ SKIP = {
 
 
 @viewo.api.findings.api_findings.route(
-    '/documents/<string(length=16):documentid>/fastfindings',
+    f'/documents/{viewo.api.documents.DOCUMENTID}/fastfindings',
     methods=['GET'],
 )
 @viewo.api.valid_document

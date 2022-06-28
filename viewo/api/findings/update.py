@@ -12,6 +12,7 @@ import iamraw
 import viewo_api
 
 import viewo.api
+import viewo.api.documents
 import viewo.api.findings
 import viewo.api_.findings.data
 import viewo.api_.findings.update
@@ -19,7 +20,7 @@ import viewo.result.update
 
 
 @viewo.api.findings.api_findings.route(
-    '/documents/<string(length=16):documentid>/findings/<string:findingid>',
+    f'/documents/{viewo.api.documents.DOCUMENTID}/findings/<string:findingid>',
     methods=['PUT'],
 )
 @viewo.api.valid_document

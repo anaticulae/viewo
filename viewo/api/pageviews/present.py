@@ -12,12 +12,13 @@ import flask_login
 import utila
 
 import viewo.api
+import viewo.api.documents
 import viewo.api.pageviews
 import viewo.api.pageviews.utils
 
 
 @viewo.api.pageviews.api_pageviews.route(
-    '/documents/<string(length=16):documentid>/pageviews',
+    f'/documents/{viewo.api.documents.DOCUMENTID}/pageviews',
     methods=['GET'],
 )
 @viewo.api.valid_document
