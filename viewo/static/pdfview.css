@@ -79,6 +79,7 @@ article, canvas{
 
 #error_message{
     padding:5px;
+    overflow:hidden;
 }
 
 #pdfview_navigation{
