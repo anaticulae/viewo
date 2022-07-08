@@ -29,8 +29,8 @@ VISITORS_MAX_FILE_SIZE = 1024  # kb
 VISITORS_TRACKING = configo.env('CHANIA_VISITORS_TRACKING', True)
 VISITORS_TRACKING_STATIC = configo.env('CHANIA_VISITORS_TRACKING_STATIC', False)
 
-PASSWORD_MIN_LENGTH = 8
-PASSWORD_MAX_LENGTH = 64
+PASSWORD_LENGTH_MIN = 8
+PASSWORD_LENGTH_MAX = 64
 
 # null:disable caching
 CACHING = configo.env('CHANIA_CACHING', 'null')
@@ -40,6 +40,22 @@ OPTIMIZE_DATA = configo.env('CHANIA_OPTIMIZE_DATA', False)
 PAYMENT = configo.env('CHANIA_PAYMENT', False)
 
 TALKER = configo.env('CHANIA_TALKER', True)
+
+
+def config_show():
+    utila.debug('')
+    utila.debug('USER')
+    utila.debug('')
+    utila.debug(f'PAYMENT:             {PAYMENT}')
+    utila.debug(f'TALKER:              {TALKER}')
+    utila.debug(f'VISITORS_TRACKING:   {VISITORS_TRACKING}')
+    utila.debug(f'PASSWORD_LENGTH_MIN: {PASSWORD_LENGTH_MIN}')
+    utila.debug('')
+    utila.debug('PLATFORM')
+    utila.debug('')
+    utila.debug(f'API_PREFIX:          {API_PREFIX}')
+    utila.debug(f'MAX_FILE_SIZE:       {MAX_FILE_SIZE}')
+    utila.debug('')
 
 
 def writing() -> str:

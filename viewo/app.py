@@ -94,6 +94,7 @@ def create_app(config=None) -> flask.Flask:
     3. Setup global env
     4. Register blueprint for routing the user requests
     """
+    viewo.config.config_show()
     # Flask determines template- and static-folder automatically.
     appi = Application()
     # configure app instance
