@@ -48,7 +48,7 @@ class Application(flask.Flask):
     def __init__(self):
         super().__init__(__name__)
         self.secret_key = viewo.config.SECRET_KEY
-        self.config.setdefault('MAX_CONTENT_LENGTH', viewo.config.MAX_FILE_SIZE)
+        self.config.setdefault('MAX_CONTENT_LENGTH', viewo.config.FILE_SIZE_MAX)
         self.config.setdefault('BOOTSTRAP_SERVE_LOCAL', True)
         # configure extensions
         flask_bootstrap.Bootstrap(app=self)

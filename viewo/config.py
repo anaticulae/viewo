@@ -21,11 +21,11 @@ TEMPLATES = os.path.join(viewo.ROOT, 'viewo/templates')
 STATIC = os.path.join(viewo.ROOT, 'viewo/static')
 
 # 20 megabyte
-MAX_FILE_SIZE = configo.env('CHANIA_DOCUMENT_SIZE_MAX', 20 * 1024 * 1024)
+FILE_SIZE_MAX = configo.env('CHANIA_DOCUMENT_SIZE_MAX', 20 * 1024 * 1024)
 
 API_PREFIX = '/api/v0'
 
-VISITORS_MAX_FILE_SIZE = 1024  # kb
+VISITORS_FILE_SIZE_MAX = 1024  # kb
 VISITORS_TRACKING = configo.env('CHANIA_VISITORS_TRACKING', True)
 VISITORS_TRACKING_STATIC = configo.env('CHANIA_VISITORS_TRACKING_STATIC', False)
 
@@ -54,7 +54,7 @@ def config_show():
     utila.debug('PLATFORM')
     utila.debug('')
     utila.debug(f'API_PREFIX:          {API_PREFIX}')
-    utila.debug(f'MAX_FILE_SIZE:       {MAX_FILE_SIZE}')
+    utila.debug(f'FILE_SIZE_MAX:       {FILE_SIZE_MAX}')
     utila.debug('')
 
 
