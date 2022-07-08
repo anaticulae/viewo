@@ -59,8 +59,10 @@ def config_show():
 
 
 def writing() -> str:
-    """Return path to generated `writers club` content. If content is
-    not generated, writer generator is executed."""
+    """Return path to generated `writers club` content.
+
+    If content is not generated, run writer generator.
+    """
     result = writers.build()
     if not os.path.exists(result):
         completed = writers.generate()
