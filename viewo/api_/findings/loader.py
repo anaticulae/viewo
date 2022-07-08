@@ -14,6 +14,7 @@ import utila
 
 import viewo.api.pageviews.utils
 import viewo.api_.findings.data
+import viewo.config
 import viewo.result.loader.pagenumbers
 
 
@@ -87,8 +88,12 @@ def findingids_tostr(pages):
 
 def remove_unpayed(simple):
     for page in simple:
-        allowed = viewo.api.pageviews.utils.free_view(page['page'])
+        allowed = viewo.api.pageviews.utils.free_view(
+            page['page'],
+            payment=viewo.config.PAYMENT,
+        )
         if allowed:
+            # if PAYMENT is disabled, all pages are allowed
             continue
         for finding in page['content']:
             finding['solution']['title'] = 'Vollzugriff erforderlich'

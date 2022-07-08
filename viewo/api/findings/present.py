@@ -32,6 +32,8 @@ def findings(documentid):
     pages_selected = pages(documentid)
     user = flask_login.current_user
     payed = not user.is_authenticated or user.payed
+    # payment is disabled, everything is free
+    payed |= not viewo.config.PAYMENT
     collected = viewo.api_.findings.data.frontend(documentid).findings(
         pages=pages_selected,
         status=None,
