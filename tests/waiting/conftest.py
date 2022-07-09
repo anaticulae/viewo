@@ -22,9 +22,8 @@ def valid(testdir):
         tests.EXAMPLE_TODO,
         testdir.tmpdir,
         recursive=True,
+        unlock=True,
     )
-    # TODO: ENSURE TO AVOID COPYING WRITEABLE FLAG, SEE UTILA
-    utila.directory_unlock(testdir.tmpdir)
     return testdir.tmpdir
 
 
