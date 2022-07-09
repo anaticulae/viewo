@@ -47,11 +47,11 @@ def test_call_result_e508af0df454gi30(client, monkeypatch):
 def test_call_result_e508af0df454gi30_image_access(test_client):
     utila.copy_content(
         src=os.path.join(tests.EXAMPLE_ROOT, 'jobinfo.yaml'),
-        dest=f'ready/{tests.TEST_DOCUMENT}',
+        dst=f'ready/{tests.TEST_DOCUMENT}',
     )
     utila.copy_content(
         src=tests.EXAMPLE_RESULT,
-        dest=f'ready/{tests.TEST_DOCUMENT}/result',
+        dst=f'ready/{tests.TEST_DOCUMENT}/result',
         recursive=True,
     )
     response = test_client.get(
