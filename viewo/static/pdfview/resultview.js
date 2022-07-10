@@ -11,6 +11,9 @@ class ResultView {
     }
 
     overlay_finding(findingid) {
+        if (this.pageopen < 0) {
+            return
+        }
         if (findingid == null) {
             let source = pdfpage_source(this.pageopen)
             $("#show_page").attr("src", source);
