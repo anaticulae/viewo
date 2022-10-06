@@ -2,6 +2,25 @@
 
 Every noteable change is logged here.
 
+## v2.26.0 (2022-10-06)
+
+### Feature
+
+* log config on startup (7973ccd86be7)
+
+### Fix
+
+* do not try to open finding overview (e08ea9f0c76a)
+* show all findings if payment is not activated (a61fd7cf5a8e)
+* cut long links in error message view (417a9e90d0a1)
+
+### Chore
+
+* generate resource in parallel (701630e36420)
+* add separate generator step (c3a0b0976241)
+* add Jenkinsfile (7eb34fcabc89)
+* upgrade requirements.txt (a00ec4947cb2)
+
 ## v2.25.0
 
 ### Feature
