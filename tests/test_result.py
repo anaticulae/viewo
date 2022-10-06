@@ -44,6 +44,7 @@ def test_call_result_e508af0df454gi30(client, monkeypatch):
     assert content
 
 
+@tests.generated
 def test_call_result_e508af0df454gi30_image_access(test_client):
     utila.copy_content(
         src=os.path.join(tests.EXAMPLE_ROOT, 'jobinfo.yaml'),

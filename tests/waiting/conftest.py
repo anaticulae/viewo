@@ -10,14 +10,17 @@
 import os
 
 import link
+import power
 import pytest
 import utila
+import utilatest
 
 import tests
 
 
 @pytest.fixture
 def valid(testdir):
+    utilatest.fixture_requires(power.DOCU007_PDF, folder='todo')
     utila.copy_content(
         tests.EXAMPLE_TODO,
         testdir.tmpdir,

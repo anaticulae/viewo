@@ -15,6 +15,7 @@ import os
 
 import power
 import protocol.finding
+import pytest
 import utila
 import utilatest
 import viewo_api
@@ -60,6 +61,11 @@ EXAMPLE_RESULT = os.path.join(EXAMPLE_ROOT, 'result')
 TEST_USER = 'eewuesteewuestee'
 TEST_PASSWORD = 'EEWUESTEEWUESTEE'  # nosec
 TEST_EMAIL = 'dertestbaer@helm.com'
+
+generated = pytest.mark.skipif(
+    not utila.exists(EXAMPLE_RESULT),
+    reason='generate data',
+)
 
 
 @contextlib.contextmanager

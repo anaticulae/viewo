@@ -168,6 +168,8 @@ def docclient(client):  # pylint:disable=W0621
 
 @pytest.fixture
 def findingclient(client):  # pylint:disable=W0621
+    if not utila.exists(power.generated()):
+        pytest.skip(reason='generate data')
     test_config = {
         'COMMON': power.generated(),
         'TODO': power.generated(folder='todo'),

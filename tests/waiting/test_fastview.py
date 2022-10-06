@@ -65,6 +65,7 @@ def test_waiting_fastviewgroupstatus_jsonify():
     assert '"Mister good one."' in json
 
 
+@tests.generated
 def test_waiting_load_groupstatus(monkeypatch):
     with monkeypatch.context() as context:
         context.setattr(viewo.path, 'todo', lambda: tests.EXAMPLE_TODO)

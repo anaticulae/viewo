@@ -54,6 +54,7 @@ def test_waiting_status_running(no_validation, user_client, monkeypatch):
     assert loaded[1] == link.State.RUNNING
 
 
+@tests.generated
 def test_waiting_status_verified(user_client, testdir, monkeypatch):
     """Test a state where pdf is uploaded and validated.
 

@@ -25,6 +25,7 @@ def validate_status(dumped: str):
     assert 'location' in dumped
 
 
+@tests.generated
 def test_waiting_resultview_load_resultview():
     loaded = viewo.result.data.load_resultview(
         tests.EXAMPLE_RESULT,
@@ -37,6 +38,7 @@ def test_waiting_resultview_load_resultview():
     assert pages == utila.rlist(-1, 25)
 
 
+@tests.generated
 def test_waiting_resultview_tojson():
     loaded = viewo.result.data.load_resultview(
         tests.EXAMPLE_RESULT,
