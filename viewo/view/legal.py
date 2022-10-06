@@ -9,6 +9,7 @@
 
 import flask
 import legal
+import utila
 
 legal_ = flask.Blueprint('legal', __name__)  # pylint:disable=C0103
 
@@ -36,8 +37,10 @@ def privacy():
 
 @legal_.route('/download/<path:filename>')
 def download_legal(filename):
+    # TODO: SAFE JOIN REQUIRED?
+    path = utila.join(legal.ROOT, 'legal/text/')
     return flask.send_from_directory(
-        flask.safe_join(legal.ROOT, 'legal/text/'),
+        path,
         filename,
         as_attachment=True,
     )
