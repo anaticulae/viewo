@@ -35,8 +35,11 @@ def first_finding(document) -> int:
     if not utila.exists(source):
         utila.error('run resource generator!')
         return None
-    for finding in protocol.finding.iter_findings(source):
-        first = finding[1][0].number
+    for path, content in protocol.finding.iter_findings(source):  # pylint:disable=W0612,W0621
+        if not content:
+            # no finding in `path`
+            continue
+        first = content[0].number
         return first
     return None
 
