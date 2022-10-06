@@ -46,11 +46,13 @@ def pytest_sessionstart():
 def extract_ready(files):
     readypath = power.generated(folder='ready')
     os.makedirs(readypath, exist_ok=True)
-    for path in files:
-        run_queuemo(
-            path,
-            generated=readypath,
-        )
+    with utila.GeorgFork() as fork:
+        for path in files:
+            fork.fork(
+                method=run_queuemo,
+                source=path,
+                generated=readypath,
+            )
     utila.directory_lock(readypath)
 
 
@@ -61,12 +63,14 @@ PUBLIC = '00000000'
 def extract_todo(files):
     todopath = power.generated(folder='todo')
     os.makedirs(todopath, exist_ok=True)
-    for path in files:
-        run_queuemo(
-            path,
-            generated=todopath,
-            owner=PUBLIC,
-        )
+    with utila.GeorgFork() as fork:
+        for path in files:
+            fork.fork(
+                method=run_queuemo,
+                source=path,
+                generated=todopath,
+                owner=PUBLIC,
+            )
     utila.directory_lock(todopath)
 
 
