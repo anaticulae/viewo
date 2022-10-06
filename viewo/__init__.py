@@ -11,5 +11,5 @@ import os
 
 __version__ = '2.26.0'
 
-PACKAGE = 'viewo'
+PROCESS = 'viewo'
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))

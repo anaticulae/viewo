@@ -24,7 +24,7 @@ import viewo.config
 
 pytest_plugins = ['pytester', 'xdist', 'localserver']  # pylint: disable=invalid-name
 
-PACKAGE = viewo.PACKAGE
+PACKAGE = viewo.PROCESS
 
 RESOURCES_READY = [
     power.HOME018_PDF,
