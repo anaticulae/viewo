@@ -28,6 +28,8 @@ power.setup(viewo.ROOT)
 
 BASE_TEMPLATE = utila.file_read(utila.join(viewo.config.TEMPLATES, 'base.html'))
 
+run, fail = utilatest.create_cli_runner(viewo)
+
 
 # TEST_FINDING = '-5427470771429581022'
 def first_finding(document) -> int:

@@ -9,6 +9,7 @@
 
 import argparse
 import collections
+import sys
 
 import utila
 
@@ -48,7 +49,16 @@ def eval_cli():
         default=0,
         help='define level of logging',
     )
+    parser.add_argument(
+        '--version',
+        action='store_true',
+        help='print version and quit',
+    )
     argv = parser.parse_args()
+    if argv.version:
+        import viewo
+        utila.log(viewo.__version__)
+        sys.exit(utila.SUCCESS)
     result = Config(
         argv.host,
         int(argv.port),
