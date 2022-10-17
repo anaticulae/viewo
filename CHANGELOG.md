@@ -2,6 +2,20 @@
 
 Every noteable change is logged here.
 
+## v2.27.0 (2022-10-17)
+
+### Feature
+
+* add docker production environment (5bd934de8782)
+* add version flag (928e85f99548)
+
+### Chore
+
+* increase used viewo (3b91d7e0f95d)
+* rename nightly to all (35f3e5fc1af5)
+* upgrade environment (acc00ef9b636)
+* upgrade requirements.txt (59a1c1b5b4a9)
+
 ## v2.26.0 (2022-10-06)
 
 ### Feature
