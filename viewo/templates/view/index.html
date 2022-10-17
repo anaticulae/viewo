@@ -28,7 +28,8 @@ onload('{{process}}')
 
 {% block pagecontent %}
 <script>
-    const MODERN = {{ 'false' if 'Edge' in request.environ['HTTP_USER_AGENT'] else 'true' }}
+    // const MODERN = {{ 'false' if 'Edge' in request.environ['HTTP_USER_AGENT'] else 'true' }}
+    const MODERN = false
 </script>
 <div id="pdfview">
     <h2><span id="finding_status_counter"></span>Gesamtdurchsicht: {{docname}}</h2>
