@@ -38,7 +38,7 @@ pipeline{
                 sh 'baw test skip --generate'
             }
         }
-        stage('nightly'){
+        stage('all'){
             steps{
                 sh 'baw test all -n16 --cov --junit_xml=report.xml'
                 junit '**/report.xml'
