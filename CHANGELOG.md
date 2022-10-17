@@ -2,6 +2,16 @@
 
 Every noteable change is logged here.
 
+## v2.27.1 (2022-10-17)
+
+### Fix
+
+* allow publish service (0956960df633)
+
+### Chore
+
+* add execution flag (33186f591f2f)
+
 ## v2.27.0 (2022-10-17)
 
 ### Feature
