@@ -1,0 +1,22 @@
+# =============================================================================
+# C O P Y R I G H T
+# -----------------------------------------------------------------------------
+# Copyright (c) 2022 by Helmut Konrad Fahrendholz. All rights reserved.
+# This file is property of Helmut Konrad Fahrendholz. Any unauthorized copy,
+# use or distribution is an offensive act against international law and may
+# be prosecuted under federal law. Its content is company confidential.
+# =============================================================================
+
+FROM 169.254.149.20:6001/arch_python:0.14.0
+
+RUN pip install "viewo==2.26.0"
+
+ENV SHARED_TODO=/var/shared/todo
+ENV SHARED_READY=/var/shared/ready
+ENV SHARED_SPACE=/var/shared/
+ENV SHARED_TMP=/tmp
+
+ENV HOST=localhost
+ENV PORT=5000
+
+ENTRYPOINT viewo --host $HOST --port $PORT -VVV
