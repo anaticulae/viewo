@@ -35,7 +35,7 @@ def load_fromdocumentid(documentid: str) -> dict:
         utila.error(f'could not load: {path}')
         return None
     pagenumbers = serializeraw.load_pagenumbers(path)
-    result = {page.pdfpage: page.detected for page in pagenumbers}
+    result = {page.pdfpage: page.detected for page in pagenumbers}  # pylint:disable=E1101
     pdfinfo = link.pdfinfo(documentid)
     if pdfinfo:
         try:
@@ -84,7 +84,7 @@ def fill_pages_magic(pages: dict, pdflength: int) -> dict:  # pylint:disable=R12
     # sort dict by page number
     pages = {key: pages[key] for key in sorted(pages.keys())}
     nones = [pdfpage for pdfpage, value in pages.items() if value is None]
-    while nones:
+    while nones:  # pylint:disable=W0149
         # go from right to left pdf pages and use the right before the
         # left page for replacing.
         for pdfpage in reversed(nones):

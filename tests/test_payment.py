@@ -48,7 +48,7 @@ def test_payment_invalid_choice(user_client, monkeypatch):
 
 def test_payment_post_nochoice(user_client, monkeypatch):
     with setpayment(True, monkeypatch):
-        failure = tests.post(user_client, '/payment', data=dict())
+        failure = tests.post(user_client, '/payment', data={})
     assert viewo.view.payment.NO_PRODUCT_CHOICE in failure
 
 

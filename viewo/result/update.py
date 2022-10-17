@@ -56,7 +56,7 @@ def update_bookkeeping(
 
 
 def problem_fromint(status: int) -> iamraw.ProblemStatus:
-    if status in (0, 1):
+    if status in {0, 1}:
         return iamraw.ProblemStatus.OPEN
     if status == 4:
         return iamraw.ProblemStatus.SOLVED

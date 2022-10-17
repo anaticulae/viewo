@@ -23,7 +23,7 @@ welcome = flask.Blueprint('welcome', __name__)  # pylint:disable=invalid-name
 def show_page(page):
     """Route public pages which are visible without any permissions."""
     try:
-        return flask.render_template('public/%s.html' % page)
+        return flask.render_template(f'public/{page}.html')
     except jinja2.TemplateNotFound:
         return flask.render_template('public/error.html', errorpage=page)
 

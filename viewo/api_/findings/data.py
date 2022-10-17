@@ -113,7 +113,7 @@ class FrontEndCollection:
 
     def run_saveme(self):
         utila.log('start saving scheduler')
-        while True:
+        while True:  # pylint:disable=W0149
             for item in self.documents.values():
                 if not item.outdated:
                     continue

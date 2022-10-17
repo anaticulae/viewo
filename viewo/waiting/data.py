@@ -107,7 +107,7 @@ def status(process: str) -> Status:  # pylint:disable=too-complex
     def globalviewed():
         before = analyzestarted()
         before_fast = fastviewed()
-        if before == link.State.FAILED or before_fast == link.State.FAILED:
+        if link.State.FAILED in (before, before_fast):
             return link.State.FAILED
         path = result_result(process)
         if path is None:

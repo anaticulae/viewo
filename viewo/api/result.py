@@ -60,7 +60,10 @@ def view_images(documentid: str = None, image: str = None):
         response = flask.send_file(image, mimetype='image')
         return response
     # Hint: contextmanager does not work here
-    response = flask.send_file(open(image, mode='rb'), mimetype='image')
+    response = flask.send_file(
+        open(image, mode='rb'),  # pylint:disable=R1732
+        mimetype='image',
+    )
     return response
 
 

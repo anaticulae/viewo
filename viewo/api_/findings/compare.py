@@ -10,7 +10,6 @@
 import collections
 import contextlib
 import enum
-import typing
 
 import link
 import protocol
@@ -22,7 +21,7 @@ ComparedFinding = collections.namedtuple(
     'ComparedFinding',
     'page, current, other',
 )
-ComparedListFinding = typing.List[ComparedFinding]
+ComparedListFinding = 'typing.List[ComparedFinding]'  # pylint:disable=C0103
 
 
 class Comperator(enum.Enum):

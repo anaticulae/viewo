@@ -65,7 +65,7 @@ class Tracker:
         viewo.api.visitors.data.append(visitor)
 
     def run(self):
-        while self.running:
+        while self.running:  # pylint:disable=W0149
             self.consume()
 
     def start(self):

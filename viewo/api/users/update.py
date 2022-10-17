@@ -32,7 +32,7 @@ PASSWORD_UPDATED = 'updated'  # nosec
 )
 @viewo.api.valid_user
 @viewo.api.login_required_api  # pylint:disable=R0911,R1260
-def user_put(userid):
+def user_put(userid):  # pylint:disable=R1260,R0911
     # TODO: SECURE INPUT
     password = flask.request.form.get('password', None)
     user = viewo_api.user.data.user_fromid(userid)
@@ -77,7 +77,7 @@ def user_put(userid):
 
 
 def user_pay(userid: str, choice: int):
-    assert choice in (0, 1, 2, 3, 4), f'invalid choice: {choice}'
+    assert choice in {0, 1, 2, 3, 4}, f'invalid choice: {choice}'
     userpath = viewo_api.user.data.userpath(userid)
     assert os.path.exists(userpath), f'invalid user path: {userpath}'
     user = viewo_api.user.serialize.load_user(userpath)
