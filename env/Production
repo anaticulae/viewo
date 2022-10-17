@@ -9,14 +9,14 @@
 
 FROM 169.254.149.20:6001/arch_python:0.14.0
 
-RUN pip install "viewo==2.27.0"
+RUN pip install "viewo==2.27.1"
 
 ENV SHARED_TODO=/var/shared/todo
 ENV SHARED_READY=/var/shared/ready
 ENV SHARED_SPACE=/var/shared/
 ENV SHARED_TMP=/tmp
 
-ENV HOST=localhost
+ENV HOST=0.0.0.0
 ENV PORT=5000
 
 ENTRYPOINT viewo --host $HOST --port $PORT -VVV
