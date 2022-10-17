@@ -2,6 +2,17 @@
 
 Every noteable change is logged here.
 
+## v2.27.2 (2022-10-17)
+
+### Fix
+
+* disable modern view (95ae5328f734)
+
+### Chore
+
+* increase viewo (bbeff2a9c7f9)
+* upgrade requirements.txt (84a600774bd3)
+
 ## v2.27.1 (2022-10-17)
 
 ### Fix
