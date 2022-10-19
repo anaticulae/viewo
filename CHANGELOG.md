@@ -2,6 +2,20 @@
 
 Every noteable change is logged here.
 
+## v2.27.3 (2022-10-19)
+
+### Feature
+
+* add message storage (00356b6696b8)
+
+### Fix
+
+* adjust message path (4cb422b60e00)
+
+### Chore
+
+* upgrade viewo (20b0bfcefb52)
+
 ## v2.27.2 (2022-10-17)
 
 ### Fix
