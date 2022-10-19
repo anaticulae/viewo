@@ -6,6 +6,10 @@ pipeline{
         }
     }
 
+    environment{
+        ADMIN_HELPDESK='/var/admin_helpdesk'
+    }
+
     parameters{
         string(name: 'BRANCH', defaultValue: 'master')
         booleanParam(name: 'RELEASE', defaultValue: false)
