@@ -16,6 +16,8 @@ ENV SHARED_READY=/var/shared/ready
 ENV SHARED_SPACE=/var/shared/
 ENV SHARED_TMP=/tmp
 
+ENV ADMIN_HELPDESK=/var/admin_helpdesk
+
 ENV HOST=0.0.0.0
 ENV PORT=5000
 
