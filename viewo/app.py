@@ -159,8 +159,7 @@ def configure(appi, config):
         appi.config['COMMON'] = common_
         appi.config['TODO'] = todo_
         appi.config['READY'] = ready_
-        path = str(os.path.join(appi.config['COMMON'], 'messages'))
-        appi.config[admin_helpdesk.ADMIN_HELPDESK] = path
+        appi.config[admin_helpdesk.ADMIN_HELPDESK] = os.environ[admin_helpdesk.ADMIN_HELPDESK]  # yapf:disable
     else:
         # Test environment
         # load the test config if passed in
