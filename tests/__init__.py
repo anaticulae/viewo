@@ -74,8 +74,8 @@ generated = pytest.mark.skipif(
 
 
 @contextlib.contextmanager
-def test_user(monkeypatch):
-    with monkeypatch.context() as context:
+def test_user(mp):
+    with mp.context() as context:
 
         def password_verify(user: str, password: str) -> bool:
             return user == TEST_USER and password == TEST_PASSWORD

@@ -184,7 +184,7 @@ def load_validation_result(process: str) -> dict:
         # invalid process
         return None
     path = os.path.join(path, link.PDFINFO_NAME)
-    loaded = utila.yaml_from_raw_or_path(path)
+    loaded = utila.yaml_load(path)
     return loaded
 
 

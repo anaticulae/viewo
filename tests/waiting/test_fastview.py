@@ -15,8 +15,8 @@ import viewo.waiting
 import viewo.waiting.fastview
 
 
-def test_waiting_fastview_status(valid, user_client, monkeypatch):
-    with monkeypatch.context() as context:
+def test_waiting_fastview_status(valid, user_client, mp):
+    with mp.context() as context:
         context.setattr(viewo.path, 'todo', lambda: valid)
         result = tests.content(
             user_client,
@@ -31,15 +31,15 @@ def test_waiting_fastview_status(valid, user_client, monkeypatch):
     assert 'warning' in result, str(result)
 
 
-def test_waiting_fastview_status_failure(valid, user_client, monkeypatch):
-    with monkeypatch.context() as context:
+def test_waiting_fastview_status_failure(valid, user_client, mp):
+    with mp.context() as context:
         context.setattr(viewo.path, 'todo', lambda: valid)
         result = tests.content(user_client, '/waiting/fastview/status/abcdc')
     assert result == {}, str(result)
 
 
-def test_waiting_fastview(valid, user_client, monkeypatch):
-    with monkeypatch.context() as context:
+def test_waiting_fastview(valid, user_client, mp):
+    with mp.context() as context:
         context.setattr(viewo.path, 'todo', lambda: valid)
         result = tests.content(
             user_client,
@@ -66,8 +66,8 @@ def test_waiting_fastviewgroupstatus_jsonify():
 
 
 @tests.generated
-def test_waiting_load_groupstatus(monkeypatch):
-    with monkeypatch.context() as context:
+def test_waiting_load_groupstatus(mp):
+    with mp.context() as context:
         context.setattr(viewo.path, 'todo', lambda: tests.EXAMPLE_TODO)
         loaded = viewo.waiting.fastview.load_fastview_result(
             tests.TODO_DOCUMENT)

@@ -49,8 +49,8 @@ def test_waiting_resultview_tojson():
     assert len(dumped) > 450, str(dumped)
 
 
-def test_waiting_resultview_status_failure(valid, user_client, monkeypatch):
-    with monkeypatch.context() as context:
+def test_waiting_resultview_status_failure(valid, user_client, mp):
+    with mp.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
         result = tests.content(
             user_client,
@@ -59,8 +59,8 @@ def test_waiting_resultview_status_failure(valid, user_client, monkeypatch):
     assert not result
 
 
-def test_waiting_resultview_status(valid, user_client, monkeypatch):
-    with monkeypatch.context() as context:
+def test_waiting_resultview_status(valid, user_client, mp):
+    with mp.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
         result = tests.content(
             user_client,
@@ -69,8 +69,8 @@ def test_waiting_resultview_status(valid, user_client, monkeypatch):
     validate_status(result)
 
 
-def test_waiting_resultview(valid, user_client, monkeypatch):
-    with monkeypatch.context() as context:
+def test_waiting_resultview(valid, user_client, mp):
+    with mp.context() as context:
         context.setattr(configo, 'todo', lambda: valid)
         result = tests.content(
             user_client,

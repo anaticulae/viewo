@@ -19,15 +19,15 @@ import tests
 
 
 @pytest.fixture
-def valid(testdir):
+def valid(td):
     utilatest.fixture_requires(power.DOCU007_PDF, folder='todo')
     utila.copy_content(
         tests.EXAMPLE_TODO,
-        testdir.tmpdir,
+        td.tmpdir,
         recursive=True,
         unlock=True,
     )
-    return testdir.tmpdir
+    return td.tmpdir
 
 
 @pytest.fixture

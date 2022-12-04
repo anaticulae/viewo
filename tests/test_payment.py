@@ -19,16 +19,16 @@ BADGETEXT = '>Vollzugriff erhalten</button>'
 
 
 @pytest.mark.parametrize('payment', (True, False))
-def test_payment_badge(user_client, payment, monkeypatch):
+def test_payment_badge(user_client, payment, mp):
     """User is logged in and no payment is done."""
-    with setpayment(payment, monkeypatch):
+    with setpayment(payment, mp):
         home = tests.content(user_client, '/')
     assert (BADGETEXT in home) == payment
 
 
-def test_payment_nobadge_after_payment(user_client, monkeypatch):
+def test_payment_nobadge_after_payment(user_client, mp):
     """Login and Pay. Badge disappear after paying."""
-    with setpayment(True, monkeypatch):
+    with setpayment(True, mp):
         home = tests.content(user_client, '/')
         assert BADGETEXT in home
         # pay
@@ -39,21 +39,21 @@ def test_payment_nobadge_after_payment(user_client, monkeypatch):
         assert BADGETEXT not in home
 
 
-def test_payment_invalid_choice(user_client, monkeypatch):
-    with setpayment(True, monkeypatch):
+def test_payment_invalid_choice(user_client, mp):
+    with setpayment(True, mp):
         failure = tests.post(user_client, '/payment', data=dict(choice='ABC'))
     # flashed error message
     assert viewo.view.payment.INVALID_MESSAGE in failure
 
 
-def test_payment_post_nochoice(user_client, monkeypatch):
-    with setpayment(True, monkeypatch):
+def test_payment_post_nochoice(user_client, mp):
+    with setpayment(True, mp):
         failure = tests.post(user_client, '/payment', data={})
     assert viewo.view.payment.NO_PRODUCT_CHOICE in failure
 
 
 @contextlib.contextmanager
-def setpayment(payment, monkeypatch):
-    with monkeypatch.context() as context:
+def setpayment(payment, mp):
+    with mp.context() as context:
         context.setattr(viewo.config, 'PAYMENT', payment)
         yield

@@ -21,7 +21,7 @@ ComparedFinding = collections.namedtuple(
     'ComparedFinding',
     'page, current, other',
 )
-ComparedListFinding = 'typing.List[ComparedFinding]'  # pylint:disable=C0103
+ComparedListFinding = 'list[ComparedFinding]'  # pylint:disable=C0103
 
 
 class Comperator(enum.Enum):

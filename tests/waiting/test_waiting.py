@@ -47,22 +47,22 @@ def test_waiting_status_invalid_resource(user_client):
     assert not result
 
 
-def test_waiting_status_running(no_validation, user_client, monkeypatch):
-    loaded = tests.waiting.run_status(user_client, no_validation, monkeypatch)
+def test_waiting_status_running(no_validation, user_client, mp):
+    loaded = tests.waiting.run_status(user_client, no_validation, mp)
     assert loaded.status == link.State.RUNNING
     assert loaded[0] == link.State.DONE
     assert loaded[1] == link.State.RUNNING
 
 
 @tests.generated
-def test_waiting_status_verified(user_client, testdir, monkeypatch):
+def test_waiting_status_verified(user_client, td, mp):
     """Test a state where pdf is uploaded and validated.
 
     This requires the following resources:
         - pdf file with name process name in process folder like `docu_docu007`
         - pdfinfo.json with validation result of pdf file
     """
-    todo = os.path.join(testdir.tmpdir, tests.TODO_DOCUMENT)
+    todo = td.tmpdir.join(tests.TODO_DOCUMENT)
     os.makedirs(todo)
     utila.file_create(os.path.join(todo, tests.TODO_DOCUMENT))  # fake pdf file
 
@@ -75,7 +75,7 @@ def test_waiting_status_verified(user_client, testdir, monkeypatch):
         os.path.join(todo, link.PDFINFO_NAME),
     )
 
-    loaded = tests.waiting.run_status(user_client, testdir.tmpdir, monkeypatch)
+    loaded = tests.waiting.run_status(user_client, td.tmpdir, mp)
     assert loaded.status == link.State.RUNNING
     assert loaded[0] == link.State.DONE
     assert loaded[1] == link.State.DONE
@@ -85,12 +85,12 @@ def test_waiting_status_verified(user_client, testdir, monkeypatch):
 def test_waiting_status_verify_failed(
     invalid_validation,
     user_client,
-    monkeypatch,
+    mp,
 ):
     loaded = tests.waiting.run_status(
         user_client,
         invalid_validation,
-        monkeypatch,
+        mp,
     )
     assert loaded.status == link.State.FAILED
     assert loaded[0] == link.State.DONE
@@ -104,9 +104,9 @@ def test_waiting_status_verify_failed(
 def test_waiting_validation_invalid_result(
     invalid_validation,
     user_client,
-    monkeypatch,
+    mp,
 ):
-    with monkeypatch.context() as context:
+    with mp.context() as context:
         context.setattr(viewo.path, 'todo', lambda: invalid_validation)
         result = tests.content(
             user_client,
@@ -116,8 +116,8 @@ def test_waiting_validation_invalid_result(
             'nicht erfolgreich</strong>') in result, str(result)
 
 
-def test_waiting_validation_result(valid, user_client, monkeypatch):
-    with monkeypatch.context() as context:
+def test_waiting_validation_result(valid, user_client, mp):
+    with mp.context() as context:
         context.setattr(viewo.path, 'todo', lambda: valid)
         result = tests.content(
             user_client,

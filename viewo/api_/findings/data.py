@@ -122,7 +122,7 @@ class FrontEndCollection:
                     item.save()
                 except Exception as error:  # pylint:disable=broad-except
                     utila.error('could not save findings')
-                    utila.log_stacktrace()
+                    utila.print_stacktrace()
                     utila.error(error)
             time.sleep(FRONTEND_SAVER_WAIT)
             utila.debug('wait for saving')

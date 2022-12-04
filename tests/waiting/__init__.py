@@ -14,9 +14,9 @@ import viewo.path
 import viewo.waiting.data
 
 
-def run_status(client, todo: str, monkeypatch):
+def run_status(client, todo: str, mp):
     document = tests.TODO_DOCUMENT
-    with monkeypatch.context() as context:
+    with mp.context() as context:
         context.setattr(viewo.path, 'todo', lambda: todo)
         result = tests.content(
             client,

@@ -51,7 +51,7 @@ FASTVIEW = 'fastview'
 @dataclasses.dataclass
 class Status:
     status: link.State = link.State.WAITING
-    state: 'typing.List[link.State]' = dataclasses.field(default_factory=list)
+    state: 'list[link.State]' = dataclasses.field(default_factory=list)
     progress: int = 0
 
     def append(self, item):
@@ -65,16 +65,16 @@ class Status:
 class FastViewGroupStatus:
     title: str = None
     pages: str = None
-    error: 'typing.List[str]' = dataclasses.field(default_factory=list)
-    good: 'typing.List[str]' = dataclasses.field(default_factory=list)
-    warning: 'typing.List[str]' = dataclasses.field(default_factory=list)
+    error: 'list[str]' = dataclasses.field(default_factory=list)
+    good: 'list[str]' = dataclasses.field(default_factory=list)
+    warning: 'list[str]' = dataclasses.field(default_factory=list)
 
 
 @dataclasses.dataclass
 class FastViewStatus:
 
     status: link.State = link.State.RUNNING
-    content: 'typing.List[FastViewGroupStatus]' = dataclasses.field(default_factory=list)  # yapf:disable
+    content: 'list[FastViewGroupStatus]' = dataclasses.field(default_factory=list)  # yapf:disable
 
     def __len__(self):
         return len(self.content)
@@ -102,4 +102,4 @@ class ResultPageView:
         return self.findings.append(item)  # pylint:disable=E1101
 
 
-ResultPageViews = 'typing.List[ResultPageView]'  # pylint:disable=C0103
+ResultPageViews = 'list[ResultPageView]'  # pylint:disable=C0103

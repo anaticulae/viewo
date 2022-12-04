@@ -36,8 +36,8 @@ def test_call_result_document_and_imagedoes_not_exist(client):
     assert 'Fehler' in content
 
 
-def test_call_result_e508af0df454gi30(client, monkeypatch):
-    with monkeypatch.context() as context:
+def test_call_result_e508af0df454gi30(client, mp):
+    with mp.context() as context:
         # Remove all environment vars
         context.setattr(os, 'environ', {'SHARED_READY': tests.EXAMPLE_READY})
         response = client.get(f'/view/{tests.TEST_DOCUMENT}')

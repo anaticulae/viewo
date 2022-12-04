@@ -12,7 +12,7 @@ import utilatest
 import tests
 
 
-def test_version(monkeypatch, capsys):
-    tests.run('--version', mp=monkeypatch)
+def test_version(mp, capsys):
+    tests.run('--version', mp=mp)
     stdout = utilatest.stdout(capsys).strip()
     assert stdout.count('.') == 2

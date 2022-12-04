@@ -103,7 +103,7 @@ def footnotes_tojson(footnotes: list) -> dict:
         'page': page,
         'error': '',
     } for footnote in content] for page, content in footnotes]
-    footnotes = utila.flatten(footnotes)
+    footnotes = utila.flat(footnotes)
     return footnotes
 
 

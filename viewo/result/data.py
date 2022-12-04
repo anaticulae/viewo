@@ -79,7 +79,7 @@ def load_findings(path: str):
         # THIS STEP SHOULD NOT BE NECESSARY IF EVERY THING WORKS FINE IN
         # QUEUEMO.
         before = len(item.content)
-        item.content = utila.make_unique(item.content)
+        item.content = utila.unique(item.content)
         after = len(item.content)
         if after != before:
             # we copy results twice

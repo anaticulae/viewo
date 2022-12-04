@@ -50,7 +50,7 @@ def load_doctextstyle_fromdocumentid(documentid: str):
         return None
     loaded = serializeraw.load_doctextstyle(path)
 
-    fontstore = serializeraw.create_fontstore_frompath(result, prefix='oneline')
+    fontstore = serializeraw.fs_frompath(result, prefix='oneline')
     if fontstore:
         # replace font ids with user readable font text
         for key in [

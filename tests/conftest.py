@@ -15,6 +15,9 @@ import pytest
 import utila
 import utilatest
 import viewo_api.user.create
+# pylint:disable=W0611
+from utilatest import mp
+from utilatest import td
 
 import tests
 import viewo
@@ -105,10 +108,10 @@ def zfill(text, width, char='0') -> str:
 
 
 @pytest.fixture
-def app(testdir):
+def app(td):  # pylint:disable=W0621
     """Create and configure a new app instance for each test."""
-    todo = os.path.join(testdir.tmpdir, 'todo')
-    ready = os.path.join(testdir.tmpdir, 'ready')
+    todo = td.tmpdir.join('todo')
+    ready = td.tmpdir.join('ready')
     # create folder
     os.makedirs(todo)
     os.makedirs(ready)
@@ -117,7 +120,7 @@ def app(testdir):
     # create the app with common test config
     test_config = {
         'TESTING': True,
-        'COMMON': testdir.tmpdir,
+        'COMMON': td.tmpdir,
         'TODO': todo,
         'READY': ready,
     }

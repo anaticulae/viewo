@@ -17,7 +17,7 @@ def test_documents_view_no_documents(client):
     assert 'Fehler' not in result
 
 
-def test_documents_view_with_documents(findingclient, testdir):
+def test_documents_view_with_documents(findingclient, td):  # pylint:disable=W0613
     result = tests.content(findingclient, '/documents')
     assert len(result) > 300, str(result)
     assert 'Keine Dokumente verfügbar!' not in result, str(result)
