@@ -9,7 +9,7 @@
 
 FROM 169.254.149.20:6001/arch_python:v0.16.0
 
-RUN pip install "viewo==2.27.3"
+RUN pip install "viewo==CURRENT"
 
 ENV SHARED_TODO=/var/shared/todo
 ENV SHARED_READY=/var/shared/ready
