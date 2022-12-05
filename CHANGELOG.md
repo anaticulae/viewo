@@ -2,6 +2,19 @@
 
 Every noteable change is logged here.
 
+## v2.27.4 (2022-12-05)
+
+### Chore
+
+* use utila quick installer (8d9da1a80dc3)
+* create docker image for every git commit (78f24e94d3cf)
+* automate docker container creation (9245952ed8ae)
+* upgrade environment (5a3a8514c8af)
+* move build script (1c30b468fc25)
+* upgrade requirements.txt (509428d9fdb4)
+* upgrade pipeline (36d79aeb01cc)
+* add missing env var (ad0d5cd3ad7c)
+
 ## v2.27.3 (2022-10-19)
 
 ### Feature
