@@ -12,7 +12,7 @@ FILE="env/Production"
 TMP="tmp"
 VIEWO=$(baw info stable)
 DESCRIBE=$(baw info describe)
-TAG="${CAELUM_DOCKER_TEST}/caelum_view_release:${DESCRIBE}"
+TAG="${CAELUM_DOCKER_TEST}/release_view:${DESCRIBE}"
 echo "baw image create --name ${TAG} --dockerfile ${TMP}"
 # insert current viewo version
 sed "s/CURRENT/${VIEWO}/" ${FILE} > ${TMP}
