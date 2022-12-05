@@ -48,6 +48,11 @@ pipeline{
                 }
             }
         }
+        stage('docker'){
+            steps{
+                sh './make'
+            }
+        }
         stage('generate'){
             steps{
                 sh 'baw --docken generate all'
