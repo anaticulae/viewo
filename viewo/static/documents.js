@@ -192,7 +192,8 @@ const create_document_line = function (item, userid) {
         if (public == false) {
             action += base.image_short('view/trash.png', `delete_document('${item.name}')`)
         }
-        title = `<span style="color:red;">${title} (fehlgeschlagen)</span>`
+        let href = `<a href="${API}/documents/${item.name}/log">(fehlgeschlagen)</a>`
+        title = `<span style="color:red;">${title} ${href}</span>`
     } else if (item.state == DOCUMENT_NOTSUPPORTED) {
         // not supported
         if (public == false) {
