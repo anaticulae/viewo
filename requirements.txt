@@ -14,17 +14,17 @@ Flask_Login==0.6.2
 Flask_Moment==1.0.4
 Flask_WTF==1.0.1
 
-iamraw>=4.88.5<5.0.0
-configo>=0.25.0<1.0.0
+iamraw>=4.88.9<5.0.0
+configo>=0.25.1<1.0.0
 link>=2.15.4<3.0.0
-utila>=2.97.0<3.0.0
+utila>=2.98.1<3.0.0
 
 viewo_api>=0.11.2<1.0.0
 viewo_waiter>=0.7.0<1.0.0
 viewo_talk>=0.3.0<1.0.0
 
 # load validation results
-protocol>=3.19.2<4.0.0
+protocol>=3.19.4<4.0.0
 writers>=1.5.0<2.0.0
 
 # agb, impressum etc.
