@@ -2,6 +2,20 @@
 
 Every noteable change is logged here.
 
+## v2.28.0 (2022-12-15)
+
+### Feature
+
+* add log provider (f614b2216186)
+* add document log loader (96f93098736b)
+* add decorator to hide functions in production (e744276ed695)
+
+### Chore
+
+* upgrade requirements.txt (f1aa045a3631)
+* upgrade Pipeline (d268d3ddebd2)
+* improve production container name (d7c9546e664a)
+
 ## v2.27.4 (2022-12-05)
 
 ### Chore
