@@ -2,6 +2,12 @@
 
 Every noteable change is logged here.
 
+## v2.29.0 (2022-12-15)
+
+### Feature
+
+* add link to open failed document link directly (9b317058d7fa)
+
 ## v2.28.0 (2022-12-15)
 
 ### Feature
