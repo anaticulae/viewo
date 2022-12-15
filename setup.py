@@ -26,9 +26,9 @@ PACKAGES = [
     'viewo.waiting',
     'viewo.writing',
 ]
-ENTRY_POINTS = {
-    'console_scripts': ['viewo = viewo.cli:main',],
-}
+ENTRY_POINTS = dict(console_scripts=[
+    'viewo = viewo.cli:main',
+])
 
 if __name__ == "__main__":
     utila.install(__file__)
