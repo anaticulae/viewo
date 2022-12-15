@@ -41,6 +41,8 @@ PAYMENT = configo.env('CHANIA_PAYMENT', False)
 
 TALKER = configo.env('CHANIA_TALKER', True)
 
+PRODUCTION = configo.env('CHANIA_PRODUCTION', False)
+
 
 def config_show():
     utila.debug('')

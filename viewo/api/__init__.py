@@ -19,6 +19,7 @@ import viewo_api.user.data
 
 import viewo.api_.findings.data
 import viewo.api_.findings.update
+import viewo.config
 
 
 def valid_document(function):
@@ -126,6 +127,17 @@ def login_required_api(func):
     def decorated_view(*args, **kwargs):
         if not flask_login.current_user.is_authenticated:
             return viewo_api.notfound('login required')
+        return func(*args, **kwargs)
+
+    return decorated_view
+
+
+def no_production(func):
+
+    @functools.wraps(func)
+    def decorated_view(*args, **kwargs):
+        if viewo.config.PRODUCTION:
+            return viewo_api.bad('invalid access')
         return func(*args, **kwargs)
 
     return decorated_view
