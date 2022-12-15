@@ -20,6 +20,7 @@ import viewo.api
 import viewo.api.documents
 import viewo.api.documents.utils
 import viewo.path
+import viewo.result.loader.log
 
 
 @viewo.api.documents.api_documents.route('/documents', methods=['GET'])
@@ -194,3 +195,14 @@ def pagenumbers_get(documentid: str):
         'pagenumbers': simple,
     })
     return dumped
+
+
+@viewo.api.no_production
+@viewo.api.documents.api_documents.route(
+    f'/documents/{viewo.api.documents.DOCUMENTID}/log',
+    methods=['GET'],
+)
+@viewo.api.valid_document
+def log_get(documentid: str):
+    content = viewo.result.loader.log.load_fromdocumentid(documentid)
+    return content
