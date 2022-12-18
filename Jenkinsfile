@@ -1,9 +1,9 @@
 @Library('caelum@a1411f1288b8bc739b27c2e76f50554a6fdcda8c') _
 
-pipeline {
-    agent {
-        docker {
-            image '169.254.149.20:6001/arch_python_git_ghost_opencv_baw:v1.35.0'
+pipeline{
+    agent{
+        docker{
+            image '169.254.149.20:6001/arch_python_git_ghost_opencv_baw:v1.37.3'
         }
     }
     environment{
