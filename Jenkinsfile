@@ -76,5 +76,12 @@ pipeline{
                 script{publish.release()}
             }
         }
+        stage('rebase'){
+            when{branch 'master'}
+            steps{
+                sh 'baw image run --name 169.254.149.20:6001/baw_rebase:v1.37.3 --env=BRANCH=integrate'
+                sh 'baw image run --name 169.254.149.20:6001/baw_rebase:v1.37.3 --env=BRANCH=develop'
+            }
+        }
     }
 }
