@@ -2,6 +2,14 @@
 
 Every noteable change is logged here.
 
+## v2.29.2 (2022-12-18)
+
+### Chore
+
+* upgrade requirements.txt (fe3666bdb6a5)
+* add rebase step (48eed63b01c1)
+* upgrade pipe library (935a3c72e412)
+
 ## v2.29.1 (2022-12-18)
 
 ### Chore
