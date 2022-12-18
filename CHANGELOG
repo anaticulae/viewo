@@ -2,6 +2,14 @@
 
 Every noteable change is logged here.
 
+## v2.29.1 (2022-12-18)
+
+### Chore
+
+* add rebase step (012f34dbeedf)
+* upgrade requirements.txt (ae12fb6fb3e3)
+* upgrade Jenkinsfile (f81b01d49021)
+
 ## v2.29.0 (2022-12-15)
 
 ### Feature
