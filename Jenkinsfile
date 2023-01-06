@@ -56,6 +56,11 @@ pipeline{
                 sh './make'
             }
         }
+        stage('pre-release'){
+            steps{
+                script{baw.pre()}
+            }
+        }
         stage('generate'){
             steps{
                 sh 'baw --docken generate all'
@@ -67,23 +72,12 @@ pipeline{
                 //script{baw.all()}
             }
         }
-        stage('pre-release'){
-            when{not{branch 'master'}}
-            steps{sh 'baw publish --pre'}
-        }
         stage('release'){
             steps{
                 script{
                     publish.release()
                     baw.rebase()
                 }
-            }
-        }
-        stage('rebase'){
-            when{branch 'master'}
-            steps{
-                sh 'baw image run --name 169.254.149.20:6001/baw_rebase:v1.37.3 --env=BRANCH=integrate'
-                sh 'baw image run --name 169.254.149.20:6001/baw_rebase:v1.37.3 --env=BRANCH=develop'
             }
         }
     }
