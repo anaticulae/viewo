@@ -14,10 +14,10 @@ Flask_Login==0.6.2
 Flask_Moment==1.0.4
 Flask_WTF==1.0.1
 
-iamraw>=4.88.11<5.0.0
+iamraw>=4.88.13<5.0.0
 configo>=0.25.3<1.0.0
 link>=2.15.6<3.0.0
-utila>=2.100.0<3.0.0
+utila>=2.100.1<3.0.0
 
 viewo_api>=0.11.4<1.0.0
 viewo_waiter>=0.7.1<1.0.0
@@ -28,6 +28,6 @@ protocol>=3.20.1<4.0.0
 writers>=1.6.0<2.0.0
 
 # agb, impressum etc.
-legal==0.3.1
+legal==0.3.2
 
-admin_helpdesk>=0.3.3<1.0.0
+admin_helpdesk>=0.3.4<1.0.0

@@ -11,7 +11,7 @@ utilatest==0.26.1
 
 power==2.20.1
 
-queuemo==1.27.3
+queuemo==1.27.4
 
 pytest_localserver==0.7.0
 selenium>=4.4.3<5.0.0
