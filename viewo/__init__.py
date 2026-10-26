@@ -7,9 +7,9 @@
 # be prosecuted under federal law. Its content is company confidential.
 #==============================================================================
 
+import importlib.metadata
 import os
 
-__version__ = '2.30.0'
-
-PROCESS = 'viewo'
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+PROCESS = 'viewo'
+__version__ = importlib.metadata.version(PROCESS)
