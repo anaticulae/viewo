@@ -14,7 +14,6 @@ authors = [
     { name = "Helmut Konrad Schewe", email = "helmutus@outlook.com" },
 ]
 dependencies = [
-    "admin_helpdesk>=0.3.4,<1.0.0",
     "configos>=0.25.3,<1.0.0",
     "flask_bootstrap>=3.3.7.1,<4.0.0.0",
     "flask>=2.2.2,<3.0.0",
@@ -29,7 +28,6 @@ dependencies = [
     "utilo>=2.100.1,<3.0.0",
     "viewo_api>=0.11.4,<1.0.0",
     "viewo_talk>=0.3.1,<1.0.0",
-    "viewo_waiter>=0.7.1,<1.0.0",
     "writers>=1.6.0,<2.0.0",
 ]
 keywords = []
@@ -55,6 +53,10 @@ dev = [
     "queuemo==1.27.4",
     "selenium>=4.4.3,<5.0.0",
     "utilotest==1.1.1",
+]
+optional = [
+    "viewo_waiter>=0.7.1,<1.0.0",
+    "admin_helpdesk>=0.3.4,<1.0.0",
 ]
 
 [project.urls]

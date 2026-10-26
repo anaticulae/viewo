@@ -9,15 +9,24 @@
 
 import os
 
-import admin_helpdesk
-import admin_helpdesk.api
 import configos
 import flask
 import flask_bootstrap
 import flask_moment
-import viewo_waiter
-import viewo_waiter.api.document.post
-from admin_helpdesk.api import *  # pylint:disable=wildcard-import,W0614,C0412
+import utilo
+
+try:
+    import viewo_waiter
+    import viewo_waiter.api.document.post
+except ImportError:
+    utilo.error('could not import viewo_waiter')
+
+try:
+    import admin_helpdesk
+    import admin_helpdesk.api
+    from admin_helpdesk.api import *  # pylint:disable=wildcard-import,W0614,C0412
+except ImportError:
+    utilo.error('could not import admin_helpdesk')
 
 import viewo
 import viewo.__patch__
@@ -114,7 +123,10 @@ def create_app(config=None) -> flask.Flask:
     # extenral
     # Add external route with the same name to internal route
     # TODO: RENAME LATER, DON'T KNOW TO RESOLVE THIS, YET
-    api_documents.deferred_functions.extend(viewo_waiter.api_documents.deferred_functions)  # yapf:disable
+    try:
+        api_documents.deferred_functions.extend(viewo_waiter.api_documents.deferred_functions)  # yapf:disable
+    except NameError:
+        utilo.error('could not register viewo_waiter')
     # data API
     # internal
     appi.register_blueprint(api_documents, url_prefix=viewo.config.API_PREFIX)
@@ -123,10 +135,13 @@ def create_app(config=None) -> flask.Flask:
     appi.register_blueprint(api_users, url_prefix=viewo.config.API_PREFIX)
     appi.register_blueprint(api_visitors, url_prefix=viewo.config.API_PREFIX)
     # messages
-    appi.register_blueprint(
-        admin_helpdesk.api.api_message,
-        url_prefix=viewo.config.API_PREFIX,
-    )
+    try:
+        appi.register_blueprint(
+            admin_helpdesk.api.api_message,
+            url_prefix=viewo.config.API_PREFIX,
+        )
+    except NameError:
+        utilo.error('could not register admin_helpdesk')
     # talker
     if viewo.config.TALKER:
         import viewo_talk
@@ -159,7 +174,11 @@ def configure(appi, config):
         appi.config['COMMON'] = common_
         appi.config['TODO'] = todo_
         appi.config['READY'] = ready_
-        appi.config[admin_helpdesk.ADMIN_HELPDESK] = os.environ[admin_helpdesk.ADMIN_HELPDESK]  # yapf:disable
+        try:
+            appi.config[admin_helpdesk.ADMIN_HELPDESK] = os.environ[admin_helpdesk.ADMIN_HELPDESK]  # yapf:disable
+        except NameError:
+            # TODO look here later
+            pass
     else:
         # Test environment
         # load the test config if passed in
