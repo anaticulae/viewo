@@ -7,15 +7,15 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import link
+import qvlink
 import utilo
 
 
 def load_fromdocumentid(documentid: str) -> str:
-    result = link.ready(documentid)
+    result = qvlink.ready(documentid)
     if not utilo.exists(result):
         return None
-    if link.failed(documentid):
+    if qvlink.failed(documentid):
         path = utilo.join(result, 'failed')
     else:
         path = utilo.join(result, 'done')

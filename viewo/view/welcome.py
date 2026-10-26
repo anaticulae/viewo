@@ -9,7 +9,7 @@
 
 import flask
 import jinja2
-import link
+import qvlink
 
 import viewo.api.documents.present
 import viewo.cache
@@ -32,8 +32,8 @@ def show_page(page):
 @viewo.cache.cached()
 def show_welcome():
     public = viewo.api.documents.present.load_documents(
-        owner=link.PUBLIC_OWNER,
-        state=link.State.DONE,
+        owner=qvlink.PUBLIC_OWNER,
+        state=qvlink.State.DONE,
     )
     rendered = flask.render_template('public/home.html', documents=public)
     return rendered

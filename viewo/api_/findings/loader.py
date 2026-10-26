@@ -9,7 +9,7 @@
 
 import flask
 import iamraw
-import link
+import qvlink
 import utilo
 
 import viewo.api.pageviews.utils
@@ -23,7 +23,7 @@ def fast_findings(
     pages: tuple = None,
     status=iamraw.ProblemStatus.OPEN,
 ) -> iamraw.PageFindings:
-    documentpath = link.document(documentid)
+    documentpath = qvlink.document(documentid)
     if documentpath is None:
         return None
     frontend = viewo.api_.findings.data.frontend(documentid)

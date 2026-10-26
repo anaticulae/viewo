@@ -14,8 +14,8 @@ import time
 
 import configos
 import iamraw
-import link
 import protocol
+import qvlink
 import utilo
 
 import viewo.result.json
@@ -78,12 +78,12 @@ class FindingsFrontEnd:
     def save(self):
         utilo.log(f'write updated findings to: {self.path}')
         findings = utilo.flatten_content(self.loaded)  # TODO: REMOVE LATER
-        private = link.private(
+        private = qvlink.private(
             self.documentid,
             done=True,
         )
         protocol.write_grouped(findings, self.path, private=private)
-        link.update_bookkeeping(self.documentid)
+        qvlink.update_bookkeeping(self.documentid)
         self.outdated = False
 
     def __getitem__(self, key):
@@ -104,7 +104,7 @@ class FrontEndCollection:
         try:
             return self.documents[documentid]
         except KeyError as error:
-            optimizedpath = link.optimized(documentid, done=True)
+            optimizedpath = qvlink.optimized(documentid, done=True)
             if not os.path.exists(optimizedpath):
                 raise error
         loaded = FindingsFrontEnd(documentid=documentid, path=optimizedpath)

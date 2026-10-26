@@ -12,7 +12,7 @@ import functools
 
 import flask
 import flask_login
-import link
+import qvlink
 import utilo
 import viewo_api
 import viewo_api.user.data
@@ -28,7 +28,7 @@ def valid_document(function):
     def decorated_function(*args, **kwargs):
         # TODO: ADD USER RIGHTS CHECK
         documentid = kwargs['documentid']
-        documentpath = link.document(documentid)
+        documentpath = qvlink.document(documentid)
         if documentpath is None:
             return viewo_api.notfound(f'could not locate `{documentid}`')
         if not accessable(documentid):
@@ -42,10 +42,10 @@ def accessable(documentid: str):
     userid = flask_login.current_user.get_id()
     try:
         # TODO: INVESTIGATE THIS HACK
-        job = link.load_jobinfo(documentid, done=False)
+        job = qvlink.load_jobinfo(documentid, done=False)
     except FileNotFoundError:
         return True
-    if job.owner == link.PUBLIC_OWNER:
+    if job.owner == qvlink.PUBLIC_OWNER:
         return True
     if userid is None:
         return False
@@ -59,7 +59,7 @@ def valid_partner(function):
     def decorated_function(*args, **kwargs):
         # TODO: ADD USER RIGHTS CHECK
         documentid = kwargs['partnerid']
-        documentpath = link.document(documentid)
+        documentpath = qvlink.document(documentid)
         if documentpath is None:
             return viewo_api.notfound(f'could not locate `{documentid}`')
         return function(*args, **kwargs)

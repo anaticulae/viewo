@@ -9,7 +9,7 @@
 
 import os
 
-import link
+import qvlink
 import utilo
 
 import viewo.api
@@ -19,7 +19,7 @@ import viewo.result.data
 
 
 def load_html(documentid: str, pages: tuple = None, payed: bool = True) -> dict:
-    root = link.resultview(documentid, done=True)
+    root = qvlink.resultview(documentid, done=True)
 
     loaded = viewo.result.data.load_html(root)
     if pages is None:
@@ -77,7 +77,7 @@ def free_view(page: int, payment: bool = True) -> bool:
 
 
 def pagecount(documentid: str) -> int:
-    root = link.resultview(documentid, done=True)
+    root = qvlink.resultview(documentid, done=True)
     result = len(utilo.file_list(os.path.join(root, 'view'), include='html'))
     return result
 
@@ -88,7 +88,7 @@ def public(documentid: str) -> bool:
     # TODO: MOVE TO LINK
     # TODO: VERIFY WITH UNIT TEST: After logging in, public documents
     # where not visbile anymore, purchase was required
-    owner = link.owner(documentid)
-    if owner == link.PUBLIC_OWNER:
+    owner = qvlink.owner(documentid)
+    if owner == qvlink.PUBLIC_OWNER:
         return True
     return False

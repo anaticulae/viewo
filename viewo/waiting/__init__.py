@@ -43,15 +43,15 @@ import dataclasses
 import enum
 
 import iamraw
-import link
+import qvlink
 
 FASTVIEW = 'fastview'
 
 
 @dataclasses.dataclass
 class Status:
-    status: link.State = link.State.WAITING
-    state: 'list[link.State]' = dataclasses.field(default_factory=list)
+    status: qvlink.State = qvlink.State.WAITING
+    state: 'list[qvlink.State]' = dataclasses.field(default_factory=list)
     progress: int = 0
 
     def append(self, item):
@@ -73,7 +73,7 @@ class FastViewGroupStatus:
 @dataclasses.dataclass
 class FastViewStatus:
 
-    status: link.State = link.State.RUNNING
+    status: qvlink.State = qvlink.State.RUNNING
     content: 'list[FastViewGroupStatus]' = dataclasses.field(default_factory=list)  # yapf:disable
 
     def __len__(self):

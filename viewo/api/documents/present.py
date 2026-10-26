@@ -12,7 +12,7 @@ import os
 
 import flask
 import flask_login
-import link
+import qvlink
 import utilo
 import viewo_api
 
@@ -34,14 +34,14 @@ def documents():
     return dumped
 
 
-def docstate() -> link.State:
+def docstate() -> qvlink.State:
     state = flask.request.args.get('state', None)
     if state is None:
         return state
     try:
-        result = link.State.fromstr(state)
+        result = qvlink.State.fromstr(state)
     except ValueError:
-        result = link.State.DONE
+        result = qvlink.State.DONE
     return result
 
 
@@ -51,9 +51,9 @@ def curowner() -> set:
     return result
 
 
-def load_documents(owner, state: link.State = None) -> list:
+def load_documents(owner, state: qvlink.State = None) -> list:
     common = viewo.path.common()
-    result = link.load_documents(
+    result = qvlink.load_documents(
         common=common,
         owner=owner,
         state=state,
@@ -68,10 +68,10 @@ def userid(public: bool = True) -> set:
     """
     # TODO: ADD UNIT TEST
     user = flask_login.current_user.get_id()
-    user = {link.PUBLIC_OWNER} if user is None else {user}
+    user = {qvlink.PUBLIC_OWNER} if user is None else {user}
     if public:
-        # user = user | {link.PUBLIC_OWNER}
-        user = {link.PUBLIC_OWNER}
+        # user = user | {qvlink.PUBLIC_OWNER}
+        user = {qvlink.PUBLIC_OWNER}
     return user
 
 
@@ -83,7 +83,7 @@ def userid(public: bool = True) -> set:
 def document_get(documentid: str):
     """Receive document information selected by documentid. If document
     does not exists, 404 Error will be raised."""
-    loaded = link.load_jobinfo_raw(documentid, done=None)
+    loaded = qvlink.load_jobinfo_raw(documentid, done=None)
     if not loaded:
         return viewo_api.notfound(f'could not locate `{documentid}')
     dumped = json.dumps({
@@ -98,7 +98,7 @@ def document_get(documentid: str):
 )
 @viewo.api.valid_document
 def pdf_get(documentid: str) -> bytes:
-    todo = link.todo(documentid)
+    todo = qvlink.todo(documentid)
     pdf = os.path.join(todo, documentid)
     if not os.path.exists(pdf):
         return 'NO DOCUMENT', 404

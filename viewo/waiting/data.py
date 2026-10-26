@@ -11,7 +11,7 @@ import contextlib
 import json
 import os
 
-import link
+import qvlink
 import utilo
 
 import viewo.path
@@ -42,9 +42,9 @@ def jsonify(item: Status) -> str:
 def loads(content: str) -> Status:
     with contextlib.suppress(TypeError):
         content = json.loads(content)
-    result = Status(status=link.State.fromstr(content['status']))
+    result = Status(status=qvlink.State.fromstr(content['status']))
     for item in content['states']:
-        parsed = link.State.fromstr(item)
+        parsed = qvlink.State.fromstr(item)
         result.append(parsed)  # pylint:disable=E1101
     return result
 
@@ -58,80 +58,81 @@ def status(process: str) -> Status:  # pylint:disable=too-complex
         # process does not exists
         return None
 
-    progress = link.progress(process)
+    progress = qvlink.progress(process)
     pdf = os.path.join(working, process)
 
     def uploaded():
-        return link.State.DONE if os.path.exists(pdf) else link.State.RUNNING
+        return qvlink.State.DONE if os.path.exists(
+            pdf) else qvlink.State.RUNNING
 
     def verified():
-        verifypath = os.path.join(working, link.PDFINFO_NAME)
-        verify = link.State.WAITING
-        if uploaded() == link.State.DONE:
-            verify = link.State.RUNNING  # pylint:disable=R0204
+        verifypath = os.path.join(working, qvlink.PDFINFO_NAME)
+        verify = qvlink.State.WAITING
+        if uploaded() == qvlink.State.DONE:
+            verify = qvlink.State.RUNNING  # pylint:disable=R0204
         if os.path.exists(verifypath):
             content = utilo.file_read(verifypath).strip()
             if content == '{}':
-                verify = link.State.FAILED
+                verify = qvlink.State.FAILED
             else:
-                verify = link.State.DONE
+                verify = qvlink.State.DONE
         return verify
 
     def analyzestarted():
         before = verified()
-        if before == link.State.FAILED:
-            return link.State.FAILED
-        if before == link.State.WAITING:
-            return link.State.WAITING
+        if before == qvlink.State.FAILED:
+            return qvlink.State.FAILED
+        if before == qvlink.State.WAITING:
+            return qvlink.State.WAITING
         if fastview_result(process):
-            return link.State.DONE
-        if before == link.State.DONE:
-            return link.State.RUNNING
-        return link.State.WAITING
+            return qvlink.State.DONE
+        if before == qvlink.State.DONE:
+            return qvlink.State.RUNNING
+        return qvlink.State.WAITING
 
     def fastviewed():
         before = analyzestarted()
-        if before == link.State.FAILED:
-            return link.State.FAILED
+        if before == qvlink.State.FAILED:
+            return qvlink.State.FAILED
         path = fastview_result(process)
         if path is None:
-            return link.State.WAITING
+            return qvlink.State.WAITING
         if os.path.exists(os.path.join(path, 'done')):
-            return link.State.DONE
+            return qvlink.State.DONE
         if os.path.exists(os.path.join(path, 'failed')):
-            return link.State.FAILED
-        if before == link.State.DONE:
-            return link.State.RUNNING
-        return link.State.WAITING
+            return qvlink.State.FAILED
+        if before == qvlink.State.DONE:
+            return qvlink.State.RUNNING
+        return qvlink.State.WAITING
 
     def globalviewed():
         before = analyzestarted()
         before_fast = fastviewed()
-        if link.State.FAILED in (before, before_fast):
-            return link.State.FAILED
+        if qvlink.State.FAILED in (before, before_fast):
+            return qvlink.State.FAILED
         path = result_result(process)
         if path is None:
-            return link.State.WAITING
+            return qvlink.State.WAITING
         if os.path.exists(os.path.join(path, 'done')):
-            return link.State.DONE
+            return qvlink.State.DONE
         if os.path.exists(os.path.join(path, 'failed')):
-            return link.State.FAILED
-        if before == link.State.DONE:
-            return link.State.RUNNING
-        return link.State.WAITING
+            return qvlink.State.FAILED
+        if before == qvlink.State.DONE:
+            return qvlink.State.RUNNING
+        return qvlink.State.WAITING
 
     def presented():
         before = globalviewed()
-        if before == link.State.FAILED:
-            return link.State.FAILED
-        if before == link.State.DONE:
+        if before == qvlink.State.FAILED:
+            return qvlink.State.FAILED
+        if before == qvlink.State.DONE:
             if copy_done(process):
-                return link.State.DONE
-            return link.State.RUNNING
-        return link.State.WAITING
+                return qvlink.State.DONE
+            return qvlink.State.RUNNING
+        return qvlink.State.WAITING
 
     result = Status(
-        status=link.State.RUNNING,
+        status=qvlink.State.RUNNING,
         state=[
             uploaded(),
             verified(),
@@ -143,16 +144,16 @@ def status(process: str) -> Status:  # pylint:disable=too-complex
         progress=progress,
     )
 
-    if all(item == link.State.DONE for item in result):
-        result.status = link.State.DONE
-    if any(item == link.State.RUNNING for item in result):
-        result.status = link.State.RUNNING  # pylint:disable=redefined-variable-type
-    failed = link.failed(process)
-    if failed or any(item == link.State.FAILED for item in result):
-        result.status = link.State.FAILED
+    if all(item == qvlink.State.DONE for item in result):
+        result.status = qvlink.State.DONE
+    if any(item == qvlink.State.RUNNING for item in result):
+        result.status = qvlink.State.RUNNING  # pylint:disable=redefined-variable-type
+    failed = qvlink.failed(process)
+    if failed or any(item == qvlink.State.FAILED for item in result):
+        result.status = qvlink.State.FAILED
         result.progress = 100
         result.state = [
-            item.FAILED if item != link.State.DONE else item
+            item.FAILED if item != qvlink.State.DONE else item
             for item in result.state
         ]
     return result
@@ -183,7 +184,7 @@ def load_validation_result(process: str) -> dict:
     if path is None:
         # invalid process
         return None
-    path = os.path.join(path, link.PDFINFO_NAME)
+    path = os.path.join(path, qvlink.PDFINFO_NAME)
     loaded = utilo.yaml_load(path)
     return loaded
 

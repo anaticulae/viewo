@@ -11,8 +11,8 @@ import collections
 import contextlib
 import enum
 
-import link
 import protocol
+import qvlink
 import utilo
 
 import viewo.api.utils
@@ -35,10 +35,10 @@ def compare(
     partnerid: str,
     operation: Comperator = Comperator.ALL,
 ) -> ComparedListFinding:
-    documentpath = link.optimized(documentid, done=True)
+    documentpath = qvlink.optimized(documentid, done=True)
     if not utilo.exists(documentpath):
         return None
-    partnerpath = link.optimized(partnerid, done=True)
+    partnerpath = qvlink.optimized(partnerid, done=True)
     if not utilo.exists(partnerpath):
         return None
     if documentid == partnerid:

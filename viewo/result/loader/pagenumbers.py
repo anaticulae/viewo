@@ -11,7 +11,7 @@ import contextlib
 import functools
 
 import iamraw.path
-import link
+import qvlink
 import serializeraw
 import utilo
 
@@ -27,7 +27,7 @@ def userpage(pdfpage: int, documentid: str) -> str:
 
 @functools.lru_cache
 def load_fromdocumentid(documentid: str) -> dict:
-    resultview = link.resultview(documentid, done=True)
+    resultview = qvlink.resultview(documentid, done=True)
     if not utilo.exists(resultview):
         return None
     path = iamraw.path.groupme_pagenumbers(resultview)
@@ -36,7 +36,7 @@ def load_fromdocumentid(documentid: str) -> dict:
         return None
     pagenumbers = serializeraw.load_pagenumbers(path)
     result = {page.pdfpage: page.detected for page in pagenumbers}  # pylint:disable=E1101
-    pdfinfo = link.pdfinfo(documentid)
+    pdfinfo = qvlink.pdfinfo(documentid)
     if pdfinfo:
         try:
             result = fill_pages_magic(result, pdflength=pdfinfo.pages)

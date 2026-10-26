@@ -9,7 +9,7 @@
 
 import os
 
-import link
+import qvlink
 import utilo
 
 import tests
@@ -23,13 +23,13 @@ import viewo.waiting.fastview
 
 def test_waiting_status_jsonify():
     status = viewo.waiting.Status(
-        status=link.State.RUNNING,
+        status=qvlink.State.RUNNING,
         state=[
-            link.State.DONE,
-            link.State.DONE,
-            link.State.RUNNING,
-            link.State.FAILED,
-            link.State.WAITING,
+            qvlink.State.DONE,
+            qvlink.State.DONE,
+            qvlink.State.RUNNING,
+            qvlink.State.FAILED,
+            qvlink.State.WAITING,
         ],
     )
     json = viewo.waiting.data.jsonify(status)
@@ -49,9 +49,9 @@ def test_waiting_status_invalid_resource(user_client):
 
 def test_waiting_status_running(no_validation, user_client, mp):
     loaded = tests.waiting.run_status(user_client, no_validation, mp)
-    assert loaded.status == link.State.RUNNING
-    assert loaded[0] == link.State.DONE
-    assert loaded[1] == link.State.RUNNING
+    assert loaded.status == qvlink.State.RUNNING
+    assert loaded[0] == qvlink.State.DONE
+    assert loaded[1] == qvlink.State.RUNNING
 
 
 @tests.generated
@@ -70,16 +70,16 @@ def test_waiting_status_verified(user_client, td, mp):
         os.path.join(
             tests.EXAMPLE_TODO,
             tests.TODO_DOCUMENT,
-            link.PDFINFO_NAME,
+            qvlink.PDFINFO_NAME,
         ),
-        os.path.join(todo, link.PDFINFO_NAME),
+        os.path.join(todo, qvlink.PDFINFO_NAME),
     )
 
     loaded = tests.waiting.run_status(user_client, td.tmpdir, mp)
-    assert loaded.status == link.State.RUNNING
-    assert loaded[0] == link.State.DONE
-    assert loaded[1] == link.State.DONE
-    assert loaded[2] == link.State.RUNNING
+    assert loaded.status == qvlink.State.RUNNING
+    assert loaded[0] == qvlink.State.DONE
+    assert loaded[1] == qvlink.State.DONE
+    assert loaded[2] == qvlink.State.RUNNING
 
 
 def test_waiting_status_verify_failed(
@@ -92,13 +92,13 @@ def test_waiting_status_verify_failed(
         invalid_validation,
         mp,
     )
-    assert loaded.status == link.State.FAILED
-    assert loaded[0] == link.State.DONE
-    assert loaded[1] == link.State.FAILED
-    assert loaded[2] == link.State.FAILED
-    assert loaded[3] == link.State.FAILED
-    assert loaded[4] == link.State.FAILED
-    assert loaded[5] == link.State.FAILED
+    assert loaded.status == qvlink.State.FAILED
+    assert loaded[0] == qvlink.State.DONE
+    assert loaded[1] == qvlink.State.FAILED
+    assert loaded[2] == qvlink.State.FAILED
+    assert loaded[3] == qvlink.State.FAILED
+    assert loaded[4] == qvlink.State.FAILED
+    assert loaded[5] == qvlink.State.FAILED
 
 
 def test_waiting_validation_invalid_result(

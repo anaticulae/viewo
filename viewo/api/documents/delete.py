@@ -7,7 +7,7 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import link
+import qvlink
 import viewo_api
 
 import viewo.api
@@ -20,10 +20,10 @@ import viewo.api.documents
 )
 @viewo.api.valid_document
 def document_delete(documentid) -> str:
-    current = link.current(documentid)
-    if current == link.ProcessState.UNDEFINED:
+    current = qvlink.current(documentid)
+    if current == qvlink.ProcessState.UNDEFINED:
         return viewo_api.internal('unexpected state')
-    if current == link.ProcessState.DELETED:
+    if current == qvlink.ProcessState.DELETED:
         return viewo_api.bad('resource was already deleted')
-    link.delete(documentid)
+    qvlink.delete(documentid)
     return viewo_api.success(f'deleted: {documentid}')

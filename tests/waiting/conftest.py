@@ -10,8 +10,8 @@
 import os
 
 import hoverpower
-import link
 import pytest
+import qvlink
 import utilo
 import utilotest
 
@@ -36,7 +36,7 @@ def no_validation(valid):  # pylint:disable=W0621
         os.path.join(
             valid,
             tests.TODO_DOCUMENT,
-            link.PDFINFO_NAME,
+            qvlink.PDFINFO_NAME,
         ))
     return valid
 
@@ -47,7 +47,7 @@ def invalid_validation(valid):  # pylint:disable=W0621
         os.path.join(
             valid,
             tests.TODO_DOCUMENT,
-            link.PDFINFO_NAME,
+            qvlink.PDFINFO_NAME,
         ),
         '{}',
     )

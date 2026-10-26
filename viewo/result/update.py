@@ -10,7 +10,7 @@
 import os
 
 import iamraw
-import link
+import qvlink
 import utilo
 
 
@@ -19,19 +19,19 @@ def update_bookkeeping(
     status: iamraw.ProblemStatus,
     before: iamraw.ProblemStatus,
 ):
-    jobpath = os.path.join(source, link.JOB_FILE_NAME)
-    loaded = link.load_job(jobpath)
+    jobpath = os.path.join(source, qvlink.JOB_FILE_NAME)
+    loaded = qvlink.load_job(jobpath)
     # update BOOKKEEPING
     if status == iamraw.ProblemStatus.SOLVED:
         # solved
-        updated = link.FindingStatus(
+        updated = qvlink.FindingStatus(
             loaded.result.open - 1,
             loaded.result.closed + 1,
             loaded.result.excluded,
         )
     elif status == iamraw.ProblemStatus.DISAGREE:
         # removed
-        updated = link.FindingStatus(
+        updated = qvlink.FindingStatus(
             loaded.result.open - 1,
             loaded.result.closed,
             loaded.result.excluded + 1,
@@ -41,7 +41,7 @@ def update_bookkeeping(
         solved = before == iamraw.ProblemStatus.SOLVED
         deleted = before == iamraw.ProblemStatus.DISAGREE
         # yapf:disable
-        updated = link.FindingStatus(
+        updated = qvlink.FindingStatus(
             loaded.result.open + 1,
             loaded.result.closed if not solved else loaded.result.closed - 1,
             loaded.result.excluded if not deleted else loaded.result.excluded - 1,
@@ -51,7 +51,7 @@ def update_bookkeeping(
         utilo.error(f'status: {status} not supported - {source}')
         return
     loaded.result = updated
-    dumped = link.dump_job(loaded)
+    dumped = qvlink.dump_job(loaded)
     utilo.file_replace(jobpath, dumped)
 
 

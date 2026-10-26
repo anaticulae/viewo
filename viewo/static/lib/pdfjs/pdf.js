@@ -640,12 +640,12 @@ function addLinkAttributes(link, {
   const urlNullRemoved = (0, _util.removeNullCharacters)(url);
 
   if (enabled) {
-    link.href = link.title = urlNullRemoved;
+    qvlink.href = qvlink.title = urlNullRemoved;
   } else {
-    link.href = "";
-    link.title = `Disabled: ${urlNullRemoved}`;
+    qvlink.href = "";
+    qvlink.title = `Disabled: ${urlNullRemoved}`;
 
-    link.onclick = () => {
+    qvlink.onclick = () => {
       return false;
     };
   }
@@ -673,8 +673,8 @@ function addLinkAttributes(link, {
       break;
   }
 
-  link.target = targetStr;
-  link.rel = typeof rel === "string" ? rel : DEFAULT_LINK_REL;
+  qvlink.target = targetStr;
+  qvlink.rel = typeof rel === "string" ? rel : DEFAULT_LINK_REL;
 }
 
 function getFilenameFromUrl(url) {
@@ -9823,7 +9823,7 @@ class LinkAnnotationElement extends AnnotationElement {
 
     if (this.quadrilaterals) {
       return this._renderQuadrilaterals("linkAnnotation").map((quadrilateral, index) => {
-        const linkElement = index === 0 ? link : link.cloneNode();
+        const linkElement = index === 0 ? link : qvlink.cloneNode();
         quadrilateral.appendChild(linkElement);
         return quadrilateral;
       });
@@ -9835,9 +9835,9 @@ class LinkAnnotationElement extends AnnotationElement {
   }
 
   _bindLink(link, destination) {
-    link.href = this.linkService.getDestinationHash(destination);
+    qvlink.href = this.linkService.getDestinationHash(destination);
 
-    link.onclick = () => {
+    qvlink.onclick = () => {
       if (destination) {
         this.linkService.goToDestination(destination);
       }
@@ -9846,23 +9846,23 @@ class LinkAnnotationElement extends AnnotationElement {
     };
 
     if (destination || destination === "") {
-      link.className = "internalLink";
+      qvlink.className = "internalLink";
     }
   }
 
   _bindNamedAction(link, action) {
-    link.href = this.linkService.getAnchorUrl("");
+    qvlink.href = this.linkService.getAnchorUrl("");
 
-    link.onclick = () => {
+    qvlink.onclick = () => {
       this.linkService.executeNamedAction(action);
       return false;
     };
 
-    link.className = "internalLink";
+    qvlink.className = "internalLink";
   }
 
   _bindJSAction(link, data) {
-    link.href = this.linkService.getAnchorUrl("");
+    qvlink.href = this.linkService.getAnchorUrl("");
     const map = new Map([["Action", "onclick"], ["Mouse Up", "onmouseup"], ["Mouse Down", "onmousedown"]]);
 
     for (const name of Object.keys(data.actions)) {
@@ -9884,7 +9884,7 @@ class LinkAnnotationElement extends AnnotationElement {
       };
     }
 
-    link.className = "internalLink";
+    qvlink.className = "internalLink";
   }
 
 }

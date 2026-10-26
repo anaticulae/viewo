@@ -7,15 +7,15 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import link
 import protocol.finding
+import qvlink
 import utilo
 
 import viewo.result.update
 
 
 def update_finding_status(documentid: str, findingid: int, status: int):
-    source = link.document(documentid)
+    source = qvlink.document(documentid)
     status = viewo.result.update.problem_fromint(status)
     before = protocol.finding_status(source, findingid)
     if not protocol.finding_status_update(source, findingid, status):

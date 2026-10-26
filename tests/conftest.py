@@ -10,8 +10,8 @@
 import os
 
 import hoverpower
-import link
 import pytest
+import qvlink
 import utilo
 import utilotest
 import viewo_api.user.create
@@ -89,7 +89,7 @@ def run_queuemo(source, generated, owner=None):
     if os.path.exists(workpath):
         return
     utilo.log(f'generate {workpath}')
-    workspace = link.create_todo(
+    workspace = qvlink.create_todo(
         source,
         todopath=generated,
         todoname=todoname,

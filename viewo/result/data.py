@@ -11,8 +11,8 @@ import concurrent.futures
 import os
 
 import iamraw
-import link
 import protocol
+import qvlink
 import serializeraw
 import utilo
 
@@ -21,9 +21,9 @@ import viewo.waiting
 
 
 def load_resultview_result(process: str) -> str:
-    result = link.resultview(process)
+    result = qvlink.resultview(process)
     if not os.path.exists(result):
-        result = link.resultview(process, done=True)
+        result = qvlink.resultview(process, done=True)
     if not os.path.exists(result):
         return None
     with utilo.profile(f'load resultview: {process}'):

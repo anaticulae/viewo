@@ -8,13 +8,13 @@
 # =============================================================================
 
 import iamraw
-import link
+import qvlink
 import serializeraw
 import utilo
 
 
 def load_fromdocumentid(documentid: str):
-    result = link.resultview(documentid, done=True)
+    result = qvlink.resultview(documentid, done=True)
     if not utilo.exists(result):
         return None
     path = iamraw.path.headerfooters(result)

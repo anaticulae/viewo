@@ -11,7 +11,7 @@ import io
 import os
 
 import flask
-import link
+import qvlink
 import utilo
 import utilo.file.securewrapper
 
@@ -25,10 +25,10 @@ result_ = flask.Blueprint('result', __name__)  # pylint:disable=C0103
 def view_result(documentid: str = None):
     if not documentid:
         return flask.redirect(flask.url_for('documents.view_documents'))
-    invalid_document = not os.path.exists(link.ready(documentid))
+    invalid_document = not os.path.exists(qvlink.ready(documentid))
     if invalid_document:
         return flask.redirect('view/failure')
-    docname = link.job_title(documentid=documentid)
+    docname = qvlink.job_title(documentid=documentid)
     rendered = flask.render_template(
         'view/index.html',
         process=documentid,
@@ -40,7 +40,7 @@ def view_result(documentid: str = None):
 
 @result_.route(f'/view/{viewo.api.documents.DOCUMENTID}/<string:image>')
 def view_images(documentid: str = None, image: str = None):
-    source = link.ready(documentid)
+    source = qvlink.ready(documentid)
     invalid_document = not os.path.exists(source)
     if invalid_document:
         utilo.error(f'could not load document: {source}')
@@ -51,7 +51,7 @@ def view_images(documentid: str = None, image: str = None):
         utilo.error(f'could not load image: {image}')
         return flask.redirect('view/failure')
 
-    if link.private(documentid, done=None):
+    if qvlink.private(documentid, done=None):
         # Decrypt private image data
         with utilo.file.securewrapper.open(image, mode='rb') as fp:
             image = fp.read()

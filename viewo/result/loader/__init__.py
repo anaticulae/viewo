@@ -11,7 +11,7 @@ import collections
 import os
 
 import iamraw
-import link
+import qvlink
 import serializeraw
 import utilo
 
@@ -30,7 +30,7 @@ def load_sentences(path: str) -> dict:
 
 
 def load_sentences_fromdocumentid(documentid: str) -> str:
-    result = link.resultview(documentid, done=True)
+    result = qvlink.resultview(documentid, done=True)
     if not os.path.exists(result):
         return None
     path = os.path.join(result, 'words__word_result.yaml')
@@ -41,7 +41,7 @@ def load_sentences_fromdocumentid(documentid: str) -> str:
 
 
 def load_doctextstyle_fromdocumentid(documentid: str):
-    result = link.resultview(documentid, done=True)
+    result = qvlink.resultview(documentid, done=True)
     if not os.path.exists(result):
         return None
     path = os.path.join(result, 'doctextstyle__textstyle.yaml')
@@ -85,7 +85,7 @@ def friendly_font(font: str) -> str:
 
 
 def load_captions_fromdocumentid(documentid: str) -> iamraw.PageContentCaptions:
-    result = link.resultview(documentid, done=True)
+    result = qvlink.resultview(documentid, done=True)
     if not os.path.exists(result):
         return None
     path = iamraw.path.caption_result(result)
@@ -96,7 +96,7 @@ def load_captions_fromdocumentid(documentid: str) -> iamraw.PageContentCaptions:
 
 
 def load_links_fromdocumentid(documentid: str) -> iamraw.PageContentCaptions:
-    result = link.resultview(documentid, done=True)
+    result = qvlink.resultview(documentid, done=True)
     if not os.path.exists(result):
         return None
     path = utilo.pathconnector(result, 'words', 'links_links')
@@ -107,7 +107,7 @@ def load_links_fromdocumentid(documentid: str) -> iamraw.PageContentCaptions:
 
 
 def load_bibliography_fromdocumentid(documentid: str) -> iamraw.BibliographyTable:  # yapf:disable
-    result = link.resultview(documentid, done=True)
+    result = qvlink.resultview(documentid, done=True)
     if not os.path.exists(result):
         return None
     path = utilo.pathconnector(result, 'detector', 'bibliography_detected')

@@ -15,9 +15,9 @@ class PDFViewHyperlinks {
         let data = []
         for (let link of hyperlinks) {
             let row = [
-                `<a href="${link.href}">${link.href.slice(0, 80)}</a>`,
-                link.page,
-                link.visited,
+                `<a href="${qvlink.href}">${qvlink.href.slice(0, 80)}</a>`,
+                qvlink.page,
+                qvlink.visited,
                 '1',
                 'X',
             ]
