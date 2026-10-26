@@ -8,7 +8,7 @@
 # =============================================================================
 
 import flask
-import utila
+import utilo
 
 api_documents = flask.Blueprint('api_documents', __name__)  # pylint:disable=C0103
 
@@ -17,7 +17,7 @@ __all__ = ['api_documents', 'delete', 'present']
 DOCUMENTID_LENGTH = 16
 DOCUMENTID = f'<string(length={DOCUMENTID_LENGTH}):documentid>'
 DOCUMENTID_B = f'<string(length={DOCUMENTID_LENGTH}):partnerid>'
-if utila.testing():
+if utilo.testing():
     # allow invalid document length
     DOCUMENTID = '<string:documentid>'
     DOCUMENTID_B = '<string:partnerid>'

@@ -9,7 +9,7 @@
 
 import flask
 import flask_login
-import utila
+import utilo
 import viewo_api.user.data
 
 import viewo.api.users.update
@@ -35,7 +35,7 @@ def payment_ready():
             flask.flash(NO_PRODUCT_CHOICE)
             return flask.render_template('public/payment/index.html')
         try:
-            choice = utila.str2int(choice)
+            choice = utilo.str2int(choice)
             assert choice in VALID_CHOICE
         except (ValueError, AssertionError):
             flask.flash(INVALID_MESSAGE)

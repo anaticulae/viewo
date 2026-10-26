@@ -10,7 +10,7 @@
 import os
 
 import flask
-import utila
+import utilo
 
 import viewo.cache
 import viewo.config
@@ -31,7 +31,7 @@ def view_writing(selected: str = None):
         errorpage = f'writing/{selected}'.lower()
         return flask.render_template('public/error.html', errorpage=errorpage)
 
-    result = utila.file_read(source)
+    result = utilo.file_read(source)
 
     result = viewo.writing.content.replace(result, source)
     result = viewo.writing.reflinks.replace(result)

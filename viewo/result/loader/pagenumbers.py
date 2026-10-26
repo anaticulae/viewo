@@ -13,7 +13,7 @@ import functools
 import iamraw.path
 import link
 import serializeraw
-import utila
+import utilo
 
 
 def userpage(pdfpage: int, documentid: str) -> str:
@@ -28,11 +28,11 @@ def userpage(pdfpage: int, documentid: str) -> str:
 @functools.lru_cache
 def load_fromdocumentid(documentid: str) -> dict:
     resultview = link.resultview(documentid, done=True)
-    if not utila.exists(resultview):
+    if not utilo.exists(resultview):
         return None
     path = iamraw.path.groupme_pagenumbers(resultview)
-    if not utila.exists(path):
-        utila.error(f'could not load: {path}')
+    if not utilo.exists(path):
+        utilo.error(f'could not load: {path}')
         return None
     pagenumbers = serializeraw.load_pagenumbers(path)
     result = {page.pdfpage: page.detected for page in pagenumbers}  # pylint:disable=E1101
@@ -42,7 +42,7 @@ def load_fromdocumentid(documentid: str) -> dict:
             result = fill_pages_magic(result, pdflength=pdfinfo.pages)
         except ValueError as error:
             # backup strategy
-            utila.error(f'use page fill backup strategy: {error}')
+            utilo.error(f'use page fill backup strategy: {error}')
             result = fill_pages(result, pdflength=pdfinfo.pages)
     return result
 
@@ -93,16 +93,16 @@ def fill_pages_magic(pages: dict, pdflength: int) -> dict:  # pylint:disable=R12
                 if after is not None:
                     after = str(after).strip('[]')
                     try:
-                        current = utila.pagenumber_minus(after)
+                        current = utilo.pagenumber_minus(after)
                     except (ValueError, KeyError):
-                        current = utila.arabic(after) - 1
+                        current = utilo.arabic(after) - 1
                     pages[pdfpage] = f'[{current}]'
                     continue
             if pdfpage > 0:
                 before = pages[pdfpage - 1]
                 if before is not None:
                     before = str(before).strip('[]')
-                    current = utila.pagenumber_plus(before)
+                    current = utilo.pagenumber_plus(before)
                     pages[pdfpage] = f'[{current}]'
                     continue
         # update nones

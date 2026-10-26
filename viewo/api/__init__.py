@@ -13,7 +13,7 @@ import functools
 import flask
 import flask_login
 import link
-import utila
+import utilo
 import viewo_api
 import viewo_api.user.data
 
@@ -108,7 +108,7 @@ def valid_pages(function):
         # verify selected pages
         documentid = kwargs['documentid']
         pagecount = viewo.api.pageviews.utils.pagecount(documentid)
-        selected = utila.parse_pages(pages, pagecount=pagecount)
+        selected = utilo.parse_pages(pages, pagecount=pagecount)
         if selected is None:
             return viewo_api.bad(f'invalid page count: {pages}')
         if len(selected) > pagecount:

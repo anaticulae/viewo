@@ -7,7 +7,7 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import utilatest
+import utilotest
 
 FORM = 'form-group'
 
@@ -24,8 +24,8 @@ TODO = [  # H2
 ]
 
 
-@utilatest.nightly
-@utilatest.displayed
+@utilotest.nightly
+@utilotest.displayed
 def test_navigation(driver, webview):
     """Ensure that navigation bar works."""
     driver.get(webview)

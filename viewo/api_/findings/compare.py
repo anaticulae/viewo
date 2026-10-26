@@ -13,7 +13,7 @@ import enum
 
 import link
 import protocol
-import utila
+import utilo
 
 import viewo.api.utils
 
@@ -36,10 +36,10 @@ def compare(
     operation: Comperator = Comperator.ALL,
 ) -> ComparedListFinding:
     documentpath = link.optimized(documentid, done=True)
-    if not utila.exists(documentpath):
+    if not utilo.exists(documentpath):
         return None
     partnerpath = link.optimized(partnerid, done=True)
-    if not utila.exists(partnerpath):
+    if not utilo.exists(partnerpath):
         return None
     if documentid == partnerid:
         # equal documents
@@ -47,7 +47,7 @@ def compare(
     document = protocol.load_grouped(documentpath)
     partner = protocol.load_grouped(partnerpath)
     compared = []
-    for number, content in utila.sync_pages((document, partner)):
+    for number, content in utilo.sync_pages((document, partner)):
         left = content[0] if content[0] else []
         right = content[1] if content[1] else []
         # run selected filter
@@ -69,8 +69,8 @@ def compare_raw(pages: ComparedListFinding):
     for page in pages:
         raw = {
             'page': page.page,
-            'current': utila.simplify(page.current),
-            'other': utila.simplify(page.other),
+            'current': utilo.simplify(page.current),
+            'other': utilo.simplify(page.other),
         }
         result.append(raw)
     return result

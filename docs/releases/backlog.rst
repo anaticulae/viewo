@@ -25,7 +25,7 @@ general
 
 * Introduce common style guide lines
 
-* Add central style css to configo package?
+* Add central style css to configos package?
 
 * Make toc clickable to jump to selected page
 

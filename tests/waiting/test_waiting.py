@@ -10,7 +10,7 @@
 import os
 
 import link
-import utila
+import utilo
 
 import tests
 import tests.api
@@ -64,9 +64,9 @@ def test_waiting_status_verified(user_client, td, mp):
     """
     todo = td.tmpdir.join(tests.TODO_DOCUMENT)
     os.makedirs(todo)
-    utila.file_create(os.path.join(todo, tests.TODO_DOCUMENT))  # fake pdf file
+    utilo.file_create(os.path.join(todo, tests.TODO_DOCUMENT))  # fake pdf file
 
-    utila.file_copy(
+    utilo.file_copy(
         os.path.join(
             tests.EXAMPLE_TODO,
             tests.TODO_DOCUMENT,

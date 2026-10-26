@@ -10,7 +10,7 @@
 import flask
 import iamraw
 import link
-import utila
+import utilo
 
 import viewo.api.pageviews.utils
 import viewo.api_.findings.data
@@ -47,7 +47,7 @@ def all_findings_raw(
     payed: bool = True,
 ):
     public = viewo.api.pageviews.utils.public(documentid)
-    simple = utila.simplify(content, removes=SKIP)
+    simple = utilo.simplify(content, removes=SKIP)
     simple = add_finding_uri(simple, documentid)
     simple = remove_unpayed(simple) if not payed and not public else simple
     simple = findingids_tostr(simple)
@@ -62,7 +62,7 @@ def all_findings_raw(
 
 
 def finding_raw(finding: iamraw.Finding, documentid: str) -> dict:
-    simple = utila.simplify(finding, removes=SKIP)
+    simple = utilo.simplify(finding, removes=SKIP)
     simple = findingid_tostr(simple)
     simple['uri'] = flask.url_for(
         'api_findings.finding_get',
@@ -127,7 +127,7 @@ def paged(documentid, pages):
     uri = flask.url_for('api_findings.findings', documentid=documentid)
     pagerange = ':'
     if pages is not None:
-        pages = utila.simplify_pages(pages)
+        pages = utilo.simplify_pages(pages)
         uri = flask.url_for(
             'api_findings.findings',
             documentid=documentid,

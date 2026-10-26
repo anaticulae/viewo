@@ -9,55 +9,56 @@
 
 import os
 
-import configo
-import utila
+import configos
+import utilo
 import writers
 
 import viewo
 
-SECRET_KEY = configo.env('CHANIA_SECRET_KEY', os.urandom(64))
+SECRET_KEY = configos.env('CHANIA_SECRET_KEY', os.urandom(64))
 
 TEMPLATES = os.path.join(viewo.ROOT, 'viewo/templates')
 STATIC = os.path.join(viewo.ROOT, 'viewo/static')
 
 # 20 megabyte
-FILE_SIZE_MAX = configo.env('CHANIA_DOCUMENT_SIZE_MAX', 20 * 1024 * 1024)
+FILE_SIZE_MAX = configos.env('CHANIA_DOCUMENT_SIZE_MAX', 20 * 1024 * 1024)
 
 API_PREFIX = '/api/v0'
 
 VISITORS_FILE_SIZE_MAX = 1024  # kb
-VISITORS_TRACKING = configo.env('CHANIA_VISITORS_TRACKING', True)
-VISITORS_TRACKING_STATIC = configo.env('CHANIA_VISITORS_TRACKING_STATIC', False)
+VISITORS_TRACKING = configos.env('CHANIA_VISITORS_TRACKING', True)
+VISITORS_TRACKING_STATIC = configos.env('CHANIA_VISITORS_TRACKING_STATIC',
+                                        False)
 
 PASSWORD_LENGTH_MIN = 8
 PASSWORD_LENGTH_MAX = 64
 
 # null:disable caching
-CACHING = configo.env('CHANIA_CACHING', 'null')
+CACHING = configos.env('CHANIA_CACHING', 'null')
 
-OPTIMIZE_DATA = configo.env('CHANIA_OPTIMIZE_DATA', False)
+OPTIMIZE_DATA = configos.env('CHANIA_OPTIMIZE_DATA', False)
 
-PAYMENT = configo.env('CHANIA_PAYMENT', False)
+PAYMENT = configos.env('CHANIA_PAYMENT', False)
 
-TALKER = configo.env('CHANIA_TALKER', True)
+TALKER = configos.env('CHANIA_TALKER', True)
 
-PRODUCTION = configo.env('CHANIA_PRODUCTION', False)
+PRODUCTION = configos.env('CHANIA_PRODUCTION', False)
 
 
 def config_show():
-    utila.debug('')
-    utila.debug('USER')
-    utila.debug('')
-    utila.debug(f'PAYMENT:             {PAYMENT}')
-    utila.debug(f'TALKER:              {TALKER}')
-    utila.debug(f'VISITORS_TRACKING:   {VISITORS_TRACKING}')
-    utila.debug(f'PASSWORD_LENGTH_MIN: {PASSWORD_LENGTH_MIN}')
-    utila.debug('')
-    utila.debug('PLATFORM')
-    utila.debug('')
-    utila.debug(f'API_PREFIX:          {API_PREFIX}')
-    utila.debug(f'FILE_SIZE_MAX:       {FILE_SIZE_MAX}')
-    utila.debug('')
+    utilo.debug('')
+    utilo.debug('USER')
+    utilo.debug('')
+    utilo.debug(f'PAYMENT:             {PAYMENT}')
+    utilo.debug(f'TALKER:              {TALKER}')
+    utilo.debug(f'VISITORS_TRACKING:   {VISITORS_TRACKING}')
+    utilo.debug(f'PASSWORD_LENGTH_MIN: {PASSWORD_LENGTH_MIN}')
+    utilo.debug('')
+    utilo.debug('PLATFORM')
+    utilo.debug('')
+    utilo.debug(f'API_PREFIX:          {API_PREFIX}')
+    utilo.debug(f'FILE_SIZE_MAX:       {FILE_SIZE_MAX}')
+    utilo.debug('')
 
 
 def writing() -> str:
@@ -68,6 +69,6 @@ def writing() -> str:
     result = writers.build()
     if not os.path.exists(result):
         completed = writers.generate()
-        assert completed == utila.SUCCESS
+        assert completed == utilo.SUCCESS
     assert os.path.exists(result), str(result)
     return result

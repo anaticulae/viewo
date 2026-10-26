@@ -10,7 +10,7 @@
 import dataclasses
 import os
 
-import utila
+import utilo
 
 import viewo.path
 
@@ -25,8 +25,8 @@ class Visit:
 def append(visit: Visit):
     assert visit, str(visit)
     outpath = os.path.join(viewo.path.visitors(), str(visit.unique))
-    raw = raw_visit(visit) + utila.NEWLINE
-    utila.file_append(outpath, raw, create=True)
+    raw = raw_visit(visit) + utilo.NEWLINE
+    utilo.file_append(outpath, raw, create=True)
 
 
 def raw_visit(visit: Visit) -> str:

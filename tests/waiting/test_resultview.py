@@ -7,8 +7,8 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import configo
-import utila
+import configos
+import utilo
 
 import tests
 import tests.api
@@ -35,7 +35,7 @@ def test_waiting_resultview_load_resultview():
     pages = [item.page for item in loaded]
     # -1 overview page
     # 25 html pages and x findings page
-    assert pages == utila.rlist(-1, 25)
+    assert pages == utilo.rlist(-1, 25)
 
 
 @tests.generated
@@ -51,7 +51,7 @@ def test_waiting_resultview_tojson():
 
 def test_waiting_resultview_status_failure(valid, user_client, mp):
     with mp.context() as context:
-        context.setattr(configo, 'todo', lambda: valid)
+        context.setattr(configos, 'todo', lambda: valid)
         result = tests.content(
             user_client,
             '/waiting/resultview/status/abcdc',
@@ -61,7 +61,7 @@ def test_waiting_resultview_status_failure(valid, user_client, mp):
 
 def test_waiting_resultview_status(valid, user_client, mp):
     with mp.context() as context:
-        context.setattr(configo, 'todo', lambda: valid)
+        context.setattr(configos, 'todo', lambda: valid)
         result = tests.content(
             user_client,
             f'/waiting/resultview/status/{tests.TODO_DOCUMENT}',
@@ -71,7 +71,7 @@ def test_waiting_resultview_status(valid, user_client, mp):
 
 def test_waiting_resultview(valid, user_client, mp):
     with mp.context() as context:
-        context.setattr(configo, 'todo', lambda: valid)
+        context.setattr(configos, 'todo', lambda: valid)
         result = tests.content(
             user_client,
             f'/waiting/resultview/{tests.TODO_DOCUMENT}',

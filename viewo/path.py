@@ -6,14 +6,14 @@
 # use or distribution is an offensive act against international law and may
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
-"""Wrapper to bypass configo enviromental variables to enable
+"""Wrapper to bypass configos enviromental variables to enable
 multiprocessed tests."""
 
 import os
 
-import configo
+import configos
 import flask
-import utila
+import utilo
 
 
 def appconfig():
@@ -54,9 +54,9 @@ def visitors():
     return result
 
 
-configo.todo = todo
-configo.ready = ready
-configo.share = common
+configos.todo = todo
+configos.ready = ready
+configos.share = common
 
 
 def init():
@@ -68,5 +68,5 @@ def init():
         visitors(),
     ]
     for item in installs:
-        utila.debug(item)
+        utilo.debug(item)
         os.makedirs(item, exist_ok=True)

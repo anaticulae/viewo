@@ -9,7 +9,7 @@
 
 import http
 
-import utilatest
+import utilotest
 
 import tests
 
@@ -65,7 +65,7 @@ def email_change(
 
 
 def upload_minimal(client):
-    result = utilatest.apiupload(
+    result = utilotest.apiupload(
         client,
         page='/documents',
         field='file',

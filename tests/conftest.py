@@ -9,15 +9,15 @@
 
 import os
 
+import hoverpower
 import link
-import power
 import pytest
-import utila
-import utilatest
+import utilo
+import utilotest
 import viewo_api.user.create
 # pylint:disable=W0611
-from utilatest import mp
-from utilatest import td
+from utilotest import mp
+from utilotest import td
 
 import tests
 import viewo
@@ -30,33 +30,33 @@ pytest_plugins = ['pytester', 'xdist', 'localserver']  # pylint: disable=invalid
 PACKAGE = viewo.PROCESS
 
 RESOURCES_READY = [
-    power.HOME018_PDF,
-    power.HOME025_PDF,
-    power.MASTER075_PDF,
+    hoverpower.HOME018_PDF,
+    hoverpower.HOME025_PDF,
+    hoverpower.MASTER075_PDF,
 ]
 RESOURCES_TODO = [
-    power.DOCU007_PDF,
+    hoverpower.DOCU007_PDF,
 ]
 
-utilatest.setup(viewo.config.API_PREFIX)
+utilotest.setup(viewo.config.API_PREFIX)
 
 
 @pytest.mark.usefixtures('session')
 def pytest_sessionstart():
-    power.run()
+    hoverpower.run()
 
 
 def extract_ready(files):
-    readypath = power.generated(folder='ready')
+    readypath = hoverpower.generated(folder='ready')
     os.makedirs(readypath, exist_ok=True)
-    with utila.GeorgFork() as fork:
+    with utilo.GeorgFork() as fork:
         for path in files:
             fork.fork(
                 method=run_queuemo,
                 source=path,
                 generated=readypath,
             )
-    utila.directory_lock(readypath)
+    utilo.directory_lock(readypath)
 
 
 # TODO: REPLACE WITH VIEWO_API
@@ -64,9 +64,9 @@ PUBLIC = '00000000'
 
 
 def extract_todo(files):
-    todopath = power.generated(folder='todo')
+    todopath = hoverpower.generated(folder='todo')
     os.makedirs(todopath, exist_ok=True)
-    with utila.GeorgFork() as fork:
+    with utilo.GeorgFork() as fork:
         for path in files:
             fork.fork(
                 method=run_queuemo,
@@ -74,7 +74,7 @@ def extract_todo(files):
                 generated=todopath,
                 owner=PUBLIC,
             )
-    utila.directory_lock(todopath)
+    utilo.directory_lock(todopath)
 
 
 def run_queuemo(source, generated, owner=None):
@@ -83,12 +83,12 @@ def run_queuemo(source, generated, owner=None):
     Keep attentation to valid document/todo-name.
     """
     # 16 accepted document id length, disabled for testing
-    todoname = utila.file_name(utila.path_parent(source))
-    todoname += '_' + utila.file_name(source)
+    todoname = utilo.file_name(utilo.path_parent(source))
+    todoname += '_' + utilo.file_name(source)
     workpath = os.path.join(generated, todoname)
     if os.path.exists(workpath):
         return
-    utila.log(f'generate {workpath}')
+    utilo.log(f'generate {workpath}')
     workspace = link.create_todo(
         source,
         todopath=generated,
@@ -97,8 +97,8 @@ def run_queuemo(source, generated, owner=None):
     )
     # run single queuemo instance in workspace, write output to same workspace
     cmd = f'queuemo_single -i {workspace} -V'
-    completed = utila.run(cmd)
-    utila.debug(utila.format_completed(completed))
+    completed = utilo.run(cmd)
+    utilo.debug(utilo.format_completed(completed))
 
 
 def zfill(text, width, char='0') -> str:
@@ -168,19 +168,19 @@ def payed_client(test_client):  # pylint:disable=W0621
 
 @pytest.fixture
 def docclient(client):  # pylint:disable=W0621
-    result = utilatest.apiupload(client, '/documents', 'file', tests.MINIMAL)
+    result = utilotest.apiupload(client, '/documents', 'file', tests.MINIMAL)
     doc = result['document']
     return client, doc
 
 
 @pytest.fixture
 def findingclient(client):  # pylint:disable=W0621
-    if not utila.exists(power.generated()):
+    if not utilo.exists(hoverpower.generated()):
         pytest.skip(reason='generate data')
     test_config = {
-        'COMMON': power.generated(),
-        'TODO': power.generated(folder='todo'),
-        'READY': power.generated(folder='ready'),
+        'COMMON': hoverpower.generated(),
+        'TODO': hoverpower.generated(folder='todo'),
+        'READY': hoverpower.generated(folder='ready'),
     }
     client.application.config.update(test_config)
     return client

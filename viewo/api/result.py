@@ -12,8 +12,8 @@ import os
 
 import flask
 import link
-import utila
-import utila.file.securewrapper
+import utilo
+import utilo.file.securewrapper
 
 import viewo.api.documents
 
@@ -43,17 +43,17 @@ def view_images(documentid: str = None, image: str = None):
     source = link.ready(documentid)
     invalid_document = not os.path.exists(source)
     if invalid_document:
-        utila.error(f'could not load document: {source}')
+        utilo.error(f'could not load document: {source}')
         return flask.redirect('view/failure')
 
     image = os.path.join(source, 'result/view/', image)
     if not os.path.exists(image):
-        utila.error(f'could not load image: {image}')
+        utilo.error(f'could not load image: {image}')
         return flask.redirect('view/failure')
 
     if link.private(documentid, done=None):
         # Decrypt private image data
-        with utila.file.securewrapper.open(image, mode='rb') as fp:
+        with utilo.file.securewrapper.open(image, mode='rb') as fp:
             image = fp.read()
         # TODO: IS BYTESIO REALLY REQUIRED
         image = io.BytesIO(image)

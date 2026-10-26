@@ -8,16 +8,16 @@
 # =============================================================================
 
 import link
-import utila
+import utilo
 
 
 def load_fromdocumentid(documentid: str) -> str:
     result = link.ready(documentid)
-    if not utila.exists(result):
+    if not utilo.exists(result):
         return None
     if link.failed(documentid):
-        path = utila.join(result, 'failed')
+        path = utilo.join(result, 'failed')
     else:
-        path = utila.join(result, 'done')
-    content = utila.file_read(path)
+        path = utilo.join(result, 'done')
+    content = utilo.file_read(path)
     return content

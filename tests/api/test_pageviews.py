@@ -9,14 +9,14 @@
 
 import http
 
-import utilatest
+import utilotest
 
 import tests
 
 
 def test_api_pages_overview(findingclient):
     client = findingclient
-    result = utilatest.apicall(
+    result = utilotest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/pageviews',
     )
@@ -26,7 +26,7 @@ def test_api_pages_overview(findingclient):
 
 def test_api_pages_overview_range(findingclient):
     client = findingclient
-    result = utilatest.apicall(
+    result = utilotest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/pageviews?pages=1',
     )
@@ -34,7 +34,7 @@ def test_api_pages_overview_range(findingclient):
     assert result['pageviews']['uri']
     assert len(result['pageviews']['html']) == 1
 
-    result = utilatest.apicall(
+    result = utilotest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/pageviews?pages=0:3',
     )
@@ -43,7 +43,7 @@ def test_api_pages_overview_range(findingclient):
 
 def test_api_pages_overview_invalid_range(findingclient):
     client = findingclient
-    utilatest.apicall(
+    utilotest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/pageviews?pages=0:xxx-10:-50',
         expected=http.HTTPStatus.BAD_REQUEST,
@@ -52,12 +52,12 @@ def test_api_pages_overview_invalid_range(findingclient):
 
 def test_api_pages_overview_invalid_document(findingclient):
     client = findingclient
-    utilatest.apicall(
+    utilotest.apicall(
         client,
         '/documents/invalid_document/pageviews',
         expected=http.HTTPStatus.NOT_FOUND,
     )
-    utilatest.apicall(
+    utilotest.apicall(
         client,
         '/documents/invalid_document/pageviews?pages=0:xxx-10:-50',
         expected=http.HTTPStatus.NOT_FOUND,
@@ -66,7 +66,7 @@ def test_api_pages_overview_invalid_document(findingclient):
 
 def test_api_pages_pagenumbers(findingclient):
     client = findingclient
-    result = utilatest.apicall(
+    result = utilotest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/pagenumbers',
     )

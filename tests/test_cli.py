@@ -7,12 +7,12 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import utilatest
+import utilotest
 
 import tests
 
 
 def test_version(mp, capsys):
     tests.run('--version', mp=mp)
-    stdout = utilatest.stdout(capsys).strip()
+    stdout = utilotest.stdout(capsys).strip()
     assert stdout.count('.') == 2

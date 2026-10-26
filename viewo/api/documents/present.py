@@ -13,7 +13,7 @@ import os
 import flask
 import flask_login
 import link
-import utila
+import utilo
 import viewo_api
 
 import viewo.api
@@ -46,7 +46,7 @@ def docstate() -> link.State:
 
 
 def curowner() -> set:
-    public = utila.str2bool(flask.request.args.get('public', False))
+    public = utilo.str2bool(flask.request.args.get('public', False))
     result = userid(public=public)
     return result
 
@@ -102,7 +102,7 @@ def pdf_get(documentid: str) -> bytes:
     pdf = os.path.join(todo, documentid)
     if not os.path.exists(pdf):
         return 'NO DOCUMENT', 404
-    loaded = utila.file_read_binary(pdf)
+    loaded = utilo.file_read_binary(pdf)
     return loaded
 
 

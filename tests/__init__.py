@@ -13,29 +13,29 @@ import json
 import json.decoder
 import os
 
-import power
+import hoverpower
 import protocol.finding
 import pytest
-import utila
-import utilatest
+import utilo
+import utilotest
 import viewo_api
 import werkzeug.datastructures
 
 import viewo
 import viewo.config
 
-power.setup(viewo.ROOT)
+hoverpower.setup(viewo.ROOT)
 
-BASE_TEMPLATE = utila.file_read(utila.join(viewo.config.TEMPLATES, 'base.html'))
+BASE_TEMPLATE = utilo.file_read(utilo.join(viewo.config.TEMPLATES, 'base.html'))
 
-run, fail = utilatest.create_cli_runner(viewo)
+run, fail = utilotest.create_cli_runner(viewo)
 
 
 # TEST_FINDING = '-5427470771429581022'
 def first_finding(document) -> int:
-    source = utila.join(power.generated(folder='ready'), document)
-    if not utila.exists(source):
-        utila.error('run resource generator!')
+    source = utilo.join(hoverpower.generated(folder='ready'), document)
+    if not utilo.exists(source):
+        utilo.error('run resource generator!')
         return None
     for path, content in protocol.finding.iter_findings(source):  # pylint:disable=W0612,W0621
         if not content:
@@ -53,12 +53,12 @@ TEST_FINDING = first_finding(TEST_DOCUMENT)
 INVALID_DOCUMENT = 'rrrrrrrrrrrrrrrr'
 INVALID_SECOND = 'SSSSSSSSSSSSSSSS'
 
-MINIMAL = power.DOCU007_PDF
+MINIMAL = hoverpower.DOCU007_PDF
 assert os.path.exists(MINIMAL), MINIMAL
 
-EXAMPLE_READY = power.generated(folder='ready')
+EXAMPLE_READY = hoverpower.generated(folder='ready')
 
-EXAMPLE_TODO = power.generated(folder='todo')
+EXAMPLE_TODO = hoverpower.generated(folder='todo')
 
 EXAMPLE_ROOT = os.path.join(EXAMPLE_READY, TEST_DOCUMENT)
 EXAMPLE_RESULT = os.path.join(EXAMPLE_ROOT, 'result')
@@ -68,7 +68,7 @@ TEST_PASSWORD = 'EEWUESTEEWUESTEE'  # nosec
 TEST_EMAIL = 'dertestbaer@helm.com'
 
 generated = pytest.mark.skipif(
-    not utila.exists(EXAMPLE_RESULT),
+    not utilo.exists(EXAMPLE_RESULT),
     reason='generate data',
 )
 
@@ -117,7 +117,7 @@ def content(
 
 
 def upload(client, file=MINIMAL):
-    result = utilatest.apiupload(
+    result = utilotest.apiupload(
         client,
         '/documents',
         'file',
@@ -162,7 +162,7 @@ def apiput(
 
 
 def finding_status(client, documentid: str, findingid: int) -> int:
-    result = utilatest.apicall(
+    result = utilotest.apicall(
         client,
         f'/documents/{documentid}/findings/{findingid}',
         expected=http.HTTPStatus.OK,

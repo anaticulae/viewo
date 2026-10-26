@@ -9,21 +9,21 @@
 
 import http
 
-import utilatest
+import utilotest
 
 import tests
 
 
 def test_api_documents_overview(client):
-    result = utilatest.apicall(client, '/documents')
+    result = utilotest.apicall(client, '/documents')
     assert not result['documents']
-    utilatest.apiupload(client, '/documents', 'file', tests.MINIMAL)
-    result = utilatest.apicall(client, '/documents')
+    utilotest.apiupload(client, '/documents', 'file', tests.MINIMAL)
+    result = utilotest.apicall(client, '/documents')
     assert result['documents']
 
 
 def test_api_document_get_no_resource(client):
-    result = utilatest.apicall(
+    result = utilotest.apicall(
         client,
         '/documents/invalid_document',
         expected=http.HTTPStatus.NOT_FOUND,
@@ -32,13 +32,13 @@ def test_api_document_get_no_resource(client):
 
 
 def test_api_document_get_byid(client):
-    result = utilatest.apiupload(client, '/documents', 'file', tests.MINIMAL)
+    result = utilotest.apiupload(client, '/documents', 'file', tests.MINIMAL)
     tests.api.login(
         client,
         userid=result['userid'],
         password=result['password'],
     )
-    result = utilatest.get(
+    result = utilotest.get(
         client,
         result['document'],
     )
@@ -49,12 +49,12 @@ def test_api_delete_document_byid(client):
     result = tests.upload(client, file=tests.MINIMAL)
     created = result['document']
     # delete pdf file with `DELETE {resource_path}`
-    result = utilatest.delete(
+    result = utilotest.delete(
         client,
         request=created,
     )
     # delete it again will produce BAD_REQUEST answer
-    result = utilatest.delete(
+    result = utilotest.delete(
         client,
         request=created,
         expected=http.HTTPStatus.BAD_REQUEST,
@@ -62,7 +62,7 @@ def test_api_delete_document_byid(client):
 
 
 def test_api_delete_document_which_does_not_exists(client):
-    result = utilatest.apidelete(
+    result = utilotest.apidelete(
         client,
         '/documents/invalid_document',
         expected=http.HTTPStatus.NOT_FOUND,
@@ -71,7 +71,7 @@ def test_api_delete_document_which_does_not_exists(client):
 
 
 def test_api_documents_links(findingclient):
-    result = utilatest.apicall(findingclient,
+    result = utilotest.apicall(findingclient,
                                '/documents/master_master075/links')
     assert result['links']
     assert len(result['links']['resource']) >= 10

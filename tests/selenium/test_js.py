@@ -7,18 +7,18 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import utila
-import utilatest
+import utilo
+import utilotest
 
 import viewo
 
 
-@utilatest.nightly
-@utilatest.displayed
+@utilotest.nightly
+@utilotest.displayed
 def test_javascript(driver):
     path = f'file:///{viewo.ROOT}/tests/js/index.html'
     driver.get(path)
     text = driver.find_element_by_id('qunit').text
-    utila.error(text)
+    utilo.error(text)
     assert 'tests completed' in text
     assert '0 failed.' in text

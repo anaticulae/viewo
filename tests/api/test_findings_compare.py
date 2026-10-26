@@ -10,7 +10,7 @@
 import http
 
 import pytest
-import utilatest
+import utilotest
 
 import tests
 import tests.api
@@ -39,7 +39,7 @@ def test_api_findings_compare_two_documents_diff():
 
 def test_api_compare_findings_all(findingclient):
     client = findingclient
-    result = utilatest.apicall(
+    result = utilotest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/findings/compare/{tests.TEST_DOCUMENT}',
     )
@@ -49,7 +49,7 @@ def test_api_compare_findings_all(findingclient):
 
 def test_api_compare_findings_invalid_partnerid(findingclient):
     client = findingclient
-    utilatest.apicall(
+    utilotest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/findings/compare/INVALIDINVALIDIN',
         expected=http.HTTPStatus.NOT_FOUND,
@@ -58,7 +58,7 @@ def test_api_compare_findings_invalid_partnerid(findingclient):
 
 def test_api_compare_findings_invalid_operation(findingclient):
     client = findingclient
-    utilatest.apicall(
+    utilotest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/findings/compare/{tests.TEST_DOCUMENT}?operation=invalid',
         expected=http.HTTPStatus.BAD_REQUEST,

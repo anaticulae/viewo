@@ -11,7 +11,7 @@ import os
 
 import admin_helpdesk
 import admin_helpdesk.api
-import configo
+import configos
 import flask
 import flask_bootstrap
 import flask_moment
@@ -65,7 +65,7 @@ class Application(flask.Flask):
 
     @staticmethod
     def ready_exists(path) -> bool:
-        result = os.path.join(configo.ready(), path)
+        result = os.path.join(configos.ready(), path)
         return os.path.exists(result)
 
     @staticmethod
@@ -155,7 +155,7 @@ def configure(appi, config):
     if config is None:
         # Production environment
         # load the instance config, if it exists
-        common_, todo_, ready_ = configo.environment()
+        common_, todo_, ready_ = configos.environment()
         appi.config['COMMON'] = common_
         appi.config['TODO'] = todo_
         appi.config['READY'] = ready_

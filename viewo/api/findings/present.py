@@ -9,7 +9,7 @@
 
 import flask
 import flask_login
-import utila
+import utilo
 import viewo_api
 
 import viewo.api
@@ -124,7 +124,7 @@ def fast_findings(documentid):
     )
     if collected is None:
         return viewo_api.notfound(f'could not find: {documentid}')
-    simple = utila.simplify(collected, removes=SKIP)
+    simple = utilo.simplify(collected, removes=SKIP)
     dumped = flask.jsonify(simple)
     return dumped
 
@@ -134,5 +134,5 @@ def pages(documentid: str) -> tuple:
     if raw is None:
         return None
     pagecount = viewo.api.pageviews.utils.pagecount(documentid)
-    selected = utila.parse_pages(raw, pagecount=pagecount)
+    selected = utilo.parse_pages(raw, pagecount=pagecount)
     return selected

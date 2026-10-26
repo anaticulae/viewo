@@ -11,7 +11,7 @@ import os
 
 import iamraw
 import link
-import utila
+import utilo
 
 
 def update_bookkeeping(
@@ -48,11 +48,11 @@ def update_bookkeeping(
         )
         # yapf:enable
     else:
-        utila.error(f'status: {status} not supported - {source}')
+        utilo.error(f'status: {status} not supported - {source}')
         return
     loaded.result = updated
     dumped = link.dump_job(loaded)
-    utila.file_replace(jobpath, dumped)
+    utilo.file_replace(jobpath, dumped)
 
 
 def problem_fromint(status: int) -> iamraw.ProblemStatus:

@@ -12,24 +12,24 @@ import threading
 import time
 
 import pytest
-import utila
+import utilo
 from viewvisitor.fixture import selenium_driver as driver  # pylint:disable=W0611
 
 
 def viewo_start(port):
     cmd = f'viewo --host localhost --port {port}'
-    completed = utila.run(cmd, expect=143)
+    completed = utilo.run(cmd, expect=143)
     assert completed.returncode == 143
 
 
 def viewo_shutdown():
-    content = utila.run('ps -W').stdout
+    content = utilo.run('ps -W').stdout
     for line in content.splitlines():
         if 'viewo' not in line:
             continue
         pid = line.split()[0]
         # TODO: WINDOWS
-        utila.run(f'KILL -f {pid}')
+        utilo.run(f'KILL -f {pid}')
 
 
 LOCK = threading.Lock()

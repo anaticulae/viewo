@@ -10,7 +10,7 @@
 import os
 
 import link
-import utila
+import utilo
 
 import viewo.api
 import viewo.api.utils
@@ -46,7 +46,7 @@ def load_html(documentid: str, pages: tuple = None, payed: bool = True) -> dict:
         for content in selected
     ]
 
-    simple = utila.simplify(selected)
+    simple = utilo.simplify(selected)
     return simple
 
 
@@ -78,7 +78,7 @@ def free_view(page: int, payment: bool = True) -> bool:
 
 def pagecount(documentid: str) -> int:
     root = link.resultview(documentid, done=True)
-    result = len(utila.file_list(os.path.join(root, 'view'), include='html'))
+    result = len(utilo.file_list(os.path.join(root, 'view'), include='html'))
     return result
 
 

@@ -9,7 +9,7 @@
 
 import re
 
-import utila
+import utilo
 
 
 def replace(content: str):
@@ -33,7 +33,7 @@ def replace_links(content: str, table: dict) -> str:
         try:
             replacement = table[finding]
         except KeyError:
-            utila.error(f'could not find ref link for: {finding}')
+            utilo.error(f'could not find ref link for: {finding}')
             continue
         content = content.replace(token, replacement, 1)
     return content

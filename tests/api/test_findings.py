@@ -10,14 +10,14 @@
 import http
 
 import pytest
-import utilatest
+import utilotest
 
 import tests
 
 
 def test_api_findings_overview_bydocumentid(findingclient):
     client = findingclient
-    result = utilatest.apicall(
+    result = utilotest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/findings',
     )
@@ -27,7 +27,7 @@ def test_api_findings_overview_bydocumentid(findingclient):
 
 def test_api_fastfindings_bydocumentid(findingclient):
     client = findingclient
-    result = utilatest.apicall(
+    result = utilotest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/fastfindings',
     )
@@ -38,7 +38,7 @@ def test_api_findings_pages_outranges(findingclient):
     """Upper page mark outranges valid pages(18). Request is cutted at
     top page border."""
     client = findingclient
-    result = utilatest.apicall(
+    result = utilotest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/fastfindings?pages=15:50',
     )
@@ -46,7 +46,7 @@ def test_api_findings_pages_outranges(findingclient):
 
 
 def test_api_findings_overview_by_invalid_documentid(client):
-    utilatest.apicall(
+    utilotest.apicall(
         client,
         '/documents/invalid_document/findings',
         expected=http.HTTPStatus.NOT_FOUND,
@@ -55,7 +55,7 @@ def test_api_findings_overview_by_invalid_documentid(client):
 
 def test_api_findings_byfindingid_notexists(docclient):
     client, doc = docclient
-    utilatest.get(
+    utilotest.get(
         client,
         f'{doc}/findings/notexists',
         expected=http.HTTPStatus.NOT_FOUND,
@@ -65,7 +65,7 @@ def test_api_findings_byfindingid_notexists(docclient):
 @pytest.mark.skipif(not tests.TEST_FINDING, reason='generate resources')
 def test_api_findings_byfindingid(findingclient):
     client = findingclient
-    result = utilatest.apicall(
+    result = utilotest.apicall(
         client,
         f'/documents/{tests.TEST_DOCUMENT}/findings/{tests.TEST_FINDING}',
         expected=http.HTTPStatus.OK,

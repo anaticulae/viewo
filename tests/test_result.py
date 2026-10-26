@@ -9,7 +9,7 @@
 
 import os
 
-import utila
+import utilo
 
 import tests
 
@@ -46,11 +46,11 @@ def test_call_result_e508af0df454gi30(client, mp):
 
 @tests.generated
 def test_call_result_e508af0df454gi30_image_access(test_client):
-    utila.copy_content(
+    utilo.copy_content(
         src=os.path.join(tests.EXAMPLE_ROOT, 'jobinfo.yaml'),
         dst=f'ready/{tests.TEST_DOCUMENT}',
     )
-    utila.copy_content(
+    utilo.copy_content(
         src=tests.EXAMPLE_RESULT,
         dst=f'ready/{tests.TEST_DOCUMENT}/result',
         recursive=True,

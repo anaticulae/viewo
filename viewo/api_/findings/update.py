@@ -9,7 +9,7 @@
 
 import link
 import protocol.finding
-import utila
+import utilo
 
 import viewo.result.update
 
@@ -19,7 +19,7 @@ def update_finding_status(documentid: str, findingid: int, status: int):
     status = viewo.result.update.problem_fromint(status)
     before = protocol.finding_status(source, findingid)
     if not protocol.finding_status_update(source, findingid, status):
-        utila.error(f'could not update: {findingid} status: {status}')
+        utilo.error(f'could not update: {findingid} status: {status}')
         return False
     viewo.result.update.update_bookkeeping(source, status, before)
     return True

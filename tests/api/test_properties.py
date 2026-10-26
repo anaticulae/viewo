@@ -7,13 +7,13 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import utilatest
+import utilotest
 
 import tests
 
 
 def test_api_properties_overview(findingclient):
-    result = utilatest.apicall(
+    result = utilotest.apicall(
         findingclient,
         f'/documents/{tests.TEST_DOCUMENT}/properties',
     )

@@ -13,7 +13,7 @@ import os
 import iamraw
 import link
 import serializeraw
-import utila
+import utilo
 
 
 def load_sentences(path: str) -> dict:
@@ -35,7 +35,7 @@ def load_sentences_fromdocumentid(documentid: str) -> str:
         return None
     path = os.path.join(result, 'words__word_result.yaml')
     if not os.path.exists(path):
-        utila.error(f'could not load: {path}')
+        utilo.error(f'could not load: {path}')
         return None
     return load_sentences(path)
 
@@ -46,7 +46,7 @@ def load_doctextstyle_fromdocumentid(documentid: str):
         return None
     path = os.path.join(result, 'doctextstyle__textstyle.yaml')
     if not os.path.exists(path):
-        utila.error(f'could not load: {path}')
+        utilo.error(f'could not load: {path}')
         return None
     loaded = serializeraw.load_doctextstyle(path)
 
@@ -66,7 +66,7 @@ def load_doctextstyle_fromdocumentid(documentid: str):
             font = getattr(loaded, key)
             font = fontstore[font]
             if font is None:
-                utila.error(f'could not find font id: {font}')
+                utilo.error(f'could not find font id: {font}')
                 continue
             font = friendly_font(font.name)
             setattr(loaded, key, font)
@@ -90,7 +90,7 @@ def load_captions_fromdocumentid(documentid: str) -> iamraw.PageContentCaptions:
         return None
     path = iamraw.path.caption_result(result)
     if not os.path.exists(path):
-        utila.error(f'could not load: {path}')
+        utilo.error(f'could not load: {path}')
         return None
     return serializeraw.load_captions(path)
 
@@ -99,9 +99,9 @@ def load_links_fromdocumentid(documentid: str) -> iamraw.PageContentCaptions:
     result = link.resultview(documentid, done=True)
     if not os.path.exists(result):
         return None
-    path = utila.pathconnector(result, 'words', 'links_links')
+    path = utilo.pathconnector(result, 'words', 'links_links')
     if not os.path.exists(path):
-        utila.error(f'could not load: {path}')
+        utilo.error(f'could not load: {path}')
         return None
     return serializeraw.load_hyperlinks(path)
 
@@ -110,9 +110,9 @@ def load_bibliography_fromdocumentid(documentid: str) -> iamraw.BibliographyTabl
     result = link.resultview(documentid, done=True)
     if not os.path.exists(result):
         return None
-    path = utila.pathconnector(result, 'detector', 'bibliography_detected')
+    path = utilo.pathconnector(result, 'detector', 'bibliography_detected')
     if not os.path.exists(path):
-        utila.error(f'could not load: {path}')
+        utilo.error(f'could not load: {path}')
         return None
     references = serializeraw.load_bibliography_reference(path)
     if isinstance(references, list):

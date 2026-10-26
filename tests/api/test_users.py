@@ -9,26 +9,26 @@
 
 import http
 
-import utilatest
+import utilotest
 
 import tests
 
 
 def test_api_users(client):
-    result = utilatest.apicall(client, '/users')
+    result = utilotest.apicall(client, '/users')
     assert result['users']
     assert result['users']['uri']
 
 
 def test_api_user_get(user_client):
-    result = utilatest.apicall(user_client, f'/users/{tests.TEST_USER}')
+    result = utilotest.apicall(user_client, f'/users/{tests.TEST_USER}')
     assert result['user']['email'] == tests.TEST_EMAIL
     assert result['user']['user'] == tests.TEST_USER
     assert result['uri']
 
 
 def test_api_user_not_logged_in(test_client):
-    result = utilatest.apicall(
+    result = utilotest.apicall(
         test_client,
         f'/users/{tests.TEST_USER}',
         expected=http.HTTPStatus.NOT_FOUND,

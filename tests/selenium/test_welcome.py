@@ -7,15 +7,15 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import utilatest
+import utilotest
 
 from tests.selenium.utils import text_inclass
 
 FORM = 'form-group'
 
 
-@utilatest.nightly
-@utilatest.displayed
+@utilotest.nightly
+@utilotest.displayed
 def test_upload_switch(driver, webview):
     """Ensure that changing user source works. First selenium test ;)."""
     driver.get(webview)

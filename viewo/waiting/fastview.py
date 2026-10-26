@@ -12,7 +12,7 @@ import os
 import re
 
 import serializeraw
-import utila
+import utilo
 
 import viewo.waiting
 import viewo.waiting.data
@@ -62,7 +62,7 @@ def load_fastview_result(process: str) -> viewo.waiting.FastViewStatus:
             continue
         parsed = load_fastview_group_result(os.path.join(path, group))
         if not parsed:
-            utila.error(f'could not parse {parsed}')
+            utilo.error(f'could not parse {parsed}')
             continue
         result.append(parsed)
     return result
@@ -82,7 +82,7 @@ def load_fastview_group_result(path: str) -> viewo.waiting.FastViewGroupStatus:
     error = []
     for name in files:
         if not PATTERN.match(name):
-            utila.error(f'{name} does not match file pattern - skip')
+            utilo.error(f'{name} does not match file pattern - skip')
             continue
         loaded = serializeraw.load_findings(os.path.join(path, name))
         for finding in loaded:

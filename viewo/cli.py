@@ -11,13 +11,13 @@ import argparse
 import collections
 import sys
 
-import utila
+import utilo
 
 
 def main():
     config = eval_cli()
     # setup logging
-    utila.level_setup(level=config.verbose)
+    utilo.level_setup(level=config.verbose)
     app = create_app()
     # run app
     app.run(
@@ -57,8 +57,8 @@ def eval_cli():
     argv = parser.parse_args()
     if argv.version:
         import viewo
-        utila.log(viewo.__version__)
-        sys.exit(utila.SUCCESS)
+        utilo.log(viewo.__version__)
+        sys.exit(utilo.SUCCESS)
     result = Config(
         argv.host,
         int(argv.port),

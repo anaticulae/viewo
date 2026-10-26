@@ -9,7 +9,7 @@
 
 import flask
 import iamraw.caption
-import utila
+import utilo
 
 import viewo.result.json
 import viewo.result.loader
@@ -21,7 +21,7 @@ def footnotes(documentid):
     loaded = viewo.result.loader.footnotes.load_fromdocumentid(documentid)
     raw = viewo.result.json.footnotes_tojson(loaded)
     raw = inject_real_pagenumbers(raw, documentid)
-    simple = {'resource': utila.simplify(raw, not_none=False)}
+    simple = {'resource': utilo.simplify(raw, not_none=False)}
     simple['uri'] = flask.url_for(
         'api_documents.footnotes_get',
         documentid=documentid,
@@ -32,7 +32,7 @@ def footnotes(documentid):
 def style(documentid):
     loaded = viewo.result.loader.load_doctextstyle_fromdocumentid(documentid)
     raw = viewo.result.json.doctextstyle_tojson(loaded)
-    simple = {'resource': utila.simplify(raw, not_none=False)}
+    simple = {'resource': utilo.simplify(raw, not_none=False)}
     simple['uri'] = flask.url_for(
         'api_documents.docstyle_get',
         documentid=documentid,
@@ -44,7 +44,7 @@ def captions(documentid):
     loaded = viewo.result.loader.load_captions_fromdocumentid(documentid)
     raw = iamraw.caption.pagecaptions_toraw(loaded) if loaded else []
     raw = inject_real_pagenumbers(raw, documentid)
-    simple = {'resource': utila.simplify(raw, not_none=False)}
+    simple = {'resource': utilo.simplify(raw, not_none=False)}
     simple['uri'] = flask.url_for(
         'api_documents.captions_get',
         documentid=documentid,
@@ -55,7 +55,7 @@ def captions(documentid):
 def bibliography(documentid):
     loaded = viewo.result.loader.load_bibliography_fromdocumentid(documentid)
     raw = loaded.references if loaded else []
-    simple = {'resource': utila.simplify(raw, not_none=False)}
+    simple = {'resource': utilo.simplify(raw, not_none=False)}
     simple['uri'] = flask.url_for(
         'api_documents.bibliography_get',
         documentid=documentid,
@@ -78,7 +78,7 @@ def links(documentid):
     if loaded is None:
         # no extracted links
         loaded = []
-    raw = utila.simplify(loaded, not_none=False)
+    raw = utilo.simplify(loaded, not_none=False)
     simple = {'resource': raw}
     simple['uri'] = flask.url_for(
         'api_documents.links_get',
@@ -89,7 +89,7 @@ def links(documentid):
 
 def pagenumbers(documentid):
     loaded = viewo.result.loader.pagenumbers.load_fromdocumentid(documentid)
-    raw = utila.simplify(loaded, not_none=False)
+    raw = utilo.simplify(loaded, not_none=False)
     simple = {'resource': raw}
     simple['uri'] = flask.url_for(
         'api_documents.pagenumbers_get',

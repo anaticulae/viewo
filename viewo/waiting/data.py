@@ -12,7 +12,7 @@ import json
 import os
 
 import link
-import utila
+import utilo
 
 import viewo.path
 from viewo.waiting import FASTVIEW
@@ -70,7 +70,7 @@ def status(process: str) -> Status:  # pylint:disable=too-complex
         if uploaded() == link.State.DONE:
             verify = link.State.RUNNING  # pylint:disable=R0204
         if os.path.exists(verifypath):
-            content = utila.file_read(verifypath).strip()
+            content = utilo.file_read(verifypath).strip()
             if content == '{}':
                 verify = link.State.FAILED
             else:
@@ -184,7 +184,7 @@ def load_validation_result(process: str) -> dict:
         # invalid process
         return None
     path = os.path.join(path, link.PDFINFO_NAME)
-    loaded = utila.yaml_load(path)
+    loaded = utilo.yaml_load(path)
     return loaded
 
 

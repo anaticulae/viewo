@@ -7,12 +7,12 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import utila
+import utilo
 
 
 def secure_hash(data: bytes, digits: int = 64, salt: str = None) -> str:  # pylint:disable=W0613
     # TODO: INTRODUCE SECURE ONE
-    return utila.freehash(data, digits=digits)
+    return utilo.freehash(data, digits=digits)
 
 
-utila.secure_hash = secure_hash
+utilo.secure_hash = secure_hash

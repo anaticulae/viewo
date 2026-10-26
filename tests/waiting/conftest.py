@@ -9,19 +9,19 @@
 
 import os
 
+import hoverpower
 import link
-import power
 import pytest
-import utila
-import utilatest
+import utilo
+import utilotest
 
 import tests
 
 
 @pytest.fixture
 def valid(td):
-    utilatest.fixture_requires(power.DOCU007_PDF, folder='todo')
-    utila.copy_content(
+    utilotest.fixture_requires(hoverpower.DOCU007_PDF, folder='todo')
+    utilo.copy_content(
         tests.EXAMPLE_TODO,
         td.tmpdir,
         recursive=True,
@@ -32,7 +32,7 @@ def valid(td):
 
 @pytest.fixture
 def no_validation(valid):  # pylint:disable=W0621
-    utila.file_remove(
+    utilo.file_remove(
         os.path.join(
             valid,
             tests.TODO_DOCUMENT,
@@ -43,7 +43,7 @@ def no_validation(valid):  # pylint:disable=W0621
 
 @pytest.fixture
 def invalid_validation(valid):  # pylint:disable=W0621
-    utila.file_replace(
+    utilo.file_replace(
         os.path.join(
             valid,
             tests.TODO_DOCUMENT,

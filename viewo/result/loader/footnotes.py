@@ -10,16 +10,16 @@
 import iamraw
 import link
 import serializeraw
-import utila
+import utilo
 
 
 def load_fromdocumentid(documentid: str):
     result = link.resultview(documentid, done=True)
-    if not utila.exists(result):
+    if not utilo.exists(result):
         return None
     path = iamraw.path.headerfooters(result)
-    if not utila.exists(path):
-        utila.error(f'could not load: {path}')
+    if not utilo.exists(path):
+        utilo.error(f'could not load: {path}')
         return None
     return load_footenotes(path)
 

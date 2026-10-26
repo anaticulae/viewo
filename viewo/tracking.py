@@ -11,7 +11,7 @@ import queue
 import threading
 
 import flask
-import utila
+import utilo
 
 import viewo.api.visitors.data
 import viewo.config
@@ -25,7 +25,7 @@ def before_each_request():
     tracker().visit(request)
 
 
-@utila.cacheme(maxsize=1)
+@utilo.cacheme(maxsize=1)
 def tracker():
     # TODO: REGISTER TACKER SEPARATLY, SEE VIEWO_TALK
     result = Tracker()
@@ -57,7 +57,7 @@ class Tracker:
             if path.startswith('/static/'):
                 return
         user = user_hash(ip, agent)
-        date = utila.filetime()
+        date = utilo.filetime()
         data = oneline(data)
         call = f'{method}:{path}?{data}' if data else f'{method}:{path}'
         # write to file system

@@ -9,7 +9,7 @@
 
 import flask
 import flask_login
-import utila
+import utilo
 
 import viewo.api
 import viewo.api.documents
@@ -46,7 +46,7 @@ def pageviews(documentid):
 def paged():
     pages = flask.request.args.get('pages', None)
     if pages:
-        pagerange = utila.parse_pages(pages)
+        pagerange = utilo.parse_pages(pages)
     else:
         pagerange, pages = None, ':'
     return pagerange, pages

@@ -12,15 +12,15 @@ import os
 import threading
 import time
 
-import configo
+import configos
 import iamraw
 import link
 import protocol
-import utila
+import utilo
 
 import viewo.result.json
 
-FRONTEND_SAVER_WAIT = configo.HV_INT_PLUS(default=50)
+FRONTEND_SAVER_WAIT = configos.HV_INT_PLUS(default=50)
 
 
 class FindingsFrontEnd:
@@ -31,7 +31,7 @@ class FindingsFrontEnd:
         self.loaded = None
         self.fast = {}
         self.outdated = False
-        utila.debug(f'create FindingFrontEnd: {documentid}')
+        utilo.debug(f'create FindingFrontEnd: {documentid}')
 
     def update_status(self, findingid: int, status: iamraw.ProblemStatus):
         assert isinstance(status, iamraw.ProblemStatus), type(status)
@@ -47,8 +47,8 @@ class FindingsFrontEnd:
             self.load()
         data = list(self.loaded)
         if pages is not None:
-            data = utila.select_pages(data, pages=pages)
-        data = utila.notnone(data)
+            data = utilo.select_pages(data, pages=pages)
+        data = utilo.notnone(data)
         for page in data:
             # remove not selected items
             page.content = [
@@ -71,13 +71,13 @@ class FindingsFrontEnd:
         findings = protocol.load_grouped(self.path)
         findings = [convert_style_markup(page) for page in findings]
         self.fast = {
-            item.number: item for item in utila.flatten_content(findings)
+            item.number: item for item in utilo.flatten_content(findings)
         }
         self.loaded = findings
 
     def save(self):
-        utila.log(f'write updated findings to: {self.path}')
-        findings = utila.flatten_content(self.loaded)  # TODO: REMOVE LATER
+        utilo.log(f'write updated findings to: {self.path}')
+        findings = utilo.flatten_content(self.loaded)  # TODO: REMOVE LATER
         private = link.private(
             self.documentid,
             done=True,
@@ -112,7 +112,7 @@ class FrontEndCollection:
         return loaded
 
     def run_saveme(self):
-        utila.log('start saving scheduler')
+        utilo.log('start saving scheduler')
         while True:  # pylint:disable=W0149
             for item in self.documents.values():
                 if not item.outdated:
@@ -121,18 +121,18 @@ class FrontEndCollection:
                 try:
                     item.save()
                 except Exception as error:  # pylint:disable=broad-except
-                    utila.error('could not save findings')
-                    utila.print_stacktrace()
-                    utila.error(error)
+                    utilo.error('could not save findings')
+                    utilo.print_stacktrace()
+                    utilo.error(error)
             time.sleep(FRONTEND_SAVER_WAIT)
-            utila.debug('wait for saving')
+            utilo.debug('wait for saving')
 
     def start(self):
         if self.saver is not None:
-            utila.error('scheduler is already started')
+            utilo.error('scheduler is already started')
             return
-        if utila.testing():
-            utila.debug('testing requires no scheduler')
+        if utilo.testing():
+            utilo.debug('testing requires no scheduler')
             return
         # scheduler is not required in test run TODO: VERIFY THIS
         self.saver = threading.Thread(target=self.run_saveme)

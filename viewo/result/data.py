@@ -14,7 +14,7 @@ import iamraw
 import link
 import protocol
 import serializeraw
-import utila
+import utilo
 
 import viewo.result.loader
 import viewo.waiting
@@ -26,7 +26,7 @@ def load_resultview_result(process: str) -> str:
         result = link.resultview(process, done=True)
     if not os.path.exists(result):
         return None
-    with utila.profile(f'load resultview: {process}'):
+    with utilo.profile(f'load resultview: {process}'):
         loaded = load_resultview(result, process)
     return loaded
 
@@ -41,11 +41,11 @@ def load_resultview(path: str, process: str) -> 'viewo.waiting.ResultPageViews':
         Loaded HTML Page View
     """
     assert os.path.exists(path), str(path)
-    with utila.profile('load findings'):
+    with utilo.profile('load findings'):
         pagefindings = load_findings(path)
-    with utila.profile('load html'):
+    with utilo.profile('load html'):
         html = load_html(path)
-    with utila.profile('render result view'):
+    with utilo.profile('render result view'):
         rendered = render_resultpage_view(html, pagefindings, process)
     return rendered
 
@@ -55,11 +55,11 @@ def render_resultpage_view(html, pagefindings, process):
     # load all pages not only the erroneous
     for page in sync_pages(html, pagefindings):
         # for page, rendered in enumerate(html):
-        finding = utila.select_page(pagefindings, page, default=[])
+        finding = utilo.select_page(pagefindings, page, default=[])
         try:
             content = html[page]
         except IndexError:
-            utila.error(f'non existing html page: {page}')
+            utilo.error(f'non existing html page: {page}')
             content = ''
         # for group in grouped:
         # content = html[group.page]
@@ -79,11 +79,11 @@ def load_findings(path: str):
         # THIS STEP SHOULD NOT BE NECESSARY IF EVERY THING WORKS FINE IN
         # QUEUEMO.
         before = len(item.content)
-        item.content = utila.unique(item.content)
+        item.content = utilo.unique(item.content)
         after = len(item.content)
         if after != before:
             # we copy results twice
-            utila.debug(f'duplicated finding ids on page: {item.page}')
+            utilo.debug(f'duplicated finding ids on page: {item.page}')
     return pagefindings
 
 
@@ -95,7 +95,7 @@ def load_html(path: str):
 
 def patch_images(html: str, process: int) -> str:
     # TODO: REMOVE THIS HACK
-    utila.debug('patch images')
+    utilo.debug('patch images')
     html = html.replace('src="', f'src="{process}/')
     return html
 
@@ -115,9 +115,9 @@ def load_htmlview(path: str) -> list:
     assert os.path.exists(path), str(path)
     # Sort html pages by number, sort 0, 1, 2, 3, ..., 10, 11, 12 correctly.
     # Example: 0.html, cut file extention and make file name int-sortable.
-    files = utila.file_list(path, 'html')
-    files = utila.files_sort(files)
-    content = [utila.file_read(os.path.join(path, item)) for item in files]
+    files = utilo.file_list(path, 'html')
+    files = utilo.files_sort(files)
+    content = [utilo.file_read(os.path.join(path, item)) for item in files]
     return content
 
 
@@ -128,7 +128,7 @@ class HtmlLookup:
         if os.path.exists(path):
             self.data = load_htmlview(path)
         else:
-            utila.error(f'html lookup: {path} does not exists.')
+            utilo.error(f'html lookup: {path} does not exists.')
 
     def __getitem__(self, index):
         return self.data[index]
@@ -141,12 +141,12 @@ def findings_from_path(path: str, worker: int = 10) -> iamraw.PageFindings:
     """Load Findings from `path` directory and group them by page as
     `PageFindings`."""
     assert os.path.isdir(path), str(path)
-    files = utila.file_list(path, include='yaml', recursive=True)
-    files = [item for item in files if utila.file_name(item).endswith('_user')]
+    files = utilo.file_list(path, include='yaml', recursive=True)
+    files = [item for item in files if utilo.file_name(item).endswith('_user')]
     paths = [os.path.join(path, item) for item in files]
     # yaml parsing is cpu bound, therefore we need a process pool instead
     # of thread pool.
-    executor = utila.select_executor()
+    executor = utilo.select_executor()
     # select executor is required to run in pytest
     with executor(max_workers=worker) as executor:
         todo = {

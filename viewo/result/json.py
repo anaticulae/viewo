@@ -12,9 +12,9 @@ import dataclasses
 import json
 import re
 
-import configo
+import configos
 import iamraw.caption
-import utila
+import utilo
 import writers
 
 
@@ -103,7 +103,7 @@ def footnotes_tojson(footnotes: list) -> dict:
         'page': page,
         'error': '',
     } for footnote in content] for page, content in footnotes]
-    footnotes = utila.flat(footnotes)
+    footnotes = utilo.flat(footnotes)
     return footnotes
 
 
@@ -121,14 +121,14 @@ def location_tojson(location, pagesentences: dict = None) -> dict:
         if pagesentences is not None:
             words = word_index(pagesentences, location.page, location.value)
             if words is None:
-                utila.error(f'no words on page: {location.page}'
+                utilo.error(f'no words on page: {location.page}'
                             f' sentence: {location.value}')
             else:
                 result['words'] = words
         return result
     if shortcut == 'r':
         if location.line is None or location.line_end is None:
-            utila.error(f'invalid location: {location}')
+            utilo.error(f'invalid location: {location}')
             return result
         # ranged location
         line, linened = location.line, location.line_end
@@ -159,7 +159,7 @@ def message_replace(content: str) -> str:
     '<sup>4</sup>'
     """
     # TODO: INTRODUCE MARKDOWN PACKAGE
-    url = configo.docs_url()
+    url = configos.docs_url()
     content = writers.replace(content, url)
     # TODO: REMOVE VIEW HACK LATER
     # TODO: REPLACE WITH <<VDIST>>(vertical distance)
@@ -188,7 +188,7 @@ def word_index(pagesentences, page, sentence):
     try:
         current = pagesentences[page]
     except KeyError:
-        utila.log(f'could not access page: {page}')
+        utilo.log(f'could not access page: {page}')
         return []
 
     generator = WordGenerator()

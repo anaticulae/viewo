@@ -67,7 +67,7 @@ Every noteable change is logged here.
 
 ### Chore
 
-* use utila quick installer (8d9da1a80dc3)
+* use utilo quick installer (8d9da1a80dc3)
 * create docker image for every git commit (78f24e94d3cf)
 * automate docker container creation (9245952ed8ae)
 * upgrade environment (5a3a8514c8af)
@@ -665,7 +665,7 @@ Every noteable change is logged here.
 
 ### Fix
 
-* fix utila pages converter (8ecfb230362a)
+* fix utilo pages converter (8ecfb230362a)
 * adjust table size (a86d835e2067)
 
 ### Documentation
@@ -1243,7 +1243,7 @@ Every noteable change is logged here.
 
 ### Feature
 
-* move code to link and configo (38de874407cb)
+* move code to link and configos (38de874407cb)
 
 ### Fix
 
@@ -1299,4 +1299,3 @@ Every noteable change is logged here.
 * basic description of running dev server (f9a8668e5b52)
 
 ## v0.0.0 Initial release
-
