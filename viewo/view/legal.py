@@ -8,8 +8,8 @@
 # =============================================================================
 
 import flask
-import legal
 import utilo
+import viewo_legal
 
 legal_ = flask.Blueprint('legal', __name__)  # pylint:disable=C0103
 
@@ -23,7 +23,7 @@ def agb():
 def impressum():
     return flask.render_template(
         'public/legal/impressum.html',
-        impressum=legal.impressum(),
+        impressum=viewo_legal.impressum(),
     )
 
 
@@ -31,14 +31,14 @@ def impressum():
 def privacy():
     return flask.render_template(
         'public/legal/privacy.html',
-        privacy=legal.privacy(),
+        privacy=viewo_legal.privacy(),
     )
 
 
 @legal_.route('/download/<path:filename>')
 def download_legal(filename):
     # TODO: SAFE JOIN REQUIRED?
-    path = utilo.join(legal.ROOT, 'legal/text/')
+    path = utilo.join(viewo_legal.ROOT, 'viewo_legal/text/')
     return flask.send_from_directory(
         path,
         filename,
