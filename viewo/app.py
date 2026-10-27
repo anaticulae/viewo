@@ -166,8 +166,9 @@ def configure(appi, config):
         appi(Flask): application to configure, which holds config
         config(dict): vars to export as global environment
     """
-    cache = viewo.cache.TYPE
+    cache = 'NullCache'
     if config is None:
+        cache = viewo.cache.TYPE
         # Production environment
         # load the instance config, if it exists
         common_, todo_, ready_ = configos.environment()
@@ -183,7 +184,6 @@ def configure(appi, config):
         # Test environment
         # load the test config if passed in
         appi.config.update(config)
-        cache = 'null'
     # setup cache
     viewo.cache.CACHE.init_app(
         appi,

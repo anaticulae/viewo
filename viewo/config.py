@@ -34,7 +34,7 @@ PASSWORD_LENGTH_MIN = 8
 PASSWORD_LENGTH_MAX = 64
 
 # null:disable caching
-CACHING = configos.env('CHANIA_CACHING', 'null')
+CACHING = configos.env('CHANIA_CACHING', 'NullCache')
 
 OPTIMIZE_DATA = configos.env('CHANIA_OPTIMIZE_DATA', False)
 
