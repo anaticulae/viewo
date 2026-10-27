@@ -149,7 +149,11 @@ def create_app(config=None) -> flask.Flask:
     # configure user access manager
     viewo.user.loginmanager.create_loginmanager(appi)
     # ensure that paths are created
-    appi.before_first_request(viewo.path.init)
+    @appi.before_request
+    def ensure_paths():
+        # fix after upgrading flask
+        appi.before_request_funcs[None].remove(ensure_paths)
+        viewo.path.init()
     # track every user request
     appi.before_request(viewo.tracking.before_each_request)
     # start finding provider
