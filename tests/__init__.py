@@ -14,7 +14,7 @@ import json.decoder
 import os
 
 import hoverpower
-import protocol.finding
+import protoerror.finding
 import pytest
 import utilo
 import utilotest
@@ -37,7 +37,7 @@ def first_finding(document) -> int:
     if not utilo.exists(source):
         utilo.error('run resource generator!')
         return None
-    for path, content in protocol.finding.iter_findings(source):  # pylint:disable=W0612,W0621
+    for path, content in protoerror.finding.iter_findings(source):  # pylint:disable=W0612,W0621
         if not content:
             # no finding in `path`
             continue

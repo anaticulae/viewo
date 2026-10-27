@@ -11,7 +11,7 @@ import collections
 import contextlib
 import enum
 
-import protocol
+import protoerror
 import qvlink
 import utilo
 
@@ -44,8 +44,8 @@ def compare(
     if documentid == partnerid:
         # equal documents
         return []
-    document = protocol.load_grouped(documentpath)
-    partner = protocol.load_grouped(partnerpath)
+    document = protoerror.load_grouped(documentpath)
+    partner = protoerror.load_grouped(partnerpath)
     compared = []
     for number, content in utilo.sync_pages((document, partner)):
         left = content[0] if content[0] else []

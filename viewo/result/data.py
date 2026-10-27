@@ -11,7 +11,7 @@ import concurrent.futures
 import os
 
 import iamraw
-import protocol
+import protoerror
 import qvlink
 import serializeraw
 import utilo
@@ -157,5 +157,5 @@ def findings_from_path(path: str, worker: int = 10) -> iamraw.PageFindings:
         for job in concurrent.futures.as_completed(todo):
             data = job.result()
             findings.extend(data)
-    result = protocol.bypage(findings)
+    result = protoerror.bypage(findings)
     return result

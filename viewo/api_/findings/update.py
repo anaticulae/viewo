@@ -7,7 +7,7 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import protocol.finding
+import protoerror.finding
 import qvlink
 import utilo
 
@@ -17,8 +17,8 @@ import viewo.result.update
 def update_finding_status(documentid: str, findingid: int, status: int):
     source = qvlink.document(documentid)
     status = viewo.result.update.problem_fromint(status)
-    before = protocol.finding_status(source, findingid)
-    if not protocol.finding_status_update(source, findingid, status):
+    before = protoerror.finding_status(source, findingid)
+    if not protoerror.finding_status_update(source, findingid, status):
         utilo.error(f'could not update: {findingid} status: {status}')
         return False
     viewo.result.update.update_bookkeeping(source, status, before)

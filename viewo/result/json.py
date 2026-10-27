@@ -178,7 +178,7 @@ def message_replace(content: str) -> str:
 def selectable(location) -> int:
     """Page able only `location` is not selectable."""
     with contextlib.suppress(AttributeError):
-        # TODO: REMOVE AFTER FIXING RANGED LOCATION IN PROTOCOL
+        # TODO: REMOVE AFTER FIXING RANGED LOCATION IN protoerror
         if location.value is None:
             return 0
     return 1

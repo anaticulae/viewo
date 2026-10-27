@@ -14,7 +14,7 @@ import time
 
 import configos
 import iamraw
-import protocol
+import protoerror
 import qvlink
 import utilo
 
@@ -68,7 +68,7 @@ class FindingsFrontEnd:
         return data
 
     def load(self):
-        findings = protocol.load_grouped(self.path)
+        findings = protoerror.load_grouped(self.path)
         findings = [convert_style_markup(page) for page in findings]
         self.fast = {
             item.number: item for item in utilo.flatten_content(findings)
@@ -82,7 +82,7 @@ class FindingsFrontEnd:
             self.documentid,
             done=True,
         )
-        protocol.write_grouped(findings, self.path, private=private)
+        protoerror.write_grouped(findings, self.path, private=private)
         qvlink.update_bookkeeping(self.documentid)
         self.outdated = False
 
