@@ -32,7 +32,9 @@ def test_payment_nobadge_after_payment(user_client, mp):
         home = tests.content(user_client, '/')
         assert BADGETEXT in home
         # pay
-        payed = tests.post(user_client, '/payment', data=dict(choice=2))
+        payed = tests.post(user_client, '/payment', data={
+            'choice': 2,
+        })
         assert BADGETEXT not in payed
         # home without badge
         home = tests.content(user_client, '/')
@@ -41,7 +43,9 @@ def test_payment_nobadge_after_payment(user_client, mp):
 
 def test_payment_invalid_choice(user_client, mp):
     with setpayment(True, mp):
-        failure = tests.post(user_client, '/payment', data=dict(choice='ABC'))
+        failure = tests.post(user_client, '/payment', data={
+            'choice': 'ABC',
+        })
     # flashed error message
     assert viewo.view.payment.INVALID_MESSAGE in failure
 

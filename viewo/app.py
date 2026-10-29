@@ -79,10 +79,10 @@ class Application(flask.Flask):
 
     @staticmethod
     def context_data() -> dict:
-        result = dict(
-            payment_active=viewo.config.PAYMENT,
-            talker_active=viewo.config.TALKER,
-        )
+        result = {
+            'payment_active': viewo.config.PAYMENT,
+            'talker_active': viewo.config.TALKER,
+        }
         return result
 
     @staticmethod
@@ -192,10 +192,10 @@ def configure(appi, config):
     # setup cache
     viewo.cache.CACHE.init_app(
         appi,
-        config=dict(
-            CACHE_TYPE=cache,
-            CACHE_NO_NULL_WARNING=True,
-        ),
+        config={
+            'CACHE_TYPE': cache,
+            'CACHE_NO_NULL_WARNING': True,
+        },
     )
 
 

@@ -56,7 +56,7 @@ def view_images(documentid: str = None, image: str = None):
         with utilo.file.securewrapper.open(image, mode='rb') as fp:
             image = fp.read()
         # TODO: IS BYTESIO REALLY REQUIRED
-        image = io.BytesIO(image)
+        image: io.BytesIO = io.BytesIO(image)
         response = flask.send_file(image, mimetype='image')
         return response
     # Hint: contextmanager does not work here
