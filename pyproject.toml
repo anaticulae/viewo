@@ -26,9 +26,9 @@ dependencies = [
     "qvlink>=2.15.7,<3.0.0",
     "utilo>=2.112.1,<3.0.0",
     "viewo-api>=1.0.1,<2.0.0",
+    "viewo-legal>=1.0.1,<2.0.0",
     "viewo-talk>=1.0.0,<2.0.0",
-    "viewo_legal>=1.0.1,<2.0.0",
-    "viewo_waiter>=1.0.1,<2.0.0",
+    "viewo-waiter>=1.0.1,<2.0.0",
     "writers>=1.7.1,<2.0.0",
 ]
 keywords = []
