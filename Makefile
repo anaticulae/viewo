@@ -13,7 +13,7 @@ docker-build:
 docker-upload:
 	docker push $(IMAGE_NAME)
 
-docker-doctest: docker-build
+docker-doctest: docker-decrypt
 	docker run\
 		-v $(CURDIR):/var/workdir \
 		$(IMAGE_NAME) \
@@ -29,13 +29,13 @@ docker-longtest: docker-decrypt
 	docker run\
 		-v $(CURDIR):/var/workdir \
 		$(IMAGE_NAME) \
-		"baw test long"
+		"baw test generate && baw test long"
 
 docker-alltest: docker-decrypt
 	docker run\
 		-v $(CURDIR):/var/workdir \
 		$(IMAGE_NAME) \
-		"baw test all"
+		"baw test generate && baw test all"
 
 docker-lint: docker-build
 	docker run\
