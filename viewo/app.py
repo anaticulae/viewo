@@ -154,6 +154,7 @@ def create_app(config=None) -> flask.Flask:
         # fix after upgrading flask
         appi.before_request_funcs[None].remove(ensure_paths)
         viewo.path.init()
+
     # track every user request
     appi.before_request(viewo.tracking.before_each_request)
     # start finding provider
