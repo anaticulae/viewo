@@ -16,7 +16,7 @@ legal_ = flask.Blueprint('legal', __name__)  # pylint:disable=C0103
 
 @legal_.route('/agb', methods=['GET'])
 def agb():
-    return flask.render_template('public/legal/agb.html', agb=legal.agb())
+    return flask.render_template('public/legal/agb.html', agb=viewo_legal.agb())
 
 
 @legal_.route('/impressum', methods=['GET'])
