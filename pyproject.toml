@@ -30,6 +30,7 @@ dependencies = [
     "viewo-talk>=1.0.0,<2.0.0",
     "viewo-waiter>=1.0.1,<2.0.0",
     "writers>=1.7.1,<2.0.0",
+    "ltk-data>=1.2.3,<2.0.0",
 ]
 keywords = []
 classifiers = [
@@ -52,7 +53,7 @@ dev = [
     "hoverpower==1.7.0",
     "pytest_localserver==0.7.0",
     "queuemo==1.27.7",
-    "selenium>=4.51.0,<5.0.0",
+    "selenium>=4.52.0,<5.0.0",
     "utilotest==1.1.1",
 ]
 optional = [
