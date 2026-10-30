@@ -9,6 +9,7 @@
 
 import os
 
+import configos
 import hoverpower
 import pytest
 import qvlink
@@ -39,6 +40,16 @@ RESOURCES_TODO = [
 ]
 
 utilotest.setup(viewo.config.API_PREFIX)
+
+SHARED = utilo.join(os.environ['HOME'], '.tmp/viewo/shared')
+configos.export(
+    SHARED,
+    utilo.join(SHARED, 'todo'),
+    utilo.join(SHARED, 'ready'),
+)
+# TODO: MOVE AFTER UPGRADING CONFIGS
+os.environ['SHARED_TMP'] = utilo.join(SHARED, 'tmp')
+configos.makedirs()
 
 
 @pytest.mark.usefixtures('session')
@@ -153,7 +164,10 @@ def user_client(test_client):  # pylint:disable=W0621
     result = tests.post(
         test_client,
         '/login',
-        dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
+        {
+            'user': tests.TEST_USER,
+            'password': tests.TEST_PASSWORD,
+        },
     )
     assert 'Login erfolgreich' in result, result
     # add users email
@@ -163,7 +177,9 @@ def user_client(test_client):  # pylint:disable=W0621
 
 @pytest.fixture
 def payed_client(test_client):  # pylint:disable=W0621
-    tests.post(test_client, '/payment', data=dict(choice=2))
+    tests.post(test_client, '/payment', data={
+        'choice': 2,
+    })
 
 
 @pytest.fixture

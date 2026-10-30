@@ -21,11 +21,11 @@ def test_contact_message_send(client):
     result = tests.post(
         client,
         '/contact',
-        dict(
-            title='Ich habe eine Frage',
-            email='manfred@gmail.com',
-            message='This is a very very secret message',
-        ),
+        {
+            'title': 'Ich habe eine Frage',
+            'email': 'manfred@gmail.com',
+            'message': 'This is a very very secret message',
+        },
     )
     assert 'Ihre Nachricht wurde erfolgreich übermittelt' in result, result
 
@@ -34,9 +34,9 @@ def test_contact_message_send_error(client):
     result = tests.post(
         client,
         '/contact',
-        dict(
-            title='Ich habe eine Frage',
-            message='This is a very very secret message',
-        ),
+        {
+            'title': 'Ich habe eine Frage',
+            'message': 'This is a very very secret message',
+        },
     )
     assert 'Nachricht konnte nicht übermittelt werden.' in result

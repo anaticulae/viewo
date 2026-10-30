@@ -14,7 +14,8 @@ api_documents = flask.Blueprint('api_documents', __name__)  # pylint:disable=C01
 
 __all__ = ['api_documents', 'delete', 'present']
 
-DOCUMENTID_LENGTH = 16
+# pylint: disable=invalid-name
+DOCUMENTID_LENGTH = 16  # TODO: USE CONFIGO
 DOCUMENTID = f'<string(length={DOCUMENTID_LENGTH}):documentid>'
 DOCUMENTID_B = f'<string(length={DOCUMENTID_LENGTH}):partnerid>'
 if utilo.testing():
