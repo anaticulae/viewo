@@ -9,6 +9,7 @@
 
 import os
 
+import configos
 import hoverpower
 import pytest
 import qvlink
@@ -39,6 +40,16 @@ RESOURCES_TODO = [
 ]
 
 utilotest.setup(viewo.config.API_PREFIX)
+
+SHARED = utilo.join(os.environ['HOME'], '.tmp/viewo/shared')
+configos.export(
+    SHARED,
+    utilo.join(SHARED, 'todo'),
+    utilo.join(SHARED, 'ready'),
+)
+# TODO: MOVE AFTER UPGRADING CONFIGS
+os.environ['SHARED_TMP'] = utilo.join(SHARED, 'tmp')
+configos.makedirs()
 
 
 @pytest.mark.usefixtures('session')
