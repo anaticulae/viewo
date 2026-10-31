@@ -109,7 +109,8 @@ def run_queuemo(source, generated, owner=None):
     # run single queuemo instance in workspace, write output to same workspace
     cmd = f'queuemo_single -i {workspace} -V'
     completed = utilo.run(cmd)
-    utilo.debug(utilo.format_completed(completed))
+    if completed.returncode:
+        utilo.log(utilo.format_completed(completed))
 
 
 def zfill(text, width, char='0') -> str:
