@@ -98,7 +98,7 @@ def run_queuemo(source, generated, owner=None):
     todoname += '_' + utilo.file_name(source)
     workpath = os.path.join(generated, todoname)
     if os.path.exists(workpath):
-        return
+        return utilo.SUCCESS
     utilo.log(f'generate {workpath}')
     workspace = qvlink.create_todo(
         source,
@@ -111,6 +111,7 @@ def run_queuemo(source, generated, owner=None):
     completed = utilo.run(cmd)
     if completed.returncode:
         utilo.log(utilo.format_completed(completed))
+    return completed.returncode
 
 
 def zfill(text, width, char='0') -> str:
