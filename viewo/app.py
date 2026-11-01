@@ -22,11 +22,11 @@ except ImportError:
     utilo.error('could not import viewo_waiter')
 
 try:
-    import admin_helpdesk
-    import admin_helpdesk.api
-    from admin_helpdesk.api import *  # pylint:disable=wildcard-import,W0614,C0412
+    import viewo_helpdesk
+    import viewo_helpdesk.api
+    from viewo_helpdesk.api import *  # pylint:disable=wildcard-import,W0614,C0412
 except ImportError:
-    utilo.error('could not import admin_helpdesk')
+    utilo.error('could not import viewo_helpdesk')
 
 import viewo
 import viewo.__patch__
@@ -137,11 +137,11 @@ def create_app(config=None) -> flask.Flask:
     # messages
     try:
         appi.register_blueprint(
-            admin_helpdesk.api.api_message,
+            viewo_helpdesk.api.api_message,
             url_prefix=viewo.config.API_PREFIX,
         )
     except NameError:
-        utilo.error('could not register admin_helpdesk')
+        utilo.error('could not register viewo_helpdesk')
     # talker
     if viewo.config.TALKER:
         import viewo_talk
@@ -181,7 +181,7 @@ def configure(appi, config):
         appi.config['TODO'] = todo_
         appi.config['READY'] = ready_
         try:
-            appi.config[admin_helpdesk.ADMIN_HELPDESK] = os.environ[admin_helpdesk.ADMIN_HELPDESK]  # yapf:disable
+            appi.config[viewo_helpdesk.VIEWO_HELPDESK] = os.environ[viewo_helpdesk.VIEWO_HELPDESK]  # yapf:disable
         except NameError:
             # TODO look here later
             pass
