@@ -60,7 +60,7 @@ class Application(flask.Flask):
         self.config.setdefault('MAX_CONTENT_LENGTH', viewo.config.FILE_SIZE_MAX)
         self.config.setdefault('BOOTSTRAP_SERVE_LOCAL', True)
         # configure extensions
-        flask_bootstrap.Bootstrap(app=self)
+        flask_bootstrap.Bootstrap5(app=self)
         flask_moment.Moment(app=self)
         if viewo.config.OPTIMIZE_DATA:
             # optimize transfer
