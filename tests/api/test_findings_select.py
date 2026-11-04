@@ -21,7 +21,7 @@ def test_api_findings_bypagenumber(findingclient):
         f'/documents/{tests.TEST_DOCUMENT}/findings?pages=0:5',
         expected=http.HTTPStatus.OK,
     )
-    expected = f'documents/{tests.TEST_DOCUMENT}/findings?pages=0%3A5'
+    expected = f'documents/{tests.TEST_DOCUMENT}/findings?pages=0:5'
     assert expected in result['findings']['uri']
 
 
@@ -33,5 +33,5 @@ def test_api_findings_negative_pagenumber(findingclient):
         f'/documents/{tests.TEST_DOCUMENT}/findings?pages=_3:5',
         expected=http.HTTPStatus.OK,
     )
-    expected = f'documents/{tests.TEST_DOCUMENT}/findings?pages=_3%3A5'
+    expected = f'documents/{tests.TEST_DOCUMENT}/findings?pages=_3:5'
     assert expected in result['findings']['uri']
