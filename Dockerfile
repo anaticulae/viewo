@@ -16,6 +16,8 @@ ENV SHARED_TODO=/var/tmp/space/todo
 ENV SHARED_READY=/var/tmp/space/ready
 ENV SHARED_TMP=/var/tmp/space/tmp
 
+ENV VIEWO_HELPDESK=/var/tmp/helpdesk
+
 WORKDIR /var/install
 
 COPY pyproject.toml .
