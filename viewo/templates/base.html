@@ -92,6 +92,8 @@
 {% block scripts %}
 {{ super() }}
 
+{{ js('js/jquery-4.0.0.min.js') }}
+
 {{ moment.include_moment(local_js=url_for('static', filename='lib/moment.min.js')) }}
 {{ moment.locale('de') }}
 
