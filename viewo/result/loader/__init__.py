@@ -53,14 +53,14 @@ def load_doctextstyle_fromdocumentid(documentid: str):
     fontstore = serializeraw.fs_frompath(result, prefix='oneline')
     if fontstore:
         # replace font ids with user readable font text
-        for key in [
+        for key in (
                 'footnote_family',
                 'h1_family',
                 'h2_family',
                 'h3_family',
                 'pagenumber_family',
                 'text_family',
-        ]:
+        ):
             if not getattr(loaded, key):
                 continue
             font = getattr(loaded, key)

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% import "bootstrap/wtf.html" as wtf %}
+{% from 'bootstrap5/form.html' import render_form %}
 
 {% block pagecontent %}
 
@@ -10,7 +10,7 @@
         Um auf das Dokument zuzugreifen geben Sie bitte Ihren Benutzernamen
         und Passwort ein.
     </p>
-    {{ wtf.quick_form(form) }}
+    {{ render_form(form) }}
 
 </div>
 {% endblock %}

@@ -32,30 +32,53 @@
 
     <fieldset>
         <legend>Wählen Sie Ihr Dokument und erhalten Sie sofort Ihre Auswertung</legend>
-        <div class="top-pad">
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#file" data-toggle="tab">Lokale Datei</a></li>
-                <li><a href="#url" data-toggle="tab">URL</a></li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane active" id="file">
-                    <form id="file_upload" enctype="multipart/form-data">
-                        <div class="form-group"><br />Wählen Sie Ihr PDF Dokument aus:</div>
-                        <input type="file" class="form-control form-group" name="file" required="required"
-                            style="max-width:600px;" />
-                        {{ accept_legal() }}
-                        {{ analysis_start() }}
-                    </form>
-                </div>
-                <div class="tab-pane" id="url">
-                    <form id="url_upload">
-                        <div class="form-group"> <br />Webadresse oder Cloudspeicher:</div>
-                        <input class="form-control form-group" type="url" name="url" placeholder="https://"
-                            required="required" style="max-width:600px;" />
-                        {{ accept_legal() }}
-                        {{ analysis_start() }}
-                    </form>
-                </div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active"
+                        id="home-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#home"
+                        type="button"
+                        role="tab">
+                    Lokale Datei
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link"
+                        id="profile-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#profile"
+                        type="button"
+                        role="tab">
+                    URL
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active"
+                 id="home"
+                 role="tabpanel"
+                 aria-labelledby="home-tab">
+                                     <form id="file_upload" enctype="multipart/form-data">
+                                <div class="form-group"><br />Wählen Sie Ihr PDF Dokument aus:</div>
+                                <input type="file" class="form-control form-group" name="file" required="required"
+                                    style="max-width:600px;" />
+                                {{ accept_legal() }}
+                                {{ analysis_start() }}
+                            </form>
+            </div>
+            <div class="tab-pane fade"
+                 id="profile"
+                 role="tabpanel"
+                 aria-labelledby="profile-tab">
+                                     <form id="url_upload">
+                                <div class="form-group"> <br />Webadresse oder Cloudspeicher:</div>
+                                <input class="form-control form-group" type="url" name="url" placeholder="https://"
+                                    required="required" style="max-width:600px;" />
+                                {{ accept_legal() }}
+                                {{ analysis_start() }}
+                            </form>
             </div>
         </div>
     </fieldset>

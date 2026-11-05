@@ -16,19 +16,29 @@ def test_auth_login_open(test_client):
     assert 'Passwort:' in result
 
 
+CREDENTIALS = { # nosec
+    'user': tests.TEST_USER,
+    'password': tests.TEST_PASSWORD,
+}
+CREDENTIALS_INVALID = { # nosec
+    'user': tests.TEST_USER,
+    'password': 'wrong password',
+}
+
+
 def test_auth_login_click(test_client):
     # run login
     result = tests.post(
         test_client,
         '/login',
-        dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
+        CREDENTIALS,
     )
     assert 'Login erfolgreich' in result
     # run login again, forward to document list
     result = tests.post(
         test_client,
         '/login',
-        dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
+        CREDENTIALS,
     )
     assert '<h2>Dokumente</h2>' in result
 
@@ -37,7 +47,7 @@ def test_auth_login_invalid_password(test_client):
     result = tests.post(
         test_client,
         '/login',
-        dict(user=tests.TEST_USER, password='wrong password'),  # nosec
+        CREDENTIALS_INVALID,
     )
     assert 'Benutzerdaten fehlerhaft' in result
     # login view visible
@@ -54,7 +64,7 @@ def test_auth_logout_click(user_client):
     result = tests.post(
         user_client,
         '/login',
-        dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
+        CREDENTIALS,
     )
     assert 'Login erfolgreich' in result
 
@@ -64,6 +74,6 @@ def test_auth_for_required_page(test_client):
     result = tests.post(
         test_client,
         '/login?next=account',
-        dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
+        CREDENTIALS,
     )
     assert '<h1>Account Übersicht</h1>' in result

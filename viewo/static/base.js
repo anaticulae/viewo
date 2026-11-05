@@ -141,7 +141,7 @@ const rpc_raw = function (url, callback, error = undefined) {
 
 const user_error = function (message) {
     let entry = `<div class="alert alert-warning">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button>
                 ${message}
                 </div>`
     $('#badnews').append(entry)
@@ -149,7 +149,7 @@ const user_error = function (message) {
 
 const user_info = function (message) {
     let entry = `<div class="alert alert-warning">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button>
                 ${message}
                 </div>`
     $('#badnews').append(entry)

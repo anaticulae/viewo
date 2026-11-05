@@ -9,6 +9,7 @@
 
 import flask
 import flask_wtf
+import markupsafe
 import wtforms
 
 contact_ = flask.Blueprint('contact', __name__)  # pylint:disable=C0103
@@ -48,10 +49,10 @@ class ContactForm(flask_wtf.FlaskForm):
         super().__init__()
         priv = flask.url_for('legal.privacy')
         lega = flask.url_for('legal.agb')
-        self.privacy.label.text = (
+        self.privacy.label.text = markupsafe.Markup( # nosec
             f'Ich habe die <a href="{priv}">Datenschutzerklärung</a> '
             f'und die <a href="{lega}">allgemeinen Geschäftsbedingungen</a> '
-            'gelesen und akzeptiert.')
+            'gelesen und akzeptiert.').format(priv, lega)
 
     title = wtforms.StringField(
         'Betreff',

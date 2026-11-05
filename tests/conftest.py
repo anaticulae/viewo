@@ -9,6 +9,7 @@
 
 import os
 
+import configos
 import hoverpower
 import pytest
 import qvlink
@@ -39,6 +40,16 @@ RESOURCES_TODO = [
 ]
 
 utilotest.setup(viewo.config.API_PREFIX)
+
+SHARED = utilo.join(os.environ['HOME'], '.tmp/viewo/shared')
+configos.export(
+    SHARED,
+    utilo.join(SHARED, 'todo'),
+    utilo.join(SHARED, 'ready'),
+)
+# TODO: MOVE AFTER UPGRADING CONFIGS
+os.environ['SHARED_TMP'] = utilo.join(SHARED, 'tmp')
+configos.makedirs()
 
 
 @pytest.mark.usefixtures('session')
@@ -87,7 +98,7 @@ def run_queuemo(source, generated, owner=None):
     todoname += '_' + utilo.file_name(source)
     workpath = os.path.join(generated, todoname)
     if os.path.exists(workpath):
-        return
+        return utilo.SUCCESS
     utilo.log(f'generate {workpath}')
     workspace = qvlink.create_todo(
         source,
@@ -98,7 +109,9 @@ def run_queuemo(source, generated, owner=None):
     # run single queuemo instance in workspace, write output to same workspace
     cmd = f'queuemo_single -i {workspace} -V'
     completed = utilo.run(cmd)
-    utilo.debug(utilo.format_completed(completed))
+    if completed.returncode:
+        utilo.log(utilo.format_completed(completed))
+    return completed.returncode
 
 
 def zfill(text, width, char='0') -> str:
@@ -153,7 +166,10 @@ def user_client(test_client):  # pylint:disable=W0621
     result = tests.post(
         test_client,
         '/login',
-        dict(user=tests.TEST_USER, password=tests.TEST_PASSWORD),
+        {
+            'user': tests.TEST_USER,
+            'password': tests.TEST_PASSWORD,
+        },
     )
     assert 'Login erfolgreich' in result, result
     # add users email
@@ -163,7 +179,9 @@ def user_client(test_client):  # pylint:disable=W0621
 
 @pytest.fixture
 def payed_client(test_client):  # pylint:disable=W0621
-    tests.post(test_client, '/payment', data=dict(choice=2))
+    tests.post(test_client, '/payment', data={
+        'choice': 2,
+    })
 
 
 @pytest.fixture

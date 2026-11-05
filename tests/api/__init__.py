@@ -18,7 +18,10 @@ def login(client, userid=tests.TEST_USER, password=tests.TEST_PASSWORD):
     result = tests.post(
         client,
         '/login',
-        dict(user=userid, password=password),
+        {
+            'user': userid,
+            'password': password,
+        },
     )
     assert 'Login erfolgreich' in result
 
