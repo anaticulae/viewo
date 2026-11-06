@@ -70,10 +70,6 @@ def extract_ready(files):
     utilo.directory_lock(readypath)
 
 
-# TODO: REPLACE WITH VIEWO_API
-PUBLIC = '00000000'
-
-
 def extract_todo(files):
     todopath = hoverpower.generated(folder='todo')
     os.makedirs(todopath, exist_ok=True)
@@ -83,7 +79,7 @@ def extract_todo(files):
                 method=run_queuemo,
                 source=path,
                 generated=todopath,
-                owner=PUBLIC,
+                owner=qvlink.PUBLIC_OWNER,
             )
     utilo.directory_lock(todopath)
 
