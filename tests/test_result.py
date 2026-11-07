@@ -9,7 +9,6 @@
 
 import os
 
-import pytest
 import utilo
 
 import tests
@@ -45,7 +44,6 @@ def test_call_result_e508af0df454gi30(client, mp):
     assert content
 
 
-@pytest.mark.xfail(reason='invalid image id', strict=False)
 @tests.generated
 def test_call_result_e508af0df454gi30_image_access(test_client):
     utilo.copy_content(
