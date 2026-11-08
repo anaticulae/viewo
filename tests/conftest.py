@@ -16,6 +16,7 @@ import qvlink
 import utilo
 import utilotest
 import viewo_api.user.create
+import viewo_helpdesk
 # pylint:disable=W0611
 from utilotest import mp
 from utilotest import td
@@ -27,6 +28,21 @@ import viewo.app
 import viewo.config
 
 pytest_plugins = ['pytester', 'xdist', 'localserver']  # pylint: disable=invalid-name
+
+
+def pytest_configure():
+    tmpdir = utilo.tmpdir(viewo.ROOT)
+    shared = utilo.join(tmpdir, 'shared')
+    configos.export(
+        shared,
+        utilo.join(shared, 'todo'),
+        utilo.join(shared, 'ready'),
+    )
+    # TODO: MOVE AFTER UPGRADING CONFIGS
+    os.environ['SHARED_TMP'] = utilo.join(shared, 'tmp')
+    os.environ[viewo_helpdesk.VIEWO_HELPDESK] = utilo.join(tmpdir, 'helpdesk')
+    configos.makedirs()
+
 
 PACKAGE = viewo.PROCESS
 
@@ -40,16 +56,6 @@ RESOURCES_TODO = [
 ]
 
 utilotest.setup(viewo.config.API_PREFIX)
-
-SHARED = utilo.join(os.environ['HOME'], '.tmp/viewo/shared')
-configos.export(
-    SHARED,
-    utilo.join(SHARED, 'todo'),
-    utilo.join(SHARED, 'ready'),
-)
-# TODO: MOVE AFTER UPGRADING CONFIGS
-os.environ['SHARED_TMP'] = utilo.join(SHARED, 'tmp')
-configos.makedirs()
 
 
 @pytest.mark.usefixtures('session')
