@@ -50,13 +50,17 @@ def test_call_result_e508af0df454gi30_image_access(test_client):
         src=os.path.join(tests.EXAMPLE_ROOT, 'jobinfo.yaml'),
         dst=f'ready/{tests.TEST_DOCUMENT}',
     )
+    dst = f'ready/{tests.TEST_DOCUMENT}/result'
     utilo.copy_content(
         src=tests.EXAMPLE_RESULT,
-        dst=f'ready/{tests.TEST_DOCUMENT}/result',
+        dst=dst,
         recursive=True,
     )
+    images = utilo.file_list(utilo.join(dst, 'view'), include='png')
+    assert images
+    image = utilo.file_name(images[0])
     response = test_client.get(
-        f'/view/{tests.TEST_DOCUMENT}/7e98e4ad3dd91838.png',
+        f'/view/{tests.TEST_DOCUMENT}/{image}.png',
         follow_redirects=True,
     )
     assert response.status_code == 200, response
