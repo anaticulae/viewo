@@ -32,18 +32,9 @@ jobs:
         run: make docker-fasttest
         env:
           HOVERPOWER_SECRET: ${{ secrets.HOVERPOWER_SECRET }}
-  longtest:
-    runs-on: ubuntu-24.04
-    needs: fasttest
-    steps:
-      - uses: actions/checkout@v7
-      - name: run longtest
-        run: make docker-longtest
-        env:
-          HOVERPOWER_SECRET: ${{ secrets.HOVERPOWER_SECRET }}
   alltest:
     runs-on: ubuntu-24.04
-    needs: longtest
+    needs: fasttest
     steps:
       - uses: actions/checkout@v7
         with:

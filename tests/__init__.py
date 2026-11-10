@@ -14,12 +14,11 @@ import json.decoder
 import os
 
 import hoverpower
-import protoerror.finding
+import protoerror
 import pytest
 import utilo
 import utilotest
 import viewo_api
-import werkzeug.datastructures
 
 import viewo
 import viewo.config
@@ -37,8 +36,10 @@ def first_finding(document) -> int:
     if not utilo.exists(source):
         utilo.error('run resource generator!')
         return None
-    for path, content in protoerror.finding.iter_findings(source):  # pylint:disable=W0612,W0621
-        if not content:
+    optimized = utilo.join(source, 'result/__optimized__')
+    loaded = protoerror.load_grouped(optimized)
+    for content in loaded:  # pylint:disable=W0612,W0621
+        if not content.content:
             # no finding in `path`
             continue
         first = content[0].number

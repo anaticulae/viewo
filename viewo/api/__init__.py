@@ -7,7 +7,6 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import contextlib
 import functools
 
 import flask
@@ -18,7 +17,6 @@ import viewo_api
 import viewo_api.user.data
 
 import viewo.api_.findings.data
-import viewo.api_.findings.update
 import viewo.config
 
 

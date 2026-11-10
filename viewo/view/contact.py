@@ -49,7 +49,7 @@ class ContactForm(flask_wtf.FlaskForm):
         super().__init__()
         priv = flask.url_for('legal.privacy')
         lega = flask.url_for('legal.agb')
-        self.privacy.label.text = markupsafe.Markup( # nosec
+        self.privacy.label.text = markupsafe.Markup(  # nosec
             f'Ich habe die <a href="{priv}">Datenschutzerklärung</a> '
             f'und die <a href="{lega}">allgemeinen Geschäftsbedingungen</a> '
             'gelesen und akzeptiert.').format(priv, lega)
