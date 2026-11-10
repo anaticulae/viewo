@@ -1,7 +1,7 @@
 [build-system]
 requires = [
-    "setuptools>=83.0.0",
-    "wheel>=0.47.0",
+    "setuptools>=84.2.1",
+    "wheel>=0.48.0",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -52,7 +52,7 @@ content-type = "text/markdown"
 dev = [
     "gennex==1.1.0",
     "hoverpower==1.7.0",
-    "pytest_localserver==0.7.0",
+    "pytest_localserver==0.10.0.post0",
     "queuemo==1.28.0",
     "selenium>=4.52.0,<5.0.0",
     "utilotest==1.1.1",
