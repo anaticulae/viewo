@@ -1,6 +1,44 @@
 # CHANGELOG
 
 
+## v2.31.1 (2026-11-10)
+
+### Chores
+
+- **conftest**: Setup environ vars correctly
+  ([`adf25bb`](https://github.com/anaticulae/viewo/commit/adf25bb09f9964ba0f0c9d842382f1feea5c9738))
+
+- **github**: Remove empty test step
+  ([`3d9e9c2`](https://github.com/anaticulae/viewo/commit/3d9e9c204f8c92b3f5aa68c3881ef1844e630e74))
+
+- **requirements**: Upgrade pyproject.toml
+  ([`9085c35`](https://github.com/anaticulae/viewo/commit/9085c3516984a0fcb060df68c62faff152302292))
+
+### Code Style
+
+- **contact**: Format code
+  ([`7dd1c7c`](https://github.com/anaticulae/viewo/commit/7dd1c7c036acf51c19214bbcf26fcc8c36fb0c6a))
+
+- **finding**: Add missing import
+  ([`632dbc4`](https://github.com/anaticulae/viewo/commit/632dbc47633d27e3b43b9eae7dfd9d5fc5f8baf6))
+
+### Refactoring
+
+- **contest**: Replace with API code
+  ([`ec8d7c8`](https://github.com/anaticulae/viewo/commit/ec8d7c8be1a0edafaf9c54d86ae581e1df214edd))
+
+### Testing
+
+- **fix**: Load test findings from correct location
+  ([`cb132b7`](https://github.com/anaticulae/viewo/commit/cb132b7e72d1e37e38a73ab86afc62f5b3042a53))
+
+- **image**: Ensure that png is selected correctly
+  ([`23a743f`](https://github.com/anaticulae/viewo/commit/23a743fc5d899d3e88adcaa8f36ea840bbf11d3e))
+
+- **result**: Enable xfailed test after fixing ltk_data
+  ([`c8c84e6`](https://github.com/anaticulae/viewo/commit/c8c84e634806e00c4f9b2a8f69f693b5297aef1b))
+
+
 ## v2.31.0 (2026-11-05)
 
 ### Bug Fixes
