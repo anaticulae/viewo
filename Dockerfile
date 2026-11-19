@@ -7,7 +7,7 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-FROM ghcr.io/anaticulae/baw:v1.90.1-python
+FROM ghcr.io/anaticulae/baw:v1.90.4-python
 
 ENV HOVERPOWER_STORE=/var/workdir/hoverpower/repo
 
